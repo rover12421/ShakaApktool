@@ -1,0 +1,78 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'license'
+
+ext.apktoolversion = '2.0.0-Beta8'
+ext.fullrev = '';
+ext.gitrev_version = '';
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+build.doFirst {
+    def javaVersion = System.getProperty("java.version")
+    //fail the build if we don't have the expected Java version
+    if (!javaVersion.startsWith("1.7")) {
+        throw new GradleException("You can fix this problem!\nWe found a " + javaVersion + " JDK\nPlease update JAVA_HOME to use a 1.7 JDK\nCurrently it is set to: " + System.getProperty("java.home"));
+    }
+}
+
+
+class Compatibility {
+    String version
+    Compatibility(String versionValue) {
+        def matcher = (versionValue =~ /Java (\d)/)
+        version = matcher[0][1]
+    }
+    String toString() { version }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
+
+// If anyone uses this outside of GoogleCode (Apktool) developers. I will hunt you down and hurt you.
+// This is for official releases only. 
+task release {
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.5.0'
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.2-rc1'
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'idea'
+
+    ext {
+        depends = [guava: 'com.google.guava:guava:14.0',
+                findbugs: 'com.google.code.findbugs:jsr305:1.3.9',
+                junit: 'junit:junit:4.6',
+                antlr_runtime: 'org.antlr:antlr-runtime:3.5',
+                antlr: 'org.antlr:antlr:3.5',
+                commons_cli: 'commons-cli:commons-cli:1.2',
+                jflex: 'de.jflex:jflex:1.4.3',
+                proguard: 'net.sf.proguard:proguard-base:4.8',
+                aspectjrt: 'org.aspectj:aspectjrt:1.7.4'
+        ]
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.8.2'
+    }
+}
