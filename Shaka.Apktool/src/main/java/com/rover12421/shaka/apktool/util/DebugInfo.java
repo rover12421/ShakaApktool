@@ -1,12 +1,17 @@
 package com.rover12421.shaka.apktool.util;
 
+import com.rover12421.shaka.apktool.lib.ShakaProperties;
+
 /**
  * Created by rover12421 on 12/25/13.
  */
 public class DebugInfo {
-    private static boolean DEBUG = true;
+    private static Boolean DEBUG = null;
 
     public static boolean isDEBUG() {
+        if (DEBUG == null) {
+            DEBUG = ShakaProperties.isDebug();
+        }
         return DEBUG;
     }
 

@@ -4,7 +4,6 @@
 /brut.j.dir/
 /brut.j.util/
 /scripts/
-/gradle/
 .gradle/
 build/
 private/
@@ -18,4 +17,5 @@ bin/
 *.iml
 .idea/
 /out
+TestApk/
 

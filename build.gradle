@@ -2,9 +2,11 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'license'
 
-ext.apktoolversion = '2.0.0-Beta8'
+ext.apktoolversion = '1.0_2.0.0-Beta8'
 ext.fullrev = '';
 ext.gitrev_version = '';
+
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -32,7 +34,7 @@ class Compatibility {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.8'
+    gradleVersion = '1.9'
 }
 
 // If anyone uses this outside of GoogleCode (Apktool) developers. I will hunt you down and hurt you.
@@ -58,13 +60,12 @@ subprojects {
     ext {
         depends = [guava: 'com.google.guava:guava:14.0',
                 findbugs: 'com.google.code.findbugs:jsr305:1.3.9',
-                junit: 'junit:junit:4.6',
+                junit: 'junit:junit:4.11',
                 antlr_runtime: 'org.antlr:antlr-runtime:3.5',
                 antlr: 'org.antlr:antlr:3.5',
                 commons_cli: 'commons-cli:commons-cli:1.2',
                 jflex: 'de.jflex:jflex:1.4.3',
                 proguard: 'net.sf.proguard:proguard-base:4.8',
-                aspectjrt: 'org.aspectj:aspectjrt:1.7.4'
         ]
     }
 
@@ -73,6 +74,8 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'junit:junit:4.8.2'
+        compile 'org.aspectj:aspectjrt:1.7.4'
+        testCompile 'junit:junit:4.11'
     }
+
 }

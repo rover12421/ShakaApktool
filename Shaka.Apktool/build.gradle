@@ -1,20 +1,83 @@
-/**
- *  Copyright 2011 Ryszard Wiśniewski <brut.alll@gmail.com>
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+apply plugin: 'fatjar'
+
+import org.apache.tools.ant.filters.*
+
+buildscript {
+    repositories {
+        maven {
+            url "http://www.eveoh.nl/files/maven2"
+        }
+    }
+    dependencies {
+        classpath "nl.eveoh:gradle-aspectj:1.2"
+    }
+}
+ext.aspectjVersion = '1.7.4'
+apply plugin: 'aspectj'
+
+version = apktoolversion
+shakaDebug = 'true'
+
+configurations {
+    proguard
+}
+
+task release {
+//    shakaDebug = 'false'
+}
+
+processResources {
+    from('src/main/resources/properties') {
+        include '**/*.properties'
+        into 'properties'
+        filter(ReplaceTokens, tokens: [version: apktoolversion, shakaDebug: shakaDebug] )
+    }
+    from('src/main/resources/') {
+        include '**/*.jar'
+    }
+
+    includeEmptyDirs = false
+}
 
 dependencies {
-  compile project(':brut.apktool:apktool-cli')
-  testCompile 'junit:junit:4.11'
+    compile 'org.aspectj:aspectjrt:1.7.4'
+    compile project(':brut.apktool:apktool-cli')
+    ajInpath project(':brut.apktool:apktool-cli')
+    compile project(':brut.apktool:apktool-lib')
+    ajInpath project(':brut.apktool:apktool-lib')
+    compile project(':brut.j.dir')
+    testCompile 'junit:junit:4.11'
+    proguard 'net.sf.proguard:proguard-base:4.8'
 }
+
+gradle.taskGraph.whenReady {
+    fatJar {
+        manifest {
+            attributes("Main-Class": "brut.apktool.Main")
+        }
+    }
+}
+
+task proguard(type: JavaExec, dependsOn: fatJar) {
+    def outFile = jar.destinationDir.getPath() + '/' + jar.baseName + '-' + jar.version + '-small' + '.' + jar.extension
+    inputs.file jar.archivePath
+    outputs.file outFile
+
+    classpath = configurations.proguard
+    main = 'proguard.ProGuard'
+    args '-injars ' + "${jar.archivePath}" + ' (!META-INF/LICENSE.txt,!META-INF/NOTICE.txt,!README)'
+    args "-outjars ${outFile}"
+    args "-libraryjars ${System.properties['java.home']}/lib/rt.jar"
+    args '-dontobfuscate'
+    args '-dontoptimize'
+    args '-keep public class brut.apktool.Main { public static void main(java.lang.String[]); }'
+    args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
+    args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
+    args '-dontwarn com.google.common.base.**'
+    args '-dontwarn com.google.common.collect.**'
+    args '-dontwarn com.google.common.util.**'
+    args '-dontwarn javax.xml.xpath.**'
+    args '-dontnote **'
+}
+
+tasks.getByPath(':release').dependsOn(proguard)
