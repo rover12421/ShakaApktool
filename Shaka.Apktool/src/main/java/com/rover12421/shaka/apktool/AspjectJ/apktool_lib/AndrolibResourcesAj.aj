@@ -13,11 +13,8 @@ import java.util.regex.Pattern;
 /**
  * Created by rover12421 on 1/1/14.
  * brut.androlib.res.AndrolibResources
- * aaptPackage(File apkFile, File manifest, File resDir,
- *      File rawDir, File assetDir, File[] include,
- *      HashMap<String, Boolean> flags, String aaptPath)
  */
-public aspect AaptPackage {
+public aspect AndrolibResourcesAj {
 
     /**
      * Androidlib.UNK_DIRNAME
@@ -26,17 +23,21 @@ public aspect AaptPackage {
     private final static String SHAKA_PNG  = "/png/Shaka.png";
     private final static String SHAKA_9_PNG  = "/png/Shaka.9.png";
 
+    /**
+     * 异常png图片处理
+     */
     pointcut aaptPackagePointcut(File apkFile, File manifest, File resDir,
                          File rawDir, File assetDir, File[] include,
                          HashMap<String, Boolean> flags, String aaptPath)
-            : execution(void brut.androlib.res.AndrolibResources.aaptPackage(File, File, File, File, File, File[], HashMap<String, Boolean>, String))
+            : execution(void brut.androlib.res.AndrolibResources.aaptPackage(File, File, File, File, File, File[], HashMap<java.lang.String, java.lang.Boolean>, java.lang.String))
             && args(apkFile, manifest, resDir, rawDir, assetDir, include, flags, aaptPath);
 
     void around(File apkFile, File manifest, File resDir,
                 File rawDir, File assetDir, File[] include,
                 HashMap<String, Boolean> flags, String aaptPath)
             : aaptPackagePointcut(apkFile, manifest, resDir, rawDir, assetDir, include, flags, aaptPath)
-            && !within(AaptPackage +) {
+            && !within(AndrolibResourcesAj +) {
+
         while (true) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PrintStream ps = new PrintStream(baos);
