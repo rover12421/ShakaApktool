@@ -36,6 +36,8 @@ public aspect AndrolibAj {
             && !within(AndrolibAj +) {
 
         File unknownFile = new File(appDir, UNK_DIRNAME);
+        if (!unknownFile.exists()) return;
+
         try {
             Directory directory = new FileDirectory(unknownFile);
             Set<String> addFiles = directory.getFiles(true);
