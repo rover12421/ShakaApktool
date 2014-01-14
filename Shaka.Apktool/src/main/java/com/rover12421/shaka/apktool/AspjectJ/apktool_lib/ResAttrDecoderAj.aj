@@ -3,7 +3,7 @@ package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.value.ResAttr;
 import brut.androlib.res.data.value.ResScalarValue;
-import com.rover12421.shaka.apktool.util.ReflectUtil;
+import brut.androlib.res.decoder.ResAttrDecoder;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 
 /**
@@ -22,16 +22,16 @@ public aspect ResAttrDecoderAj {
 
         String result = null;
         try {
-            ResPackage mCurrentPackage = (ResPackage) ReflectUtil.getFieldValue(thisJoinPoint.getThis(), "mCurrentPackage");
+            ResAttrDecoder resAttrDecoder = (ResAttrDecoder) thisJoinPoint.getThis();
+            ResPackage mCurrentPackage = resAttrDecoder.getCurrentPackage();
             ResScalarValue resValue = mCurrentPackage.getValueFactory().factory(
                     type, value, rawValue);
 
             String decoded = null;
 //            if (attrResId != 0) {
             if (attrResId > 0) {
-                ResPackage resPackage = (ResPackage) ReflectUtil.invokeMethod(thisJoinPoint.getThis(), "getCurrentPackage");
 //                ResAttr attr = (ResAttr) getCurrentPackage().getResTable()
-                ResAttr attr = (ResAttr) resPackage.getResTable()
+                ResAttr attr = (ResAttr) mCurrentPackage.getResTable()
                         .getResSpec(attrResId).getDefaultResource().getValue();
                 decoded = attr.convertToResXmlFormat(resValue);
             }

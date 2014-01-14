@@ -18,4 +18,5 @@ bin/
 .idea/
 /out
 TestApk/
+/libs/
 Shaka.Apktool/src/test/java/com/rover12421/shaka/apktool/temp/
