@@ -15,7 +15,10 @@ buildscript {
 ext.aspectjVersion = '1.7.4'
 apply plugin: 'aspectj'
 
-version = apktoolversion
+shakaVersion_major = '1.0'
+shakaVersion_minor = project.apktool_version
+shakaVersion = shakaVersion_major + "-" + shakaVersion_minor
+
 shakaDebug = 'true'
 
 configurations {
@@ -30,7 +33,7 @@ processResources {
     from('src/main/resources/properties') {
         include '**/*.properties'
         into 'properties'
-        filter(ReplaceTokens, tokens: [version: apktoolversion, shakaDebug: shakaDebug] )
+        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion, shakaDebug: shakaDebug] )
     }
     from('src/main/resources/') {
         include '**/*.jar'
@@ -47,6 +50,9 @@ dependencies {
     ajInpath project(':brut.apktool:apktool-cli')
     compile project(':brut.j.dir')
     testCompile 'junit:junit:4.11'
+//    testCompile 'com.google.code.gson:gson:2.2.4'
+    testCompile 'com.google.code.gson:gson:1.7.2'
+
 //    proguard 'net.sf.proguard:proguard-base:4.8'
     proguard files('../libs/proguard.jar')
 }
@@ -60,7 +66,7 @@ gradle.taskGraph.whenReady {
 }
 
 task proguard(type: JavaExec, dependsOn: fatJar) {
-    def outFile = jar.destinationDir.getPath() + '/' + jar.baseName + '-' + jar.version + '-release' + '.' + jar.extension
+    def outFile = jar.destinationDir.getPath() + '/' + "ShakaApktool" + '_' + shakaVersion + '-release' + '.' + jar.extension
     inputs.file jar.archivePath
     outputs.file outFile
 

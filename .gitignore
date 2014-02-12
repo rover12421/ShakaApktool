@@ -1,9 +1,9 @@
-/brut.apktool/
-/brut.apktool.smali/
-/brut.j.common/
-/brut.j.dir/
-/brut.j.util/
-/scripts/
+/brut.apktool
+/brut.apktool.smali
+/brut.j.common
+/brut.j.dir
+/brut.j.util
+/scripts
 .gradle/
 build/
 private/
