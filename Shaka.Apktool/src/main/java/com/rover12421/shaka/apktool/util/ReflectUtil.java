@@ -26,9 +26,23 @@ public class ReflectUtil {
     }
 
     public static Field getField(Class<?> clazz, String name) throws NoSuchFieldException {
-        Field field = clazz.getDeclaredField(name);
-        field.setAccessible(true);
-        return field;
+
+        Class<?> cl = clazz;
+        NoSuchFieldException exception = null;
+        while (cl != null && !cl.getName().equals(Object.class.getName())) {
+            try {
+                Field field = cl.getDeclaredField(name);
+                field.setAccessible(true);
+                return field;
+            } catch (NoSuchFieldException e) {
+                if (exception == null) {
+                    exception = e;
+                }
+                cl = cl.getSuperclass();
+            }
+        }
+
+        throw exception;
     }
 
     public static Field getField(Object obj, String name) throws NoSuchFieldException {
@@ -72,9 +86,23 @@ public class ReflectUtil {
     }
 
     public static Method getMethod(Class<?> clazz, String name, Class ... classes) throws NoSuchMethodException {
-        Method method = clazz.getDeclaredMethod(name, classes);
-        method.setAccessible(true);
-        return method;
+
+        Class<?> cl = clazz;
+        NoSuchMethodException exception = null;
+        while (cl != null && !cl.getName().equals(Object.class.getName())) {
+            try {
+                Method method = cl.getDeclaredMethod(name, classes);
+                method.setAccessible(true);
+                return method;
+            } catch (NoSuchMethodException e) {
+                if (exception == null) {
+                    exception = e;
+                }
+                cl = cl.getSuperclass();
+            }
+        }
+
+        throw exception;
     }
 
     public static Method getMethod(Class<?> clazz, String name, Object ... objects) throws NoSuchMethodException {
