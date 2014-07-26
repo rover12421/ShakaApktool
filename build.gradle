@@ -69,7 +69,7 @@ build.doFirst {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.10'
+    gradleVersion = '1.12'
 }
 
 // used for official releases only. Please don't use
@@ -98,8 +98,7 @@ subprojects {
                 antlr: 'org.antlr:antlr:3.5',
                 commons_cli: 'commons-cli:commons-cli:1.2',
                 jflex: 'de.jflex:jflex:1.4.3',
-                proguard: 'net.sf.proguard:proguard-base:4.8',
-                aspectjrt: 'org.aspectj:aspectjrt:1.7.4'
+//                proguard: 'net.sf.proguard:proguard-base:4.8',
         ]
     }
 

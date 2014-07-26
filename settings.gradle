@@ -1,4 +1,5 @@
-include 'brut.j.common',
+include 'Shaka.Apktool',
+  'brut.j.common',
   'brut.j.util',
   'brut.j.dir',
   'brut.apktool.smali:util',
@@ -7,5 +8,5 @@ include 'brut.j.common',
   'brut.apktool.smali:smali',
   'brut.apktool.smali:dexlib2:accessorTestGenerator',
   'brut.apktool:apktool-lib',
-  'brut.apktool:apktool-cli',
-  'Shaka.Apktool'
+  'brut.apktool:apktool-cli'
+

@@ -5,14 +5,14 @@ import org.apache.tools.ant.filters.*
 buildscript {
     repositories {
         maven {
-            url "http://www.eveoh.nl/files/maven2"
+            url "https://maven.eveoh.nl/content/repositories/releases"
         }
     }
     dependencies {
-        classpath "nl.eveoh:gradle-aspectj:1.2"
+        classpath "nl.eveoh:gradle-aspectj:1.4"
     }
 }
-ext.aspectjVersion = '1.7.4'
+ext.aspectjVersion = '1.8.1'
 apply plugin: 'aspectj'
 
 shakaVersion_major = '1.0'
@@ -40,18 +40,21 @@ processResources {
     }
 
     includeEmptyDirs = false
+
+//    tasks.getByPath(":Shaka.Apktool:clean").execute()
+    clean.execute()
 }
 
 dependencies {
-    compile 'org.aspectj:aspectjrt:1.7.4'
+    compile 'org.aspectj:aspectjrt:1.8.1'
     compile project(':brut.apktool:apktool-cli')
     compile project(':brut.apktool:apktool-lib')
     ajInpath project(':brut.apktool:apktool-lib')
     ajInpath project(':brut.apktool:apktool-cli')
     compile project(':brut.j.dir')
     testCompile 'junit:junit:4.11'
-//    testCompile 'com.google.code.gson:gson:2.2.4'
-    testCompile 'com.google.code.gson:gson:1.7.2'
+    testCompile 'com.google.code.gson:gson:2.2.4'
+//    testCompile 'com.google.code.gson:gson:1.7.2'
 
 //    proguard 'net.sf.proguard:proguard-base:4.8'
     proguard files('../libs/proguard.jar')
@@ -60,7 +63,8 @@ dependencies {
 gradle.taskGraph.whenReady {
     fatJar {
         manifest {
-            attributes("Main-Class": "brut.apktool.Main")
+//            attributes("Main-Class": "brut.apktool.Main")
+            attributes("Main-Class": "com.rover12421.shaka.apktool.Main")
         }
     }
 }
@@ -94,3 +98,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
 }
 
 tasks.getByPath(':release').dependsOn(proguard)
+
+task ShakaApktool(dependsOn: fatJar) {
+}
+
