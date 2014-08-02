@@ -1,25 +1,48 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'fatjar'
+apply plugin: 'idea'
+
+import org.apache.tools.ant.filters.*
 
 def apktoolversion_major = '2.0.0'
-def apktoolversion_minor = 'Beta9';
+def apktoolversion_minor = 'RC1';
+ext.apktool_version = apktoolversion_major + "-" + apktoolversion_minor
+
+def shakaVersion_major = '1.0'
+def shakaVersion_minor = project.apktool_version
+ext.shakaVersion = shakaVersion_major + "-" + shakaVersion_minor
+
+ext.shakaDebug = 'true'
+ext.smaliVersion = '1.4.1'
 
 if (!('release' in gradle.startParameter.taskNames)) {
     def hash = getCheckedOutGitCommitHash();
+    def apktoolHash = getApktoolCheckedOutGitCommitHash();
 
-    if (hash == null) {
-        project.ext.set("hash", "dirty")
+    if (apktoolHash == null) {
+        project.ext.set("apktoolHash", "dirty")
         project.ext.set("apktool_version", apktoolversion_major + "-dirty")
         println "Building SNAPSHOT (no .git folder found)";
     } else {
+        project.ext.set("apktoolHash", apktoolHash);
+        project.ext.set("apktool_version", apktoolversion_major + "-" + apktoolHash + "-SNAPSHOT");
+        println "Building SNAPSHOT (" + getApktoolCheckedOutBranch() + "): " + apktoolHash;
+    }
+
+    if (hash == null) {
+        project.ext.set("hash", "dirty")
+        project.ext.set("shakaVersion", shakaVersion_major + "-dirty")
+        println "Building SNAPSHOT (no .git folder found)";
+    } else {
         project.ext.set("hash", hash);
-        project.ext.set("apktool_version", apktoolversion_major + "-" + hash + "-SNAPSHOT");
+        project.ext.set("shakaVersion", shakaVersion_major + "-" + hash + "-SNAPSHOT");
         println "Building SNAPSHOT (" + getCheckedOutBranch() + "): " + hash;
     }
 } else {
     project.ext.set("hash", "")
-    project.ext.set("apktool_version", apktoolversion_major + "-" + apktoolversion_minor);
-    println "Building RELEASE (" + getCheckedOutBranch() + "): " + apktoolversion_major + "-" + apktoolversion_minor;
+    project.ext.set("shakaVersion", shakaVersion_major + "-" + shakaVersion_minor);
+    println "Building RELEASE (" + getCheckedOutBranch() + "): " + shakaVersion_major + "-" + shakaVersion_minor;
 }
 
 // https://gist.github.com/JonasGroeger/7620911
@@ -53,6 +76,36 @@ def getCheckedOutBranch() {
     return head[2].trim();
 }
 
+def getApktoolCheckedOutGitCommitHash() {
+    def gitFolder = "$projectDir/apktool/.git/"
+    def takeFromHash = 6
+
+    def head
+    try {
+        head = new File(gitFolder + "HEAD").text.split(":")
+    } catch(Exception e) {
+        return null;
+    }
+
+    def isCommit = head.length == 1
+    if(isCommit) return head[0].trim().take(takeFromHash)
+
+    def refHead = new File(gitFolder + head[1].trim())
+    refHead.text.trim().take takeFromHash
+}
+
+def getApktoolCheckedOutBranch() {
+    def gitFolder = "$projectDir/apktool/.git/"
+
+    def head
+    try {
+        head = new File(gitFolder + "HEAD").text.split("/")
+    } catch(Exception e) {
+        return "";
+    }
+    return head[2].trim();
+}
+
 repositories {
     mavenCentral()
 }
@@ -69,51 +122,276 @@ build.doFirst {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
-}
-
-// used for official releases only. Please don't use
-task release {
+    gradleVersion = '2.0'
 }
 
 buildscript {
     repositories {
+        maven {
+            url "https://maven.eveoh.nl/content/repositories/releases"
+        }
         mavenCentral()
     }
     dependencies {
-        classpath 'eu.appsatori:gradle-fatjar-plugin:0.2-rc1'
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.2'
+        classpath "nl.eveoh:gradle-aspectj:1.4"
     }
 }
 
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-    apply plugin: 'idea'
+ext.aspectjVersion = '1.8.1'
+apply plugin: 'aspectj'
 
-    ext {
-        depends = [guava: 'com.google.guava:guava:14.0',
-                findbugs: 'com.google.code.findbugs:jsr305:1.3.9',
-                junit: 'junit:junit:4.6',
-                antlr_runtime: 'org.antlr:antlr-runtime:3.5',
-                antlr: 'org.antlr:antlr:3.5',
-                commons_cli: 'commons-cli:commons-cli:1.2',
-                jflex: 'de.jflex:jflex:1.4.3',
-//                proguard: 'net.sf.proguard:proguard-base:4.8',
-        ]
-    }
+configurations {
+    antlr3
+    jflex
+    proguard
+}
 
-    repositories {
-        mavenCentral()
-    }
+task release {
+    ext.shakaDebug = 'false'
+}
 
-    dependencies {
-        compile 'org.aspectj:aspectjrt:1.7.4'
-        testCompile 'junit:junit:4.8.2'
+sourceSets {
+    main {
+        java {
+            srcDirs = [
+                        'src/main/java',
+                        'apktool/brut.j.common/src/main/java',
+                        'apktool/brut.j.util/src/main/java',
+                        'apktool/brut.j.dir/src/main/java',
+                        'apktool/brut.apktool.smali/util/src/main/java',
+                        'apktool/brut.apktool.smali/dexlib2/src/main/java',
+                        'apktool/brut.apktool.smali/baksmali/src/main/java',
+                        'apktool/brut.apktool.smali/smali/src/main/java',
+                        'apktool/brut.apktool.smali/dexlib2/accessorTestGenerator/src/main/java',
+                        'apktool/brut.apktool/apktool-lib/src/main/java',
+                        'apktool/brut.apktool/apktool-cli/src/main/java'
+                    ]
+        }
+        resources {
+            srcDirs = [
+                        'src/main/resources',
+                        'apktool/brut.j.common/src/main/resources',
+                        'apktool/brut.j.util/src/main/resources',
+                        'apktool/brut.j.dir/src/main/resources',
+                        'apktool/brut.apktool.smali/util/src/main/resources',
+                        'apktool/brut.apktool.smali/dexlib2/src/main/resources',
+                        'apktool/brut.apktool.smali/baksmali/src/main/resources',
+                        'apktool/brut.apktool.smali/smali/src/main/resources',
+                        'apktool/brut.apktool.smali/dexlib2/accessorTestGenerator/src/main/resources',
+                        'apktool/brut.apktool/apktool-lib/src/main/resources',
+                        'apktool/brut.apktool/apktool-cli/src/main/resources'
+                    ]
+        }
     }
 
     test {
-        testLogging {
-            exceptionFormat = 'full'
+        java {
+            srcDirs = [
+                        'src/test/java',
+                        //'apktool/brut.j.common/src/test/java',
+                        //'apktool/brut.j.util/src/test/java',
+                        //'apktool/brut.j.dir/src/test/java',
+                        'apktool/brut.apktool.smali/util/src/test/java',
+                        'apktool/brut.apktool.smali/dexlib2/src/test/java',
+                        'apktool/brut.apktool.smali/baksmali/src/test/java',
+                        'apktool/brut.apktool.smali/smali/src/test/java',
+                        //'apktool/brut.apktool.smali/dexlib2/accessorTestGenerator/src/test/java',
+                        'apktool/brut.apktool/apktool-lib/src/test/java',
+                        //'apktool/brut.apktool/apktool-cli/src/test/java'
+                    ]
+        }
+        resources {
+            srcDirs = [
+                        'src/test/resources',
+                        'apktool/brut.j.common/src/test/resources',
+                        'apktool/brut.j.util/src/test/resources',
+                        'apktool/brut.j.dir/src/test/resources',
+                        'apktool/brut.apktool.smali/util/src/test/resources',
+                        'apktool/brut.apktool.smali/dexlib2/src/test/resources',
+                        'apktool/brut.apktool.smali/baksmali/src/test/resources',
+                        'apktool/brut.apktool.smali/smali/src/test/resources',
+                        'apktool/brut.apktool.smali/dexlib2/accessorTestGenerator/src/test/resources',
+                        'apktool/brut.apktool/apktool-lib/src/test/resources',
+                        'apktool/brut.apktool/apktool-cli/src/test/resources'
+                    ]
         }
     }
+}
+
+processResources {
+    from('src/main/resources/properties') {
+        include '**/*.properties'
+        into 'properties'
+        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion, shakaDebug: project.shakaDebug] )
+    }
+
+    from('apktool/brut.apktool/apktool-lib/src/main/resources/properties') {
+        include '**/*.properties'
+        into 'properties'
+        filter(ReplaceTokens, tokens: [version: project.apktool_version, gitrev: project.hash] )
+    }
+
+    from('apktool/brut.apktool.smali/smali/src/main/resources') {
+        inputs.property('version', smaliVersion)
+        expand('version': smaliVersion)
+    }
+
+    from('apktool/brut.apktool.smali/baksmali/src/main/resources') {
+        inputs.property('version', smaliVersion)
+        expand('version': smaliVersion)
+    }
+
+
+}
+
+dependencies {
+    compile "org.aspectj:aspectjrt:1.8.1",
+            "com.google.guava:guava:14.0",
+            "org.antlr:antlr-runtime:3.5",
+            "commons-cli:commons-cli:1.2",
+            "com.google.code.findbugs:jsr305:1.3.9",
+            "commons-io:commons-io:2.4",
+            "org.apache.commons:commons-compress:1.4.1",
+            "org.yaml:snakeyaml:1.12",
+            "xpp3:xpp3:1.1.4c",
+            "xmlunit:xmlunit:1.3",
+            "org.apache.commons:commons-lang3:3.1",
+            "org.antlr:ST4:4.0.7"
+
+    testCompile 'junit:junit:4.11'
+    testCompile 'com.google.code.gson:gson:2.2.4'
+//    testCompile 'com.google.code.gson:gson:1.7.2'
+
+    antlr3 'org.antlr:antlr:3.5'
+    jflex 'de.jflex:jflex:1.4.3'
+
+//    proguard 'net.sf.proguard:proguard-base:4.8'
+    proguard files('../libs/proguard.jar')
+}
+
+gradle.taskGraph.whenReady {
+    fatJar {
+        manifest {
+            attributes("Main-Class": "com.rover12421.shaka.apktool.Main")
+        }
+    }
+}
+
+ext.antlrSource = 'apktool/brut.apktool.smali/smali/src/main/antlr3'
+ext.antlrOutput = file("${buildDir}/generated-sources/antlr3")
+
+ext.jflexSource = "apktool/brut.apktool.smali/smali/src/main/jflex"
+ext.jflexOutput = file("${buildDir}/generated-sources/jflex")
+
+ext.testAntlrSource = 'apktool/brut.apktool.smali/smali/src/test/antlr3'
+ext.testAntlrOutput = file("${buildDir}/generated-test-sources/antlr3")
+
+sourceSets.main.java.srcDir antlrOutput
+sourceSets.main.java.srcDir jflexOutput
+
+sourceSets.test.java.srcDir testAntlrOutput
+
+idea {
+    module {
+        excludeDirs -= buildDir
+        if (buildDir.exists()) {
+            excludeDirs.addAll(buildDir.listFiles())
+        }
+        for (sourceDir in (sourceDirs + testSourceDirs)) {
+            excludeDirs.remove(sourceDir);
+            while ((sourceDir = sourceDir.getParentFile()) != null) {
+                excludeDirs.remove(sourceDir);
+            }
+        }
+    }
+}
+
+task generateParserAntlrSource(type: JavaExec) {
+    inputs.dir file(antlrSource)
+    outputs.dir file(antlrOutput)
+
+    mkdir(antlrOutput)
+    def grammars = fileTree(antlrSource).include('**/smaliParser.g')
+
+    classpath = configurations.antlr3
+    main = 'org.antlr.Tool'
+    args '-fo', relativePath("${antlrOutput}/org/jf/smali")
+    args grammars.files
+}
+
+task generateTreeWalkerAntlrSource(type: JavaExec) {
+    inputs.dir file(antlrSource)
+    outputs.dir file(antlrOutput)
+
+    mkdir(antlrOutput)
+    def grammars = fileTree(antlrSource).include('**/smaliTreeWalker.g')
+
+    classpath = configurations.antlr3
+    main = 'org.antlr.Tool'
+    args '-fo', relativePath("${antlrOutput}/org/jf/smali")
+    args grammars.files
+}
+
+task generateTestAntlrSource(type: JavaExec) {
+    inputs.dir file(testAntlrSource)
+    outputs.dir file(testAntlrOutput)
+
+    mkdir(testAntlrOutput)
+    def grammars = fileTree(testAntlrSource).include('**/*.g')
+
+    classpath = configurations.antlr3
+    main = 'org.antlr.Tool'
+    args '-fo', relativePath("${testAntlrOutput}/org/jf/smali")
+    args grammars.files.join(' ')
+}
+
+task generateJflexSource(type: JavaExec) {
+    inputs.dir file(jflexSource)
+    outputs.dir file(jflexOutput)
+
+    mkdir(jflexOutput)
+    def grammars = fileTree(jflexSource).include('**/*.flex')
+
+    classpath = configurations.jflex
+    main = 'JFlex.Main'
+    args '-q'
+    args '-d', relativePath("${jflexOutput}/org/jf/smali")
+    args grammars.files.join(' ')
+}
+
+compileJava.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource
+compileTestJava.dependsOn generateTestAntlrSource
+
+task proguard(type: JavaExec, dependsOn: fatJar) {
+    def outFile = jar.destinationDir.getPath() + '/' + "ShakaApktool" + '_' + shakaVersion + '-release' + '.' + jar.extension
+    inputs.file jar.archivePath
+    outputs.file outFile
+
+    classpath = configurations.proguard
+    main = 'proguard.ProGuard'
+    args '-injars ' + "${jar.archivePath}" + ' (!META-INF/LICENSE.txt,!META-INF/NOTICE.txt,!README)'
+    args "-outjars ${outFile}"
+    args "-libraryjars ${System.properties['java.home']}/lib/rt.jar"
+//    args '-dontobfuscate'
+//    args "-obfuscationdictionary ${keywordsFile}"
+//    args "-classobfuscationdictionary ${keywordsFile}"
+//    args "-packageobfuscationdictionary ${keywordsFile}"
+    args '-dontoptimize'
+    args '-dontnote **'
+    args '-ignorewarnings'
+    args '-dontwarn com.google.common.base.**'
+    args '-dontwarn com.google.common.collect.**'
+    args '-dontwarn com.google.common.util.**'
+    args '-dontwarn javax.xml.xpath.**'
+    args '-dontwarn com.rover12421.shaka.apktool.AspjectJ.**'
+    args '-keep public class brut.apktool.Main { public static void main(java.lang.String[]); }'
+    args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
+    args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
+    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'
+}
+
+tasks.getByPath(':release').dependsOn(proguard)
+
+task ShakaApktool(dependsOn: fatJar) {
 }

@@ -1,9 +1,3 @@
-/brut.apktool
-/brut.apktool.smali
-/brut.j.common
-/brut.j.dir
-/brut.j.util
-/scripts
 .gradle/
 build/
 private/
@@ -15,8 +9,11 @@ private/
 *.setting
 bin/
 *.iml
+*.ipr
+*.iws
 .idea/
 /out
 TestApk/
-/libs/
-Shaka.Apktool/src/test/java/com/rover12421/shaka/apktool/temp/
+libs/
+apktool/
+/src/test/java/com/rover12421/shaka/apktool/temp/
