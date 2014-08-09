@@ -14,7 +14,7 @@ def shakaVersion_minor = project.apktool_version
 ext.shakaVersion = shakaVersion_major + "-" + shakaVersion_minor
 
 ext.shakaDebug = 'true'
-ext.smaliVersion = '1.4.1'
+ext.smaliVersion = '2.0.3'
 
 if (!('release' in gradle.startParameter.taskNames)) {
     def hash = getCheckedOutGitCommitHash();
@@ -32,11 +32,11 @@ if (!('release' in gradle.startParameter.taskNames)) {
 
     if (hash == null) {
         project.ext.set("hash", "dirty")
-        project.ext.set("shakaVersion", shakaVersion_major + "-dirty")
+        project.ext.set("shakaVersion", shakaVersion_major + "-" + apktoolversion_major + "-dirty")
         println "Building SNAPSHOT (no .git folder found)";
     } else {
         project.ext.set("hash", hash);
-        project.ext.set("shakaVersion", shakaVersion_major + "-" + hash + "-SNAPSHOT");
+        project.ext.set("shakaVersion", shakaVersion_major + "-" + hash +"-" + apktool_version);
         println "Building SNAPSHOT (" + getCheckedOutBranch() + "): " + hash;
     }
 } else {
@@ -52,7 +52,7 @@ def getCheckedOutGitCommitHash() {
 
     def head
     try {
-        head = new File(gitFolder + "HEAD").text.split(":")
+        head = new File(gitFolder, "HEAD").text.split(":")
     } catch(Exception e) {
         return null;
     }
@@ -60,7 +60,7 @@ def getCheckedOutGitCommitHash() {
     def isCommit = head.length == 1
     if(isCommit) return head[0].trim().take(takeFromHash)
 
-    def refHead = new File(gitFolder + head[1].trim())
+    def refHead = new File(gitFolder, head[1].trim())
     refHead.text.trim().take takeFromHash
 }
 
@@ -69,7 +69,7 @@ def getCheckedOutBranch() {
 
     def head
     try {
-        head = new File(gitFolder + "HEAD").text.split("/")
+        head = new File(gitFolder, "HEAD").text.split("/")
     } catch(Exception e) {
         return "";
     }
@@ -77,12 +77,12 @@ def getCheckedOutBranch() {
 }
 
 def getApktoolCheckedOutGitCommitHash() {
-    def gitFolder = "$projectDir/apktool/.git/"
+    def gitFolder = "$projectDir/.git/modules/apktool/"
     def takeFromHash = 6
 
     def head
     try {
-        head = new File(gitFolder + "HEAD").text.split(":")
+        head = new File(gitFolder, "HEAD").text.split(":")
     } catch(Exception e) {
         return null;
     }
@@ -90,16 +90,16 @@ def getApktoolCheckedOutGitCommitHash() {
     def isCommit = head.length == 1
     if(isCommit) return head[0].trim().take(takeFromHash)
 
-    def refHead = new File(gitFolder + head[1].trim())
+    def refHead = new File(gitFolder, head[1].trim())
     refHead.text.trim().take takeFromHash
 }
 
 def getApktoolCheckedOutBranch() {
-    def gitFolder = "$projectDir/apktool/.git/"
+    def gitFolder = "$projectDir/.git/modules/apktool"
 
     def head
     try {
-        head = new File(gitFolder + "HEAD").text.split("/")
+        head = new File(gitFolder, "HEAD").text.split("/")
     } catch(Exception e) {
         return "";
     }
@@ -229,7 +229,7 @@ processResources {
     from('apktool/brut.apktool/apktool-lib/src/main/resources/properties') {
         include '**/*.properties'
         into 'properties'
-        filter(ReplaceTokens, tokens: [version: project.apktool_version, gitrev: project.hash] )
+        filter(ReplaceTokens, tokens: [version: project.apktool_version, gitrev: project.apktoolHash] )
     }
 
     from('apktool/brut.apktool.smali/smali/src/main/resources') {
@@ -242,8 +242,21 @@ processResources {
         expand('version': smaliVersion)
     }
 
-
 }
+
+task deleteProperties(type: Delete) {
+    delete buildDir.getAbsolutePath() + '/resources/main'
+}
+
+processResources.dependsOn deleteProperties
+
+task copyProperties(type: Copy) {
+    from buildDir.getAbsolutePath() + '/resources/main'
+    into buildDir.getAbsolutePath() + '/classes/main'
+
+    include '**/*.properties'
+}
+compileJava.dependsOn copyProperties
 
 dependencies {
     compile "org.aspectj:aspectjrt:1.8.1",
@@ -360,8 +373,12 @@ task generateJflexSource(type: JavaExec) {
     args grammars.files.join(' ')
 }
 
-compileJava.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource
-compileTestJava.dependsOn generateTestAntlrSource
+/**
+ * 使用AspjectJ之后,此处需要开为compileAspect
+ * compileAspect在compileJava之前
+ */
+compileAspect.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource
+compileTestAspect.dependsOn generateTestAntlrSource
 
 task proguard(type: JavaExec, dependsOn: fatJar) {
     def outFile = jar.destinationDir.getPath() + '/' + "ShakaApktool" + '_' + shakaVersion + '-release' + '.' + jar.extension
@@ -393,5 +410,3 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
 
 tasks.getByPath(':release').dependsOn(proguard)
 
-task ShakaApktool(dependsOn: fatJar) {
-}

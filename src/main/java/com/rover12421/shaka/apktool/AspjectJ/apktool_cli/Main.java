@@ -24,7 +24,9 @@ public class Main {
             "&& args(commandLine)" +
             "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.Main +)")
     public void usage_around(final ProceedingJoinPoint joinPoint, CommandLine commandLine) {
-        System.out.println("ShakaApktool v" + ShakaProperties.getVersion());
+        System.out.println("ShakaApktool v" + ShakaProperties.getVersion() + " - using AspectJ weaver Apktool project");
+        System.out.println("Weaver by Rover12421 <rover12421@163.com>");
+        System.out.println();
         try {
             joinPoint.proceed(new Object[]{commandLine});
         } catch (Throwable throwable) {

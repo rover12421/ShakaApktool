@@ -1,13 +1,19 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
+import brut.androlib.Androlib;
+import brut.androlib.res.util.ExtFile;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
+import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.AndroidZip;
+import com.rover12421.shaka.apktool.util.ReflectUtil;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Created by rover12421 on 1/1/14.
@@ -96,4 +102,27 @@ public aspect AndrolibAj {
 //
 //        return proceed(scheme, sspNew, fragment);
 //    }
+
+    /**
+     * public void build(ExtFile appDir, File outFile,
+     * HashMap<String, Boolean> flags, String aaptPath)
+     */
+    pointcut build_Pointcut(ExtFile appDir, File outFile, HashMap<String, Boolean> flags, String aaptPath)
+            : call(void brut.androlib.Androlib.build(ExtFile, File, HashMap<String, Boolean>, String))
+            && args(appDir, outFile, flags, aaptPath);
+
+    before(ExtFile appDir, File outFile, HashMap<String, Boolean> flags, String aaptPath)
+            : build_Pointcut(appDir, outFile, flags, aaptPath)
+            && !within(AndrolibAj +) {
+
+        try {
+            Logger LOGGER = (Logger) ReflectUtil.getFieldValue(thisJoinPoint.getThis(), "LOGGER");
+            LOGGER.info("Using ShakaApktool " + ShakaProperties.getVersion());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        new File("");
+    }
 }
