@@ -46,7 +46,11 @@ public class AndrolibResourcesAj {
                                    HashMap<String, Boolean> flags, String aaptPath) {
         try {
             String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
-            while (true) {
+            /**
+             * 最大尝试10次,防止无限循环
+             */
+            int max = 10;
+            while (max-- > 0) {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 PrintStream ps = new PrintStream(baos);
                 PrintStream olderr = System.err;
@@ -82,6 +86,14 @@ public class AndrolibResourcesAj {
 
                     if (replacePng.size() > 0 ) {
                         for (String srcPng : replacePng.keySet()) {
+                            if (!new File(srcPng).exists()) {
+                                /**
+                                 * 文件不存在.跳过.
+                                 * 发现错误流有被篡写的现象
+                                 */
+                                continue;
+                            }
+
                             String desPng = replacePng.get(srcPng);
                             //创建目录
                             new File(desPng).getParentFile().mkdirs();
