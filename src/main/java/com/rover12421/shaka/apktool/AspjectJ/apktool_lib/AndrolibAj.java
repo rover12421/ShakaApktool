@@ -1,6 +1,7 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
+import brut.androlib.res.data.ResUnknownFiles;
 import brut.androlib.res.util.ExtFile;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
@@ -33,16 +34,23 @@ public class AndrolibAj {
 
 
     @Before("pointcut_buildUnknownFiles(appDir, outFile, meta)")
-    public void buildUnknownFiles_before(File appDir, File outFile, Map<String, Object> meta) {
+    public void buildUnknownFiles_before(JoinPoint joinPoint, File appDir, File outFile, Map<String, Object> meta) {
         try {
             String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
             File unknownFile = new File(appDir, UNK_DIRNAME);
-            if (!unknownFile.exists()) return;
+            if (!unknownFile.exists()) {
+                return;
+            }
 
             try {
                 Directory directory = new FileDirectory(unknownFile);
                 Set<String> addFiles = directory.getFiles(true);
                 Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
+                if (files == null) {
+                    ResUnknownFiles mResUnknownFiles = (ResUnknownFiles) ReflectUtil.getFieldValue(joinPoint.getThis(), "mResUnknownFiles");
+                    files = mResUnknownFiles.getUnknownFiles();
+                    meta.put("unknownFiles", files);
+                }
                 for (String file : addFiles) {
                     files.put(file, AndroidZip.getZipMethod(new File(appDir, file).getAbsolutePath()) + "");
                 }
