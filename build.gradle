@@ -103,6 +103,10 @@ def getApktoolCheckedOutBranch() {
     } catch(Exception e) {
         return "";
     }
+    if (head.length < 2) {
+        //windows 下,submodule的保存信息和非submodule不一样
+        return "";
+    }
     return head[2].trim();
 }
 
