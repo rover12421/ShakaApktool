@@ -4,29 +4,31 @@ import brut.androlib.res.decoder.StringBlock;
 import brut.util.ExtDataInput;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 
 import java.io.IOException;
 
 /**
- * Created by rover12421 on 1/4/14.
- * brut.androlib.res.decoder.StringBlockAj
+ * Created by rover12421 on 8/9/14.
  */
-public aspect StringBlockAj {
-
+@Aspect
+public class StringBlockAj {
     private static final int CHUNK_TYPE = 0x001C0001;
     private static final int UTF8_FLAG = 0x00000100;
 
     /**
-     * public static StringBlockAj read(ExtDataInput reader) throws IOException
+     * public static StringBlock read(ExtDataInput reader) throws IOException
      */
-    pointcut readPointcut(ExtDataInput reader)
-            : execution(StringBlock brut.androlib.res.decoder.StringBlock.read(ExtDataInput))
-            && args(reader);
 
-    StringBlock around(ExtDataInput reader)
-            : readPointcut(reader)
-            && !within(StringBlockAj +) {
+    @Pointcut("execution(* brut.androlib.res.decoder.StringBlock.read(..))" +
+            "&& args(reader)")
+    private void pointcut_read(ExtDataInput reader) {}
 
+    @Around("pointcut_read(reader)")
+    public StringBlock read_around(ExtDataInput reader) {
         StringBlock block = null;
         try {
             reader.skipCheckInt(CHUNK_TYPE);
@@ -90,4 +92,5 @@ public aspect StringBlockAj {
 
         return block;
     }
+
 }

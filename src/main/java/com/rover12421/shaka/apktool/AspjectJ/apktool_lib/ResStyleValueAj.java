@@ -9,29 +9,33 @@ import brut.androlib.res.data.value.ResValue;
 import brut.util.Duo;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.xmlpull.v1.XmlSerializer;
 
 /**
- * Created by rover12421 on 2/12/14.
+ * Created by rover12421 on 8/9/14.
  */
-public aspect ResStyleValueAj {
-
+@Aspect
+public class ResStyleValueAj {
     /**
      * package brut.androlib.res.data.value
      * public class ResStyleValue extends ResBagValue implements ResValuesXmlSerializable
      * public void serializeToResValuesXml(XmlSerializer serializer,ResResource res)
      */
-    pointcut serializeToResValuesXmlPointcut(XmlSerializer serializer, ResResource res)
-            : execution(void brut.androlib.res.data.value.ResStyleValue.serializeToResValuesXml(XmlSerializer, ResResource))
-            && args(serializer, res);
 
-    void around(XmlSerializer serializer, ResResource res)
-            : serializeToResValuesXmlPointcut(serializer, res)
-            && !within(ResStyleValueAj +) {
+    @Pointcut("execution(void brut.androlib.res.data.value.ResStyleValue.serializeToResValuesXml(..))" +
+            "&& args(serializer, res)")
+    private void pointcut_serializeToResValuesXml(XmlSerializer serializer, ResResource res) {}
+
+    @Around("pointcut_serializeToResValuesXml(serializer, res)")
+    public void serializeToResValuesXml_around(ProceedingJoinPoint joinPoint, XmlSerializer serializer, ResResource res) {
         try {
 
-            ResReferenceValue mParent = (ResReferenceValue) ReflectUtil.getFieldValue(thisJoinPoint.getThis(), "mParent");
-            Duo<ResReferenceValue, ResScalarValue>[] mItems = (Duo<ResReferenceValue, ResScalarValue>[]) ReflectUtil.getFieldValue(thisJoinPoint.getThis(), "mItems");
+            ResReferenceValue mParent = (ResReferenceValue) ReflectUtil.getFieldValue(joinPoint.getThis(), "mParent");
+            Duo<ResReferenceValue, ResScalarValue>[] mItems = (Duo<ResReferenceValue, ResScalarValue>[]) ReflectUtil.getFieldValue(joinPoint.getThis(), "mItems");
 
             serializer.startTag(null, "style");
             serializer.attribute(null, "name", res.getResSpec().getName());
@@ -74,6 +78,6 @@ public aspect ResStyleValueAj {
         } catch (Exception e) {
             throw new ShakaRuntimeException(e);
         }
-
     }
+
 }

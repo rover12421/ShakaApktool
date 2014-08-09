@@ -5,24 +5,27 @@ import brut.androlib.res.data.value.ResAttr;
 import brut.androlib.res.data.value.ResScalarValue;
 import brut.androlib.res.decoder.ResAttrDecoder;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 
 /**
- * Created by rover12421 on 1/6/14.
+ * Created by rover12421 on 8/9/14.
  * brut.androlib.res.decoder.ResAttrDecoder
  */
-public aspect ResAttrDecoderAj {
+@Aspect
+public class ResAttrDecoderAj {
 
-    pointcut decodePointcut(int type, int value, String rawValue, int attrResId)
-            : execution(String brut.androlib.res.decoder.ResAttrDecoder.decode(int, int, String, int))
-            && args(type, value, rawValue, attrResId);
+    @Pointcut("execution(* brut.androlib.res.decoder.ResAttrDecoder.decode(..))" +
+            "&& args(type, value, rawValue, attrResId)")
+    private void pointcut_decode(int type, int value, String rawValue, int attrResId) {};
 
-    String around(int type, int value, String rawValue, int attrResId)
-            : decodePointcut(type, value, rawValue, attrResId)
-            && !within(ResAttrDecoderAj +) {
-
+    @Around("pointcut_decode(type, value, rawValue, attrResId)")
+    public String decode_around(ProceedingJoinPoint joinPoint, int type, int value, String rawValue, int attrResId) {
         String result = null;
         try {
-            ResAttrDecoder resAttrDecoder = (ResAttrDecoder) thisJoinPoint.getThis();
+            ResAttrDecoder resAttrDecoder = (ResAttrDecoder) joinPoint.getThis();
             ResPackage mCurrentPackage = resAttrDecoder.getCurrentPackage();
             ResScalarValue resValue = mCurrentPackage.getValueFactory().factory(
                     type, value, rawValue);
@@ -44,4 +47,5 @@ public aspect ResAttrDecoderAj {
 
         return result;
     }
+
 }
