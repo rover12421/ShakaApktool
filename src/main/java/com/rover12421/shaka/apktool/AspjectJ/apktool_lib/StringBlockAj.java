@@ -4,10 +4,8 @@ import brut.androlib.res.decoder.StringBlock;
 import brut.util.ExtDataInput;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 
 import java.io.IOException;
 
@@ -23,11 +21,8 @@ public class StringBlockAj {
      * public static StringBlock read(ExtDataInput reader) throws IOException
      */
 
-    @Pointcut("execution(* brut.androlib.res.decoder.StringBlock.read(..))" +
+    @Around("execution(* brut.androlib.res.decoder.StringBlock.read(..))" +
             "&& args(reader)")
-    private void pointcut_read(ExtDataInput reader) {}
-
-    @Around("pointcut_read(reader)")
     public StringBlock read_around(ExtDataInput reader) {
         StringBlock block = null;
         try {

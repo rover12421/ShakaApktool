@@ -7,7 +7,6 @@ import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -31,16 +30,11 @@ public class AndrolibResourcesAj {
     private final static String SHAKA_PNG  = "/png/Shaka.png";
     private final static String SHAKA_9_PNG  = "/png/Shaka.9.png";
 
-    @Pointcut("execution(void brut.androlib.res.AndrolibResources.aaptPackage(..))" +
-            "&& args(apkFile, manifest, resDir, rawDir, assetDir, include, flags, aaptPath)")
-    private void pointcut_aaptPackage(File apkFile, File manifest, File resDir,
-                                      File rawDir, File assetDir, File[] include,
-                                      HashMap<String, Boolean> flags, String aaptPath) {}
-
     /**
      * 异常png图片处理
      */
-    @Around("pointcut_aaptPackage(apkFile, manifest, resDir, rawDir, assetDir, include, flags, aaptPath)")
+    @Around("execution(void brut.androlib.res.AndrolibResources.aaptPackage(..))" +
+            "&& args(apkFile, manifest, resDir, rawDir, assetDir, include, flags, aaptPath)")
     public void aaptPackage_around(ProceedingJoinPoint joinPoint, File apkFile, File manifest, File resDir,
                                    File rawDir, File assetDir, File[] include,
                                    HashMap<String, Boolean> flags, String aaptPath) {

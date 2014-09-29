@@ -284,7 +284,7 @@ dependencies {
     jflex 'de.jflex:jflex:1.4.3'
 
 //    proguard 'net.sf.proguard:proguard-base:4.8'
-    proguard files('../libs/proguard.jar')
+    proguard files('libs/proguard.jar')
 }
 
 gradle.taskGraph.whenReady {

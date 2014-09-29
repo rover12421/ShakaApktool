@@ -13,6 +13,7 @@ It is NOT intended for piracy and other non-legal uses. It could be used for loc
 - [Source (GitCafe)](https://gitcafe.com/rover12421/ShakaApktool)
 - [Source (OsChina)](http://git.oschina.net/rover12421/ShakaApktool)
 - [Source (CSDN)](https://code.csdn.net/rover12421/shakaapktool)
+- [How To Build](https://github.com/rover12421/ShakaApktool/wiki/How-To-Build)
 
 #### Other
 - QQ Group : 198996891

@@ -8,7 +8,6 @@ import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 
 /**
  * Created by rover12421 on 8/9/14.
@@ -17,11 +16,8 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class ResAttrDecoderAj {
 
-    @Pointcut("execution(* brut.androlib.res.decoder.ResAttrDecoder.decode(..))" +
+    @Around("execution(* brut.androlib.res.decoder.ResAttrDecoder.decode(..))" +
             "&& args(type, value, rawValue, attrResId)")
-    private void pointcut_decode(int type, int value, String rawValue, int attrResId) {};
-
-    @Around("pointcut_decode(type, value, rawValue, attrResId)")
     public String decode_around(ProceedingJoinPoint joinPoint, int type, int value, String rawValue, int attrResId) {
         String result = null;
         try {

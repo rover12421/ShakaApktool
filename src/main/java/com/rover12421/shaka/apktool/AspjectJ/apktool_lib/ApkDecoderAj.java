@@ -5,7 +5,6 @@ import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 
 import java.util.logging.Logger;
 
@@ -16,10 +15,7 @@ import java.util.logging.Logger;
 @Aspect
 public class ApkDecoderAj {
 
-    @Pointcut("execution(void brut.androlib.ApkDecoder.decode())")
-    private void pointcut_decode() {}
-
-    @Before("pointcut_decode()")
+    @Before("execution(void brut.androlib.ApkDecoder.decode())")
     public void decode_before(JoinPoint joinPoint) {
         try {
             Logger LOGGER = (Logger) ReflectUtil.getFieldValue(joinPoint.getThis(), "LOGGER");

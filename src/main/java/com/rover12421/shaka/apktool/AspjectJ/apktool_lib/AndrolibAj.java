@@ -12,7 +12,6 @@ import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 
 import java.io.File;
 import java.util.HashMap;
@@ -28,12 +27,8 @@ public class AndrolibAj {
     /**
      * 未知文件处理,在编译未知文件之前,重新扫描一次"unknown"目录
      */
-    @Pointcut("execution(void brut.androlib.Androlib.buildUnknownFiles(..))" +
+    @Before("execution(void brut.androlib.Androlib.buildUnknownFiles(..))" +
             "&& args(appDir, outFile, meta)")
-    private void pointcut_buildUnknownFiles(File appDir, File outFile, Map<String, Object> meta) {}
-
-
-    @Before("pointcut_buildUnknownFiles(appDir, outFile, meta)")
     public void buildUnknownFiles_before(JoinPoint joinPoint, File appDir, File outFile, Map<String, Object> meta) {
         try {
             String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
@@ -69,11 +64,8 @@ public class AndrolibAj {
      * public void build(ExtFile appDir, File outFile,
      * HashMap<String, Boolean> flags, String aaptPath)
      */
-    @Pointcut("execution(void brut.androlib.Androlib.build(..))" +
+    @Before("execution(void brut.androlib.Androlib.build(..))" +
             "&& args(appDir, outFile, flags, aaptPath)")
-    private void pointcut_build(ExtFile appDir, File outFile, HashMap<String, Boolean> flags, String aaptPath) {}
-
-    @Before("pointcut_build(appDir, outFile, flags, aaptPath)")
     public void build_before(JoinPoint joinPoint, ExtFile appDir, File outFile, HashMap<String, Boolean> flags, String aaptPath) {
         try {
             Logger LOGGER = (Logger) ReflectUtil.getFieldValue(joinPoint.getThis(), "LOGGER");

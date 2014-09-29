@@ -12,7 +12,6 @@ import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.xmlpull.v1.XmlSerializer;
 
 /**
@@ -25,12 +24,8 @@ public class ResStyleValueAj {
      * public class ResStyleValue extends ResBagValue implements ResValuesXmlSerializable
      * public void serializeToResValuesXml(XmlSerializer serializer,ResResource res)
      */
-
-    @Pointcut("execution(void brut.androlib.res.data.value.ResStyleValue.serializeToResValuesXml(..))" +
+    @Around("execution(void brut.androlib.res.data.value.ResStyleValue.serializeToResValuesXml(..))" +
             "&& args(serializer, res)")
-    private void pointcut_serializeToResValuesXml(XmlSerializer serializer, ResResource res) {}
-
-    @Around("pointcut_serializeToResValuesXml(serializer, res)")
     public void serializeToResValuesXml_around(ProceedingJoinPoint joinPoint, XmlSerializer serializer, ResResource res) {
         try {
 
