@@ -1,6 +1,7 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
+import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResUnknownFiles;
 import brut.androlib.res.util.ExtFile;
 import brut.directory.Directory;
@@ -10,8 +11,11 @@ import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.AndroidZip;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 
 import java.io.File;
 import java.util.HashMap;
@@ -77,4 +81,34 @@ public class AndrolibAj {
         }
     }
 
+
+    /**
+     *
+     <B>com.carrot.carrotfantasy.apk</B>
+
+     Exception in thread "main" org.jf.util.ExceptionWithContext: The assets/cfg.dex file in com.carrot.carrotfantasy.apk is too small to be a valid dex file
+     at org.jf.dexlib2.DexFileFactory.loadDexFile(DexFileFactory.java:77)
+     at org.jf.dexlib2.DexFileFactory.loadDexFile(DexFileFactory.java:59)
+     at brut.androlib.src.SmaliDecoder.decode(SmaliDecoder.java:94)
+     at brut.androlib.src.SmaliDecoder.decode(SmaliDecoder.java:46)
+     at brut.androlib.Androlib.decodeSourcesSmali(Androlib.java:83)
+     at brut.androlib.ApkDecoder.decode(ApkDecoder.java:146)
+     at brut.apktool.Main.cmdDecode(Main.java:170)
+     at brut.apktool.Main.main(Main.java:86)
+     */
+    @Around("execution(* brut.androlib.Androlib.decodeSourcesSmali(..))" +
+            "&& args(apkFile, outDir, filename, debug, debugLinePrefix, bakdeb, api)")
+    public void decodeSourcesSmali_around(ProceedingJoinPoint joinPoint, File apkFile, File outDir, String filename, boolean debug, String debugLinePrefix,
+                            boolean bakdeb, int api) throws Throwable {
+        try {
+            joinPoint.proceed(new Object[]{apkFile, outDir, filename, debug, debugLinePrefix, bakdeb, api});
+        } catch (Throwable e) {
+            if (!"classes.dex".equals(filename)) {
+                Logger LOGGER = (Logger) ReflectUtil.getFieldValue(Androlib.class, "LOGGER");
+                LOGGER.info("decodeSourcesSmali " + filename + " error!");
+            } else {
+                throw e;
+            }
+        }
+    }
 }
