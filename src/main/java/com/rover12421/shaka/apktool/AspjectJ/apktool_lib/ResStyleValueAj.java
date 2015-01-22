@@ -9,7 +9,6 @@ import brut.androlib.res.data.value.ResScalarValue;
 import brut.androlib.res.data.value.ResValue;
 import brut.util.Duo;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
-import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -91,9 +90,7 @@ public class ResStyleValueAj {
                 serializer.endTag(null, "item");
             }
             serializer.endTag(null, "style");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }

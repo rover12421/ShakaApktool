@@ -5,7 +5,6 @@ import brut.androlib.ApktoolProperties;
 import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import org.apache.commons.cli.CommandLine;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -22,7 +21,7 @@ public class MainAj {
 
     @Around("pointcut_usage(commandLine)")
     public void usage_around(ProceedingJoinPoint joinPoint, CommandLine commandLine) {
-        System.out.println("ShakaApktool v" + ShakaProperties.getVersion() + " - using AspectJ weaver Apktool project");
+        System.out.println("ShakaApktool v" + ShakaProperties.getVersion() + " - Using AspectJ weaver Apktool project");
         System.out.println("Weaver by Rover12421 <rover12421@163.com>");
         System.out.println();
         try {

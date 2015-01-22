@@ -1,14 +1,6 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
-import brut.androlib.res.decoder.StringBlock;
-import brut.util.ExtDataInput;
-import com.rover12421.shaka.apktool.util.ReflectUtil;
-import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by rover12421 on 8/9/14.
@@ -16,9 +8,9 @@ import java.util.Arrays;
 @Aspect
 public class StringBlockAj {
     // ResChunk_header = header.type (0x0001) + header.headerSize (0x001C)
-    private static final int CHUNK_STRINGPOOL_TYPE = 0x001C0001;
-    private static final int CHUNK_NULL_TYPE = 0x00000000;
-    private static final int UTF8_FLAG = 0x00000100;
+//    private static final int CHUNK_STRINGPOOL_TYPE = 0x001C0001;
+//    private static final int CHUNK_NULL_TYPE = 0x00000000;
+//    private static final int UTF8_FLAG = 0x00000100;
 
     /**
      *

@@ -19,7 +19,6 @@ public class ResAttrDecoderAj {
     @Around("execution(* brut.androlib.res.decoder.ResAttrDecoder.decode(..))" +
             "&& args(type, value, rawValue, attrResId)")
     public String decode_around(ProceedingJoinPoint joinPoint, int type, int value, String rawValue, int attrResId) {
-        String result = null;
         try {
             ResAttrDecoder resAttrDecoder = (ResAttrDecoder) joinPoint.getThis();
             ResPackage mCurrentPackage = resAttrDecoder.getCurrentPackage();
@@ -35,13 +34,11 @@ public class ResAttrDecoderAj {
                 decoded = attr.convertToResXmlFormat(resValue);
             }
 
-            result = decoded != null ? decoded : resValue.encodeAsResXmlAttr();
+            return decoded != null ? decoded : resValue.encodeAsResXmlAttr();
         } catch (Exception e) {
             e.printStackTrace();
             throw new ShakaRuntimeException(e);
         }
-
-        return result;
     }
 
 }

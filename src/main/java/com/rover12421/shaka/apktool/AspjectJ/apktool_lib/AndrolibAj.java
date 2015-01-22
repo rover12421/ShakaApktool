@@ -1,7 +1,6 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
-import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResUnknownFiles;
 import brut.androlib.res.util.ExtFile;
 import brut.directory.Directory;
@@ -9,16 +8,15 @@ import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
 import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.AndroidZip;
+import com.rover12421.shaka.apktool.util.LogHelper;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -56,27 +54,22 @@ public class AndrolibAj {
             } catch (DirectoryException e) {
                 e.printStackTrace();
             }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
     }
 
     /**
-     * public void build(ExtFile appDir, File outFile,
-     * HashMap<String, Boolean> flags, String aaptPath)
+     * public void build(ExtFile appDir, File outFile)
      */
     @Before("execution(void brut.androlib.Androlib.build(..))" +
-            "&& args(appDir, outFile, flags, aaptPath)")
-    public void build_before(JoinPoint joinPoint, ExtFile appDir, File outFile, HashMap<String, Boolean> flags, String aaptPath) {
+            "&& args(appDir, outFile)")
+    public void build_before(JoinPoint joinPoint, ExtFile appDir, File outFile) {
         try {
             Logger LOGGER = (Logger) ReflectUtil.getFieldValue(joinPoint.getThis(), "LOGGER");
             LOGGER.info("Using ShakaApktool " + ShakaProperties.getVersion());
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -104,8 +97,7 @@ public class AndrolibAj {
             joinPoint.proceed(new Object[]{apkFile, outDir, filename, debug, debugLinePrefix, bakdeb, api});
         } catch (Throwable e) {
             if (!"classes.dex".equals(filename)) {
-                Logger LOGGER = (Logger) ReflectUtil.getFieldValue(Androlib.class, "LOGGER");
-                LOGGER.info("decodeSourcesSmali " + filename + " error!");
+                LogHelper.getLogger().warning("decodeSourcesSmali " + filename + " error!");
             } else {
                 throw e;
             }

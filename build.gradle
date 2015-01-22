@@ -1,20 +1,25 @@
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'fatjar'
+apply plugin: "eu.appsatori.fatjar"
 apply plugin: 'idea'
 
 import org.apache.tools.ant.filters.*
 
 def apktoolversion_major = '2.0.0'
-def apktoolversion_minor = 'RC1';
+def apktoolversion_minor = 'RC3';
 ext.apktool_version = apktoolversion_major + "-" + apktoolversion_minor
 
-def shakaVersion_major = '1.0'
+def shakaVersion_major = '1.1'
 def shakaVersion_minor = project.apktool_version
 ext.shakaVersion = shakaVersion_major + "-" + shakaVersion_minor
 
 ext.shakaDebug = 'true'
-ext.smaliVersion = '2.0.3'
+ext.smaliVersion = '2.0.5'
+
+task clearResources(type: Delete) {
+    delete new File(project.buildDir, '/resources')
+}
+processResources.dependsOn clearResources
 
 if (!('release' in gradle.startParameter.taskNames)) {
     def hash = getCheckedOutGitCommitHash();
@@ -78,7 +83,7 @@ def getCheckedOutBranch() {
 
 def getApktoolCheckedOutGitCommitHash() {
     def gitFolder = "$projectDir/.git/modules/apktool/"
-    def takeFromHash = 6
+    def takeFromHash = 7
 
     def head
     try {
@@ -126,7 +131,7 @@ build.doFirst {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    gradleVersion = '2.1'
 }
 
 buildscript {
@@ -134,15 +139,19 @@ buildscript {
         maven {
             url "https://maven.eveoh.nl/content/repositories/releases"
         }
-        mavenCentral()
+        jcenter()
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.incremental = true
     }
     dependencies {
-        classpath 'eu.appsatori:gradle-fatjar-plugin:0.2'
-        classpath "nl.eveoh:gradle-aspectj:1.4"
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
+        classpath "nl.eveoh:gradle-aspectj:1.5"
     }
 }
 
-ext.aspectjVersion = '1.8.1'
+ext.aspectjVersion = '1.8.4'
 apply plugin: 'aspectj'
 
 configurations {
@@ -263,22 +272,22 @@ task copyProperties(type: Copy) {
 compileJava.dependsOn copyProperties
 
 dependencies {
-    compile "org.aspectj:aspectjrt:1.8.1",
-            "com.google.guava:guava:14.0",
-            "org.antlr:antlr-runtime:3.5",
-            "commons-cli:commons-cli:1.2",
-            "com.google.code.findbugs:jsr305:1.3.9",
-            "commons-io:commons-io:2.4",
-            "org.apache.commons:commons-compress:1.4.1",
-            "org.yaml:snakeyaml:1.12",
-            "xpp3:xpp3:1.1.4c",
-            "xmlunit:xmlunit:1.3",
-            "org.apache.commons:commons-lang3:3.1",
-            "org.antlr:ST4:4.0.7"
+    compile 'org.aspectj:aspectjrt:1.8.1',
+            'com.google.guava:guava:18.0',
+            'org.antlr:antlr-runtime:3.5',
+            'commons-cli:commons-cli:1.2',
+            'com.google.code.findbugs:jsr305:1.3.9',
+            'commons-io:commons-io:2.4',
+            'org.apache.commons:commons-compress:1.4.1',
+            'org.yaml:snakeyaml:1.12',
+            'xpp3:xpp3:1.1.4c',
+            'xmlunit:xmlunit:1.3',
+            'org.apache.commons:commons-lang3:3.1',
+            'org.antlr:ST4:4.0.7',
+            'org.antlr:stringtemplate:3.2.1'
 
-    testCompile 'junit:junit:4.11'
-    testCompile 'com.google.code.gson:gson:2.2.4'
-//    testCompile 'com.google.code.gson:gson:1.7.2'
+    testCompile 'junit:junit:4.11',
+                'com.google.code.gson:gson:2.2.4'
 
     antlr3 'org.antlr:antlr:3.5'
     jflex 'de.jflex:jflex:1.4.3'

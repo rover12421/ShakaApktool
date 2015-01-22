@@ -1,6 +1,7 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
+import com.rover12421.shaka.apktool.util.LogHelper;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 import org.apache.commons.io.IOUtils;
@@ -32,12 +33,13 @@ public class AndrolibResourcesAj {
 
     /**
      * 异常png图片处理
+     * brut.androlib.res.AndrolibResources
+     * public void aaptPackage(File apkFile, File manifest, File resDir, File rawDir, File assetDir, File[] include)
      */
-    @Around("execution(void brut.androlib.res.AndrolibResources.aaptPackage(..))" +
-            "&& args(apkFile, manifest, resDir, rawDir, assetDir, include, flags, aaptPath)")
-    public void aaptPackage_around(ProceedingJoinPoint joinPoint, File apkFile, File manifest, File resDir,
-                                   File rawDir, File assetDir, File[] include,
-                                   HashMap<String, Boolean> flags, String aaptPath) {
+    @Around("execution(* brut.androlib.res.AndrolibResources.aaptPackage(..))" +
+            "&& args(apkFile, manifest, resDir, rawDir, assetDir, include)")
+    public void aaptPackage_around(ProceedingJoinPoint joinPoint,
+                                   File apkFile, File manifest, File resDir, File rawDir, File assetDir, File[] include) {
         try {
             String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
             /**
@@ -50,7 +52,7 @@ public class AndrolibResourcesAj {
                 PrintStream olderr = System.err;
                 System.setErr(ps);
                 try {
-                    joinPoint.proceed(new Object[]{apkFile, manifest, resDir, rawDir, assetDir, include, flags, aaptPath});
+                    joinPoint.proceed(new Object[]{apkFile, manifest, resDir, rawDir, assetDir, include});
                     System.setErr(olderr);
                     break;
                 } catch (Throwable e) {
@@ -96,10 +98,11 @@ public class AndrolibResourcesAj {
                                 //备份原始文件
                                 Path srcPath = Paths.get(srcPng);
                                 Path desPath = Paths.get(desPng);
+                                LogHelper.getLogger().warning("Found exception png file : " + srcPng);
                                 Files.copy(srcPath, desPath, StandardCopyOption.REPLACE_EXISTING);
 
                                 //用ok的png替换异常png
-                                InputStream pngIs = null;
+                                InputStream pngIs;
                                 if (srcPng.endsWith(".9.png")) {
                                     pngIs = this.getClass().getResourceAsStream(SHAKA_9_PNG);
                                 } else {
@@ -121,9 +124,7 @@ public class AndrolibResourcesAj {
                     IOUtils.closeQuietly(baos);
                 }
             }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
