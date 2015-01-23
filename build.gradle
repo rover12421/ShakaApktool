@@ -119,8 +119,22 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+def langLevel = '1.7'
+
+project.sourceCompatibility = langLevel
+project.targetCompatibility = langLevel
+idea {
+    project {
+        languageLevel = langLevel
+    }
+
+    module {
+        excludeDirs += files(
+                'TestApk'
+        )
+    }
+}
+
 
 build.doFirst {
     def javaVersion = System.getProperty("java.version")
@@ -272,7 +286,7 @@ task copyProperties(type: Copy) {
 compileJava.dependsOn copyProperties
 
 dependencies {
-    compile 'org.aspectj:aspectjrt:1.8.1',
+    compile 'org.aspectj:aspectjrt:1.8.4',
             'com.google.guava:guava:18.0',
             'org.antlr:antlr-runtime:3.5',
             'commons-cli:commons-cli:1.2',
@@ -292,8 +306,8 @@ dependencies {
     antlr3 'org.antlr:antlr:3.5'
     jflex 'de.jflex:jflex:1.4.3'
 
-//    proguard 'net.sf.proguard:proguard-base:4.8'
-    proguard files('libs/proguard.jar')
+    proguard 'net.sf.proguard:proguard-base:5.1'
+//    proguard files('libs/proguard.jar')
 }
 
 gradle.taskGraph.whenReady {
@@ -387,7 +401,7 @@ task generateJflexSource(type: JavaExec) {
 }
 
 /**
- * 使用AspjectJ之后,此处需要开为compileAspect
+ * 使用AspjectJ之后,此处需要改为compileAspect
  * compileAspect在compileJava之前
  */
 compileAspect.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource

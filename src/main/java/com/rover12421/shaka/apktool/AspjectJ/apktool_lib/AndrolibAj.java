@@ -2,7 +2,6 @@ package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
 import brut.androlib.res.data.ResUnknownFiles;
-import brut.androlib.res.util.ExtFile;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
@@ -19,7 +18,6 @@ import org.aspectj.lang.annotation.Before;
 import java.io.File;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Created by rover12421 on 8/9/14.
@@ -63,15 +61,9 @@ public class AndrolibAj {
     /**
      * public void build(ExtFile appDir, File outFile)
      */
-    @Before("execution(void brut.androlib.Androlib.build(..))" +
-            "&& args(appDir, outFile)")
-    public void build_before(JoinPoint joinPoint, ExtFile appDir, File outFile) {
-        try {
-            Logger LOGGER = (Logger) ReflectUtil.getFieldValue(joinPoint.getThis(), "LOGGER");
-            LOGGER.info("Using ShakaApktool " + ShakaProperties.getVersion());
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    @Before("execution(void brut.androlib.Androlib.build(brut.androlib.res.util.ExtFile, java.io.File))")
+    public void build_before() {
+        LogHelper.getLogger().info("Using ShakaApktool " + ShakaProperties.getVersion());
     }
 
 
@@ -94,7 +86,7 @@ public class AndrolibAj {
     public void decodeSourcesSmali_around(ProceedingJoinPoint joinPoint, File apkFile, File outDir, String filename, boolean debug, String debugLinePrefix,
                             boolean bakdeb, int api) throws Throwable {
         try {
-            joinPoint.proceed(new Object[]{apkFile, outDir, filename, debug, debugLinePrefix, bakdeb, api});
+            joinPoint.proceed(joinPoint.getArgs());
         } catch (Throwable e) {
             if (!"classes.dex".equals(filename)) {
                 LogHelper.getLogger().warning("decodeSourcesSmali " + filename + " error!");

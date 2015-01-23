@@ -52,7 +52,7 @@ public class AndrolibResourcesAj {
                 PrintStream olderr = System.err;
                 System.setErr(ps);
                 try {
-                    joinPoint.proceed(new Object[]{apkFile, manifest, resDir, rawDir, assetDir, include});
+                    joinPoint.proceed(joinPoint.getArgs());
                     System.setErr(olderr);
                     break;
                 } catch (Throwable e) {

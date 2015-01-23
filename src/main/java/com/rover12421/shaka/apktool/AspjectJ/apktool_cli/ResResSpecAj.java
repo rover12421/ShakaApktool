@@ -13,15 +13,13 @@ import org.aspectj.lang.annotation.Pointcut;
  */
 @Aspect
 public class ResResSpecAj {
-    @Pointcut("execution(void brut.androlib.res.data.ResResSpec.addResource(..))" +
-            "&& args(res, overwrite)")
-    private void pointcut_addResource(ResResource res, boolean overwrite){}
 
-    @Around("pointcut_addResource(res, overwrite)")
+    @Around("execution(void brut.androlib.res.data.ResResSpec.addResource(..))" +
+            "&& args(res, overwrite)")
     public void usage_around(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) {
         try {
             try {
-                joinPoint.proceed(new Object[]{res, overwrite});
+                joinPoint.proceed(joinPoint.getArgs());
             } catch (AndrolibException e) {
                 LogHelper.getLogger().warning("Add Repeat Resource : " + e.getMessage());
             }

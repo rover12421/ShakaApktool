@@ -15,17 +15,14 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class MainAj {
 
-    @Pointcut("execution(void brut.apktool.Main.usage(..))" +
-                      "&& args(commandLine)")
-    private void pointcut_usage(CommandLine commandLine) {}
-
-    @Around("pointcut_usage(commandLine)")
+    @Around("execution(void brut.apktool.Main.usage(..))" +
+            "&& args(commandLine)")
     public void usage_around(ProceedingJoinPoint joinPoint, CommandLine commandLine) {
         System.out.println("ShakaApktool v" + ShakaProperties.getVersion() + " - Using AspectJ weaver Apktool project");
         System.out.println("Weaver by Rover12421 <rover12421@163.com>");
         System.out.println();
         try {
-            joinPoint.proceed(new Object[]{commandLine});
+            joinPoint.proceed(joinPoint.getArgs());
             System.out.println("For ShakaApktool info, see: http://www.rover12421.com/");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -33,10 +30,7 @@ public class MainAj {
     }
 
 
-    @Pointcut("execution(void brut.apktool.Main._version())")
-    private void pointcut_version(){}
-
-    @Around("pointcut_version()")
+    @Around("execution(void brut.apktool.Main._version())")
     public void version_around() {
         System.out.println("ShakaApktool v" + ShakaProperties.getVersion());
         System.out.println("Apktool v" + Androlib.getVersion());
