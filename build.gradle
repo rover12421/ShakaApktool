@@ -6,7 +6,7 @@ apply plugin: 'idea'
 import org.apache.tools.ant.filters.*
 
 def apktoolversion_major = '2.0.0'
-def apktoolversion_minor = 'RC3';
+def apktoolversion_minor = 'RC4';
 ext.apktool_version = apktoolversion_major + "-" + apktoolversion_minor
 
 def shakaVersion_major = '1.1'
@@ -436,4 +436,3 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
 }
 
 tasks.getByPath(':release').dependsOn(proguard)
-
