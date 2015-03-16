@@ -16,6 +16,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 import java.io.File;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 
@@ -93,6 +95,30 @@ public class AndrolibAj {
             } else {
                 throw e;
             }
+        }
+    }
+
+    @Around("execution(* brut.androlib.Androlib.insertFile(..))" +
+            "&& args(apkPath, zip_properties, insert, method, location)")
+    public void insertFile_around(ProceedingJoinPoint joinPoint,
+                                  Path apkPath, Map<String,String> zip_properties,
+                                  File insert, String method, Path location) throws Throwable {
+        try {
+            joinPoint.proceed(joinPoint.getArgs());
+        } catch (FileAlreadyExistsException e) {
+            LogHelper.getLogger().warning("FileAlreadyExistsException(1): " + location);
+            FileAlreadyExistsException exception = null;
+            for (int i=2; i<=10; i++) {
+                LogHelper.getLogger().warning("FileAlreadyExistsException(" + i + "): " + location);
+                try {
+                    joinPoint.proceed(joinPoint.getArgs());
+                    return;
+                } catch (FileAlreadyExistsException e1) {
+                    exception = e1;
+                }
+            }
+
+            throw exception;
         }
     }
 }
