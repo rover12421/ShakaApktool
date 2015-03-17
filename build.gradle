@@ -414,7 +414,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
 
 tasks.getByPath(':release').dependsOn(proguard)
 
-task cli() {
+task cli() << {
     file('build/libs/ShakaApktool.jar').renameTo(file("build/libs/ShakaApktool-" + shakaVersion + ".jar"))
 }
 cli.dependsOn fatJar
