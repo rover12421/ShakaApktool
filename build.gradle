@@ -113,12 +113,15 @@ idea {
 }
 
 
-build.doFirst {
-    def javaVersion = System.getProperty("java.version")
-    //fail the build if we don't have the expected Java version
-    if (!javaVersion.startsWith("1.7")) {
-        throw new GradleException("You can fix this problem!\nWe found a " + javaVersion + " JDK\nPlease update JAVA_HOME to use a 1.7 JDK\nCurrently it is set to: " + System.getProperty("java.home"));
-    }
+def javaVersion = System.getProperty("java.version")
+
+//fail the build if we java 1.5 or 1.6.
+if (javaVersion.startsWith("1.5") || javaVersion.startsWith("1.6")) {
+    throw new GradleException("You can fix this problem!\n" +
+            "We found a " + javaVersion + " JDK\n" +
+            "Please update JAVA_HOME to use at least a 1.7 JDK\n" +
+            "Currently it is set to: " + System.getProperty("java.home")
+    );
 }
 
 task wrapper(type: Wrapper) {
