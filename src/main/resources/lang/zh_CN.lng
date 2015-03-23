@@ -65,7 +65,7 @@
 64=Multiple resources
 65=Multiple res specs
 66=Config flags size > %d. Exceeding bytes: 0x%X
-67=Using ShakaApktool
+67=使用 ShakaApktool
 68=Ignoring duplicate field
 69=Duplicate static+instance field found
 70=You will need to rename one of these fields, including all references
@@ -90,12 +90,12 @@
 89=Error while reading boot class path entry
 90=Cannot locate boot class path file
 91=odex version %d is not supported yet
-92=code address:
+92=代码地址:
 93=Invalid register type %s for register v%d
 94=v%d cannot be used as the first register in a wide registerpair because it is the last register.
 95=Incorrect field type "%s" for %s
 96=Not an odexed field access opcode:
-97=Unknown type %s
+97=未知类型 %s
 98=Switch instruction at address/index 0x%x/%d points to the end of the method
 99=Switch instruction at address/index 0x%x/%d does not refer to a payload instruction
 100=Switch instruction at address/index 0x%x/%d refers to the wrong type of payload instruction
