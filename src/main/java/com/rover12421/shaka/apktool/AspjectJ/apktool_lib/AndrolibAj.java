@@ -1,6 +1,7 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
+import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResUnknownFiles;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
@@ -16,6 +17,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -95,4 +99,52 @@ public class AndrolibAj {
             }
         }
     }
+
+    @Around("execution(* brut.androlib.Androlib.buildUnknownFiles(..))" +
+            "&& args(appDir, outFile, meta)")
+    public void buildUnknownFiles_around(File appDir, File outFile, Map<String, Object> meta)
+            throws AndrolibException {
+        try {
+            String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+            Path globalPath = Paths.get(appDir.getPath() + File.separatorChar + UNK_DIRNAME);
+
+            if (meta.containsKey("unknownFiles")) {
+                LogHelper.getLogger().info("Copying unknown files/dir...");
+
+                Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
+
+                try {
+                    // set our filesystem options
+                    Map<String, String> zip_properties = new HashMap<>();
+                    zip_properties.put("create", "false");
+                    zip_properties.put("encoding", "UTF-8");
+
+                    // create filesystem
+                    Path path = Paths.get(outFile.getAbsolutePath());
+
+                    try(
+                            FileSystem fs = FileSystems.newFileSystem(path, null)
+                    ) {
+                        // loop through files inside
+                        for (Map.Entry<String,String> entry : files.entrySet()) {
+
+                            File file = new File(globalPath.toFile(), entry.getKey());
+                            Path dest = fs.getPath(entry.getKey());
+                            Path destParent = dest.getParent();
+                            if (destParent != null && !Files.exists(destParent)) {
+                                Files.createDirectories(destParent);
+                            }
+                            Path newFile = Paths.get(file.getAbsolutePath());
+                            Files.copy(newFile, dest, StandardCopyOption.REPLACE_EXISTING);
+                        }
+                    }
+                } catch (IOException ex) {
+                    throw new AndrolibException(ex);
+                }
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

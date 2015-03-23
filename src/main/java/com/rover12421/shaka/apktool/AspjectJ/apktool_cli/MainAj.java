@@ -69,7 +69,12 @@ public class MainAj {
         try {
             commandLine = parser.parse(options, arguments, stopAtNonOption);
             if (commandLine.hasOption("lng") || commandLine.hasOption("language")) {
-                Locale locale = Locale.forLanguageTag(commandLine.getOptionValue("lng"));
+                String lngStr = commandLine.getOptionValue("lng");
+                Locale locale = Locale.forLanguageTag(lngStr);
+                if (locale.toString().isEmpty()) {
+                    lngStr = lngStr.replaceAll("_", "-");
+                    locale = Locale.forLanguageTag(lngStr);
+                }
                 MultiLanguageSupport.getInstance().setLang(locale);
             }
         } catch (Exception ex) {
