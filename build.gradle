@@ -418,4 +418,3 @@ task cli() << {
     file('build/libs/ShakaApktool.jar').renameTo(file("build/libs/ShakaApktool-" + shakaVersion + ".jar"))
 }
 cli.dependsOn fatJar
-
