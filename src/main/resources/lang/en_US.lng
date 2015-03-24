@@ -197,5 +197,3 @@ r2=Baksmaling $1...
 r3=Using Apktool $1 on $2
 r4=Renamed manifest package found! Replacing $1 with $2
 r5=Arsc file contains multiple packages. Using package $1 as default
-
-
