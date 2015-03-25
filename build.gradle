@@ -275,18 +275,18 @@ dependencies {
             'org.apache.commons:commons-compress:1.4.1',
             'org.yaml:snakeyaml:1.12',
             'xpp3:xpp3:1.1.4c',
-            'xmlunit:xmlunit:1.3',
             'org.apache.commons:commons-lang3:3.1',
             'org.antlr:ST4:4.0.7',
             'org.antlr:stringtemplate:3.2.1'
 
     testCompile 'junit:junit:4.11',
+                'xmlunit:xmlunit:1.3',
                 'com.google.code.gson:gson:2.2.4'
 
     antlr3 'org.antlr:antlr:3.5'
     jflex 'de.jflex:jflex:1.4.3'
 
-    proguard 'net.sf.proguard:proguard-base:5.1'
+    proguard 'net.sf.proguard:proguard-base:5.2'
 //    proguard files('libs/proguard.jar')
 }
 
@@ -409,15 +409,20 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-dontwarn com.google.common.util.**'
     args '-dontwarn javax.xml.xpath.**'
     args '-dontwarn com.rover12421.shaka.apktool.AspjectJ.**'
-    args '-keep public class brut.apktool.Main { public static void main(java.lang.String[]); }'
+    args '-keep public class com.rover12421.shaka.apktool.Main { public static void main(java.lang.String[]); }'
     args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
     args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
-    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'
+//    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'
+    args '-keepclasseswithmembers class brut.apktool.Main { ** normalOptions; }'
+    args '-keepclasseswithmembers class brut.androlib.Androlib { ** UNK_DIRNAME; ** mResUnknownFiles; }'
+    args '-keepclasseswithmembers class brut.androlib.res.data.value.ResStyleValue { ** mParent; ** mItems; }'
 }
 
 tasks.getByPath(':release').dependsOn(proguard)
 
-task cli() << {
-    file('build/libs/ShakaApktool.jar').renameTo(file("build/libs/ShakaApktool-" + shakaVersion + ".jar"))
+task cli() {
+    doLast {
+        file('build/libs/ShakaApktool.jar').renameTo(file("build/libs/ShakaApktool-" + shakaVersion + ".jar"))
+    }
 }
 cli.dependsOn fatJar
