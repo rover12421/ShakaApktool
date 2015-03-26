@@ -29,7 +29,7 @@
 28=Make all framework resources public
 29=Default is
 30=publicize-resources
-31=Loading resource table
+31=Loading resource table from file
 32=Building apk file
 33=Copy original files
 34=Copy AndroidManifest.xml
@@ -56,7 +56,7 @@
 55=Decoding AndroidManifest.xml with only framework resources
 56=Decoding AndroidManifest.xml with resources
 57=Framework installed to
-58=Loading resource table from file
+58=Loading resource table
 59=Decoding Shared Library
 60=Could not decode file, replacing by FALSE value
 61=Could not decode attr value, using undecoded value
@@ -190,6 +190,13 @@
 189=Big endian dex files are not currently supported
 190=Expected:
 191=Display language
+192=Checking whether sources has changed
+193=Could not find sources
+194=Renaming it to
+195=Could not decode arsc file
+196=Could not decode XML
+197=Could not detect whether app is framework one
+198=Out dir not set
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...
@@ -197,3 +204,4 @@ r2=Baksmaling $1...
 r3=Using Apktool $1 on $2
 r4=Renamed manifest package found! Replacing $1 with $2
 r5=Arsc file contains multiple packages. Using package $1 as default
+r6=Using Apktool $1
