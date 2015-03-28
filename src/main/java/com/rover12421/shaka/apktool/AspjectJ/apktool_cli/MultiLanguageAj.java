@@ -47,7 +47,7 @@ public class MultiLanguageAj {
             "Make all framework resources public",
             "Default is",
             "publicize-resources",
-            "Loading resource table",
+            "Loading resource table from file",
             "Building apk file",
             "Copy original files",
             "Copy AndroidManifest.xml",
@@ -74,7 +74,7 @@ public class MultiLanguageAj {
             "Decoding AndroidManifest.xml with only framework resources",
             "Decoding AndroidManifest.xml with resources",
             "Framework installed to",
-            "Loading resource table from file",
+            "Loading resource table",
             "Decoding Shared Library",
             "Could not decode file, replacing by FALSE value",
             "Could not decode attr value, using undecoded value",
@@ -208,6 +208,13 @@ public class MultiLanguageAj {
             "Big endian dex files are not currently supported",
             "Expected:",
             "Display language",
+            "Checking whether sources has changed",
+            "Could not find sources",
+            "Renaming it to",
+            "Could not decode arsc file",
+            "Could not decode XML",
+            "Could not detect whether app is framework one",
+            "Out dir not set",
     };
 
     private static final String[] langRpStr = new String[]{
@@ -217,6 +224,7 @@ public class MultiLanguageAj {
             "Using Apktool (.+?) on (.+?)",
             "Renamed manifest package found! Replacing (.+?) with (.+?)",
             "Arsc file contains multiple packages\\. Using package (.+?) as default",
+            "Using Apktool (.+?)",
     };
 
     private static final String[] langRpStrDef = new String[]{
@@ -226,6 +234,7 @@ public class MultiLanguageAj {
             "Using Apktool $1 on $2",
             "Renamed manifest package found! Replacing $1 with $2",
             "Arsc file contains multiple packages. Using package $1 as default",
+            "Using Apktool $1",
     };
 
     public static String repleceLanguage(String str) {
