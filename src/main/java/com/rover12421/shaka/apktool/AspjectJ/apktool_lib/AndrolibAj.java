@@ -2,7 +2,9 @@ package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
 import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResTable;
 import brut.androlib.res.data.ResUnknownFiles;
+import brut.androlib.res.util.ExtFile;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
@@ -14,6 +16,7 @@ import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -24,16 +27,18 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.CRC32;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
+import java.util.zip.*;
 
 /**
  * Created by rover12421 on 8/9/14.
  */
 @Aspect
 public class AndrolibAj {
+
+    public String getUNK_DIRNAME() throws NoSuchFieldException, IllegalAccessException {
+        return (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+    }
+
     /**
      * 未知文件处理,在编译未知文件之前,重新扫描一次"unknown"目录
      */
@@ -41,7 +46,7 @@ public class AndrolibAj {
             "&& args(appDir, outFile, meta)")
     public void buildUnknownFiles_before(JoinPoint joinPoint, File appDir, File outFile, Map<String, Object> meta) {
         try {
-            String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+            String UNK_DIRNAME = getUNK_DIRNAME();
             File unknownFile = new File(appDir, UNK_DIRNAME);
             if (!unknownFile.exists()) {
                 return;
@@ -164,7 +169,7 @@ public class AndrolibAj {
 
     private void copyUnknownFiles(File appDir, ZipOutputStream outputFile, Map<String, String> files)
             throws IOException, NoSuchFieldException, IllegalAccessException {
-        String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+        String UNK_DIRNAME = getUNK_DIRNAME();
         File unknownFileDir = new File(appDir, UNK_DIRNAME);
 
         // loop through unknown files
@@ -208,6 +213,48 @@ public class AndrolibAj {
             crc.update(buffer, 0, bytesRead);
         }
         return crc;
+    }
+
+    /**
+     * res中的资源没有被arsc中引用,没有生成id,就会丢失.
+     * 这里是把这类丢失的文件添加到unkown目录下
+     * @param joinPoint
+     * @param apkFile
+     * @param outDir
+     * @param resTable
+     */
+    @After("execution(* brut.androlib.Androlib.decodeUnknownFiles(..))" +
+            "&& args(apkFile, outDir, resTable)")
+    public void decodeUnknownFiles_after(JoinPoint joinPoint, ExtFile apkFile, File outDir, ResTable resTable) {
+        try {
+            File unknownOut = new File(outDir, getUNK_DIRNAME());
+            ResUnknownFiles mResUnknownFiles = (ResUnknownFiles) ReflectUtil.getFieldValue(joinPoint.getThis(), "mResUnknownFiles");
+            ZipFile zipFile = new ZipFile(apkFile.getAbsolutePath());
+            try (
+                    FileInputStream fis = new FileInputStream(apkFile.getAbsoluteFile());
+                    ZipInputStream zis = new ZipInputStream(fis)
+                    ){
+                ZipEntry entry;
+                while ((entry = zis.getNextEntry()) != null) {
+                    if (entry.getName().startsWith("res/")) {
+                        File resFile = new File(outDir, entry.getName());
+                        File unFile = new File(unknownOut, entry.getName());
+                        if (!resFile.exists()) {
+                            unFile.getParentFile().mkdirs();
+                            try (
+                                    FileOutputStream fos = new FileOutputStream(unFile);
+                                    InputStream is = zipFile.getInputStream(entry)
+                                    ){
+                                IOUtils.copy(is, fos);
+                            }
+                            mResUnknownFiles.addUnknownFileInfo(entry.getName(), String.valueOf(entry.getMethod()));
+                        }
+                    }
+                }
+            }
+        } catch (NoSuchFieldException | IllegalAccessException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
