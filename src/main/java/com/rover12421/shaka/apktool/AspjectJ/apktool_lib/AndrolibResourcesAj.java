@@ -1,11 +1,16 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
+import brut.androlib.res.decoder.*;
+import brut.util.Duo;
+import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
 import com.rover12421.shaka.apktool.util.LogHelper;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
@@ -128,5 +133,19 @@ public class AndrolibResourcesAj {
             e.printStackTrace();
         }
 
+    }
+
+    @AfterReturning(pointcut = "execution(* brut.androlib.res.AndrolibResources.getResFileDecoder(..))", returning = "duo")
+    public void getResFileDecoder_after(Duo<ResFileDecoder, AXmlResourceParser> duo) {
+        if (!ShakaDecodeOption.getInstance().isNo9png()) {
+            return;
+        }
+        ResFileDecoder fileDecoder = duo.m1;
+        try {
+            ResStreamDecoderContainer mDecoders = (ResStreamDecoderContainer) ReflectUtil.getFieldValue(fileDecoder, "mDecoders");
+            mDecoders.setDecoder("9patch", new ResRawStreamDecoder());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

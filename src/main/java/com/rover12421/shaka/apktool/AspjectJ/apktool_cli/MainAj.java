@@ -5,6 +5,7 @@ import brut.androlib.ApkDecoder;
 import brut.androlib.ApktoolProperties;
 import com.rover12421.shaka.apktool.Main;
 import com.rover12421.shaka.apktool.lib.MultiLanguageSupport;
+import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
 import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.apache.commons.cli.*;
@@ -51,9 +52,15 @@ public class MainAj {
                 .withArgName("Locale")
                 .create("lng");
 
+        Option no9png = OptionBuilder.withLongOpt("no-9png")
+                .withDescription("Do not decode .9 png file.")
+                .create("n9");
+
         try {
             Options normalOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "normalOptions");
+            Options DecodeOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "DecodeOptions");
             normalOptions.addOption(language);
+            DecodeOptions.addOption(no9png);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,6 +85,14 @@ public class MainAj {
                 MultiLanguageSupport.getInstance().setLang(locale);
             }
         } catch (Exception ex) {
+        }
+    }
+
+    @Before("execution(void brut.apktool.Main.cmdDecode(..))" +
+            "&& args(cli)")
+    public void cmdDecode_before(CommandLine cli) {
+        if (cli.hasOption("n9") || cli.hasOption("no-9png")) {
+            ShakaDecodeOption.getInstance().setNo9png(true);
         }
     }
 }
