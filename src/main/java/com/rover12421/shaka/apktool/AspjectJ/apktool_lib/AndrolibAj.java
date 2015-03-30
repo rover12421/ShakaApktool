@@ -6,22 +6,28 @@ import brut.androlib.res.data.ResUnknownFiles;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
+import brut.util.BrutIO;
 import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.AndroidZip;
 import com.rover12421.shaka.apktool.util.LogHelper;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
+import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.CRC32;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by rover12421 on 8/9/14.
@@ -100,52 +106,108 @@ public class AndrolibAj {
         }
     }
 
-    // Apktool已处理
-//    @Around("execution(* brut.androlib.Androlib.buildUnknownFiles(..))" +
-//            "&& args(appDir, outFile, meta)")
-//    public void buildUnknownFiles_around(File appDir, File outFile, Map<String, Object> meta)
-//            throws AndrolibException {
-//        try {
-//            String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
-//            Path globalPath = Paths.get(appDir.getPath() + File.separatorChar + UNK_DIRNAME);
-//
-//            if (meta.containsKey("unknownFiles")) {
-//                LogHelper.getLogger().info("Copying unknown files/dir...");
-//
-//                Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
-//
-//                try {
-//                    // set our filesystem options
-//                    Map<String, String> zip_properties = new HashMap<>();
-//                    zip_properties.put("create", "false");
-//                    zip_properties.put("encoding", "UTF-8");
-//
-//                    // create filesystem
-//                    Path path = Paths.get(outFile.getAbsolutePath());
-//
-//                    try(
-//                            FileSystem fs = FileSystems.newFileSystem(path, null)
-//                    ) {
-//                        // loop through files inside
-//                        for (Map.Entry<String,String> entry : files.entrySet()) {
-//
-//                            File file = new File(globalPath.toFile(), entry.getKey());
-//                            Path dest = fs.getPath(entry.getKey());
-//                            Path destParent = dest.getParent();
-//                            if (destParent != null && !Files.exists(destParent)) {
-//                                Files.createDirectories(destParent);
-//                            }
-//                            Path newFile = Paths.get(file.getAbsolutePath());
-//                            Files.copy(newFile, dest, StandardCopyOption.REPLACE_EXISTING);
-//                        }
-//                    }
-//                } catch (IOException ex) {
-//                    throw new AndrolibException(ex);
-//                }
-//            }
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Around("execution(* brut.androlib.Androlib.buildUnknownFiles(..))" +
+            "&& args(appDir, outFile, meta)")
+    public void buildUnknownFiles_around(File appDir, File outFile, Map<String, Object> meta)
+            throws Throwable {
+        if (meta.containsKey("unknownFiles")) {
+            LogHelper.getLogger().info("Copying unknown files/dir...");
+
+            Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
+            File tempFile = File.createTempFile("buildUnknownFiles", "tmp");
+            tempFile.delete();
+            boolean renamed = outFile.renameTo(tempFile);
+            if(!renamed) {
+                throw new AndrolibException("Unable to rename temporary file");
+            }
+
+            try (
+                    ZipFile inputFile = new ZipFile(tempFile);
+                    ZipOutputStream actualOutput = new ZipOutputStream(new FileOutputStream(outFile))
+            ) {
+                copyExistingFiles(inputFile, actualOutput, files);
+                copyUnknownFiles(appDir, actualOutput, files);
+            } catch (IOException ex) {
+                throw new AndrolibException(ex);
+            }
+
+            // Remove our temporary file.
+            tempFile.delete();
+        }
+    }
+
+    private void copyExistingFiles(ZipFile inputFile, ZipOutputStream outputFile, Map<String, String> excludeFiles) throws IOException {
+        // First, copy the contents from the existing outFile:
+        Enumeration<? extends ZipEntry> entries = inputFile.entries();
+        while (entries.hasMoreElements()) {
+            ZipEntry entry = new ZipEntry(entries.nextElement());
+            if (excludeFiles.get(entry.getName()) != null) {
+                //排除的文件不处理.
+                continue;
+            }
+            // We can't reuse the compressed size because it depends on compression sizes.
+            entry.setCompressedSize(-1);
+            outputFile.putNextEntry(entry);
+
+            // No need to create directory entries in the final apk
+            if (!entry.isDirectory()) {
+                try (
+                        InputStream is = inputFile.getInputStream(entry)
+                ){
+                    IOUtils.copy(is, outputFile);
+                }
+            }
+
+            outputFile.closeEntry();
+        }
+    }
+
+    private void copyUnknownFiles(File appDir, ZipOutputStream outputFile, Map<String, String> files)
+            throws IOException, NoSuchFieldException, IllegalAccessException {
+        String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+        File unknownFileDir = new File(appDir, UNK_DIRNAME);
+
+        // loop through unknown files
+        for (Map.Entry<String,String> unknownFileInfo : files.entrySet()) {
+            File inputFile = new File(unknownFileDir, unknownFileInfo.getKey());
+            if(inputFile.isDirectory()) {
+                continue;
+            }
+
+            ZipEntry newEntry = new ZipEntry(unknownFileInfo.getKey());
+            int method = Integer.valueOf(unknownFileInfo.getValue());
+            LogHelper.getLogger().fine(String.format("Copying unknown file %s with method %d", unknownFileInfo.getKey(), method));
+            if(method == ZipEntry.STORED) {
+                newEntry.setMethod(ZipEntry.STORED);
+                newEntry.setSize(inputFile.length());
+                newEntry.setCompressedSize(-1);
+                BufferedInputStream unknownFile = new BufferedInputStream(new FileInputStream(inputFile));
+                CRC32 crc = calculateCrc(unknownFile);
+                newEntry.setCrc(crc.getValue());
+
+//                LogHelper.getLogger().fine("\tsize: " + newEntry.getSize());
+            } else {
+                newEntry.setMethod(ZipEntry.DEFLATED);
+            }
+            outputFile.putNextEntry(newEntry);
+
+            try (
+                    FileInputStream fis = new FileInputStream(inputFile)
+            ){
+                IOUtils.copy(fis, outputFile);
+            }
+            outputFile.closeEntry();
+        }
+    }
+
+    public static CRC32 calculateCrc(InputStream input) throws IOException {
+        CRC32 crc = new CRC32();
+        int bytesRead;
+        byte[] buffer = new byte[4096];
+        while((bytesRead = input.read(buffer)) != -1) {
+            crc.update(buffer, 0, bytesRead);
+        }
+        return crc;
+    }
 
 }
