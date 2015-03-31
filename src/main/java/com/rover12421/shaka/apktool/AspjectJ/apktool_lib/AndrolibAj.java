@@ -59,7 +59,10 @@ public class AndrolibAj {
                     meta.put("unknownFiles", files);
                 }
                 for (String file : addFiles) {
-                    files.put(file, AndroidZip.getZipMethod(new File(appDir, file).getAbsolutePath()) + "");
+                    //判断下.是否已经存在.已经存在的,压缩模式试用原包的模式
+                    if (!files.containsKey(file)) {
+                        files.put(file, AndroidZip.getZipMethod(new File(appDir, file).getAbsolutePath()) + "");
+                    }
                 }
             } catch (DirectoryException e) {
                 e.printStackTrace();
