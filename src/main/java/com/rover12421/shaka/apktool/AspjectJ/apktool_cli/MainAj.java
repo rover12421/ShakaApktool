@@ -1,17 +1,16 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_cli;
 
 import brut.androlib.Androlib;
-import brut.androlib.ApkDecoder;
 import brut.androlib.ApktoolProperties;
-import com.rover12421.shaka.apktool.Main;
 import com.rover12421.shaka.apktool.lib.MultiLanguageSupport;
 import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
 import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.apache.commons.cli.*;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 
 import java.util.Locale;
 
