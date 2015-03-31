@@ -1,3 +1,4 @@
+-1=unkown
 0=Using AspectJ weaver Apktool project
 1=Weaver by
 2=a tool for reengineering Android apk files
@@ -197,6 +198,8 @@
 196=Could not decode XML
 197=Could not detect whether app is framework one
 198=Out dir not set
+199=使用默然的框架资源档
+200=不解析.9格式的资源
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...

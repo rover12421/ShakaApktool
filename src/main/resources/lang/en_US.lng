@@ -197,6 +197,8 @@
 196=Could not decode XML
 197=Could not detect whether app is framework one
 198=Out dir not set
+199=Using default framework file
+200=Do not decode .9 png file
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...

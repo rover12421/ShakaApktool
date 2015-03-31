@@ -26,7 +26,13 @@ public class MainAj {
     public void usage_around(ProceedingJoinPoint joinPoint, CommandLine commandLine) {
         System.out.println("ShakaApktool v" + ShakaProperties.getVersion() + " - Using AspectJ weaver Apktool project");
         System.out.println("Weaver by Rover12421 <rover12421@163.com>");
-        System.out.println();
+        String thanks = MultiLanguageSupport.getInstance().get(-1, null);
+        if (thanks != null) {
+            System.out.println(thanks);
+        }
+
+        System.out.println("----------------\n");
+
         try {
             joinPoint.proceed(joinPoint.getArgs());
             System.out.println("For ShakaApktool info, see: http://www.rover12421.com/");

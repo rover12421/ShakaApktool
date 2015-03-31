@@ -215,6 +215,8 @@ public class MultiLanguageAj {
             "Could not decode XML",
             "Could not detect whether app is framework one",
             "Out dir not set",
+            "Using default framework file",
+            "Do not decode .9 png file"
     };
 
     private static final String[] langRpStr = new String[]{
