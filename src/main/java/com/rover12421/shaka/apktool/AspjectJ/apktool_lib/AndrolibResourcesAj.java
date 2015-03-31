@@ -1,6 +1,8 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.Androlib;
+import brut.androlib.AndrolibException;
+import brut.androlib.res.AndrolibResources;
 import brut.androlib.res.decoder.*;
 import brut.util.Duo;
 import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
@@ -9,7 +11,6 @@ import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -146,6 +147,23 @@ public class AndrolibResourcesAj {
             mDecoders.setDecoder("9patch", new ResRawStreamDecoder());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @AfterReturning(pointcut = "execution(* brut.androlib.res.AndrolibResources.getFrameworkApk(..))" +
+            "&& args(id, frameTag)", returning = "apk")
+    public void getFrameworkApk(int id, String frameTag, File apk) throws AndrolibException {
+        if (!ShakaDecodeOption.getInstance().isUsingDefaultFramework()) {
+            return;
+        }
+
+        if (id == 1 && apk.getAbsolutePath().endsWith("/1.apk")) {
+            try (InputStream in = AndrolibResources.class.getResourceAsStream("/brut/androlib/android-framework.jar");
+                 OutputStream out = new FileOutputStream(apk)) {
+                IOUtils.copy(in, out);
+            } catch (IOException ex) {
+                throw new AndrolibException(ex);
+            }
         }
     }
 }

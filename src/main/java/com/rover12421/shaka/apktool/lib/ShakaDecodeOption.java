@@ -14,6 +14,7 @@ public class ShakaDecodeOption {
     }
 
     private boolean no9png = false;
+    private boolean usingDefaultFramework = false;
 
     public boolean isNo9png() {
         return no9png;
@@ -21,5 +22,13 @@ public class ShakaDecodeOption {
 
     public void setNo9png(boolean no9png) {
         this.no9png = no9png;
+    }
+
+    public boolean isUsingDefaultFramework() {
+        return usingDefaultFramework;
+    }
+
+    public void setUsingDefaultFramework(boolean usingDefaultFramework) {
+        this.usingDefaultFramework = usingDefaultFramework;
     }
 }

@@ -56,11 +56,16 @@ public class MainAj {
                 .withDescription("Do not decode .9 png file.")
                 .create("n9");
 
+        Option usingDefaultFramework = OptionBuilder.withLongOpt("default-framework")
+                .withDescription("Using default framework file.")
+                .create("df");
+
         try {
             Options normalOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "normalOptions");
             Options DecodeOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "DecodeOptions");
             normalOptions.addOption(language);
             DecodeOptions.addOption(no9png);
+            DecodeOptions.addOption(usingDefaultFramework);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,6 +98,10 @@ public class MainAj {
     public void cmdDecode_before(CommandLine cli) {
         if (cli.hasOption("n9") || cli.hasOption("no-9png")) {
             ShakaDecodeOption.getInstance().setNo9png(true);
+        }
+
+        if (cli.hasOption("df") || cli.hasOption("default-framework")) {
+            ShakaDecodeOption.getInstance().setUsingDefaultFramework(true);
         }
     }
 }
