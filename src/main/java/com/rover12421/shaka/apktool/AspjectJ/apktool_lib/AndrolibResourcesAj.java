@@ -160,7 +160,7 @@ public class AndrolibResourcesAj {
             return;
         }
 
-        if (id == 1 && apk.getAbsolutePath().endsWith("/1.apk")) {
+        if (id == 1 && apk.getAbsolutePath().endsWith("1.apk")) {
             try (InputStream in = AndrolibResources.class.getResourceAsStream("/brut/androlib/android-framework.jar");
                  OutputStream out = new FileOutputStream(apk)) {
                 IOUtils.copy(in, out);
