@@ -236,7 +236,7 @@ public class AndrolibAj {
                     ){
                 ZipEntry entry;
                 while ((entry = zis.getNextEntry()) != null) {
-                    if (entry.getName().startsWith("res/")) {
+                    if (!entry.isDirectory() && entry.getName().startsWith("res/")) {
                         File resFile = new File(outDir, entry.getName());
                         File unFile = new File(unknownOut, entry.getName());
                         if (!resFile.exists()) {
