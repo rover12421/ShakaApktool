@@ -199,6 +199,7 @@
 198=Out dir not set
 199=Using default framework file
 200=Do not decode .9 png file
+201=Unable to rename temporary file
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...
@@ -207,3 +208,4 @@ r3=Using Apktool $1 on $2
 r4=Renamed manifest package found! Replacing $1 with $2
 r5=Arsc file contains multiple packages. Using package $1 as default
 r6=Using Apktool $1
+r7=Copying unknown file $1 with method $2

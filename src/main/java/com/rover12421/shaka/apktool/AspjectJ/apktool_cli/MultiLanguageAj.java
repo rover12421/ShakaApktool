@@ -7,6 +7,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import java.util.Locale;
+
 /**
  * Created by rover12421 on 2/9/15.
  */
@@ -216,7 +218,8 @@ public class MultiLanguageAj {
             "Could not detect whether app is framework one",
             "Out dir not set",
             "Using default framework file",
-            "Do not decode .9 png file"
+            "Do not decode .9 png file",
+            "Unable to rename temporary file"
     };
 
     private static final String[] langRpStr = new String[]{
@@ -227,6 +230,7 @@ public class MultiLanguageAj {
             "Renamed manifest package found! Replacing (.+?) with (.+?)",
             "Arsc file contains multiple packages\\. Using package (.+?) as default",
             "Using Apktool (.+?)",
+            "^Copying unknown file (.+?) with method (.+?)$"
     };
 
     private static final String[] langRpStrDef = new String[]{
@@ -237,16 +241,17 @@ public class MultiLanguageAj {
             "Renamed manifest package found! Replacing $1 with $2",
             "Arsc file contains multiple packages. Using package $1 as default",
             "Using Apktool $1",
+            "Copying unknown file $1 with method $2"
     };
 
     public static String covertLocaleInfo(String str) {
         if (str == null || str.length() < MINLEN) return str;
         MultiLanguageSupport languageSupport = MultiLanguageSupport.getInstance();
 //        if (languageSupport.getLocale().equals(Locale.US)) return str;
-        int len = str.length();
+//        int len = str.length();
         for (int i=0; i<langStr.length; i++) {
             String key = langStr[i];
-            if (len < key.length()) continue;
+//            if (len < key.length()) continue;
             String val = languageSupport.get(i, langStr[i]);
             if (key.equals(val)) continue;
             str = str.replace(key, val);
@@ -255,7 +260,7 @@ public class MultiLanguageAj {
         for (int i=0; i<langRpStr.length; i++) {
             try {
                 String key = langRpStr[i];
-                if (len < key.length()) continue;
+//                if (len < key.length()) continue;
                 String val = languageSupport.get("r" + i, langRpStrDef[i]);
                 if (key.equals(val)) continue;
                 str = str.replaceFirst(key, val);
@@ -294,7 +299,7 @@ public class MultiLanguageAj {
             "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
     public String around_String_format(ProceedingJoinPoint joinPoint,
                                      String format, Object... args) throws Throwable {
-        return (String) joinPoint.proceed(new Object[]{covertLocaleInfo(format), args});
+        return covertLocaleInfo((String) joinPoint.proceed(joinPoint.getArgs()));
     }
 
 
