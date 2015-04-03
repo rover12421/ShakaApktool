@@ -1,6 +1,5 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
-import brut.androlib.Androlib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResTable;
 import brut.androlib.res.data.ResUnknownFiles;
@@ -33,7 +32,8 @@ import java.util.zip.*;
 public class AndrolibAj {
 
     public String getUNK_DIRNAME() throws NoSuchFieldException, IllegalAccessException {
-        return (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+//        return (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+        return "unknown";
     }
 
     /**

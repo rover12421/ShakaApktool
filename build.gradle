@@ -385,8 +385,8 @@ task generateJflexSource(type: JavaExec) {
  * 使用AspjectJ之后,此处需要改为compileAspect
  * compileAspect在compileJava之前
  */
-compileAspect.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource
-compileTestAspect.dependsOn generateTestAntlrSource
+compileAspect.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource, generateTestAntlrSource
+//compileTestAspect.dependsOn generateTestAntlrSource
 
 task proguard(type: JavaExec, dependsOn: fatJar) {
     def outFile = jar.destinationDir.getPath() + '/' + "ShakaApktool" + '_' + shakaVersion + '-release' + '.' + jar.extension
@@ -414,11 +414,12 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
     args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
 //    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'
-    args '-keepclasseswithmembers class brut.apktool.Main { ** normalOptions; ** DecodeOptions; }'
-    args '-keepclasseswithmembers class brut.androlib.Androlib { ** UNK_DIRNAME; ** mResUnknownFiles; }'
-    args '-keepclasseswithmembers class brut.androlib.res.data.value.ResBagValue { ** mParent; }'
-    args '-keepclasseswithmembers class brut.androlib.res.data.value.ResStyleValue { **[] mItems; }'
-    args '-keepclasseswithmembers class brut.androlib.res.decoder.ResFileDecoder { ** mDecoders; }'
+    args '-keepclassmembernames class brut.apktool.Main { *** normalOptions; *** DecodeOptions; }'
+    args '-keepclassmembernames class brut.androlib.Androlib { *** mResUnknownFiles; }'
+    args '-keepclassmembernames class brut.androlib.res.data.value.ResBagValue { *** mParent; }'
+    args '-keepclassmembernames class brut.androlib.res.data.value.ResStyleValue { *** mItems; }'
+    args '-keepclassmembernames class brut.androlib.res.decoder.ResFileDecoder { *** mDecoders; }'
+    args '-keepclassmembernames class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** android_ns; *** getAttributeOffset(...);}'
 }
 
 tasks.getByPath(':release').dependsOn(proguard)

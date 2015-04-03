@@ -1,6 +1,5 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
-import brut.androlib.Androlib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.AndrolibResources;
 import brut.androlib.res.decoder.AXmlResourceParser;
@@ -50,7 +49,8 @@ public class AndrolibResourcesAj {
     public void aaptPackage_around(ProceedingJoinPoint joinPoint,
                                    File apkFile, File manifest, File resDir, File rawDir, File assetDir, File[] include) {
         try {
-            String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+//            String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
+            String UNK_DIRNAME = "unknown";
             /**
              * 最大尝试10次,防止无限循环
              */
