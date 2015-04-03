@@ -14,13 +14,11 @@ import com.rover12421.shaka.apktool.util.ReflectUtil;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 
 import java.io.*;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.zip.*;
@@ -236,10 +234,13 @@ public class AndrolibAj {
                     ){
                 ZipEntry entry;
                 while ((entry = zis.getNextEntry()) != null) {
-                    if (!entry.isDirectory() && entry.getName().startsWith("res/")) {
-                        File resFile = new File(outDir, entry.getName());
-                        File unFile = new File(unknownOut, entry.getName());
+                    String entryName = entry.getName();
+                    if (!entry.isDirectory() && !entryName.equals("classes.dex") && !entryName.equals("resources.arsc")) {
+                        File resFile = new File(outDir, getDecodeFileMapName(entryName));
                         if (!resFile.exists()) {
+                            File unFile = new File(unknownOut, entryName);
+                            if (unFile.exists()) continue;
+
                             unFile.getParentFile().mkdirs();
                             try (
                                     FileOutputStream fos = new FileOutputStream(unFile);
@@ -247,7 +248,7 @@ public class AndrolibAj {
                                     ){
                                 IOUtils.copy(is, fos);
                             }
-                            mResUnknownFiles.addUnknownFileInfo(entry.getName(), String.valueOf(entry.getMethod()));
+                            mResUnknownFiles.addUnknownFileInfo(entryName, String.valueOf(entry.getMethod()));
                         }
                     }
                 }
@@ -257,4 +258,25 @@ public class AndrolibAj {
         }
     }
 
+    public static final String DecodeFileMapsMetaName = "DecodeFileMaps";
+    public static Map<String, String> DecodeFileMaps = new LinkedHashMap<>();
+
+    @Before("execution(* brut.androlib.Androlib.writeMetaFile(..))" +
+            "&& args(mOutDir, meta)")
+    public void writeMetaFile(File mOutDir, Map<String, Object> meta) {
+        meta.put(DecodeFileMapsMetaName, DecodeFileMaps);
+    }
+
+    @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")
+    public void readMetaFile(Map<String, Object> meta) {
+        DecodeFileMaps = (Map<String, String>) meta.get(DecodeFileMapsMetaName);
+    }
+
+    public String getDecodeFileMapName(String name) {
+        String mapName = DecodeFileMaps.get(name);
+        if (mapName == null) {
+            mapName = name;
+        }
+        return mapName;
+    }
 }
