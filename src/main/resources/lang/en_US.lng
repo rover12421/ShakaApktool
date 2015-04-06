@@ -45,7 +45,7 @@
 44=Copying raw manifest
 45=Copying assets and libs
 46=Decoding Java sources
-47=Copying raw classes.dex file
+47=Could not find resources
 48=Copying unknown files
 49=Copying original files
 50=being used as aapt location
@@ -209,3 +209,4 @@ r4=Renamed manifest package found! Replacing $1 with $2
 r5=Arsc file contains multiple packages. Using package $1 as default
 r6=Using Apktool $1
 r7=Copying unknown file $1 with method $2
+r8=Copying raw $1 file...
