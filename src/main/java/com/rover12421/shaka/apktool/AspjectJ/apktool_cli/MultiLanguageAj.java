@@ -1,13 +1,12 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_cli;
 
 import com.rover12421.shaka.apktool.lib.MultiLanguageSupport;
+
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-
-import java.util.Locale;
 
 /**
  * Created by rover12421 on 2/9/15.
@@ -65,7 +64,7 @@ public class MultiLanguageAj {
             "Copying raw manifest",
             "Copying assets and libs",
             "Decoding Java sources",
-            "Copying raw classes.dex file",
+            "Could not find resources",
             "Copying unknown files",
             "Copying original files",
             "being used as aapt location",
@@ -230,7 +229,8 @@ public class MultiLanguageAj {
             "Renamed manifest package found! Replacing (.+?) with (.+?)",
             "Arsc file contains multiple packages\\. Using package (.+?) as default",
             "Using Apktool (.+?)",
-            "^Copying unknown file (.+?) with method (.+?)$"
+            "^Copying unknown file (.+?) with method (.+?)$",
+            "Copying raw (.+?) file\\.\\.\\."
     };
 
     private static final String[] langRpStrDef = new String[]{
@@ -241,7 +241,8 @@ public class MultiLanguageAj {
             "Renamed manifest package found! Replacing $1 with $2",
             "Arsc file contains multiple packages. Using package $1 as default",
             "Using Apktool $1",
-            "Copying unknown file $1 with method $2"
+            "Copying unknown file $1 with method $2",
+            "Copying raw $1 file..."
     };
 
     public static String covertLocaleInfo(String str) {

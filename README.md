@@ -7,7 +7,7 @@ It is NOT intended for piracy and other non-legal uses. It could be used for loc
 
 #### Link
 - [Project Page](http://www.rover12421.com/shakaapktool)
-- [Apktool Project Page](http://code.google.com/p/android-apktool/)
+- [Apktool Project Page](http://ibotpeaches.github.io/Apktool/)
 - [Source (Github)](https://github.com/rover12421/ShakaApktool/)
 - [Source (Bitbucket)](https://bitbucket.org/Rover12421/shakaapktool)
 - [Source (GitCafe)](https://gitcafe.com/rover12421/ShakaApktool)
