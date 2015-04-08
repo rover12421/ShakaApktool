@@ -1,14 +1,19 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
 import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.decoder.AXmlResourceParser;
 import brut.androlib.res.decoder.ResAttrDecoder;
 import brut.androlib.res.decoder.StringBlock;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by rover12421 on 4/3/15.
@@ -72,6 +77,7 @@ public class AXmlResourceParserAj {
         }
 
         String value = m_strings(parser).getString(namespace);
+
         try {
             String name = mAttrDecoder(parser).decodeManifestAttr(parser.getAttributeNameResource(index));
             if (name == null && value.equalsIgnoreCase(android_ns(parser))) {
@@ -81,6 +87,7 @@ public class AXmlResourceParserAj {
                 value = android_ns(parser);
             }
         } catch (AndrolibException e) {
+            value = "";
         }
 
         return value;

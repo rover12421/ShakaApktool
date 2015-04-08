@@ -1,5 +1,6 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
+import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.value.ResAttr;
 import brut.androlib.res.data.value.ResScalarValue;
@@ -29,9 +30,13 @@ public class ResAttrDecoderAj {
 //            if (attrResId != 0) {
             if (attrResId > 0) {
 //                ResAttr attr = (ResAttr) getCurrentPackage().getResTable()
-                ResAttr attr = (ResAttr) mCurrentPackage.getResTable()
-                        .getResSpec(attrResId).getDefaultResource().getValue();
-                decoded = attr.convertToResXmlFormat(resValue);
+                try {
+                    ResAttr attr = (ResAttr) mCurrentPackage.getResTable()
+                            .getResSpec(attrResId).getDefaultResource().getValue();
+                    decoded = attr.convertToResXmlFormat(resValue);
+                } catch (AndrolibException e) {
+//                e.printStackTrace();
+                }
             }
 
             return decoded != null ? decoded : resValue.encodeAsResXmlAttr();
