@@ -117,7 +117,7 @@ public class AndrolibAj {
             LogHelper.getLogger().info("Copying unknown files/dir...");
 
             Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
-            File tempFile = File.createTempFile("buildUnknownFiles", "tmp");
+            File tempFile = File.createTempFile("buildUnknownFiles", "tmp", outFile.getParentFile());
             tempFile.delete();
             boolean renamed = outFile.renameTo(tempFile);
             if(!renamed) {
@@ -126,16 +126,17 @@ public class AndrolibAj {
 
             try (
                     ZipFile inputFile = new ZipFile(tempFile);
-                    ZipOutputStream actualOutput = new ZipOutputStream(new FileOutputStream(outFile))
+                    FileOutputStream fos = new FileOutputStream(outFile);
+                    ZipOutputStream actualOutput = new ZipOutputStream(fos)
             ) {
                 copyExistingFiles(inputFile, actualOutput, files);
                 copyUnknownFiles(appDir, actualOutput, files);
             } catch (IOException ex) {
                 throw new AndrolibException(ex);
+            } finally {
+                // Remove our temporary file.
+                tempFile.delete();
             }
-
-            // Remove our temporary file.
-            tempFile.delete();
         }
     }
 
@@ -235,7 +236,13 @@ public class AndrolibAj {
                 ZipEntry entry;
                 while ((entry = zis.getNextEntry()) != null) {
                     String entryName = entry.getName();
-                    if (!entry.isDirectory() && !entryName.equals("classes.dex") && !entryName.equals("resources.arsc")) {
+                    if (!entry.isDirectory()
+                            && !entryName.equals("classes.dex")
+                            && !entryName.equals("resources.arsc")
+                            ) {
+                        if (entryName.replaceFirst("META-INF/[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
+                            continue;
+                        }
                         File resFile = new File(outDir, getDecodeFileMapName(entryName));
                         if (!resFile.exists()) {
                             File unFile = new File(unknownOut, entryName);

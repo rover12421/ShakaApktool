@@ -13,13 +13,17 @@ public class ResFileDecoderAj {
             "&& args(inDir, inFileName, outDir, outFileName, decoder)")
     public void decode(Directory inDir, String inFileName, Directory outDir,
                        String outFileName, String decoder) {
-        AndrolibAj.DecodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
+        if (!inFileName.equals(outFileName)) {
+            AndrolibAj.DecodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
+        }
     }
 
     @Before("execution(* brut.androlib.res.decoder.ResFileDecoder.decodeManifest(..))" +
             "&& args(inDir, inFileName, outDir, outFileName)")
     public void decodeManifest(Directory inDir, String inFileName,
                                Directory outDir, String outFileName) {
-        AndrolibAj.DecodeFileMaps.put(inFileName, outFileName);
+        if (!inFileName.equals(outFileName)) {
+            AndrolibAj.DecodeFileMaps.put(inFileName, outFileName);
+        }
     }
 }
