@@ -1,12 +1,16 @@
 package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
+import brut.androlib.Androlib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResTable;
 import brut.androlib.res.data.ResUnknownFiles;
 import brut.androlib.res.util.ExtFile;
+import brut.androlib.src.SmaliDecoder;
+import brut.common.BrutException;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
+import brut.util.OS;
 import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.AndroidZip;
 import com.rover12421.shaka.apktool.util.LogHelper;
@@ -17,6 +21,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -33,6 +38,9 @@ public class AndrolibAj {
 //        return (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
         return "unknown";
     }
+
+    private final static String SMALI_DIRNAME = "smali";
+    private final static String APK_DIRNAME = "build/apk";
 
     /**
      * 未知文件处理,在编译未知文件之前,重新扫描一次"unknown"目录
@@ -99,13 +107,53 @@ public class AndrolibAj {
     public void decodeSourcesSmali_around(ProceedingJoinPoint joinPoint, File apkFile, File outDir, String filename, boolean debug, String debugLinePrefix,
                             boolean bakdeb, int api) throws Throwable {
         try {
-            joinPoint.proceed(joinPoint.getArgs());
-        } catch (Throwable e) {
+            File smaliDir;
+            if (filename.equalsIgnoreCase("classes.dex")) {
+                smaliDir = new File(outDir, SMALI_DIRNAME);
+            } else {
+                String mapDirName = SMALI_DIRNAME + "_" + filename.replaceAll("\\\\|/", "_");
+                //去掉.dex后缀
+                mapDirName = mapDirName.substring(0, mapDirName.length()-4);
+                smaliDir = new File(outDir, mapDirName);
+                NonDefaultSourceMaps.put(filename, mapDirName);
+            }
+            OS.rmdir(smaliDir);
+            smaliDir.mkdirs();
+            LogHelper.getLogger().info("Baksmaling " + filename + "...");
+            SmaliDecoder.decode(apkFile, smaliDir, filename, debug, debugLinePrefix, bakdeb, api);
+        } catch (BrutException ex) {
+            //只要不是反编译classes.dex的时候抛出异常,都不终止程序
             if (!"classes.dex".equals(filename)) {
                 LogHelper.getLogger().warning("decodeSourcesSmali " + filename + " error!");
             } else {
-                throw e;
+                throw ex;
             }
+        }
+    }
+
+    @Around("execution(* brut.androlib.Androlib.buildNonDefaultSources(..))" +
+            "&& args(appDir)")
+    public void buildNonDefaultSources(ProceedingJoinPoint joinPoint, ExtFile appDir) {
+        for (String dex : NonDefaultSourceMaps.keySet()) {
+            try {
+                Androlib androlib = (Androlib) joinPoint.getThis();
+                File dexFile = new File(appDir, APK_DIRNAME + "/" + dex);
+                dexFile.getParentFile().mkdirs();
+                androlib.buildSourcesSmali(appDir, NonDefaultSourceMaps.get(dex), dex);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Around("execution(* brut.androlib.Androlib.decodeSourcesRaw(..))" +
+            "&& args(apkFile, outDir, filename)")
+    public void decodeSourcesRaw(ProceedingJoinPoint joinPoint, ExtFile apkFile, File outDir, String filename) throws Throwable {
+        /**
+         * 不解码dex的时候,只有classes.dex需要copy,其他的全部作为unkownfiles文件处理即可
+         */
+        if (filename.equals("classes.dex")) {
+            joinPoint.proceed(joinPoint.getArgs());
         }
     }
 
@@ -215,8 +263,6 @@ public class AndrolibAj {
     }
 
     /**
-     * res中的资源没有被arsc中引用,没有生成id,就会丢失.
-     * 这里是把这类丢失的文件添加到unkown目录下
      * @param joinPoint
      * @param apkFile
      * @param outDir
@@ -240,9 +286,21 @@ public class AndrolibAj {
                             && !entryName.equals("classes.dex")
                             && !entryName.equals("resources.arsc")
                             ) {
+
+                        /**
+                         * 过滤签名文件
+                         */
                         if (entryName.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
                             continue;
                         }
+
+                        /**
+                         * 过滤dex文件
+                         */
+                        if (NonDefaultSourceMaps.containsKey(entryName)) {
+                            continue;
+                        }
+
                         File resFile = new File(outDir, getDecodeFileMapName(entryName));
                         if (!resFile.exists()) {
                             File unFile = new File(unknownOut, entryName);
@@ -267,16 +325,20 @@ public class AndrolibAj {
 
     public static final String DecodeFileMapsMetaName = "DecodeFileMaps";
     public static Map<String, String> DecodeFileMaps = new LinkedHashMap<>();
+    public static final String NonDefaultSourceMapsMetaName = "NonDefaultSources";
+    public static Map<String, String> NonDefaultSourceMaps = new LinkedHashMap<>();
 
     @Before("execution(* brut.androlib.Androlib.writeMetaFile(..))" +
             "&& args(mOutDir, meta)")
     public void writeMetaFile(File mOutDir, Map<String, Object> meta) {
         meta.put(DecodeFileMapsMetaName, DecodeFileMaps);
+        meta.put(NonDefaultSourceMapsMetaName, NonDefaultSourceMaps);
     }
 
     @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")
     public void readMetaFile(Map<String, Object> meta) {
         DecodeFileMaps = (Map<String, String>) meta.get(DecodeFileMapsMetaName);
+        NonDefaultSourceMaps = (Map<String, String>) meta.get(NonDefaultSourceMapsMetaName);
     }
 
     public String getDecodeFileMapName(String name) {
