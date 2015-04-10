@@ -65,12 +65,17 @@ public class MainAj {
                 .withDescription("Using default framework file.")
                 .create("df");
 
+        Option showMoreRecognizableCharacters = OptionBuilder.withLongOpt("more-recognizable-characters")
+                .withDescription("Show more recognizable characters")
+                .create("mc");
+
         try {
             Options normalOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "normalOptions");
             Options DecodeOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "DecodeOptions");
             normalOptions.addOption(language);
             DecodeOptions.addOption(no9png);
             DecodeOptions.addOption(usingDefaultFramework);
+            DecodeOptions.addOption(showMoreRecognizableCharacters);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,6 +112,10 @@ public class MainAj {
 
         if (cli.hasOption("df") || cli.hasOption("default-framework")) {
             ShakaDecodeOption.getInstance().setUsingDefaultFramework(true);
+        }
+
+        if (cli.hasOption("mc") || cli.hasOption("more-recognizable-characters")) {
+            ShakaDecodeOption.getInstance().setShowMoreRecognizableCharacters(true);
         }
     }
 }

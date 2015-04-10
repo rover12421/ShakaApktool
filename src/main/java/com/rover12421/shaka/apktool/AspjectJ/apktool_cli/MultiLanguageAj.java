@@ -218,7 +218,8 @@ public class MultiLanguageAj {
             "Out dir not set",
             "Using default framework file",
             "Do not decode .9 png file",
-            "Unable to rename temporary file"
+            "Unable to rename temporary file",
+            "Show more recognizable characters"
     };
 
     private static final String[] langRpStr = new String[]{

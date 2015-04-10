@@ -200,6 +200,7 @@
 199=Using default framework file
 200=Do not decode .9 png file
 201=Unable to rename temporary file
+202=Show more recognizable characters
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...
