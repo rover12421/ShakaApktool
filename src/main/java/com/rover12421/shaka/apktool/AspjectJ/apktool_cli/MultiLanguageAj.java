@@ -304,13 +304,13 @@ public class MultiLanguageAj {
     }
 
 
-    @Around("call(void org.jf.util.IndentingWriter.write(..))" +
-            "&& args(s)" +
-            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
-    public void around_IndentingWriter_write(ProceedingJoinPoint joinPoint,
-                                                   String s) throws Throwable {
-        joinPoint.proceed(new Object[]{covertLocaleInfo(s)});
-    }
+//    @Around("call(void org.jf.util.IndentingWriter.write(..))" +
+//            "&& args(s)" +
+//            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
+//    public void around_IndentingWriter_write(ProceedingJoinPoint joinPoint,
+//                                                   String s) throws Throwable {
+//        joinPoint.proceed(new Object[]{covertLocaleInfo(s)});
+//    }
 
     @Around("call(void java.util.logging.Logger.*(String))" +
             "&& args(msg)" +
