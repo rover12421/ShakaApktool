@@ -240,7 +240,7 @@ public class AndrolibAj {
                             && !entryName.equals("classes.dex")
                             && !entryName.equals("resources.arsc")
                             ) {
-                        if (entryName.replaceFirst("META-INF/[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
+                        if (entryName.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
                             continue;
                         }
                         File resFile = new File(outDir, getDecodeFileMapName(entryName));
