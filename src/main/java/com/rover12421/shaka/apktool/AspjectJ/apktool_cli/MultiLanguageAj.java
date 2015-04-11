@@ -220,7 +220,8 @@ public class MultiLanguageAj {
             "Do not decode .9 png file",
             "Unable to rename temporary file",
             "Show more recognizable characters",
-            "Find HorizontalScrollView exception xml"
+            "Find HorizontalScrollView exception xml",
+            "Detected dalvik-obfuscator code block"
     };
 
     private static final String[] langRpStr = new String[]{

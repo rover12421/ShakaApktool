@@ -420,6 +420,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-keepclassmembernames class brut.androlib.res.data.value.ResStyleValue { *** mItems; }'
     args '-keepclassmembernames class brut.androlib.res.decoder.ResFileDecoder { *** mDecoders; }'
     args '-keepclassmembernames class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** android_ns; *** getAttributeOffset(...);}'
+    args '-keepclassmembernames class org.jf.dexlib2.dexbacked.DexBackedMethodImplementation { *** codeOffset; }'
 }
 
 tasks.getByPath(':release').dependsOn(proguard)

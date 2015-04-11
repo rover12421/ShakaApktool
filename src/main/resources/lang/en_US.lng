@@ -202,6 +202,7 @@
 201=Unable to rename temporary file
 202=Show more recognizable characters
 203=Find HorizontalScrollView exception xml
+204=Detected dalvik-obfuscator code block
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...
