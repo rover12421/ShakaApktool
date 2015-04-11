@@ -11,13 +11,22 @@ import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
 import com.rover12421.shaka.apktool.util.LogHelper;
 import com.rover12421.shaka.apktool.util.ReflectUtil;
 import com.rover12421.shaka.apktool.util.ShakaException;
-import com.rover12421.shaka.apktool.util.ShakaRuntimeException;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -124,6 +133,72 @@ public class AndrolibResourcesAj {
                         }
                     }
                 } else {
+                    if (errStr.indexOf("'@android:style/Widget.HorizontalScrollView'") > 0) {
+                        Pattern xmlPathPattern = Pattern.compile("([^:]+?):.+?(Error retrieving parent for item).+?'@android:style/Widget.HorizontalScrollView'");
+                        Matcher xmlPathMatcher = xmlPathPattern.matcher(errStr);
+                        if (xmlPathMatcher.find()) {
+                            String xmlPathStr = xmlPathMatcher.group(1);
+                            File xmlPathFile = new File(xmlPathStr);
+                            if (xmlPathFile.exists()) {
+                                LogHelper.getLogger().warning("Find HorizontalScrollView exception xml : " + xmlPathStr);
+                                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                                Document document = documentBuilder.parse(xmlPathStr);
+                                NodeList list = document.getChildNodes().item(0).getChildNodes();
+                                for (int i=0; i<list.getLength(); i++) {
+                                    Node node = list.item(i);
+                                    if (node.getAttributes() != null) {
+                                        Node attr = node.getAttributes().getNamedItem("parent");
+                                        if (attr != null && attr.getNodeValue().equals("@android:style/Widget.HorizontalScrollView")) {
+                                            /**
+                                             * 首先把HorizontalScrollView替换成aapt能识别的ScrollView
+                                             */
+                                            attr.setNodeValue("@android:style/Widget.ScrollView");
+                                            /**
+                                             * 再判断时候有 android:scrollbars 和 android:fadingEdge 属性
+                                             * 有的话不修改,没有就添加
+                                             * 这样是为了保持样式不变化
+                                             */
+                                            Element scrollbars = document.createElement("item");
+                                            scrollbars.setAttribute("name", "android:scrollbars");
+                                            scrollbars.setNodeValue("horizontal");
+
+                                            Element fadingEdge = document.createElement("item");
+                                            fadingEdge.setAttribute("name", "android:fadingEdge");
+                                            fadingEdge.setNodeValue("horizontal");
+                                            Element element = (Element) node;
+                                            NodeList items = element.getElementsByTagName("item");
+                                            for (int j=0; j<items.getLength(); j++) {
+                                                Element item = (Element) items.item(j);
+                                                if (item.getAttribute("name").equals("android:scrollbars")) {
+                                                    scrollbars = null;
+                                                }
+                                                if (item.getAttribute("name").equals("android:fadingEdge")) {
+                                                    fadingEdge = null;
+                                                }
+                                            }
+
+                                            if (scrollbars != null) {
+                                                node.appendChild(scrollbars);
+                                            }
+
+                                            if (fadingEdge != null) {
+                                                node.appendChild(fadingEdge);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                /**
+                                 * 保存修改过的xml
+                                 */
+                                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                                Transformer transformer = transformerFactory.newTransformer();
+                                transformer.transform(new DOMSource(document), new StreamResult(xmlPathStr));
+                                continue;
+                            }
+                        }
+                    }
                     throw new ShakaException(errStr, e);
                 }
 

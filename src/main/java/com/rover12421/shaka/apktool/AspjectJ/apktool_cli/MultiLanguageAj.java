@@ -219,7 +219,8 @@ public class MultiLanguageAj {
             "Using default framework file",
             "Do not decode .9 png file",
             "Unable to rename temporary file",
-            "Show more recognizable characters"
+            "Show more recognizable characters",
+            "Find HorizontalScrollView exception xml"
     };
 
     private static final String[] langRpStr = new String[]{
