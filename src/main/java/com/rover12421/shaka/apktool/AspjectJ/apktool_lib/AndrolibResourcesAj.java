@@ -134,7 +134,7 @@ public class AndrolibResourcesAj {
                     }
                 } else {
                     if (errStr.indexOf("'@android:style/Widget.HorizontalScrollView'") > 0) {
-                        Pattern xmlPathPattern = Pattern.compile("([^:]+?):.+?(Error retrieving parent for item).+?'@android:style/Widget.HorizontalScrollView'");
+                        Pattern xmlPathPattern = Pattern.compile("(.+?):\\d+:.+?(Error retrieving parent for item).+?'@android:style/Widget.HorizontalScrollView'");
                         Matcher xmlPathMatcher = xmlPathPattern.matcher(errStr);
                         if (xmlPathMatcher.find()) {
                             String xmlPathStr = xmlPathMatcher.group(1);
