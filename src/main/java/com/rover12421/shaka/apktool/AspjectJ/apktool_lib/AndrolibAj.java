@@ -337,8 +337,12 @@ public class AndrolibAj {
 
     @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")
     public void readMetaFile(Map<String, Object> meta) {
-        DecodeFileMaps = (Map<String, String>) meta.get(DecodeFileMapsMetaName);
-        NonDefaultSourceMaps = (Map<String, String>) meta.get(NonDefaultSourceMapsMetaName);
+        if (meta.get(DecodeFileMapsMetaName) != null) {
+            DecodeFileMaps = (Map<String, String>) meta.get(DecodeFileMapsMetaName);
+        }
+        if (meta.get(NonDefaultSourceMapsMetaName) != null) {
+            NonDefaultSourceMaps = (Map<String, String>) meta.get(NonDefaultSourceMapsMetaName);
+        }
     }
 
     public String getDecodeFileMapName(String name) {
