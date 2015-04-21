@@ -69,6 +69,14 @@ public class MainAj {
                 .withDescription("Show more recognizable characters")
                 .create("mc");
 
+        Option fuckUnkownId = OptionBuilder.withLongOpt("fuck_unkown_id")
+                .withDescription("Fuck unkown id")
+                .create("fui");
+
+        Option ignoreResDecodeError = OptionBuilder.withLongOpt("ignore_res_decode_error")
+                .withDescription("ignore res decode error")
+                .create("ir");
+
         try {
             Options normalOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "normalOptions");
             Options DecodeOptions = (Options) ReflectUtil.getFieldValue(brut.apktool.Main.class, "DecodeOptions");
@@ -76,6 +84,8 @@ public class MainAj {
             DecodeOptions.addOption(no9png);
             DecodeOptions.addOption(usingDefaultFramework);
             DecodeOptions.addOption(showMoreRecognizableCharacters);
+            DecodeOptions.addOption(fuckUnkownId);
+            DecodeOptions.addOption(ignoreResDecodeError);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,6 +126,14 @@ public class MainAj {
 
         if (cli.hasOption("mc") || cli.hasOption("more-recognizable-characters")) {
             ShakaDecodeOption.getInstance().setShowMoreRecognizableCharacters(true);
+        }
+
+        if (cli.hasOption("fui") || cli.hasOption("fuck_unkown_id")) {
+            ShakaDecodeOption.getInstance().setFuckUnkownId(true);
+        }
+
+        if (cli.hasOption("ir") || cli.hasOption("ignore_res_decode_error")) {
+            ShakaDecodeOption.getInstance().setIgnoreResDecodeError(true);
         }
     }
 }

@@ -18,6 +18,9 @@ public class ShakaDecodeOption {
     //显示更多可识别字符
     private boolean showMoreRecognizableCharacters = false;
 
+    private boolean fuckUnkownId = false;
+    private boolean ignoreResDecodeError = false;
+
     public boolean isNo9png() {
         return no9png;
     }
@@ -40,5 +43,21 @@ public class ShakaDecodeOption {
 
     public void setShowMoreRecognizableCharacters(boolean showMoreRecognizableCharacters) {
         this.showMoreRecognizableCharacters = showMoreRecognizableCharacters;
+    }
+
+    public boolean isFuckUnkownId() {
+        return fuckUnkownId;
+    }
+
+    public void setFuckUnkownId(boolean fuckUnkownId) {
+        this.fuckUnkownId = fuckUnkownId;
+    }
+
+    public boolean isIgnoreResDecodeError() {
+        return ignoreResDecodeError;
+    }
+
+    public void setIgnoreResDecodeError(boolean ignoreResDecodeError) {
+        this.ignoreResDecodeError = ignoreResDecodeError;
     }
 }

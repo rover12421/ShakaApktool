@@ -203,6 +203,9 @@
 202=Show more recognizable characters
 203=Find HorizontalScrollView exception xml
 204=Detected dalvik-obfuscator code block
+205=Could not decode file, ignore
+206=ignore res decode error
+207=Fuck unkown id
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...

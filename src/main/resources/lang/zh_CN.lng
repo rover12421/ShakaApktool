@@ -202,8 +202,11 @@
 200=不解析.9格式的资源
 201=不能重命名临时文件
 202=显示更多的可识别字符
-203=找到 HorizontalScrollView 异常 xml
-204=检测到 dalvik-obfuscator 代码快
+203=检测到 HorizontalScrollView 异常 xml
+204=检测到 dalvik-obfuscator 代码块
+205=忽略不能反编译的资源文件
+206=忽略资源反编译的错误
+207=反编译遇到未知资源id继续执行
 
 r0=拷贝文件 $1 ...
 r1=编译 $1 到 $2...

@@ -2,6 +2,7 @@ package com.rover12421.shaka.apktool.AspjectJ.apktool_cli;
 
 import com.rover12421.shaka.apktool.lib.MultiLanguageSupport;
 
+import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -221,7 +222,10 @@ public class MultiLanguageAj {
             "Unable to rename temporary file",
             "Show more recognizable characters",
             "Find HorizontalScrollView exception xml",
-            "Detected dalvik-obfuscator code block"
+            "Detected dalvik-obfuscator code block",
+            "Could not decode file, ignore",
+            "ignore res decode error",
+            "Fuck unkown id",
     };
 
     private static final String[] langRpStr = new String[]{
@@ -250,6 +254,9 @@ public class MultiLanguageAj {
 
     public static String covertLocaleInfo(String str) {
         if (str == null || str.length() < MINLEN) return str;
+        if (str.contains("replacing by FALSE value") && ShakaDecodeOption.getInstance().isIgnoreResDecodeError()) {
+            str = str.replaceAll("replacing by FALSE value", "ignore");
+        }
         MultiLanguageSupport languageSupport = MultiLanguageSupport.getInstance();
 //        if (languageSupport.getLocale().equals(Locale.US)) return str;
 //        int len = str.length();
