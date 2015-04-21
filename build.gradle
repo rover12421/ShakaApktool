@@ -432,3 +432,10 @@ task cli() {
     }
 }
 cli.dependsOn fatJar
+
+
+test {
+    exclude 'com/rover12421/shaka/apktool/temp/**'
+
+//    testLogging.showStandardStreams = true
+}
