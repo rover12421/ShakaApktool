@@ -1,0 +1,131 @@
+/**
+ *  Copyright 2015 Rover12421 <rover12421@163.com>
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+import org.apache.tools.ant.filters.*
+
+def apktoolversion_major = '2.0.0'
+def apktoolversion_minor = 'RC4'
+
+ext.apktool_version = ""
+ext.hash = ""
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [
+                        'src/main/java',
+                        'apktool/brut.j.common/src/main/java',
+                        'apktool/brut.j.util/src/main/java',
+                        'apktool/brut.j.dir/src/main/java',
+                        'apktool/brut.apktool/apktool-lib/src/main/java',
+                        'apktool/brut.apktool/apktool-cli/src/main/java'
+                    ]
+        }
+        resources {
+            srcDirs = [
+                        'src/main/resources',
+                        'apktool/brut.j.common/src/main/resources',
+                        'apktool/brut.j.util/src/main/resources',
+                        'apktool/brut.j.dir/src/main/resources',
+                        'apktool/brut.apktool/apktool-lib/src/main/resources',
+                        'apktool/brut.apktool/apktool-cli/src/main/resources'
+                    ]
+        }
+    }
+
+    test {
+        java {
+            srcDirs = [
+                        'src/test/java',
+                        'apktool/brut.apktool/apktool-lib/src/test/java',
+                    ]
+        }
+        resources {
+            srcDirs = [
+                        'src/test/resources',
+                        'apktool/brut.j.common/src/test/resources',
+                        'apktool/brut.j.util/src/test/resources',
+                        'apktool/brut.j.dir/src/test/resources',
+                        'apktool/brut.apktool/apktool-lib/src/test/resources',
+                        'apktool/brut.apktool/apktool-cli/src/test/resources'
+                    ]
+        }
+    }
+}
+
+ext.shakaVersion = ""
+ext.shakaDebug = false
+ext.apktoolVersion = ""
+ext.apktoolHash = ""
+processResources {
+    from('src/main/resources/properties') {
+        include '**/*.properties'
+        into 'properties'
+        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion.toString(), shakaDebug: shakaDebug.toString()] )
+    }
+
+    from('apktool/brut.apktool/apktool-lib/src/main/resources/properties') {
+        include '**/*.properties'
+        into 'properties'
+        filter(ReplaceTokens, tokens: [version: apktoolVersion.toString(), gitrev: apktoolHash.toString()] )
+    }
+}
+
+dependencies {
+    compile project(':shaka.lib'),
+            project(':shaka.smali'),
+            depends.snakeyaml,
+            depends.xmlpull,
+            depends.guava,
+            depends.commons_lang,
+            depends.commons_io,
+            depends.commons_cli,
+            depends.antlr
+
+    testCompile depends.xmlunit,
+            depends.junit
+}
+
+// https://gist.github.com/JonasGroeger/7620911
+def getCheckedOutGitCommitHash() {
+    def gitFolder = "$projectDir/.git/"
+    def takeFromHash = 6
+
+    def head
+    try {
+        head = new File(gitFolder + "HEAD").text.split(":")
+    } catch(Exception e) {
+        return null;
+    }
+
+    def isCommit = head.length == 1
+    if(isCommit) return head[0].trim().take(takeFromHash)
+
+    def refHead = new File(gitFolder + head[1].trim())
+    refHead.text.trim().take takeFromHash
+}
+
+def getCheckedOutBranch() {
+    def gitFolder = "$projectDir/.git/"
+
+    def head
+    try {
+        head = new File(gitFolder + "HEAD").text.split("/")
+        return head[2].trim();
+    } catch(Exception e) {
+        return "SNAPSHOT";
+    }
+}

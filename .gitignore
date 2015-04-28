@@ -16,3 +16,4 @@ bin/
 TestApk/
 libs/
 /src/test/
+generated/

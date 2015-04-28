@@ -1,0 +1,7 @@
+include 'shaka.lib',
+        'shaka.cli',
+		'shaka.gui',
+		'shaka.smali',
+		'shaka.apktool',
+		'shaka.smali:accessorTestGenerator'
+

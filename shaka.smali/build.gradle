@@ -1,0 +1,194 @@
+/**
+ *  Copyright 2015 Rover12421 <rover12421@163.com>
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+apply plugin: 'antlr'
+apply plugin: 'jflex'
+
+def smali_version = '2.0.5'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath depends.jflex_plugin
+    }
+}
+
+ext.testAccessorOutputDir = file("${projectDir}/generated/accessor/test")
+ext.testAccessorOutputFile = file("${projectDir}/generated/accessor/test/org/jf/dexlib2/AccessorTypes.java")
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [
+                    'src/main/java',
+                    'smali/util/src/main/java',
+                    'smali/dexlib2/src/main/java',
+                    'smali/baksmali/src/main/java',
+                    'smali/smali/src/main/java',
+                    'generated/main',
+            ]
+        }
+        resources {
+            srcDirs = [
+                    'src/main/resources',
+                    'smali/util/src/main/resources',
+                    'smali/dexlib2/src/main/resources',
+                    'smali/baksmali/src/main/resources',
+                    'smali/smali/src/main/resources',
+            ]
+        }
+        jflex {
+            srcDirs = [
+                    'smali/smali/src/main/jflex'
+                    ]
+        }
+        antlr {
+            srcDirs = [
+                    'smali/smali/src/main/antlr'
+            ]
+        }
+    }
+
+    test {
+        java {
+            srcDirs = [
+                    'src/test/java',
+                    'smali/util/src/test/java',
+                    'smali/dexlib2/src/test/java',
+                    'smali/baksmali/src/test/java',
+                    'smali/smali/src/test/java',
+                    'generated/test',
+                    testAccessorOutputDir
+            ]
+        }
+        resources {
+            srcDirs = [
+                    'src/test/resources',
+                    'smali/util/src/test/resources',
+                    'smali/dexlib2/src/test/resources',
+                    'smali/baksmali/src/test/resources',
+                    'smali/smali/src/test/resources',
+            ]
+        }
+        antlr {
+            srcDirs = [
+                    'smali/smali/src/test/antlr'
+            ]
+        }
+    }
+}
+
+configurations {
+    accessorTestGenerator
+    dx
+
+    // Remove the full antlr library that's added by the antlr plugin. We manually
+    // add the smaller antlr_runtime library instead
+    compile.exclude group: 'org.antlr', module: 'antlr'
+
+    // The jflex lexer doesn't have any runtime dependencies, so remove the dependency
+    // that gets added by the jflex plugin
+    compile.exclude group: 'de.jflex', module: 'jflex'
+}
+
+dependencies {
+    compile project(':shaka.lib'),
+            depends.antlr_runtime,
+            depends.stringtemplate,
+            depends.commons_cli,
+            depends.guava,
+            depends.findbugs,
+            depends.ST4
+
+    testCompile depends.junit
+
+    antlr depends.antlr
+    jflex depends.jflex
+    dx    depends.dx
+
+    accessorTestGenerator project('accessorTestGenerator')
+}
+
+processResources.inputs.property('version', smali_version)
+processResources.expand('version': smali_version)
+
+generateTestGrammarSource {
+    outputDirectory = new File("${projectDir.name}/generated/test/", 'org/jf/smali')
+}
+
+generateGrammarSource {
+    outputDirectory = new File("${projectDir.name}/generated/main/", 'org/jf/smali')
+}
+
+generateJFlexSource {
+    outputDirectory = new File("${projectDir.name}/generated/main/", 'org/jf/smali')
+}
+
+compileAspect.dependsOn generateGrammarSource, generateJFlexSource
+
+// You must manually execute this task to regenerate SyntheticAccessorFSM.java, after modifying the ragel file
+// e.g. ./gradlew ragel
+task ragel(type:Exec) {
+    workingDir = 'src/main/ragel'
+
+    commandLine 'ragel', '-J', '-o', file('src/main/java/org/jf/dexlib2/util/SyntheticAccessorFSM.java'),
+            'SyntheticAccessorFSM.rl'
+}
+
+task generateAccessorTestSource(type: JavaExec) {
+    doFirst {
+        file(testAccessorOutputFile.parent).mkdirs()
+    }
+
+    outputs.dir file(testAccessorOutputDir)
+    sourceSets['test'].java.srcDir file(testAccessorOutputDir)
+
+    classpath = configurations.accessorTestGenerator
+    main = 'org.jf.dexlib2.AccessorTestGenerator'
+    args testAccessorOutputFile
+}
+compileTestJava.dependsOn generateTestGrammarSource, generateAccessorTestSource
+
+task generateAccessorTestDex(type: JavaExec, dependsOn: compileTestJava) {
+    def outputDex = file(new File(sourceSets.test.output.resourcesDir, 'accessorTest.dex'))
+
+    doFirst {
+        file(outputDex.parent).mkdirs()
+
+        // this has to be done in doFirst, so that the generated classes will be available.
+        // otherwise, it the tree will be populated while the build is being configured,
+        // which is before the compileTestJava has run
+        fileTree(project.sourceSets.test.output.classesDir) {
+            include 'org/jf/dexlib2/AccessorTypes*.class'
+        }.each { File file ->
+            args file
+        }
+    }
+
+    inputs.dir(project.sourceSets.test.output.classesDir)
+    outputs.file outputDex
+
+    main 'com.android.dx.command.Main'
+    classpath = configurations.dx
+
+    workingDir project.sourceSets.test.output.classesDir
+    //executable 'dx'
+    args '--dex'
+    args '--no-strict'
+    args "--output=${outputDex}"
+}
+test.dependsOn generateAccessorTestDex
