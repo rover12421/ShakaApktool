@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 /**
  *  Copyright 2015 Rover12421 <rover12421@163.com>
  *
@@ -13,3 +15,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
+processResources {
+    from('src/main/resources/properties') {
+        include '**/*.properties'
+        into 'properties'
+        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion.toString(), shakaDebug: shakaDebug.toString()] )
+    }
+}

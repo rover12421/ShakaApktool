@@ -19,8 +19,10 @@ import org.apache.tools.ant.filters.*
 def apktoolversion_major = '2.0.0'
 def apktoolversion_minor = 'RC4'
 
-ext.apktool_version = ""
-ext.hash = ""
+def branch = getCheckedOutBranchFromModule('apktool')
+def hash   = getCheckedOutGitCommitHashFromModule('apktool')
+ext.apktoolHash = "$branch-$hash"
+ext.apktoolVersion = "$apktoolversion_major-$apktoolversion_minor-$apktoolHash"
 
 sourceSets {
     main {
@@ -66,17 +68,7 @@ sourceSets {
     }
 }
 
-ext.shakaVersion = ""
-ext.shakaDebug = false
-ext.apktoolVersion = ""
-ext.apktoolHash = ""
 processResources {
-    from('src/main/resources/properties') {
-        include '**/*.properties'
-        into 'properties'
-        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion.toString(), shakaDebug: shakaDebug.toString()] )
-    }
-
     from('apktool/brut.apktool/apktool-lib/src/main/resources/properties') {
         include '**/*.properties'
         into 'properties'
@@ -97,35 +89,4 @@ dependencies {
 
     testCompile depends.xmlunit,
             depends.junit
-}
-
-// https://gist.github.com/JonasGroeger/7620911
-def getCheckedOutGitCommitHash() {
-    def gitFolder = "$projectDir/.git/"
-    def takeFromHash = 6
-
-    def head
-    try {
-        head = new File(gitFolder + "HEAD").text.split(":")
-    } catch(Exception e) {
-        return null;
-    }
-
-    def isCommit = head.length == 1
-    if(isCommit) return head[0].trim().take(takeFromHash)
-
-    def refHead = new File(gitFolder + head[1].trim())
-    refHead.text.trim().take takeFromHash
-}
-
-def getCheckedOutBranch() {
-    def gitFolder = "$projectDir/.git/"
-
-    def head
-    try {
-        head = new File(gitFolder + "HEAD").text.split("/")
-        return head[2].trim();
-    } catch(Exception e) {
-        return "SNAPSHOT";
-    }
 }

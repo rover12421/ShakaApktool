@@ -14,10 +14,18 @@
  *  limitations under the License.
  */
 
+apply from  : 'gradle/functions.gradle'
 
 ext.langLevel = '1.7'
 ext.aspectjVersion = '1.8.4'
-ext.shakaVersion = "2.0"
+version = '2.0.0'
+
+def branch = getCheckedOutBranchFromProject()
+def hash = getCheckedOutGitCommitHashFromProject()
+def date = new Date().format("yyyyMMdd")
+
+ext.shakaVersion = "$version-$branch-$hash-$date"
+ext.shakaDebug = false
 
 buildscript {
     repositories {
@@ -47,6 +55,12 @@ allprojects {
 
     sourceCompatibility = langLevel
     targetCompatibility = langLevel
+
+    task deleteProperties(type: Delete) {
+        delete buildDir.getAbsolutePath() + '/resources/main'
+    }
+
+    processResources.dependsOn deleteProperties
 }
 
 subprojects {
@@ -97,111 +111,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
 
-build.doFirst {
-    def javaVersion = System.getProperty("java.version")
-
-    //fail the build if we java 1.5 or 1.6.
-    if (javaVersion.startsWith("1.5") || javaVersion.startsWith("1.6")) {
-        throw new GradleException("You can fix this problem!\n" +
-                "We found a " + javaVersion + " JDK\n" +
-                "Please update JAVA_HOME to use at least a 1.7 JDK\n" +
-                "Currently it is set to: " + System.getProperty("java.home")
-        );
-    }
-}
-
 // used for official releases only. Please don't use
 task release {
 }
 
-//
-//task deleteProperties(type: Delete) {
-//    delete buildDir.getAbsolutePath() + '/resources/main'
-//}
-//
-//processResources.dependsOn deleteProperties
-//
-//task copyProperties(type: Copy) {
-//    from buildDir.getAbsolutePath() + '/resources/main'
-//    into buildDir.getAbsolutePath() + '/classes/main'
-//
-//    include '**/*.properties'
-//}
-//compileJava.dependsOn copyProperties
-//
-//dependencies {
-//
-//    proguard 'net.sf.proguard:proguard-base:5.2'
-////    proguard files('libs/proguard.jar')
-//}
-//
-//gradle.taskGraph.whenReady {
-//    fatJar {
-//        manifest {
-//            attributes("Main-Class": "com.rover12421.shaka.apktool.Main")
-//        }
-//    }
-//}
-
-
-
-//
-///**
-// * 使用AspjectJ之后,此处需要改为compileAspect
-// * compileAspect在compileJava之前
-// */
-//compileAspect.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource, generateTestAntlrSource
-////compileTestAspect.dependsOn generateTestAntlrSource
-//
-//task proguard(type: JavaExec, dependsOn: fatJar) {
-//    def outFile = jar.destinationDir.getPath() + '/' + "ShakaApktool" + '_' + shakaVersion + '-release' + '.' + jar.extension
-//    inputs.file jar.archivePath
-//    outputs.file outFile
-//
-//    classpath = configurations.proguard
-//    main = 'proguard.ProGuard'
-//    args '-injars ' + "${jar.archivePath}" + ' (!META-INF/LICENSE.txt,!META-INF/NOTICE.txt,!README)'
-//    args "-outjars ${outFile}"
-//    args "-libraryjars ${System.properties['java.home']}/lib/rt.jar"
-////    args '-dontobfuscate'
-////    args "-obfuscationdictionary ${keywordsFile}"
-////    args "-classobfuscationdictionary ${keywordsFile}"
-////    args "-packageobfuscationdictionary ${keywordsFile}"
-//    args '-dontoptimize'
-//    args '-dontnote **'
-////    args '-ignorewarnings'
-//    args '-dontwarn com.google.common.base.**'
-//    args '-dontwarn com.google.common.collect.**'
-//    args '-dontwarn com.google.common.util.**'
-//    args '-dontwarn javax.xml.xpath.**'
-//    args '-dontwarn com.rover12421.shaka.apktool.AspjectJ.**'
-//    args '-dontwarn brut.androlib.**'
-//    args '-keep public class com.rover12421.shaka.apktool.Main { public static void main(java.lang.String[]); }'
-//    args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
-//    args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
-////    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'
-//    args '-keepclassmembernames class brut.apktool.Main { *** normalOptions; *** DecodeOptions; }'
-//    args '-keepclassmembernames class brut.androlib.Androlib { *** mResUnknownFiles; }'
-//    args '-keepclassmembernames class brut.androlib.res.data.value.ResBagValue { *** mParent; }'
-//    args '-keepclassmembernames class brut.androlib.res.data.value.ResStyleValue { *** mItems; }'
-//    args '-keepclassmembernames class brut.androlib.res.decoder.ResFileDecoder { *** mDecoders; }'
-//    args '-keepclassmembernames class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** android_ns; *** getAttributeOffset(...);}'
-//    args '-keepclassmembernames class org.jf.dexlib2.dexbacked.DexBackedMethodImplementation { *** codeOffset; }'
-//    args '-keepclassmembernames class brut.androlib.res.data.ResPackage { *** mResTable; }'
-//}
-//
-//tasks.getByPath(':release').dependsOn(proguard)
-//
-//task cli() {
-//    doLast {
-//        file('build/libs/ShakaApktool.jar').renameTo(file("build/libs/ShakaApktool-" + shakaVersion + ".jar"))
-//    }
-//}
-//cli.dependsOn fatJar
-//
-//
-//test {
-//    exclude 'com/rover12421/shaka/apktool/temp/**'
-//
-////    testLogging.showStandardStreams = true
-//}
