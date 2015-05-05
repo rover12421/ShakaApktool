@@ -41,6 +41,7 @@ import brut.common.BrutException;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
+import brut.util.BrutIO;
 import brut.util.OS;
 import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.AndroidZip;
@@ -233,11 +234,7 @@ public class AndrolibAj {
 
             // No need to create directory entries in the final apk
             if (!entry.isDirectory()) {
-                try (
-                        InputStream is = inputFile.getInputStream(entry)
-                ){
-                    IOUtils.copy(is, outputFile);
-                }
+                BrutIO.copy(inputFile, outputFile, entry);
             }
 
             outputFile.closeEntry();
@@ -273,11 +270,7 @@ public class AndrolibAj {
             }
             outputFile.putNextEntry(newEntry);
 
-            try (
-                    FileInputStream fis = new FileInputStream(inputFile)
-            ){
-                IOUtils.copy(fis, outputFile);
-            }
+            BrutIO.copy(inputFile, outputFile);
             outputFile.closeEntry();
         }
     }

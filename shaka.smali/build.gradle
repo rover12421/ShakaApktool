@@ -18,7 +18,7 @@ apply plugin: 'jflex'
 
 def branch = getCheckedOutBranchFromModule('smali')
 def hash   = getCheckedOutGitCommitHashFromModule('smali')
-def smaliVersion = '2.0.5'
+def smaliVersion = '2.0.6'
 def smali_version = "$smaliVersion-$branch-$hash"
 
 buildscript {

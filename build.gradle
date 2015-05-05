@@ -82,7 +82,7 @@ subprojects {
                 gson            : 'com.google.code.gson:gson:2.2.4',
                 guava           : 'com.google.guava:guava:18.0',
                 jflex           : 'de.jflex:jflex:1.6.0',
-                jflex_plugin    : 'co.tomlee.gradle.plugins:gradle-jflex-plugin:0.0.1',
+                jflex_plugin    : 'co.tomlee.gradle.plugins:gradle-jflex-plugin:0.0.2',
                 junit           : 'junit:junit:4.11',
                 proguard        : 'net.sf.proguard:proguard-gradle:5.2.1',
                 snakeyaml       : 'org.yaml:snakeyaml:1.12',
