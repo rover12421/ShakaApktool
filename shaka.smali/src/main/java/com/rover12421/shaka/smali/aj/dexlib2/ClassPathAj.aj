@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.smali_dexlib2;
+package com.rover12421.shaka.smali.aj.dexlib2;
 
-import org.jf.baksmali.baksmaliOptions;
+import org.jf.dexlib2.analysis.ClassPath;
 
 /**
  * Created by rover12421 on 4/28/15.
  */
-public aspect baksmaliOptionsAj {
-    public static final int baksmaliOptions.DIFFPRE = 128;
+public aspect ClassPathAj {
+    public static boolean ClassPath.dontLoadClassPath = false;
 }

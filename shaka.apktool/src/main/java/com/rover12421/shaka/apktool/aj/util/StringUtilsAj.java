@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.apktool_util;
+package com.rover12421.shaka.apktool.aj.util;
 
 import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
 import org.aspectj.lang.ProceedingJoinPoint;

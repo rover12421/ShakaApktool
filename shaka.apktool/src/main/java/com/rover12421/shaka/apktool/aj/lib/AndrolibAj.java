@@ -29,7 +29,7 @@
  *  limitations under the License.
  */
 
-package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
+package com.rover12421.shaka.apktool.aj.lib;
 
 import brut.androlib.Androlib;
 import brut.androlib.AndrolibException;
@@ -52,7 +52,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;

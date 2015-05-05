@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.smali_dexlib2;
+package com.rover12421.shaka.smali.aj.dexlib2;
 
 import com.rover12421.shaka.apktool.util.LogHelper;
 import com.rover12421.shaka.apktool.util.ReflectUtil;

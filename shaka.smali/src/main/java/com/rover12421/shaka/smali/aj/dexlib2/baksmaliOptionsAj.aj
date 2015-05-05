@@ -13,24 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
+package com.rover12421.shaka.smali.aj.dexlib2;
 
-import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import org.jf.baksmali.baksmaliOptions;
 
 /**
- * Created by rover12421 on 8/16/14.
+ * Created by rover12421 on 4/28/15.
  */
-@Aspect
-public class ARSCDecoderAj {
-
-    @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.addMissingResSpecs())")
-    public void addMissingResSpecs(ProceedingJoinPoint joinPoint) throws Throwable {
-        if (!ShakaDecodeOption.getInstance().isFuckUnkownId()) {
-            joinPoint.proceed(joinPoint.getArgs());
-        }
-    }
-
+public aspect baksmaliOptionsAj {
+    public static final int baksmaliOptions.DIFFPRE = 128;
 }

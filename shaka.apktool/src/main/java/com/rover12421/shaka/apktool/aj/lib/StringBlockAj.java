@@ -13,25 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
+package com.rover12421.shaka.apktool.aj.lib;
 
-import brut.androlib.res.data.value.ResValue;
-import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
+import com.rover12421.shaka.apktool.util.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * Created by rover12421 on 4/21/15.
+ * Created by rover12421 on 4/1/15.
  */
 @Aspect
-public class ResResourceAj {
-
-    @Around("execution(* brut.androlib.res.data.ResResource.replace(..))" +
-            "&& args(value)")
-    public void replace(ProceedingJoinPoint joinPoint, ResValue value) throws Throwable {
-        if (!ShakaDecodeOption.getInstance().isIgnoreResDecodeError()) {
-            joinPoint.proceed(joinPoint.getArgs());
+public class StringBlockAj {
+    @Around("execution(* brut.androlib.res.decoder.StringBlock.outputStyleTag(..))" +
+            "&& args(tag, builder, close)")
+    public void outputStyleTag(ProceedingJoinPoint joinPoint, String tag, StringBuilder builder, boolean close) throws Throwable {
+        String newTag = tag.replaceAll(";+", ";");
+        if (!newTag.equals(tag)) {
+            LogHelper.getLogger().info("outputStyleTag " + tag + " >>> " + newTag);
         }
+
+        joinPoint.proceed(new Object[]{newTag, builder, close});
     }
 }

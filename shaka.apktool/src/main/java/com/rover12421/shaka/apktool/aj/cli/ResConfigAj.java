@@ -13,26 +13,29 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
 
+package com.rover12421.shaka.apktool.aj.cli;
+
+import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResResource;
 import com.rover12421.shaka.apktool.util.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * Created by rover12421 on 4/1/15.
+ * Created by rover12421 on 8/2/14.
  */
 @Aspect
-public class StringBlockAj {
-    @Around("execution(* brut.androlib.res.decoder.StringBlock.outputStyleTag(..))" +
-            "&& args(tag, builder, close)")
-    public void outputStyleTag(ProceedingJoinPoint joinPoint, String tag, StringBuilder builder, boolean close) throws Throwable {
-        String newTag = tag.replaceAll(";+", ";");
-        if (!newTag.equals(tag)) {
-            LogHelper.getLogger().info("outputStyleTag " + tag + " >>> " + newTag);
-        }
+public class ResConfigAj {
 
-        joinPoint.proceed(new Object[]{newTag, builder, close});
+    @Around("execution(void brut.androlib.res.data.ResConfig.addResource(..))" +
+            "&& args(res, overwrite)")
+    public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
+        try {
+            joinPoint.proceed(joinPoint.getArgs());
+        } catch (AndrolibException e) {
+            LogHelper.getLogger().warning("Add Repeat Resource > " + e.getMessage());
+        }
     }
 }

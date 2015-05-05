@@ -13,29 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package com.rover12421.shaka.apktool.aj.lib;
 
-package com.rover12421.shaka.apktool.AspjectJ.apktool_cli;
-
-import brut.androlib.AndrolibException;
-import brut.androlib.res.data.ResResource;
+import com.rover12421.shaka.apktool.lib.ShakaProperties;
 import com.rover12421.shaka.apktool.util.LogHelper;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 
 /**
- * Created by rover12421 on 8/2/14.
+ * Created by rover12421 on 8/9/14.
+ * brut.androlib.ApkDecoder
  */
 @Aspect
-public class ResConfigAj {
+public class ApkDecoderAj {
 
-    @Around("execution(void brut.androlib.res.data.ResConfig.addResource(..))" +
-            "&& args(res, overwrite)")
-    public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
-        try {
-            joinPoint.proceed(joinPoint.getArgs());
-        } catch (AndrolibException e) {
-            LogHelper.getLogger().warning("Add Repeat Resource > " + e.getMessage());
-        }
+    @Before("execution(void brut.androlib.ApkDecoder.decode())")
+    public void decode_before() {
+        LogHelper.getLogger().info("Using ShakaApktool " + ShakaProperties.getVersion());
     }
 }

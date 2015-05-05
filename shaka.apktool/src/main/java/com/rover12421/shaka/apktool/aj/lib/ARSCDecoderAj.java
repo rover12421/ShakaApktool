@@ -13,19 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.smali_dexlib2;
+package com.rover12421.shaka.apktool.aj.lib;
 
-import org.jf.dexlib2.DexFileFactory;
-import org.jf.dexlib2.dexbacked.DexBackedDexFile;
-
-import java.io.File;
-import java.io.IOException;
+import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 
 /**
- * Created by rover12421 on 4/28/15.
+ * Created by rover12421 on 8/16/14.
  */
-public aspect DexFileFactoryAj {
-    public static DexBackedDexFile DexFileFactory.loadDexFile(File dexFile, String dexEntry, int api) throws IOException {
-        return DexFileFactory.loadDexFile(dexFile, dexEntry, api, false);
+@Aspect
+public class ARSCDecoderAj {
+
+    @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.addMissingResSpecs())")
+    public void addMissingResSpecs(ProceedingJoinPoint joinPoint) throws Throwable {
+        if (!ShakaDecodeOption.getInstance().isFuckUnkownId()) {
+            joinPoint.proceed(joinPoint.getArgs());
+        }
     }
+
 }

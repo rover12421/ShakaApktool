@@ -13,13 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.smali_dexlib2;
+package com.rover12421.shaka.smali.aj.dexlib2;
 
-import org.jf.dexlib2.analysis.ClassPath;
+import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by rover12421 on 4/28/15.
  */
-public aspect ClassPathAj {
-    public static boolean ClassPath.dontLoadClassPath = false;
+public aspect DexFileFactoryAj {
+    public static DexBackedDexFile DexFileFactory.loadDexFile(File dexFile, String dexEntry, int api) throws IOException {
+        return DexFileFactory.loadDexFile(dexFile, dexEntry, api, false);
+    }
 }

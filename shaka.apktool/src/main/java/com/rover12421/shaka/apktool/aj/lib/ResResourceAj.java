@@ -13,22 +13,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
+package com.rover12421.shaka.apktool.aj.lib;
 
-import com.rover12421.shaka.apktool.lib.ShakaProperties;
-import com.rover12421.shaka.apktool.util.LogHelper;
+import brut.androlib.res.data.value.ResValue;
+import com.rover12421.shaka.apktool.lib.ShakaDecodeOption;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 
 /**
- * Created by rover12421 on 8/9/14.
- * brut.androlib.ApkDecoder
+ * Created by rover12421 on 4/21/15.
  */
 @Aspect
-public class ApkDecoderAj {
+public class ResResourceAj {
 
-    @Before("execution(void brut.androlib.ApkDecoder.decode())")
-    public void decode_before() {
-        LogHelper.getLogger().info("Using ShakaApktool " + ShakaProperties.getVersion());
+    @Around("execution(* brut.androlib.res.data.ResResource.replace(..))" +
+            "&& args(value)")
+    public void replace(ProceedingJoinPoint joinPoint, ResValue value) throws Throwable {
+        if (!ShakaDecodeOption.getInstance().isIgnoreResDecodeError()) {
+            joinPoint.proceed(joinPoint.getArgs());
+        }
     }
 }

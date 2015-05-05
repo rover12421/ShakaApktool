@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.AspjectJ.apktool_lib;
+package com.rover12421.shaka.apktool.aj.lib;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResPackage;

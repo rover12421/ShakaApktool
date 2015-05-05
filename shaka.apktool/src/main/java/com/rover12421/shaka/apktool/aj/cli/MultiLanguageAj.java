@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.rover12421.shaka.apktool.AspjectJ.apktool_cli;
+package com.rover12421.shaka.apktool.aj.cli;
 
 import com.rover12421.shaka.apktool.lib.MultiLanguageSupport;
 
@@ -300,7 +300,7 @@ public class MultiLanguageAj {
 
     @Around("call(void java.io.PrintStream.println(..))" +
             "&& args(x)" +
-            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)" +
+            "&& !within(com.rover12421.shaka.apktool.aj.cli.MultiLanguageAj)" +
             "&& !within(com.rover12421.shaka.apktool.test.*)")
     public void around_sout_println(ProceedingJoinPoint joinPoint, String x) throws Throwable {
         joinPoint.proceed(new Object[]{covertLocaleInfo(x)});
@@ -308,14 +308,14 @@ public class MultiLanguageAj {
 
     @Around("call(* org.apache.commons.cli.OptionBuilder.withDescription(..))" +
             "&& args(newDescription)" +
-            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
+            "&& !within(com.rover12421.shaka.apktool.aj.cli.MultiLanguageAj)")
     public OptionBuilder around_OptionBuilder_withDescription(ProceedingJoinPoint joinPoint, String newDescription) throws Throwable {
         return (OptionBuilder) joinPoint.proceed(new Object[]{covertLocaleInfo(newDescription)});
     }
 
     @Around("call(void org.apache.commons.cli.HelpFormatter.printHelp(..))" +
             "&& args(cmdLineSyntax, header, options, footer)" +
-            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
+            "&& !within(com.rover12421.shaka.apktool.aj.cli.MultiLanguageAj)")
     public void around_HelpFormatter_printHelp(ProceedingJoinPoint joinPoint,
                                                         String cmdLineSyntax, String header, Options options, String footer) throws Throwable {
         joinPoint.proceed(new Object[]{covertLocaleInfo(cmdLineSyntax), covertLocaleInfo(header), options, footer});
@@ -323,7 +323,7 @@ public class MultiLanguageAj {
 
     @Around("call(* java.lang.String.format(..))" +
             "&& args(format, args)" +
-            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
+            "&& !within(com.rover12421.shaka.apktool.aj.cli.MultiLanguageAj)")
     public String around_String_format(ProceedingJoinPoint joinPoint,
                                      String format, Object... args) throws Throwable {
         return covertLocaleInfo((String) joinPoint.proceed(joinPoint.getArgs()));
@@ -332,7 +332,7 @@ public class MultiLanguageAj {
 
 //    @Around("call(void org.jf.util.IndentingWriter.write(..))" +
 //            "&& args(s)" +
-//            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
+//            "&& !within(com.rover12421.shaka.apktool.aj.cli.MultiLanguageAj)")
 //    public void around_IndentingWriter_write(ProceedingJoinPoint joinPoint,
 //                                                   String s) throws Throwable {
 //        joinPoint.proceed(new Object[]{covertLocaleInfo(s)});
@@ -340,7 +340,7 @@ public class MultiLanguageAj {
 
     @Around("call(void java.util.logging.Logger.*(String))" +
             "&& args(msg)" +
-            "&& !within(com.rover12421.shaka.apktool.AspjectJ.apktool_cli.MultiLanguageAj)")
+            "&& !within(com.rover12421.shaka.apktool.aj.cli.MultiLanguageAj)")
     public void around_Logger_msg(ProceedingJoinPoint joinPoint,
                                              String msg) throws Throwable {
         joinPoint.proceed(new Object[]{covertLocaleInfo(msg)});
