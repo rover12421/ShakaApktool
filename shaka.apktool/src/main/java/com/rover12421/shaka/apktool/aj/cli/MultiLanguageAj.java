@@ -242,6 +242,7 @@ public class MultiLanguageAj {
             "Could not decode file, ignore",
             "ignore res decode error",
             "Fuck unkown id",
+            "Correct decoder",
     };
 
     private static final String[] langRpStr = new String[]{

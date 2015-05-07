@@ -206,6 +206,7 @@
 205=Could not decode file, ignore
 206=ignore res decode error
 207=Fuck unkown id
+208=Correct decoder
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...

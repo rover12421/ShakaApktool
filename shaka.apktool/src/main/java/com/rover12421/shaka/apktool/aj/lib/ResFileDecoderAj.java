@@ -16,6 +16,9 @@
 package com.rover12421.shaka.apktool.aj.lib;
 
 import brut.directory.Directory;
+import com.rover12421.shaka.apktool.util.LogHelper;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
@@ -24,12 +27,23 @@ import org.aspectj.lang.annotation.Before;
  */
 @Aspect
 public class ResFileDecoderAj {
-    @Before("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
+    @Around("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
             "&& args(inDir, inFileName, outDir, outFileName, decoder)")
-    public void decode(Directory inDir, String inFileName, Directory outDir,
-                       String outFileName, String decoder) {
+    public void decode(ProceedingJoinPoint joinPoint, Directory inDir, String inFileName, Directory outDir,
+                       String outFileName, String decoder) throws Throwable {
         if (!inFileName.equals(outFileName)) {
             AndrolibAj.DecodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
+        }
+
+        /**
+         * 解决 .9.xml 被当成 nine patch images 处理
+         */
+        if (outFileName.endsWith(".xml") && decoder != "xml") {
+            LogHelper.getLogger().warning(String.format("Correct decoder [%s] : %s >>> xml", outFileName, decoder));
+            decoder = "xml";
+            joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
+        } else {
+            joinPoint.proceed(joinPoint.getArgs());
         }
     }
 
@@ -41,4 +55,5 @@ public class ResFileDecoderAj {
             AndrolibAj.DecodeFileMaps.put(inFileName, outFileName);
         }
     }
+
 }
