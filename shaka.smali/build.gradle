@@ -1,3 +1,10 @@
+import java.nio.charset.StandardCharsets
+import java.nio.file.FileVisitResult
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.SimpleFileVisitor
+import java.nio.file.attribute.BasicFileAttributes
+
 /**
  *  Copyright 2015 Rover12421 <rover12421@163.com>
  *
@@ -141,7 +148,7 @@ generateJFlexSource {
     outputDirectory = new File("${projectDir.name}/generated/main/", 'org/jf/smali')
 }
 
-compileAspect.dependsOn generateGrammarSource, generateJFlexSource
+//compileAspect.dependsOn generateGrammarSource, generateJFlexSource
 
 // You must manually execute this task to regenerate SyntheticAccessorFSM.java, after modifying the ragel file
 // e.g. ./gradlew ragel
@@ -164,7 +171,7 @@ task generateAccessorTestSource(type: JavaExec) {
     main = 'org.jf.dexlib2.AccessorTestGenerator'
     args testAccessorOutputFile
 }
-compileTestJava.dependsOn generateTestGrammarSource, generateAccessorTestSource
+//compileTestJava.dependsOn generateTestGrammarSource, generateAccessorTestSource
 
 task generateAccessorTestDex(type: JavaExec, dependsOn: compileTestJava) {
     def outputDex = file(new File(sourceSets.test.output.resourcesDir, 'accessorTest.dex'))
@@ -195,3 +202,17 @@ task generateAccessorTestDex(type: JavaExec, dependsOn: compileTestJava) {
     args "--output=${outputDex}"
 }
 test.dependsOn generateAccessorTestDex
+
+task deleteGeneratedCodePathPrefix() {
+    def genSrcDir = new File("${projectDir.name}/generated/")
+    def prefix = genSrcDir.absoluteFile.parentFile.parent + File.separator
+    genSrcDir.eachFileRecurse(
+        {file ->
+            if (file.name.endsWith(".java")) {
+                file.write(file.text.replaceAll(prefix, ""))
+            }
+        }
+    )
+}
+
+deleteGeneratedCodePathPrefix.dependsOn generateGrammarSource, generateJFlexSource, generateTestGrammarSource, generateAccessorTestSource
