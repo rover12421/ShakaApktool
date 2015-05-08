@@ -146,7 +146,7 @@ public class AndrolibAj {
                 //去掉.dex后缀
                 mapDirName = mapDirName.substring(0, mapDirName.length()-4);
                 smaliDir = new File(outDir, mapDirName);
-                NonDefaultSourceMaps.put(filename, mapDirName);
+                DexMaps.put(filename, mapDirName);
             }
             OS.rmdir(smaliDir);
             smaliDir.mkdirs();
@@ -165,12 +165,26 @@ public class AndrolibAj {
     @Around("execution(* brut.androlib.Androlib.buildNonDefaultSources(..))" +
             "&& args(appDir)")
     public void buildNonDefaultSources(ProceedingJoinPoint joinPoint, ExtFile appDir) {
-        for (String dex : NonDefaultSourceMaps.keySet()) {
+        /**
+         * 兼容未添加到`apktool.yml`的情况
+         * 只兼容5.0多包标准结构, `gradle test` 会测试到这种情况
+         * 其它情况需手动添加到`apktool.yml`下
+         */
+        File[] files = appDir.getAbsoluteFile().listFiles();
+        for (File file : files) {
+            String name = file.getName();
+            if (file.isDirectory() && !DexMaps.containsKey(name) && name.startsWith("smali_")) {
+                String key = name.substring("smali_".length()) + ".dex";
+                DexMaps.put(key, name);
+            }
+        }
+
+        for (String dex : DexMaps.keySet()) {
             try {
                 Androlib androlib = (Androlib) joinPoint.getThis();
                 File dexFile = new File(appDir, APK_DIRNAME + "/" + dex);
                 dexFile.getParentFile().mkdirs();
-                androlib.buildSourcesSmali(appDir, NonDefaultSourceMaps.get(dex), dex);
+                androlib.buildSourcesSmali(appDir, DexMaps.get(dex), dex);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -320,7 +334,7 @@ public class AndrolibAj {
                         /**
                          * 过滤dex文件
                          */
-                        if (NonDefaultSourceMaps.containsKey(entryName)) {
+                        if (DexMaps.containsKey(entryName)) {
                             continue;
                         }
 
@@ -348,14 +362,14 @@ public class AndrolibAj {
 
     public static final String DecodeFileMapsMetaName = "DecodeFileMaps";
     public static Map<String, String> DecodeFileMaps = new LinkedHashMap<>();
-    public static final String NonDefaultSourceMapsMetaName = "NonDefaultSources";
-    public static Map<String, String> NonDefaultSourceMaps = new LinkedHashMap<>();
+    public static final String DexMapsMetaName = "DexMaps";
+    public static Map<String, String> DexMaps = new LinkedHashMap<>();
 
     @Before("execution(* brut.androlib.Androlib.writeMetaFile(..))" +
             "&& args(mOutDir, meta)")
     public void writeMetaFile(File mOutDir, Map<String, Object> meta) {
         meta.put(DecodeFileMapsMetaName, DecodeFileMaps);
-        meta.put(NonDefaultSourceMapsMetaName, NonDefaultSourceMaps);
+        meta.put(DexMapsMetaName, DexMaps);
     }
 
     @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")
@@ -363,8 +377,8 @@ public class AndrolibAj {
         if (meta.get(DecodeFileMapsMetaName) != null) {
             DecodeFileMaps = (Map<String, String>) meta.get(DecodeFileMapsMetaName);
         }
-        if (meta.get(NonDefaultSourceMapsMetaName) != null) {
-            NonDefaultSourceMaps = (Map<String, String>) meta.get(NonDefaultSourceMapsMetaName);
+        if (meta.get(DexMapsMetaName) != null) {
+            DexMaps = (Map<String, String>) meta.get(DexMapsMetaName);
         }
     }
 
