@@ -231,6 +231,4 @@ if (genGrammarSource) {
     }
 
     deleteGeneratedCodePathPrefix.dependsOn generateGrammarSource, generateJFlexSource, generateTestGrammarSource, generateAccessorTestSource
-
-    deleteGeneratedCodePathPrefix.execute()
 }
