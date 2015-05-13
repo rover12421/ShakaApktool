@@ -16,8 +16,8 @@
 
 import org.apache.tools.ant.filters.*
 
-def apktoolversion_major = '2.0.0'
-def apktoolversion_minor = 'RC4'
+def apktoolversion_major = '2.0.1'
+def apktoolversion_minor = 'SNAPSHOT'
 
 def branch = getCheckedOutBranchFromModule('apktool')
 def hash   = getCheckedOutGitCommitHashFromModule('apktool')
