@@ -1,10 +1,3 @@
-import java.nio.charset.StandardCharsets
-import java.nio.file.FileVisitResult
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.SimpleFileVisitor
-import java.nio.file.attribute.BasicFileAttributes
-
 /**
  *  Copyright 2015 Rover12421 <rover12421@163.com>
  *
@@ -20,13 +13,24 @@ import java.nio.file.attribute.BasicFileAttributes
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-apply plugin: 'antlr'
-apply plugin: 'jflex'
 
 def branch = getCheckedOutBranchFromModule('smali')
 def hash   = getCheckedOutGitCommitHashFromModule('smali')
 def smaliVersion = '2.0.6'
 def smali_version = "$smaliVersion-$branch-$hash"
+
+ext {
+    if (project.hasProperty('genGrammarSource') && Boolean.valueOf(project['genGrammarSource']) == true) {
+        genGrammarSource = true;
+    } else {
+        genGrammarSource = false;
+    }
+}
+
+if (genGrammarSource) {
+    apply plugin: 'antlr'
+    apply plugin: 'jflex'
+}
 
 buildscript {
     repositories {
@@ -61,16 +65,19 @@ sourceSets {
                     'smali/smali/src/main/resources',
             ]
         }
-        jflex {
-            srcDirs = [
-                    'smali/smali/src/main/jflex'
-                    ]
+        if (genGrammarSource) {
+            jflex {
+                srcDirs = [
+                        'smali/smali/src/main/jflex'
+                ]
+            }
+            antlr {
+                srcDirs = [
+                        'smali/smali/src/main/antlr'
+                ]
+            }
         }
-        antlr {
-            srcDirs = [
-                    'smali/smali/src/main/antlr'
-            ]
-        }
+
     }
 
     test {
@@ -94,10 +101,12 @@ sourceSets {
                     'smali/smali/src/test/resources',
             ]
         }
-        antlr {
-            srcDirs = [
-                    'smali/smali/src/test/antlr'
-            ]
+        if (genGrammarSource) {
+            antlr {
+                srcDirs = [
+                        'smali/smali/src/test/antlr'
+                ]
+            }
         }
     }
 }
@@ -105,14 +114,6 @@ sourceSets {
 configurations {
     accessorTestGenerator
     dx
-
-    // Remove the full antlr library that's added by the antlr plugin. We manually
-    // add the smaller antlr_runtime library instead
-    compile.exclude group: 'org.antlr', module: 'antlr'
-
-    // The jflex lexer doesn't have any runtime dependencies, so remove the dependency
-    // that gets added by the jflex plugin
-    compile.exclude group: 'de.jflex', module: 'jflex'
 }
 
 dependencies {
@@ -126,8 +127,6 @@ dependencies {
 
     testCompile depends.junit
 
-    antlr depends.antlr
-    jflex depends.jflex
     dx    depends.dx
 
     accessorTestGenerator project('accessorTestGenerator')
@@ -136,42 +135,14 @@ dependencies {
 processResources.inputs.property('version', smali_version)
 processResources.expand('version': smali_version)
 
-generateTestGrammarSource {
-    outputDirectory = new File("${projectDir.name}/generated/test/", 'org/jf/smali')
-}
-
-generateGrammarSource {
-    outputDirectory = new File("${projectDir.name}/generated/main/", 'org/jf/smali')
-}
-
-generateJFlexSource {
-    outputDirectory = new File("${projectDir.name}/generated/main/", 'org/jf/smali')
-}
-
-//compileAspect.dependsOn generateGrammarSource, generateJFlexSource
-
 // You must manually execute this task to regenerate SyntheticAccessorFSM.java, after modifying the ragel file
 // e.g. ./gradlew ragel
-task ragel(type:Exec) {
-    workingDir = 'src/main/ragel'
-
-    commandLine 'ragel', '-J', '-o', file('src/main/java/org/jf/dexlib2/util/SyntheticAccessorFSM.java'),
-            'SyntheticAccessorFSM.rl'
-}
-
-task generateAccessorTestSource(type: JavaExec) {
-    doFirst {
-        file(testAccessorOutputFile.parent).mkdirs()
-    }
-
-    outputs.dir file(testAccessorOutputDir)
-    sourceSets['test'].java.srcDir file(testAccessorOutputDir)
-
-    classpath = configurations.accessorTestGenerator
-    main = 'org.jf.dexlib2.AccessorTestGenerator'
-    args testAccessorOutputFile
-}
-//compileTestJava.dependsOn generateTestGrammarSource, generateAccessorTestSource
+//task ragel(type:Exec) {
+//    workingDir = 'src/main/ragel'
+//
+//    commandLine 'ragel', '-J', '-o', file('src/main/java/org/jf/dexlib2/util/SyntheticAccessorFSM.java'),
+//            'SyntheticAccessorFSM.rl'
+//}
 
 task generateAccessorTestDex(type: JavaExec, dependsOn: compileTestJava) {
     def outputDex = file(new File(sourceSets.test.output.resourcesDir, 'accessorTest.dex'))
@@ -203,16 +174,63 @@ task generateAccessorTestDex(type: JavaExec, dependsOn: compileTestJava) {
 }
 test.dependsOn generateAccessorTestDex
 
-task deleteGeneratedCodePathPrefix() {
-    def genSrcDir = new File("${projectDir.name}/generated/")
-    def prefix = genSrcDir.absoluteFile.parentFile.parent + File.separator
-    genSrcDir.eachFileRecurse(
-        {file ->
-            if (file.name.endsWith(".java")) {
-                file.write(file.text.replaceAll(prefix, ""))
-            }
-        }
-    )
-}
+if (genGrammarSource) {
+    def genDir = 'generated'
+    configurations {
+        // Remove the full antlr library that's added by the antlr plugin. We manually
+        // add the smaller antlr_runtime library instead
+        compile.exclude group: 'org.antlr', module: 'antlr'
 
-deleteGeneratedCodePathPrefix.dependsOn generateGrammarSource, generateJFlexSource, generateTestGrammarSource, generateAccessorTestSource
+        // The jflex lexer doesn't have any runtime dependencies, so remove the dependency
+        // that gets added by the jflex plugin
+        compile.exclude group: 'de.jflex', module: 'jflex'
+    }
+
+    dependencies {
+        antlr depends.antlr
+        jflex depends.jflex
+    }
+
+    generateTestGrammarSource {
+        outputDirectory = new File("${projectDir.name}/$genDir/test/", 'org/jf/smali')
+    }
+
+    generateGrammarSource {
+        outputDirectory = new File("${projectDir.name}/$genDir/main/", 'org/jf/smali')
+    }
+
+    generateJFlexSource {
+        outputDirectory = new File("${projectDir.name}/$genDir/main/", 'org/jf/smali')
+    }
+
+    task generateAccessorTestSource(type: JavaExec) {
+        doFirst {
+            file(testAccessorOutputFile.parent).mkdirs()
+        }
+
+        outputs.dir file(testAccessorOutputDir)
+        sourceSets['test'].java.srcDir file(testAccessorOutputDir)
+
+        classpath = configurations.accessorTestGenerator
+        main = 'org.jf.dexlib2.AccessorTestGenerator'
+        args testAccessorOutputFile
+    }
+
+    task deleteGeneratedCodePathPrefix() {
+        def genSrcDir = new File(projectDir.name, genDir)
+        if (genSrcDir.exists()) {
+            def prefix = genSrcDir.absoluteFile.parentFile.parent + File.separator
+            genSrcDir.eachFileRecurse(
+                    {file ->
+                        if (file.name.endsWith(".java")) {
+                            file.write(file.text.replaceAll(prefix, ""))
+                        }
+                    }
+            )
+        }
+    }
+
+    deleteGeneratedCodePathPrefix.dependsOn generateGrammarSource, generateJFlexSource, generateTestGrammarSource, generateAccessorTestSource
+
+    deleteGeneratedCodePathPrefix.execute()
+}
