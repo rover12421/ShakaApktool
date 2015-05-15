@@ -37,8 +37,9 @@ public class ResFileDecoderAj {
 
         /**
          * 解决 .9.xml 被当成 nine patch images 处理
+         * 如果
          */
-        if (outFileName.endsWith(".xml") && decoder != "xml") {
+        if (outFileName.endsWith(".xml") && decoder.equals("9patch")) {
             LogHelper.getLogger().warning(String.format("Correct decoder [%s] : %s >>> xml", outFileName, decoder));
             decoder = "xml";
             joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
