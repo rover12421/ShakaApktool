@@ -15,15 +15,33 @@
  */
 package com.rover12421.shaka.cli;
 
-import brut.common.BrutException;
-
-import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by rover12421 on 7/11/14.
  */
 public class Main {
-    public static void main(String[] args) throws InterruptedException, BrutException, IOException {
-        brut.apktool.Main.main(args);
+    public static void main(String[] args) throws Exception {
+        ArrayList<String> list = new ArrayList<>();
+        boolean smali = false;
+        boolean baksmali = false;
+        String[] newArgs = new String[list.size()];
+        newArgs = list.toArray(newArgs);
+        for (String arg : args) {
+            if (arg.equalsIgnoreCase("s") || arg.equalsIgnoreCase("smali")) {
+                smali = true;
+            } else if (arg.equalsIgnoreCase("bs") || arg.equalsIgnoreCase("baksmali")) {
+                baksmali = true;
+            } else {
+                list.add(arg);
+            }
+        }
+        if (smali) {
+            org.jf.smali.main.main(newArgs);
+        } else if (baksmali) {
+            org.jf.baksmali.main.main(newArgs);
+        } else {
+            brut.apktool.Main.main(args);
+        }
     }
 }
