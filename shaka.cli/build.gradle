@@ -21,15 +21,13 @@ configurations {
 dependencies {
     compile project(':shaka.apktool')
 
-    testCompile depends.junit
-
     proguard depends.proguard
 }
 
 gradle.taskGraph.whenReady {
     fatJar {
         manifest {
-            attributes("Main-Class": "com.rover12421.shaka.apktool.Main")
+            attributes("Main-Class": "com.rover12421.shaka.cli.Main")
         }
     }
 }
@@ -57,7 +55,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-dontwarn javax.xml.xpath.**'
     args '-dontwarn com.rover12421.shaka.apktool.AspjectJ.**'
     args '-dontwarn brut.androlib.**'
-    args '-keep public class com.rover12421.shaka.apktool.Main { public static void main(java.lang.String[]); }'
+    args '-keep public class Main { public static void main(java.lang.String[]); }'
     args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
     args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
 //    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'

@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 /**
  *  Copyright 2015 Rover12421 <rover12421@163.com>
  *
@@ -15,15 +13,24 @@ import org.apache.tools.ant.filters.ReplaceTokens
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package com.rover12421.shaka.lib;
 
-processResources {
-    from('src/main/resources/properties') {
-        include '**/*.properties'
-        into 'properties'
-        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion.toString(), shakaDebug: shakaDebug.toString()] )
+/**
+ * Created by rover12421 on 12/29/13.
+ */
+public class ShakaRuntimeException extends RuntimeException {
+    public ShakaRuntimeException(Throwable cause) {
+        super(cause);
     }
-}
 
-dependencies {
-    compile depends.commons_cli
+    public ShakaRuntimeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public ShakaRuntimeException(String message) {
+        super(message);
+    }
+
+    public ShakaRuntimeException() {
+    }
 }

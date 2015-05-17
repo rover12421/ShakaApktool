@@ -92,6 +92,19 @@ subprojects {
                 xmlpull         : 'xpp3:xpp3:1.1.4c',
         ]
     }
+
+    dependencies {
+        testCompile depends.junit
+    }
+}
+
+// 过滤shaka.lib,其他项目均可以包含该项目
+configure(subprojects - project(':shaka.lib')) {
+    dependencies {
+        compile project(':shaka.lib')
+        // acj 的全局注入
+        aspectpath files(project(':shaka.lib').buildDir)
+    }
 }
 
 idea {

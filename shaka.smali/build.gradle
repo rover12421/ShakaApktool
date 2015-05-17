@@ -117,15 +117,12 @@ configurations {
 }
 
 dependencies {
-    compile project(':shaka.lib'),
-            depends.antlr_runtime,
+    compile depends.antlr_runtime,
             depends.stringtemplate,
             depends.commons_cli,
             depends.guava,
             depends.findbugs,
             depends.ST4
-
-    testCompile depends.junit
 
     dx    depends.dx
 

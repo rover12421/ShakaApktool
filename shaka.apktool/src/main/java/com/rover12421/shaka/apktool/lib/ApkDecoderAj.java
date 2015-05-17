@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 /**
  *  Copyright 2015 Rover12421 <rover12421@163.com>
  *
@@ -15,15 +13,22 @@ import org.apache.tools.ant.filters.ReplaceTokens
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package com.rover12421.shaka.apktool.lib;
 
-processResources {
-    from('src/main/resources/properties') {
-        include '**/*.properties'
-        into 'properties'
-        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion.toString(), shakaDebug: shakaDebug.toString()] )
+import com.rover12421.shaka.lib.ShakaProperties;
+import com.rover12421.shaka.lib.LogHelper;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+/**
+ * Created by rover12421 on 8/9/14.
+ * brut.androlib.ApkDecoder
+ */
+@Aspect
+public class ApkDecoderAj {
+
+    @Before("execution(void brut.androlib.ApkDecoder.decode())")
+    public void decode_before() {
+        LogHelper.getLogger().info("Using ShakaApktool " + ShakaProperties.getVersion());
     }
-}
-
-dependencies {
-    compile depends.commons_cli
 }

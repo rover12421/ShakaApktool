@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 /**
  *  Copyright 2015 Rover12421 <rover12421@163.com>
  *
@@ -15,15 +13,19 @@ import org.apache.tools.ant.filters.ReplaceTokens
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package com.rover12421.shaka.smali.dexlib2;
 
-processResources {
-    from('src/main/resources/properties') {
-        include '**/*.properties'
-        into 'properties'
-        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion.toString(), shakaDebug: shakaDebug.toString()] )
+import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
+
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * Created by rover12421 on 4/28/15.
+ */
+public aspect DexFileFactoryAj {
+    public static DexBackedDexFile DexFileFactory.loadDexFile(File dexFile, String dexEntry, int api) throws IOException {
+        return DexFileFactory.loadDexFile(dexFile, dexEntry, api, false);
     }
-}
-
-dependencies {
-    compile depends.commons_cli
 }

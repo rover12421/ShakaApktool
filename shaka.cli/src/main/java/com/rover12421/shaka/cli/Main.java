@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 /**
  *  Copyright 2015 Rover12421 <rover12421@163.com>
  *
@@ -15,15 +13,17 @@ import org.apache.tools.ant.filters.ReplaceTokens
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package com.rover12421.shaka.cli;
 
-processResources {
-    from('src/main/resources/properties') {
-        include '**/*.properties'
-        into 'properties'
-        filter(ReplaceTokens, tokens: [shakaVersion: shakaVersion.toString(), shakaDebug: shakaDebug.toString()] )
+import brut.common.BrutException;
+
+import java.io.IOException;
+
+/**
+ * Created by rover12421 on 7/11/14.
+ */
+public class Main {
+    public static void main(String[] args) throws InterruptedException, BrutException, IOException {
+        brut.apktool.Main.main(args);
     }
-}
-
-dependencies {
-    compile depends.commons_cli
 }
