@@ -17,7 +17,7 @@
 15=不反編譯源文件
 16=使用指定名稱的框架文件 <tag>
 17=跳過已編譯檢查,強制編譯所有文件
-18=輸出apk文件名
+18=The numeric api-level of the file to generate, e.g. 14 for ICS
 19=不輸出debug信息
 20=反編譯調試模式. 查閱更多信息
 21=反編譯調試模式下,給Smali添加行前綴

@@ -19,28 +19,49 @@ package com.rover12421.shaka.apktool.cli;
 import brut.androlib.Androlib;
 import brut.androlib.ApktoolProperties;
 import brut.apktool.Main;
-import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
+import com.rover12421.shaka.lib.HookMain;
+import com.rover12421.shaka.lib.ReflectUtil;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaProperties;
-import com.rover12421.shaka.lib.ReflectUtil;
+import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
 import com.rover12421.shaka.smali.baksmali.baksmaliMainAj;
 import com.rover12421.shaka.smali.smali.smaliMainAj;
-import org.apache.commons.cli.*;
-import org.aspectj.lang.ProceedingJoinPoint;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.jf.util.ConsoleUtil;
 import org.jf.util.SmaliHelpFormatter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Locale;
-
 /**
  * Created by rover12421 on 7/11/14.
  */
 @Aspect
 public class ApktoolMainAj {
+
+    private static HookMain hookMain = new HookMain() {
+        private ApktoolMainAj apktoolMainAj = new ApktoolMainAj();
+        @Override
+        public void version() {
+            apktoolMainAj.version_around();
+        }
+
+        @Override
+        public void usage() {
+            try {
+                apktoolMainAj.usage_around(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    public static HookMain getHookMain() {
+        return hookMain;
+    }
 
     public static final Options normalOptions() throws Exception {
         return (Options) ReflectUtil.getFieldValue(Main.class, "normalOptions");
@@ -70,9 +91,17 @@ public class ApktoolMainAj {
         return (String) ReflectUtil.invokeMethod(Main.class, "verbosityHelp");
     }
 
+    private void _Options() {
+        try {
+            ReflectUtil.invokeMethod(Main.class, "_Options");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Around("execution(void brut.apktool.Main.usage(..))" +
             "&& args(commandLine)")
-    public void usage_around(ProceedingJoinPoint joinPoint, CommandLine commandLine) throws Exception {
+    public void usage_around(CommandLine commandLine) throws Exception {
         System.out.println("ShakaApktool v" + ShakaProperties.getVersion() + " - Using AspectJ weaver Apktool project");
         System.out.println("Weaver by Rover12421 <rover12421@163.com>");
         String thanks = MultiLanguageSupport.getInstance().get(-1, null);
@@ -83,7 +112,7 @@ public class ApktoolMainAj {
         System.out.println("----------------\n");
 
         // load basicOptions
-//        _Options();   //main进入的时候已经load过了,没必要再load一次
+        _Options();
         SmaliHelpFormatter formatter = new SmaliHelpFormatter();
 //        formatter.setWidth(120);
         int consoleWidth = ConsoleUtil.getConsoleWidth();
@@ -176,28 +205,6 @@ public class ApktoolMainAj {
             DecodeOptions.addOption(ignoreResDecodeError);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    @Before("call(* org.apache.commons.cli.CommandLineParser.parse(..))" +
-            "&& args(options, arguments, stopAtNonOption)" +
-            "&& within(brut.apktool.Main)")
-    public void before_parse(Options options, String[] arguments, boolean stopAtNonOption) {
-        CommandLineParser parser = new PosixParser();
-        CommandLine commandLine;
-
-        try {
-            commandLine = parser.parse(options, arguments, stopAtNonOption);
-            if (commandLine.hasOption("lng") || commandLine.hasOption("language")) {
-                String lngStr = commandLine.getOptionValue("lng");
-                Locale locale = Locale.forLanguageTag(lngStr);
-                if (locale.toString().isEmpty()) {
-                    lngStr = lngStr.replaceAll("_", "-");
-                    locale = Locale.forLanguageTag(lngStr);
-                }
-                MultiLanguageSupport.getInstance().setLang(locale);
-            }
-        } catch (Exception ex) {
         }
     }
 

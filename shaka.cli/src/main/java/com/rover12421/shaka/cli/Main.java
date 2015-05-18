@@ -15,7 +15,14 @@
  */
 package com.rover12421.shaka.cli;
 
+import com.rover12421.shaka.apktool.cli.ApktoolMainAj;
+import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
+import com.rover12421.shaka.smali.baksmali.baksmaliMainAj;
+import com.rover12421.shaka.smali.smali.smaliMainAj;
+import org.apache.commons.cli.*;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by rover12421 on 7/11/14.
@@ -25,8 +32,7 @@ public class Main {
         ArrayList<String> list = new ArrayList<>();
         boolean smali = false;
         boolean baksmali = false;
-        String[] newArgs = new String[list.size()];
-        newArgs = list.toArray(newArgs);
+
         for (String arg : args) {
             if (arg.equalsIgnoreCase("s") || arg.equalsIgnoreCase("smali")) {
                 smali = true;
@@ -36,9 +42,42 @@ public class Main {
                 list.add(arg);
             }
         }
+
+        // cli parser
+        CommandLineParser parser = new PosixParser();
+        CommandLine commandLine = null;
+
+        Option language = OptionBuilder.withLongOpt("language")
+            .withDescription("Display language, e.g. zh-CN, zh-TW")
+            .hasArg(true)
+            .withArgName("Locale")
+            .create("lng");
+
+        Options options = new Options();
+        options.addOption(language);
+
+        try {
+            commandLine = parser.parse(options, args, false);
+            if (commandLine.hasOption("lng") || commandLine.hasOption("language")) {
+                String lngStr = commandLine.getOptionValue("lng");
+                Locale locale = Locale.forLanguageTag(lngStr);
+                if (locale.toString().isEmpty()) {
+                    lngStr = lngStr.replaceAll("_", "-");
+                    locale = Locale.forLanguageTag(lngStr);
+                }
+                MultiLanguageSupport.getInstance().setLang(locale);
+            }
+        } catch (Exception ex) {
+        }
+
+        String[] newArgs = new String[list.size()];
+        newArgs = list.toArray(newArgs);
+
         if (smali) {
+            smaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
             org.jf.smali.main.main(newArgs);
         } else if (baksmali) {
+            baksmaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
             org.jf.baksmali.main.main(newArgs);
         } else {
             brut.apktool.Main.main(args);

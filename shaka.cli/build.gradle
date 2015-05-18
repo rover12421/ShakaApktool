@@ -37,11 +37,14 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     inputs.file jar.archivePath
     outputs.file outFile
 
+    def mappingFile = new File(new File(outFile).getParentFile(), "mapping.txt");
+
     classpath = configurations.proguard
     main = 'proguard.ProGuard'
     args '-injars ' + "${jar.archivePath}" + ' (!META-INF/LICENSE.txt,!META-INF/NOTICE.txt,!README)'
     args "-outjars ${outFile}"
     args "-libraryjars ${System.properties['java.home']}/lib/rt.jar"
+    args "-printmapping ${mappingFile}"
 //    args '-dontobfuscate'
 //    args "-obfuscationdictionary ${keywordsFile}"
 //    args "-classobfuscationdictionary ${keywordsFile}"
@@ -59,15 +62,16 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-keep public class com.rover12421.shaka.cli.Main { public static void main(java.lang.String[]); }'
     args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
     args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
-//    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'
-    args '-keepclassmembernames class brut.apktool.Main { *** normalOptions; *** DecodeOptions; }'
-    args '-keepclassmembernames class brut.androlib.Androlib { *** mResUnknownFiles; }'
-    args '-keepclassmembernames class brut.androlib.res.data.value.ResBagValue { *** mParent; }'
-    args '-keepclassmembernames class brut.androlib.res.data.value.ResStyleValue { *** mItems; }'
-    args '-keepclassmembernames class brut.androlib.res.decoder.ResFileDecoder { *** mDecoders; }'
-    args '-keepclassmembernames class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** android_ns; *** getAttributeOffset(...);}'
-    args '-keepclassmembernames class org.jf.dexlib2.dexbacked.DexBackedMethodImplementation { *** codeOffset; }'
-    args '-keepclassmembernames class brut.androlib.res.data.ResPackage { *** mResTable; }'
+    args '-keepclassmembers class brut.apktool.Main { *** normalOptions; *** DecodeOptions; *** BuildOptions; *** frameOptions; *** allOptions; *** emptyOptions; *** verbosityHelp(); *** _Options(); }'
+    args '-keepclassmembers class org.jf.smali.main { *** basicOptions; *** debugOptions; *** options; }'
+    args '-keepclassmembers class org.jf.baksmali.main { *** basicOptions; *** debugOptions; *** options; }'
+    args '-keepclassmembers class brut.androlib.Androlib { *** mResUnknownFiles; }'
+    args '-keepclassmembers class brut.androlib.res.data.value.ResBagValue { *** mParent; }'
+    args '-keepclassmembers class brut.androlib.res.data.value.ResStyleValue { *** mItems; }'
+    args '-keepclassmembers class brut.androlib.res.decoder.ResFileDecoder { *** mDecoders; }'
+    args '-keepclassmembers class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** android_ns; *** getAttributeOffset(...);}'
+    args '-keepclassmembers class org.jf.dexlib2.dexbacked.DexBackedMethodImplementation { *** codeOffset; }'
+    args '-keepclassmembers class brut.androlib.res.data.ResPackage { *** mResTable; }'
 }
 
 tasks.getByPath(':release').dependsOn(proguard)

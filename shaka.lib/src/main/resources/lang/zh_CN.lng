@@ -17,7 +17,7 @@
 15=不反编译classes.dex
 16=使用指定名称的框架文件 <tag>
 17=跳过已编译检查,强制编译所有文件
-18=输出apk文件名
+18=The numeric api-level of the file to generate, e.g. 14 for ICS
 19=不输出debug信息
 20=反编译调试模式. 查看更多信息
 21=反编译调试模式下, 给Smali添加行前缀
