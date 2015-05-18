@@ -56,6 +56,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-dontwarn com.rover12421.shaka.apktool.AspjectJ.**'
     args '-dontwarn brut.androlib.**'
     args '-keep public class Main { public static void main(java.lang.String[]); }'
+    args '-keep public class com.rover12421.shaka.cli.Main { public static void main(java.lang.String[]); }'
     args '-keep class org.yaml.snakeyaml.** { public protected private *; }'
     args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
 //    args '-keep class brut.androlib.res.decoder.StringBlock { private *; }'
