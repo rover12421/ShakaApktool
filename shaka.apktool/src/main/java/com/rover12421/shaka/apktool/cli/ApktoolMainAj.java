@@ -152,9 +152,9 @@ public class ApktoolMainAj {
 
         // print out more information
         System.out.println(
-                "For additional info, see: http://ibotpeaches.github.io/Apktool/ \n"
+                "For additional info, see: http://www.rover12421.com/ \n"
                         + "For smali/baksmali info, see: http://code.google.com/p/smali/");
-        System.out.println("For ShakaApktool info, see: http://www.rover12421.com/");
+        System.out.println("For Apktool info, see: http://ibotpeaches.github.io/Apktool/");
     }
 
 

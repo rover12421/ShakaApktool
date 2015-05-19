@@ -15,11 +15,12 @@
  */
 package com.rover12421.shaka.lib.multiLanguage;
 
+import com.rover12421.shaka.lib.ShakaDecodeOption;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Locale;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by rover12421 on 2/9/15.
@@ -66,7 +67,7 @@ public class MultiLanguageSupport {
         return getLangFile(locale.toString());
     }
 
-    private String getLangFile(String lang) {
+    private static String getLangFile(String lang) {
         return "lang/" + lang + ".lng";
     }
 
@@ -76,5 +77,102 @@ public class MultiLanguageSupport {
 
     public String get(String key, String def) {
         return properties.getProperty(key, def);
+    }
+
+    private static int MINLEN = Integer.MAX_VALUE;
+
+    private static final Map<String, Integer> langStrMap = new TreeMap<>(new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            //按字符串长度从大到小排序
+            if (o2.length() == o1.length()) {
+                return o2.compareTo(o1);
+            }
+            return o2.length() - o1.length();
+        }
+    });
+    static {
+        String langFile = getLangFile("en_US");
+        try (
+                InputStream is = MultiLanguageSupport.class.getClassLoader().getResourceAsStream(langFile)
+                ) {
+            if (is != null) {
+                Properties enProps = new Properties();
+                enProps.load(is);
+                for (int i=0; i<enProps.size(); i++) {
+                    String key = Integer.toString(i);
+                    String val = (String) enProps.get(key);
+                    if (val != null) {
+                        langStrMap.put(val, i);
+                        if (val.length() < MINLEN) {
+                            MINLEN = val.length();
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+        }
+    }
+
+    private static final String[] langRpStr = new String[]{
+            "Copying (.+?) file\\.\\.\\.",
+            "Smaling (.+?) folder into (.+?)\\.\\.\\.",
+            "Baksmaling (.+?)\\.\\.\\.",
+            "Using Apktool (.+?) on (.+?)",
+            "Renamed manifest package found! Replacing (.+?) with (.+?)",
+            "Arsc file contains multiple packages\\. Using package (.+?) as default",
+            "Using Apktool (.+?)",
+            "^Copying unknown file (.+?) with method (.+?)$",
+            "Copying raw (.+?) file\\.\\.\\."
+    };
+
+    private static final String[] langRpStrDef = new String[]{
+            "Copying $1 file...",
+            "Smaling $1 folder into $2...",
+            "Baksmaling $1...",
+            "Using Apktool $1 on $2",
+            "Renamed manifest package found! Replacing $1 with $2",
+            "Arsc file contains multiple packages. Using package $1 as default",
+            "Using Apktool $1",
+            "Copying unknown file $1 with method $2",
+            "Copying raw $1 file..."
+    };
+
+    public static String covertLocaleInfo(String str) {
+        if (str == null) {
+            return str;
+        }
+
+        //特殊罗辑处理
+        if (ShakaDecodeOption.getInstance().isIgnoreResDecodeError()
+                && str.contains("replacing by FALSE value")) {
+            str = str.replaceAll("replacing by FALSE value", "ignore");
+        }
+
+        if (str.length() < MINLEN) {
+            return str;
+        }
+
+        MultiLanguageSupport languageSupport = MultiLanguageSupport.getInstance();
+        for (String key : langStrMap.keySet()) {
+            if (str.contains(key)) {
+                String val = languageSupport.get(langStrMap.get(key), key);
+                if (key.equals(val)) continue;
+                str = str.replace(key, val);
+            }
+        }
+
+        for (int i=0; i<langRpStr.length; i++) {
+            try {
+                String key = langRpStr[i];
+                String val = languageSupport.get("r" + i, langRpStrDef[i]);
+
+                if (key.equals(val)) continue;
+                str = str.replaceFirst(key, val);
+            } catch (Exception e) {
+            }
+        }
+
+        return str;
     }
 }
