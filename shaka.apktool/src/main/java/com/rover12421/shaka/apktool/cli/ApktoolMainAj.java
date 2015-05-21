@@ -102,15 +102,6 @@ public class ApktoolMainAj {
     @Around("execution(void brut.apktool.Main.usage(..))" +
             "&& args(commandLine)")
     public void usage_around(CommandLine commandLine) throws Exception {
-        System.out.println("ShakaApktool v" + ShakaProperties.getVersion() + " - Using AspectJ weaver Apktool project");
-        System.out.println("Weaver by Rover12421 <rover12421@163.com>");
-        String thanks = MultiLanguageSupport.getInstance().get(-1, null);
-        if (thanks != null) {
-            System.out.println(thanks);
-        }
-
-        System.out.println("----------------\n");
-
         // load basicOptions
         _Options();
         SmaliHelpFormatter formatter = new SmaliHelpFormatter();
@@ -123,38 +114,49 @@ public class ApktoolMainAj {
 
         // print out license info prior to formatter.
         System.out.println(
-                "Apktool v" + Androlib.getVersion() + " - a tool for reengineering Android apk files\n" +
-                        "with smali v" + ApktoolProperties.get("smaliVersion") +
-                        " and baksmali v" + ApktoolProperties.get("baksmaliVersion") + "\n" +
-                        "Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>\n" +
-                        "Updated by Connor Tumbleson <connor.tumbleson@gmail.com>" );
-        if (Main.isAdvanceMode()) {
-            System.out.println("Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)\n");
-        }else {
-            System.out.println("");
+                "ShakaApktool v" + ShakaProperties.getVersion() + " - a tool for reengineering Android apk files\n" +
+                        "with\n" +
+                        "\tapktool v " + Androlib.getVersion() + ",\n" +
+                        "\tsmali v" + ApktoolProperties.get("smaliVersion") + ",\n" +
+                        "\tbaksmali v" + ApktoolProperties.get("baksmaliVersion") + "\n" +
+                        "Copyright 2015 Rover12421 <rover12421@163.com>");
+
+        System.out.println("Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)\n");
+
+        String thanks = MultiLanguageSupport.getInstance().get(-1, null);
+        if (thanks != null) {
+            System.out.println(thanks);
         }
 
+        System.out.println("\n******************** apktool ********************\n");
+
         // 4 usage outputs (general, frameworks, decode, build)
-        formatter.printHelp("apktool " + verbosityHelp(), normalOptions());
-        formatter.printHelp("apktool " + verbosityHelp() + "if|install-framework [options] <framework.apk>", frameOptions());
-        formatter.printHelp("apktool " + verbosityHelp() + "d[ecode] [options] <file_apk>", DecodeOptions());
-        formatter.printHelp("apktool " + verbosityHelp() + "b[uild] [options] <app_path>", BuildOptions());
-        formatter.printHelp("apktool " + verbosityHelp() + "s[mali] [options] [--] [<smali-file>|folder]*",
+        formatter.printHelp("ShakaApktool " + verbosityHelp(), normalOptions());
+        formatter.printHelp("ShakaApktool " + verbosityHelp() + "if|install-framework [options] <framework.apk>", frameOptions());
+        formatter.printHelp("ShakaApktool " + verbosityHelp() + "d[ecode] [options] <file_apk>", DecodeOptions());
+        formatter.printHelp("ShakaApktool " + verbosityHelp() + "b[uild] [options] <app_path>", BuildOptions());
+
+        System.out.println("\n******************** smali ********************\n");
+
+        formatter.printHelp("ShakaApktool " + verbosityHelp() + "s[mali] [options] [--] [<smali-file>|folder]*",
                 "assembles a set of smali files into a dex file", smaliMainAj.basicOptions(), smaliMainAj.debugOptions());
-        formatter.printHelp("apktool " + verbosityHelp() + "bs|baksmali [options] <dex-file>",
+
+        System.out.println("\n******************** baksmali ********************\n");
+
+        formatter.printHelp("ShakaApktool " + verbosityHelp() + "bs|baksmali [options] <dex-file>",
                 "disassembles and/or dumps a dex file", baksmaliMainAj.basicOptions(), baksmaliMainAj.debugOptions());
+
         if (Main.isAdvanceMode()) {
-            formatter.printHelp("apktool " + verbosityHelp() + "publicize-resources <file_path>",
+            System.out.println("\n******************** AdvanceMode ********************\n");
+            formatter.printHelp("ShakaApktool " + verbosityHelp() + "publicize-resources <file_path>",
                     "Make all framework resources public.", emptyOptions(), (String)null);
-        } else {
-            System.out.println("");
         }
 
         // print out more information
-        System.out.println(
-                "For additional info, see: http://www.rover12421.com/ \n"
-                        + "For smali/baksmali info, see: http://code.google.com/p/smali/");
+        System.out.println("\n******************** More ********************\n");
+        System.out.println("For additional info, see: http://www.rover12421.com/");
         System.out.println("For Apktool info, see: http://ibotpeaches.github.io/Apktool/");
+        System.out.println("For smali/baksmali info, see: http://code.google.com/p/smali/");
     }
 
 
