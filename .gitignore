@@ -15,5 +15,5 @@ bin/
 /out
 TestApk/
 libs/
-/src/test/
+shaka.cli/src/test/
 generated/

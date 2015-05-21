@@ -22,12 +22,25 @@ import com.rover12421.shaka.smali.smali.smaliMainAj;
 import org.apache.commons.cli.*;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Locale;
 
 /**
  * Created by rover12421 on 7/11/14.
  */
 public class Main {
+
+    public static class IgnoreUnkownArgsPosixParser extends PosixParser {
+        @Override
+        protected void processOption(String arg, ListIterator iter) throws ParseException
+        {
+            try {
+                super.processOption(arg, iter);
+            } catch (ParseException e) {
+            }
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         ArrayList<String> list = new ArrayList<>();
         boolean smali = false;
@@ -44,8 +57,8 @@ public class Main {
         }
 
         // cli parser
-        CommandLineParser parser = new PosixParser();
-        CommandLine commandLine = null;
+        CommandLineParser parser = new IgnoreUnkownArgsPosixParser();
+        CommandLine commandLine;
 
         Option language = OptionBuilder.withLongOpt("language")
             .withDescription("Display language, e.g. zh-CN, zh-TW")

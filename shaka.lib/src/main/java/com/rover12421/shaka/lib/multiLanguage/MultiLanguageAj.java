@@ -55,7 +55,8 @@ public class MultiLanguageAj {
 
     @Around("call(* java.lang.String.format(..))" +
             "&& args(format, args)" +
-            "&& !within(com.rover12421.shaka.lib.multiLanguage.* +)")
+            "&& !within(com.rover12421.shaka.lib.multiLanguage.* +)" +
+            "&& !within(org.jf.dexlib2.util.* +)")
     public String around_String_format(ProceedingJoinPoint joinPoint,
                                      String format, Object... args) throws Throwable {
         return mts.covertLocaleInfo((String) joinPoint.proceed(joinPoint.getArgs()));
