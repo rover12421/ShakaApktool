@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.rover12421.shaka.apktool.util;
+package com.rover12421.shaka.smali.util;
 
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -103,7 +103,6 @@ public class StringUtilsAj {
     @Around("execution(* org.jf.util.StringUtils.escapeString(..))" +
             "&& args(value)")
     public String escapeString(ProceedingJoinPoint joinPoint, String value) throws Throwable {
-
         if (!ShakaDecodeOption.getInstance().isShowMoreRecognizableCharacters()) {
             return (String) joinPoint.proceed(joinPoint.getArgs());
         }
