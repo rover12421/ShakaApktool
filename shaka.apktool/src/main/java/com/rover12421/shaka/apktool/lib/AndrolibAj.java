@@ -137,25 +137,34 @@ public class AndrolibAj {
             "&& args(apkFile, outDir, filename, debug, debugLinePrefix, bakdeb, api)")
     public void decodeSourcesSmali_around(ProceedingJoinPoint joinPoint, File apkFile, File outDir, String filename, boolean debug, String debugLinePrefix,
                             boolean bakdeb, int api) throws Throwable {
+
+        File smaliDir = null;
+        String mapDirName = null;
         try {
-            File smaliDir;
+
             if (filename.equalsIgnoreCase("classes.dex")) {
                 smaliDir = new File(outDir, SMALI_DIRNAME);
             } else {
-                String mapDirName = SMALI_DIRNAME + "_" + filename.replaceAll("\\\\|/", "_");
+                mapDirName = SMALI_DIRNAME + "_" + filename.replaceAll("\\\\|/", "_");
                 //去掉.dex后缀
                 mapDirName = mapDirName.substring(0, mapDirName.length()-4);
                 smaliDir = new File(outDir, mapDirName);
-                DexMaps.put(filename, mapDirName);
             }
             OS.rmdir(smaliDir);
             smaliDir.mkdirs();
             LogHelper.getLogger().info("Baksmaling " + filename + "...");
             SmaliDecoder.decode(apkFile, smaliDir, filename, debug, debugLinePrefix, bakdeb, api);
-        } catch (BrutException ex) {
+            //没有异常才添加
+            if (mapDirName != null) {
+                DexMaps.put(filename, mapDirName);
+            }
+        } catch (Exception ex) {
             //只要不是反编译classes.dex的时候抛出异常,都不终止程序
             if (!"classes.dex".equals(filename)) {
                 LogHelper.getLogger().warning("decodeSourcesSmali " + filename + " error!");
+                if (smaliDir != null) {
+                    OS.rmdir(smaliDir);
+                }
             } else {
                 throw ex;
             }
