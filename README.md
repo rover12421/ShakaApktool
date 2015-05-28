@@ -15,6 +15,7 @@ It is NOT intended for piracy and other non-legal uses. It could be used for loc
 - [Source (CSDN)](https://code.csdn.net/rover12421/shakaapktool)
 - [Source (CODING)](https://coding.net/u/rover12421/p/ShakaApktool)
 - [How To Build](https://github.com/rover12421/ShakaApktool/wiki/How-To-Build)
+- [Download](http://pan.baidu.com/s/1hqpcJNu)
 
 #### Other
 - QQ Group : 198996891
