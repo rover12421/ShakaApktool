@@ -19,6 +19,7 @@ package com.rover12421.shaka.apktool.cli;
 import brut.androlib.Androlib;
 import brut.androlib.ApktoolProperties;
 import brut.apktool.Main;
+import brut.common.BrutException;
 import com.rover12421.shaka.lib.HookMain;
 import com.rover12421.shaka.lib.ReflectUtil;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
@@ -232,5 +233,11 @@ public class ApktoolMainAj {
         if (cli.hasOption("ir") || cli.hasOption("ignore_res_decode_error")) {
             ShakaDecodeOption.getInstance().setIgnoreResDecodeError(true);
         }
+    }
+
+    @Before("execution(void brut.apktool.Main.cmdBuild(..))" +
+            "&& args(cli)")
+    public void cmdBuild(CommandLine cli) {
+
     }
 }
