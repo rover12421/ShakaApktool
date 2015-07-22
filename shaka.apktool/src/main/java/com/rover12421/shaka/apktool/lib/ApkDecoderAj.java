@@ -29,6 +29,6 @@ public class ApkDecoderAj {
 
     @Before("execution(void brut.androlib.ApkDecoder.decode())")
     public void decode_before() {
-        LogHelper.getLogger().info("Using ShakaApktool " + ShakaProperties.getVersion());
+        LogHelper.info("Using ShakaApktool " + ShakaProperties.getVersion());
     }
 }

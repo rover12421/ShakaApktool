@@ -66,7 +66,7 @@ public class DexBackedMethodImplementationAj {
              * 先重置instructions和reader
              * dalvik-obfuscator用nop替换,再继续读取正常的指令数据
              */
-            LogHelper.getLogger().warning("Detected dalvik-obfuscator code block : " + thiz.method.getDefiningClass() + "->" + thiz.method.getName());
+            LogHelper.warning("Detected dalvik-obfuscator code block : " + thiz.method.getDefiningClass() + "->" + thiz.method.getName());
             instructions.clear();
             reader = thiz.dexFile.readerAt(instructionsStartOffset);
             /**

@@ -23,7 +23,23 @@ import java.util.logging.Logger;
 public class LogHelper {
     private final static Logger LOGGER = Logger.getLogger("ShakaApktool");
 
-    public static Logger getLogger() {
+    private static Logger getLogger() {
         return LOGGER;
+    }
+
+    public static void warning(String msg) {
+        getLogger().warning(msg);
+    }
+
+    public static void info(String msg) {
+        getLogger().info(msg);
+    }
+
+    public static void fine(String msg) {
+        getLogger().fine(msg);
+    }
+
+    public static void severe(String msg) {
+        getLogger().severe(msg);
     }
 }

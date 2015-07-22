@@ -38,10 +38,7 @@ import brut.androlib.res.decoder.ResFileDecoder;
 import brut.androlib.res.decoder.ResRawStreamDecoder;
 import brut.androlib.res.decoder.ResStreamDecoderContainer;
 import brut.util.Duo;
-import com.rover12421.shaka.lib.ShakaDecodeOption;
-import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
-import com.rover12421.shaka.lib.ShakaException;
+import com.rover12421.shaka.lib.*;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -147,7 +144,7 @@ public class AndrolibResourcesAj {
                             //备份原始文件
                             Path srcPath = Paths.get(srcPng);
                             Path desPath = Paths.get(desPng);
-                            LogHelper.getLogger().warning("Found exception png file : " + srcPng);
+                            LogHelper.warning("Found exception png file : " + srcPng);
                             Files.copy(srcPath, desPath, StandardCopyOption.REPLACE_EXISTING);
 
                             //用ok的png替换异常png
@@ -171,7 +168,7 @@ public class AndrolibResourcesAj {
                             String xmlPathStr = xmlPathMatcher.group(1);
                             File xmlPathFile = new File(xmlPathStr);
                             if (xmlPathFile.exists()) {
-                                LogHelper.getLogger().warning("Find HorizontalScrollView exception xml : " + xmlPathStr);
+                                LogHelper.warning("Find HorizontalScrollView exception xml : " + xmlPathStr);
                                 DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                                 DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                                 Document document = documentBuilder.parse(xmlPathStr);
@@ -270,6 +267,16 @@ public class AndrolibResourcesAj {
             } catch (IOException ex) {
                 throw new AndrolibException(ex);
             }
+        }
+    }
+
+    @Around("execution(* brut.androlib.res.AndrolibResources.getAaptBinaryFile())")
+    public File getAaptBinaryFile() throws ShakaException {
+        try {
+            return new File(ShakaApktoolFiles.getShakaAaptBinPath());
+        } catch (Throwable e) {
+            LogHelper.info("Can't set aapt binary as executable");
+            throw new ShakaException("Can't set aapt binary as executable", e);
         }
     }
 }

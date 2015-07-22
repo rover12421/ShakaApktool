@@ -30,7 +30,7 @@ public class StringBlockAj {
     public void outputStyleTag(ProceedingJoinPoint joinPoint, String tag, StringBuilder builder, boolean close) throws Throwable {
         String newTag = tag.replaceAll(";+", ";");
         if (!newTag.equals(tag)) {
-            LogHelper.getLogger().info("outputStyleTag " + tag + " >>> " + newTag);
+            LogHelper.info("outputStyleTag " + tag + " >>> " + newTag);
         }
 
         joinPoint.proceed(new Object[]{newTag, builder, close});

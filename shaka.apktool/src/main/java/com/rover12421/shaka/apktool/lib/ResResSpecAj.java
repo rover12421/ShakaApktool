@@ -35,7 +35,7 @@ public class ResResSpecAj {
         try {
             joinPoint.proceed(joinPoint.getArgs());
         } catch (AndrolibException e) {
-                LogHelper.getLogger().warning("Add Repeat Resource : " + e.getMessage());
+                LogHelper.warning("Add Repeat Resource : " + e.getMessage());
         }
     }
 }

@@ -40,7 +40,7 @@ public class ResFileDecoderAj {
          * 如果
          */
         if (outFileName.endsWith(".xml") && decoder.equals("9patch")) {
-            LogHelper.getLogger().warning(String.format("Correct decoder [%s] : %s >>> xml", outFileName, decoder));
+            LogHelper.warning(String.format("Correct decoder [%s] : %s >>> xml", outFileName, decoder));
             decoder = "xml";
             joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
         } else {

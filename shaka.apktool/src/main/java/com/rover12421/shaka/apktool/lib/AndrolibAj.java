@@ -115,7 +115,7 @@ public class AndrolibAj {
      */
     @Before("execution(void brut.androlib.Androlib.build(brut.androlib.res.util.ExtFile, java.io.File))")
     public void build_before() {
-        LogHelper.getLogger().info("Using ShakaApktool " + ShakaProperties.getVersion());
+        LogHelper.info("Using ShakaApktool " + ShakaProperties.getVersion());
     }
 
 
@@ -152,7 +152,7 @@ public class AndrolibAj {
             }
             OS.rmdir(smaliDir);
             smaliDir.mkdirs();
-            LogHelper.getLogger().info("Baksmaling " + filename + "...");
+            LogHelper.info("Baksmaling " + filename + "...");
             SmaliDecoder.decode(apkFile, smaliDir, filename, debug, debugLinePrefix, bakdeb, api);
             //没有异常才添加
             if (mapDirName != null) {
@@ -161,7 +161,7 @@ public class AndrolibAj {
         } catch (Exception ex) {
             //只要不是反编译classes.dex的时候抛出异常,都不终止程序
             if (!"classes.dex".equals(filename)) {
-                LogHelper.getLogger().warning("decodeSourcesSmali " + filename + " error!");
+                LogHelper.warning("decodeSourcesSmali " + filename + " error!");
                 if (smaliDir != null) {
                     OS.rmdir(smaliDir);
                 }
@@ -216,7 +216,7 @@ public class AndrolibAj {
     public void buildUnknownFiles_around(File appDir, File outFile, Map<String, Object> meta)
             throws Throwable {
         if (meta.containsKey("unknownFiles")) {
-            LogHelper.getLogger().info("Copying unknown files/dir...");
+            LogHelper.info("Copying unknown files/dir...");
 
             Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
             File tempFile = File.createTempFile("buildUnknownFiles", "tmp", outFile.getParentFile());
@@ -278,7 +278,7 @@ public class AndrolibAj {
 
             ZipEntry newEntry = new ZipEntry(unknownFileInfo.getKey());
             int method = Integer.valueOf(unknownFileInfo.getValue());
-            LogHelper.getLogger().fine(String.format("Copying unknown file %s with method %d", unknownFileInfo.getKey(), method));
+            LogHelper.fine(String.format("Copying unknown file %s with method %d", unknownFileInfo.getKey(), method));
             if(method == ZipEntry.STORED) {
                 newEntry.setMethod(ZipEntry.STORED);
                 newEntry.setSize(inputFile.length());
