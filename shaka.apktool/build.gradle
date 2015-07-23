@@ -45,6 +45,7 @@ sourceSets {
                         'apktool/brut.apktool/apktool-lib/src/main/resources',
                         'apktool/brut.apktool/apktool-cli/src/main/resources'
                     ]
+            exclude '**/prebuilt/**'
         }
     }
 
