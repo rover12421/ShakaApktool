@@ -13,17 +13,6 @@ public class EnvironmentDetection {
     private static String OSNAME;
 
     static {
-        if (isWindows()) {
-            LIBEXT = "dll";
-            OSNAME = "windows";
-        } else if (isUnix()) {
-            LIBEXT = "so";
-            OSNAME = "linux";
-        } else if (isMacOSX()) {
-            LIBEXT = "dylib";
-            OSNAME = "darwin";
-        }
-
         if (isRunning64Bit()) {
             ARCH = "x86_64";
             LIBPATHNAME = "lib64";
@@ -33,8 +22,17 @@ public class EnvironmentDetection {
         }
 
         if (isWindows()) {
+            LIBEXT = "dll";
+            OSNAME = "windows";
+            
             //windows 暂时还没有64bit版本
             ARCH = "x86";
+        } else if (isUnix()) {
+            LIBEXT = "so";
+            OSNAME = "linux";
+        } else if (isMacOSX()) {
+            LIBEXT = "dylib";
+            OSNAME = "darwin";
         }
     }
 
