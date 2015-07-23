@@ -91,13 +91,13 @@ public class ShakaApktoolFiles {
             ShakaAaptBinPath = getShakaApktoolDir() +
                     String.format("%1$s%2$s-%3$s%1$sbin%1$saapt",
                             File.separatorChar,
-                            EnvironmentDetection.getOS(),
+                            EnvironmentDetection.getOSNAME(),
                             EnvironmentDetection.getARCH());
 
             ShakaAaptlibPath = getShakaApktoolDir() +
                     String.format("%1$s%2$s-%3$s%1$s%4$s%1$slibc++.%5$s",
                             File.separatorChar,
-                            EnvironmentDetection.getOS(),
+                            EnvironmentDetection.getOSNAME(),
                             EnvironmentDetection.getARCH(),
                             EnvironmentDetection.getLIBPATHNAME(),
                             EnvironmentDetection.getLIBEXT());
@@ -106,5 +106,4 @@ public class ShakaApktoolFiles {
         }
         return ShakaAaptBinPath;
     }
-
 }
