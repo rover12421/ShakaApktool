@@ -31,6 +31,11 @@ public class EnvironmentDetection {
             ARCH = "x86";
             LIBPATHNAME = "lib";
         }
+
+        if (isWindows()) {
+            //windows 暂时还没有64bit版本
+            ARCH = "x86";
+        }
     }
 
     public static boolean isWindows() {
