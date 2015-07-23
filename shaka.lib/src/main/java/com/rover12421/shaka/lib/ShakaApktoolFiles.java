@@ -89,13 +89,14 @@ public class ShakaApktoolFiles {
     public static String getShakaAaptBinPath() throws ShakaException {
         if (ShakaAaptBinPath == null) {
             ShakaAaptBinPath = getShakaApktoolDir() +
-                    String.format("%1$s%2$s-%3$s%1$sbin%1$saapt",
+                    String.format("%1$s%2$s-%3$s%1$sbin%1$saapt%4$s",
                             File.separatorChar,
                             EnvironmentDetection.getOSNAME(),
-                            EnvironmentDetection.getARCH());
+                            EnvironmentDetection.getARCH(),
+                            EnvironmentDetection.getBINEXT());
 
             ShakaAaptlibPath = getShakaApktoolDir() +
-                    String.format("%1$s%2$s-%3$s%1$s%4$s%1$slibc++.%5$s",
+                    String.format("%1$s%2$s-%3$s%1$s%4$s%1$slibc++%5$s",
                             File.separatorChar,
                             EnvironmentDetection.getOSNAME(),
                             EnvironmentDetection.getARCH(),

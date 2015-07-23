@@ -8,6 +8,7 @@ public class EnvironmentDetection {
     private static String JVM_ARCH = System.getProperty("sun.arch.data.model").toLowerCase();
 
     private static String LIBEXT;
+    private static String BINEXT = "";
     private static String LIBPATHNAME;
     private static String ARCH;
     private static String OSNAME;
@@ -22,16 +23,17 @@ public class EnvironmentDetection {
         }
 
         if (isWindows()) {
-            LIBEXT = "dll";
+            LIBEXT = ".dll";
+            BINEXT = ".exe";
             OSNAME = "windows";
-            
+
             //windows 暂时还没有64bit版本
             ARCH = "x86";
         } else if (isUnix()) {
-            LIBEXT = "so";
+            LIBEXT = ".so";
             OSNAME = "linux";
         } else if (isMacOSX()) {
-            LIBEXT = "dylib";
+            LIBEXT = ".dylib";
             OSNAME = "darwin";
         }
     }
@@ -78,5 +80,9 @@ public class EnvironmentDetection {
 
     public static String getOSNAME() {
         return OSNAME;
+    }
+
+    public static String getBINEXT() {
+        return BINEXT;
     }
 }
