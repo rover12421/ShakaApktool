@@ -1,6 +1,9 @@
 import groovy.io.FileType
 import org.apache.tools.ant.filters.ReplaceTokens
 
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.zip.CRC32
 
 /**
@@ -26,7 +29,8 @@ task genShakaAaptCrc32 {
     def binDir = file('src/main/resources/ShakaAapt')
     def binDir_len = binDir.absolutePath.length() + 1
     def ShakaAaptProperties = file('src/main/resources/properties/ShakaAapt.properties')
-    def out = ShakaAaptProperties.newWriter()
+    def props = new ArrayList()
+
     binDir.eachFileRecurse(FileType.FILES) {
         def crc32 = new CRC32()
         def buff = new byte[4096]
@@ -38,10 +42,21 @@ task genShakaAaptCrc32 {
         fis.close()
         String name = it.absolutePath.substring(binDir_len).replaceAll("/", ".")
         String prop = name + "=" + Long.toHexString(crc32.value)
-        out.append(prop)
-        out.newLine()
+        props.add(prop)
     }
-    out.close()
+    Collections.sort(props, new Comparator() {
+        @Override
+        int compare(Object o1, Object o2) {
+            String s1 = o1
+            String s2 = o2
+            if (s1.length() == s2.length()) {
+                return s1.compareTo(s2);
+            } else {
+                return s1.length() - s2.length()
+            }
+        }
+    })
+    Files.write(Paths.get(ShakaAaptProperties.absolutePath), props, StandardCharsets.UTF_8)
 }
 
 processResources {
