@@ -15,8 +15,10 @@
  */
 package com.rover12421.shaka.apktool.lib;
 
+import brut.androlib.AndrolibException;
 import brut.androlib.err.UndefinedResObject;
 import brut.androlib.res.data.*;
+import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ReflectUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -45,6 +47,15 @@ public class ResPackageAj {
             } else {
                 throw e;
             }
+        }
+    }
+
+    @Around("execution(* brut.androlib.res.data.ResPackage.addResSpec(..))")
+    public void addResSpec(ProceedingJoinPoint joinPoint) {
+        try {
+            joinPoint.proceed(joinPoint.getArgs());
+        } catch (Throwable throwable) {
+            LogHelper.warning(throwable.getMessage());
         }
     }
 }

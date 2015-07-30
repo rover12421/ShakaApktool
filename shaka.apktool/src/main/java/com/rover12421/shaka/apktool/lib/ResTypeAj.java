@@ -13,29 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package com.rover12421.shaka.apktool.lib;
 
-import brut.androlib.AndrolibException;
-import brut.androlib.res.data.ResResource;
 import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * Created by rover12421 on 8/2/14.
+ * Created by rover12421 on 7/30/15.
  */
 @Aspect
-public class ResConfigAj {
-
-    @Around("execution(void brut.androlib.res.data.ResConfig.addResource(..))" +
-            "&& args(res, overwrite)")
-    public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
+public class ResTypeAj {
+    @Around("execution(* brut.androlib.res.data.ResType.addResSpec(..))")
+    public void addResSpec(ProceedingJoinPoint joinPoint) {
         try {
             joinPoint.proceed(joinPoint.getArgs());
-        } catch (AndrolibException e) {
-            LogHelper.warning(e.getMessage());
+        } catch (Throwable throwable) {
+            LogHelper.warning(throwable.getMessage());
         }
     }
 }
