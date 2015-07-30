@@ -22,6 +22,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
+import java.io.InputStream;
+
 /**
  * Created by rover12421 on 4/3/15.
  */
@@ -33,6 +35,15 @@ public class ResFileDecoderAj {
                        String outFileName, String decoder) throws Throwable {
         if (!inFileName.equals(outFileName)) {
             AndrolibAj.DecodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
+        }
+
+        try (
+                InputStream is = inDir.getFileInput(inFileName)
+        ){
+
+        } catch (NullPointerException e) {
+            LogHelper.warning("[ResFileDecoder] the file no exist : " + inFileName);
+            return;
         }
 
         /**
