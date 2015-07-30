@@ -19,7 +19,7 @@ package com.rover12421.shaka.lib;
  * Created by rover12421 on 3/30/15.
  */
 public class ShakaDecodeOption {
-    private static ShakaDecodeOption option = new ShakaDecodeOption();
+    private static final ShakaDecodeOption option = new ShakaDecodeOption();
 
     public static ShakaDecodeOption getInstance() {
         return option;

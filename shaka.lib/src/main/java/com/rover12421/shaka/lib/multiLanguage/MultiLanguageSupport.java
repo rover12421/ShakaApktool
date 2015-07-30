@@ -27,9 +27,9 @@ import java.util.*;
  */
 public class MultiLanguageSupport {
     private Locale locale = Locale.getDefault();
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
-    private static MultiLanguageSupport multiLanguageSupport = new MultiLanguageSupport();
+    private static final MultiLanguageSupport multiLanguageSupport = new MultiLanguageSupport();
 
     private MultiLanguageSupport() {
         loadLang();
@@ -57,7 +57,7 @@ public class MultiLanguageSupport {
     }
 
     public void setLang(Locale locale) {
-        if (locale != null && !this.locale.toString().equals(locale)) {
+        if (locale != null && !this.locale.equals(locale)) {
             this.locale = locale;
             loadLang();
         }
@@ -111,6 +111,7 @@ public class MultiLanguageSupport {
                 }
             }
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -170,6 +171,7 @@ public class MultiLanguageSupport {
                 if (key.equals(val)) continue;
                 str = str.replaceFirst(key, val);
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

@@ -37,7 +37,6 @@ import brut.androlib.res.data.ResTable;
 import brut.androlib.res.data.ResUnknownFiles;
 import brut.androlib.res.util.ExtFile;
 import brut.androlib.src.SmaliDecoder;
-import brut.common.BrutException;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
@@ -65,7 +64,7 @@ import java.util.zip.*;
 @Aspect
 public class AndrolibAj {
 
-    public String getUNK_DIRNAME() throws NoSuchFieldException, IllegalAccessException {
+    public String getUNK_DIRNAME() {
 //        return (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
         return "unknown";
     }
@@ -180,11 +179,13 @@ public class AndrolibAj {
          * 其它情况需手动添加到`apktool.yml`下
          */
         File[] files = appDir.getAbsoluteFile().listFiles();
-        for (File file : files) {
-            String name = file.getName();
-            if (file.isDirectory() && !DexMaps.containsKey(name) && name.startsWith("smali_")) {
-                String key = name.substring("smali_".length()) + ".dex";
-                DexMaps.put(key, name);
+        if (files != null) {
+            for (File file : files) {
+                String name = file.getName();
+                if (file.isDirectory() && !DexMaps.containsKey(name) && name.startsWith("smali_")) {
+                    String key = name.substring("smali_".length()) + ".dex";
+                    DexMaps.put(key, name);
+                }
             }
         }
 

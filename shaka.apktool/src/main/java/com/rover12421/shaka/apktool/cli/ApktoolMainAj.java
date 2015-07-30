@@ -42,8 +42,8 @@ import org.jf.util.SmaliHelpFormatter;
 @Aspect
 public class ApktoolMainAj {
 
-    private static HookMain hookMain = new HookMain() {
-        private ApktoolMainAj apktoolMainAj = new ApktoolMainAj();
+    private static final HookMain hookMain = new HookMain() {
+        private final ApktoolMainAj apktoolMainAj = new ApktoolMainAj();
         @Override
         public void version() {
             apktoolMainAj.version_around();
@@ -63,27 +63,27 @@ public class ApktoolMainAj {
         return hookMain;
     }
 
-    public static final Options normalOptions() throws Exception {
+    public static Options normalOptions() throws Exception {
         return (Options) ReflectUtil.getFieldValue(Main.class, "normalOptions");
     }
 
-    public static final Options DecodeOptions() throws Exception {
+    public static Options DecodeOptions() throws Exception {
         return (Options) ReflectUtil.getFieldValue(Main.class, "DecodeOptions");
     }
 
-    public static final Options BuildOptions() throws Exception {
+    public static Options BuildOptions() throws Exception {
         return (Options) ReflectUtil.getFieldValue(Main.class, "BuildOptions");
     }
 
-    public static final Options frameOptions() throws Exception {
+    public static Options frameOptions() throws Exception {
         return (Options) ReflectUtil.getFieldValue(Main.class, "frameOptions");
     }
 
-    public static final Options allOptions() throws Exception {
+    public static Options allOptions() throws Exception {
         return (Options) ReflectUtil.getFieldValue(Main.class, "allOptions");
     }
 
-    public static final Options emptyOptions() throws Exception {
+    public static Options emptyOptions() throws Exception {
         return (Options) ReflectUtil.getFieldValue(Main.class, "emptyOptions");
     }
 

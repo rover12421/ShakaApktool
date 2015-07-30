@@ -28,21 +28,21 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class MultiLanguageAj {
 
-    private MultiLanguageSupport mts = MultiLanguageSupport.getInstance();
+    private final MultiLanguageSupport mts = MultiLanguageSupport.getInstance();
 
     @Around("call(void java.io.PrintStream.println(..))" +
             "&& args(x)" +
             "&& !within(com.rover12421.shaka.lib.multiLanguage.* +)" +
             "&& !within(com.rover12421.shaka.apktool.test.*)")
     public void around_sout_println(ProceedingJoinPoint joinPoint, String x) throws Throwable {
-        joinPoint.proceed(new Object[]{mts.covertLocaleInfo(x)});
+        joinPoint.proceed(new Object[]{MultiLanguageSupport.covertLocaleInfo(x)});
     }
 
     @Around("call(* org.apache.commons.cli.OptionBuilder.withDescription(..))" +
             "&& args(newDescription)" +
             "&& !within(com.rover12421.shaka.lib.multiLanguage.* +)")
     public OptionBuilder around_OptionBuilder_withDescription(ProceedingJoinPoint joinPoint, String newDescription) throws Throwable {
-        return (OptionBuilder) joinPoint.proceed(new Object[]{mts.covertLocaleInfo(newDescription)});
+        return (OptionBuilder) joinPoint.proceed(new Object[]{MultiLanguageSupport.covertLocaleInfo(newDescription)});
     }
 
     @Around("call(void org.apache.commons.cli.HelpFormatter.printHelp(..))" +
@@ -50,7 +50,7 @@ public class MultiLanguageAj {
             "&& !within(com.rover12421.shaka.lib.multiLanguage.* +)")
     public void around_HelpFormatter_printHelp(ProceedingJoinPoint joinPoint,
                                                         String cmdLineSyntax, String header, Options options, String footer) throws Throwable {
-        joinPoint.proceed(new Object[]{mts.covertLocaleInfo(cmdLineSyntax), mts.covertLocaleInfo(header), options, footer});
+        joinPoint.proceed(new Object[]{MultiLanguageSupport.covertLocaleInfo(cmdLineSyntax), MultiLanguageSupport.covertLocaleInfo(header), options, footer});
     }
 
     @Around("call(* java.lang.String.format(..))" +
@@ -59,7 +59,7 @@ public class MultiLanguageAj {
             "&& !within(org.jf.dexlib2.util.* +)")
     public String around_String_format(ProceedingJoinPoint joinPoint,
                                      String format, Object... args) throws Throwable {
-        return mts.covertLocaleInfo((String) joinPoint.proceed(joinPoint.getArgs()));
+        return MultiLanguageSupport.covertLocaleInfo((String) joinPoint.proceed(joinPoint.getArgs()));
     }
 
 
@@ -68,7 +68,7 @@ public class MultiLanguageAj {
             "&& !within(com.rover12421.shaka.lib.multiLanguage.* +)")
     public void around_Logger_msg(ProceedingJoinPoint joinPoint,
                                              String msg) throws Throwable {
-        joinPoint.proceed(new Object[]{mts.covertLocaleInfo(msg)});
+        joinPoint.proceed(new Object[]{MultiLanguageSupport.covertLocaleInfo(msg)});
     }
 }
 

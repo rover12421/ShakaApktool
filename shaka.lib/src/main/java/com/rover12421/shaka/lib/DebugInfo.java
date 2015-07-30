@@ -15,8 +15,6 @@
  */
 package com.rover12421.shaka.lib;
 
-import com.rover12421.shaka.lib.ShakaProperties;
-
 /**
  * Created by rover12421 on 12/25/13.
  */
