@@ -15,20 +15,69 @@
  */
 package com.rover12421.shaka.apktool.lib;
 
+import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResResource;
+import brut.androlib.res.decoder.ResFileDecoder;
 import brut.directory.Directory;
 import com.rover12421.shaka.lib.LogHelper;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rover12421 on 4/3/15.
  */
 @Aspect
 public class ResFileDecoderAj {
+    public static final List<ReDecodeResFile> CanNeedReDecodeFiles = new ArrayList<>();
+    public static boolean NeedReDecodeFiles = false;
+
+    public class ReDecodeResFile {
+        private ResFileDecoder decoder;
+        private ResResource res;
+        private Directory inDir;
+        private Directory outDir;
+
+        public ReDecodeResFile(ResFileDecoder decoder, ResResource res, Directory inDir, Directory outDir) {
+            this.decoder = decoder;
+            this.res = res;
+            this.inDir = inDir;
+            this.outDir = outDir;
+        }
+
+        public void decode() throws AndrolibException {
+            decoder.decode(res, inDir, outDir);
+        }
+    }
+
+    public static boolean DonotRecord = false;
+    public static void ReDecodeFiles() throws AndrolibException {
+        if (NeedReDecodeFiles) {
+            DonotRecord = true;
+            LogHelper.info("Re Decoding file-resources...");
+            for (ReDecodeResFile resFile : CanNeedReDecodeFiles) {
+                resFile.decode();
+            }
+            DonotRecord = false;
+        }
+        CanNeedReDecodeFiles.clear();
+    }
+
+    @Before("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
+            "&& args(res, inDir, outDir)")
+    public void decode_before(JoinPoint joinPoint, ResResource res, Directory inDir, Directory outDir) {
+        if (DonotRecord) {
+            return;
+        }
+        CanNeedReDecodeFiles.add(new ReDecodeResFile((ResFileDecoder) joinPoint.getThis(), res, inDir, outDir));
+    }
+
     @Around("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
             "&& args(inDir, inFileName, outDir, outFileName, decoder)")
     public void decode(ProceedingJoinPoint joinPoint, Directory inDir, String inFileName, Directory outDir,

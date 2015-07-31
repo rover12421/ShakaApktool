@@ -26,11 +26,16 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by rover12421 on 8/2/14.
  */
 @Aspect
 public class ResConfigAj {
+
+    public final static Map<Integer, ResResource> MultopleResFileValue = new HashMap<>();
 
     @Around("execution(void brut.androlib.res.data.ResConfig.addResource(..))" +
             "&& args(res, overwrite)")
@@ -38,31 +43,23 @@ public class ResConfigAj {
         ResResSpec spec = res.getResSpec();
 
         String key = ResTypeAj.getKey(spec);
-        ResType resType = ResTypeAj.MultopleSpecs.get(key);
-        if (resType != null) {
+        ResResSpec resSpec = ResTypeAj.MultopleSpecs.get(key);
+        if (resSpec != null) {
             //有重复的ResResSpec
             ResValue resValue = res.getValue();
             String rename = null;
             if (resValue instanceof ResFileValue) {
                 ResFileValue fileValue = (ResFileValue) resValue;
                 rename = fileValue.getPath().replaceAll("/|\\\\|\\.", "_");
-//            } else if (resValue instanceof ResAttr) {
-//                ResAttr resAttr = (ResAttr) resValue;
-//                rename = spec.getName() + "_" + spec.getId();
+                MultopleResFileValue.put(spec.getId().id, res);
             } else {
-                if (spec.getId().id == 2130772219) {
-                    System.out.println("find 2130772219 : clazz := " + resValue.getClass());
-                    ResAttr resAttr = (ResAttr) resValue;
-                    String name = spec.getFullName(res.getResSpec().getPackage(), true);
-                    System.out.println("name = " + name);
-                }
                 rename = spec.getName() + "_" + spec.getId();
             }
 
             if (rename != null) {
 //                LogHelper.warning("Rename ResResSpec " + spec.getName() + " to " + rename);
                 ResResSpecAj.setName(spec, rename);
-                resType.addResSpec(spec);
+                ResTypeAj.addSpecToResType(spec);
             }
         }
 

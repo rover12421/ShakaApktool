@@ -15,6 +15,7 @@
  */
 package com.rover12421.shaka.apktool.lib;
 
+import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.data.ResType;
 import com.rover12421.shaka.lib.LogHelper;
@@ -31,7 +32,7 @@ import java.util.Map;
 @Aspect
 public class ResTypeAj {
 
-    public final static Map<String, ResType> MultopleSpecs = new HashMap<>();
+    public final static Map<String, ResResSpec> MultopleSpecs = new HashMap<>();
 
     @Around("execution(* brut.androlib.res.data.ResType.addResSpec(..))" +
             "&& args(spec)")
@@ -51,12 +52,34 @@ public class ResTypeAj {
                     "Multiple res specs: %s/%s", thiz.getName(), spec.getName()));
             if (exitsSpec.getId() != spec.getId()) {
                 String key = getKey(spec);
-                MultopleSpecs.put(key, thiz);
+                MultopleSpecs.put(key, spec);
+
+                key = getKey(exitsSpec);
+                MultopleSpecs.put(key, exitsSpec);
+            }
+        }
+    }
+
+    public static void addSpecToResType(ResResSpec spec) {
+        ResType type = spec.getType();
+        ResResSpec findSpec = null;
+        try {
+            findSpec = type.getResSpec(spec.getName());
+        } catch (Exception e) {
+        }
+        if (findSpec == null) {
+            try {
+                type.addResSpec(spec);
+            } catch (AndrolibException e) {
             }
         }
     }
 
     public static String getKey(ResResSpec spec) {
-        return "?" + spec.getName() + spec.getId();
+        return getKey(spec.getId().id);
+    }
+
+    public static String getKey(int id) {
+        return "?" + String.format("0x%08x", id);
     }
 }
