@@ -70,7 +70,7 @@ public class ResStyleValueAj {
             }
             for (int i = 0; i < mItems.length; i++) {
                 ResResSpec spec = mItems[i].m1.getReferent();
-                String name = null;
+                String name;
                 String value = null;
 
                 String resource = spec.getDefaultResource().getValue().toString();

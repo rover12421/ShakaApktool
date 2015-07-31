@@ -19,7 +19,6 @@ package com.rover12421.shaka.apktool.lib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.data.ResResource;
-import brut.androlib.res.data.ResType;
 import brut.androlib.res.data.value.*;
 import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -47,7 +46,7 @@ public class ResConfigAj {
         if (resSpec != null) {
             //有重复的ResResSpec
             ResValue resValue = res.getValue();
-            String rename = null;
+            String rename;
             if (resValue instanceof ResFileValue) {
                 ResFileValue fileValue = (ResFileValue) resValue;
                 rename = fileValue.getPath().replaceAll("/|\\\\|\\.", "_");

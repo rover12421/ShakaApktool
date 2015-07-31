@@ -39,10 +39,10 @@ public class ResFileDecoderAj {
     public static boolean NeedReDecodeFiles = false;
 
     public class ReDecodeResFile {
-        private ResFileDecoder decoder;
-        private ResResource res;
-        private Directory inDir;
-        private Directory outDir;
+        private final ResFileDecoder decoder;
+        private final ResResource res;
+        private final Directory inDir;
+        private final Directory outDir;
 
         public ReDecodeResFile(ResFileDecoder decoder, ResResource res, Directory inDir, Directory outDir) {
             this.decoder = decoder;

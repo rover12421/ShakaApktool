@@ -53,7 +53,6 @@ import org.aspectj.lang.annotation.*;
 
 import java.io.*;
 import java.nio.file.*;
-import java.rmi.server.ExportException;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -268,7 +267,7 @@ public class AndrolibAj {
     }
 
     private void copyUnknownFiles(File appDir, ZipOutputStream outputFile, Map<String, String> files)
-            throws IOException, NoSuchFieldException, IllegalAccessException {
+            throws IOException {
         String UNK_DIRNAME = getUNK_DIRNAME();
         File unknownFileDir = new File(appDir, UNK_DIRNAME);
 

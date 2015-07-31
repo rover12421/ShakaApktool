@@ -16,7 +16,6 @@
 package com.rover12421.shaka.apktool.lib;
 
 import android.util.TypedValue;
-import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.ResType;
 import brut.androlib.res.data.value.ResIntBasedValue;

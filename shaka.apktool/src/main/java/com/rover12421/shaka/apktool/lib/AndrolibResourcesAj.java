@@ -33,14 +33,12 @@ package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.AndrolibResources;
-import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.ResTable;
 import brut.androlib.res.decoder.AXmlResourceParser;
 import brut.androlib.res.decoder.ResFileDecoder;
 import brut.androlib.res.decoder.ResRawStreamDecoder;
 import brut.androlib.res.decoder.ResStreamDecoderContainer;
 import brut.androlib.res.util.ExtFile;
-import brut.directory.Directory;
 import brut.util.Duo;
 import com.rover12421.shaka.lib.*;
 import org.apache.commons.io.IOUtils;
@@ -53,7 +51,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xmlpull.v1.XmlSerializer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -293,8 +290,8 @@ public class AndrolibResourcesAj {
     @Before("execution(* brut.androlib.res.AndrolibResources.decode(..))" +
             "&& args(resTable, apkFile, outDir)")
     public void decode(ResTable resTable, ExtFile apkFile, File outDir) {
-        this.apkFile = apkFile;
-        this.outDir = outDir;
+        AndrolibResourcesAj.apkFile = apkFile;
+        AndrolibResourcesAj.outDir = outDir;
     }
 
     public static ExtFile getApkFile() {
