@@ -15,22 +15,48 @@
  */
 package com.rover12421.shaka.apktool.lib;
 
+import brut.androlib.res.data.ResResSpec;
+import brut.androlib.res.data.ResType;
 import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by rover12421 on 7/30/15.
  */
 @Aspect
 public class ResTypeAj {
-    @Around("execution(* brut.androlib.res.data.ResType.addResSpec(..))")
-    public void addResSpec(ProceedingJoinPoint joinPoint) {
+
+    public final static Map<String, ResType> MultopleSpecs = new HashMap<>();
+
+    @Around("execution(* brut.androlib.res.data.ResType.addResSpec(..))" +
+            "&& args(spec)")
+    public void addResSpec(ProceedingJoinPoint joinPoint, ResResSpec spec) throws Throwable {
+        ResType thiz = (ResType) joinPoint.getThis();
+
+        ResResSpec exitsSpec = null;
         try {
-            joinPoint.proceed(joinPoint.getArgs());
-        } catch (Throwable throwable) {
-            LogHelper.warning(throwable.getMessage());
+            exitsSpec = thiz.getResSpec(spec.getName());
+        } catch (Exception e) {
         }
+
+        if (exitsSpec == null) {
+            joinPoint.proceed(joinPoint.getArgs());
+        } else {
+            LogHelper.warning(String.format(
+                    "Multiple res specs: %s/%s", thiz.getName(), spec.getName()));
+            if (exitsSpec.getId() != spec.getId()) {
+                String key = getKey(spec);
+                MultopleSpecs.put(key, thiz);
+            }
+        }
+    }
+
+    public static String getKey(ResResSpec spec) {
+        return "?" + spec.getName() + spec.getId();
     }
 }

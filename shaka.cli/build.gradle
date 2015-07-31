@@ -72,7 +72,8 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-keepclassmembers class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** android_ns; *** getAttributeOffset(...);}'
     args '-keepclassmembers class org.jf.dexlib2.dexbacked.DexBackedMethodImplementation { *** codeOffset; }'
     args '-keepclassmembers class brut.androlib.res.data.ResPackage { *** mResTable; }'
-    args '-keepclassmembers class brut.androlib.res.decoder.ARSCDecoder { *** mIn; *** mHeader; *** mTableStrings; *** nextChunkCheckType(...); *** nextChunk(...); *** readPackage(...); }'
+    args '-keepclassmembers class brut.androlib.res.decoder.ARSCDecoder { *** mIn; *** mPkg; *** mType; *** mHeader; *** mTableStrings; *** nextChunkCheckType(...); *** nextChunk(...); *** readPackage(...); }'
+    args '-keepclassmembers class brut.androlib.res.data.ResResSpec { *** mName; }'
 }
 
 tasks.getByPath(':release').dependsOn(proguard)

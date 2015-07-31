@@ -33,8 +33,16 @@ public class ResFileDecoderAj {
             "&& args(inDir, inFileName, outDir, outFileName, decoder)")
     public void decode(ProceedingJoinPoint joinPoint, Directory inDir, String inFileName, Directory outDir,
                        String outFileName, String decoder) throws Throwable {
-        if (!inFileName.equals(outFileName)) {
-            AndrolibAj.DecodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
+        if (inDir == null) {
+            //inDir == null,说明不是标准的资源目录结构
+            inDir = AndrolibResourcesAj.getApkFile().getDirectory();
+            if (!inFileName.equals(outFileName)) {
+                AndrolibAj.DecodeFileMaps.put(inFileName, "res/" + outFileName);
+            }
+        } else {
+            if (!inFileName.equals(outFileName)) {
+                AndrolibAj.DecodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
+            }
         }
 
         try (
@@ -53,10 +61,8 @@ public class ResFileDecoderAj {
         if (outFileName.endsWith(".xml") && decoder.equals("9patch")) {
             LogHelper.warning(String.format("Correct decoder [%s] : %s >>> xml", outFileName, decoder));
             decoder = "xml";
-            joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
-        } else {
-            joinPoint.proceed(joinPoint.getArgs());
         }
+        joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
     }
 
     @Before("execution(* brut.androlib.res.decoder.ResFileDecoder.decodeManifest(..))" +

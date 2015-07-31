@@ -17,7 +17,10 @@
 package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.data.ResResource;
+import brut.androlib.res.data.ResType;
+import brut.androlib.res.data.value.*;
 import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -32,6 +35,37 @@ public class ResConfigAj {
     @Around("execution(void brut.androlib.res.data.ResConfig.addResource(..))" +
             "&& args(res, overwrite)")
     public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
+        ResResSpec spec = res.getResSpec();
+
+        String key = ResTypeAj.getKey(spec);
+        ResType resType = ResTypeAj.MultopleSpecs.get(key);
+        if (resType != null) {
+            //有重复的ResResSpec
+            ResValue resValue = res.getValue();
+            String rename = null;
+            if (resValue instanceof ResFileValue) {
+                ResFileValue fileValue = (ResFileValue) resValue;
+                rename = fileValue.getPath().replaceAll("/|\\\\|\\.", "_");
+//            } else if (resValue instanceof ResAttr) {
+//                ResAttr resAttr = (ResAttr) resValue;
+//                rename = spec.getName() + "_" + spec.getId();
+            } else {
+                if (spec.getId().id == 2130772219) {
+                    System.out.println("find 2130772219 : clazz := " + resValue.getClass());
+                    ResAttr resAttr = (ResAttr) resValue;
+                    String name = spec.getFullName(res.getResSpec().getPackage(), true);
+                    System.out.println("name = " + name);
+                }
+                rename = spec.getName() + "_" + spec.getId();
+            }
+
+            if (rename != null) {
+//                LogHelper.warning("Rename ResResSpec " + spec.getName() + " to " + rename);
+                ResResSpecAj.setName(spec, rename);
+                resType.addResSpec(spec);
+            }
+        }
+
         try {
             joinPoint.proceed(joinPoint.getArgs());
         } catch (AndrolibException e) {

@@ -15,7 +15,11 @@
  */
 package com.rover12421.shaka.apktool.lib;
 
+import android.util.TypedValue;
+import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResPackage;
+import brut.androlib.res.data.ResType;
+import brut.androlib.res.data.value.ResIntBasedValue;
 import brut.androlib.res.decoder.ARSCDecoder;
 import brut.androlib.res.decoder.StringBlock;
 import brut.util.ExtDataInput;
@@ -49,8 +53,20 @@ public class ARSCDecoderAj {
         return  (ExtDataInput) ReflectUtil.getFieldValue(thiz, "mIn");
     }
 
+    public ResPackage mPkg(ARSCDecoder thiz) throws Exception {
+        return  (ResPackage) ReflectUtil.getFieldValue(thiz, "mPkg");
+    }
+
     public ARSCDecoder.Header mHeader(ARSCDecoder thiz) throws Exception {
         return  (ARSCDecoder.Header) ReflectUtil.getFieldValue(thiz, "mHeader");
+    }
+
+    public StringBlock mTableStrings(ARSCDecoder thiz) throws Exception {
+        return  (StringBlock) ReflectUtil.getFieldValue(thiz, "mTableStrings");
+    }
+
+    public ResType mType(ARSCDecoder thiz) throws Exception {
+        return  (ResType) ReflectUtil.getFieldValue(thiz, "mType");
     }
 
     @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.nextChunk())")
@@ -118,5 +134,25 @@ public class ARSCDecoderAj {
             }
         }
     }
+
+    @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.readValue())")
+    public ResIntBasedValue readValue(ProceedingJoinPoint joinPoint) throws Exception {
+        ARSCDecoder decoder = (ARSCDecoder) joinPoint.getThis();
+        ExtDataInput mIn = mIn(decoder);
+        ResPackage mPkg = mPkg(decoder);
+
+		/* size */mIn.skipCheckShort((short) 8);
+		/* zero */mIn.skipCheckByte((byte) 0);
+        byte type = mIn.readByte();
+        int data = mIn.readInt();
+
+        ResType mType = mType(decoder);
+
+        return type == TypedValue.TYPE_STRING
+//                ? mPkg.getValueFactory().factory(mTableStrings(decoder).getHTML(data), data)
+                ? ResValueFactoryAj.factory(mType, mTableStrings(decoder).getHTML(data), data)
+                : mPkg.getValueFactory().factory(type, data, null);
+    }
+
 
 }

@@ -52,6 +52,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 
 import java.io.*;
+import java.nio.file.*;
+import java.rmi.server.ExportException;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -95,7 +97,7 @@ public class AndrolibAj {
                     meta.put("unknownFiles", files);
                 }
                 for (String file : addFiles) {
-                    //判断下.是否已经存在.已经存在的,压缩模式试用原包的模式
+                    //判断下.是否已经存在.已经存在的,压缩模式使用原包的模式
                     if (!files.containsKey(file)) {
                         files.put(file, AndroidZip.getZipMethod(new File(appDir, file).getAbsolutePath()) + "");
                     }
@@ -329,42 +331,70 @@ public class AndrolibAj {
                 ZipEntry entry;
                 while ((entry = zis.getNextEntry()) != null) {
                     String entryName = entry.getName();
-                    if (!entry.isDirectory()
-                            && !entryName.equals("classes.dex")
-                            && !entryName.equals("resources.arsc")
+
+                    if (entry.isDirectory()
+                            || entryName.equals("classes.dex")
+                            || entryName.equals("resources.arsc")
                             ) {
+                        continue;
+                    }
 
-                        /**
-                         * 过滤签名文件
-                         */
-                        if (entryName.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
+                    /**
+                     * 过滤签名文件
+                     */
+                    if (entryName.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
+                        continue;
+                    }
+
+                    /**
+                     * 过滤dex文件
+                     */
+                    if (DexMaps.containsKey(entryName)) {
+                        continue;
+                    }
+
+                    String decodeMapFileName = getDecodeFileMapName(entryName);
+                    File resFile = new File(outDir, decodeMapFileName);
+                    if (resFile.exists()) {
+                        //已经编码过的文件,从未知表中移除
+                        mResUnknownFiles.getUnknownFiles().remove(entryName);
+                        File needDeleteFile = new File(unknownOut, entryName);
+                        if (needDeleteFile.exists()) {
+                            //已编码文件在未知目录中,需要删除
+                            needDeleteFile.delete();
+                        }
+                    } else {
+                        File unFile = new File(unknownOut, entryName);
+                        if (unFile.exists()) {
+                            //未知文件已经存在
                             continue;
                         }
 
-                        /**
-                         * 过滤dex文件
-                         */
-                        if (DexMaps.containsKey(entryName)) {
-                            continue;
+                        //不存在,解压文件
+                        unFile.getParentFile().mkdirs();
+                        try (
+                                FileOutputStream fos = new FileOutputStream(unFile);
+                                InputStream is = zipFile.getInputStream(entry)
+                        ){
+                            IOUtils.copy(is, fos);
                         }
-
-                        File resFile = new File(outDir, getDecodeFileMapName(entryName));
-                        if (!resFile.exists()) {
-                            File unFile = new File(unknownOut, entryName);
-                            if (unFile.exists()) continue;
-
-                            unFile.getParentFile().mkdirs();
-                            try (
-                                    FileOutputStream fos = new FileOutputStream(unFile);
-                                    InputStream is = zipFile.getInputStream(entry)
-                                    ){
-                                IOUtils.copy(is, fos);
-                            }
-                            mResUnknownFiles.addUnknownFileInfo(entryName, String.valueOf(entry.getMethod()));
-                        }
+                        mResUnknownFiles.addUnknownFileInfo(entryName, String.valueOf(entry.getMethod()));
                     }
                 }
             }
+
+            //删除空目录
+            Files.walkFileTree(Paths.get(unknownOut.getAbsolutePath()), new SimpleFileVisitor<Path>(){
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    try {
+                        Files.deleteIfExists(dir);
+                    } catch (Exception e){
+
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+            });
         } catch (NoSuchFieldException | IllegalAccessException | IOException e) {
             e.printStackTrace();
         }

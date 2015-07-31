@@ -33,10 +33,12 @@ package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.AndrolibResources;
+import brut.androlib.res.data.ResTable;
 import brut.androlib.res.decoder.AXmlResourceParser;
 import brut.androlib.res.decoder.ResFileDecoder;
 import brut.androlib.res.decoder.ResRawStreamDecoder;
 import brut.androlib.res.decoder.ResStreamDecoderContainer;
+import brut.androlib.res.util.ExtFile;
 import brut.util.Duo;
 import com.rover12421.shaka.lib.*;
 import org.apache.commons.io.IOUtils;
@@ -44,6 +46,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -278,5 +281,18 @@ public class AndrolibResourcesAj {
             LogHelper.info("Can't set aapt binary as executable");
             throw new ShakaException("Can't set aapt binary as executable", e);
         }
+    }
+
+
+    private static ExtFile apkFile;
+
+    @Before("execution(* brut.androlib.res.AndrolibResources.decode(..))" +
+            "&& args(resTable, apkFile, outDir)")
+    public void decode(ResTable resTable, ExtFile apkFile, File outDir) {
+        this.apkFile = apkFile;
+    }
+
+    public static ExtFile getApkFile() {
+        return apkFile;
     }
 }

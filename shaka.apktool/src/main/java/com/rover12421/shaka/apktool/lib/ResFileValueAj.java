@@ -13,35 +13,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package com.rover12421.shaka.apktool.lib;
 
-import brut.androlib.AndrolibException;
-import brut.androlib.res.data.ResResSpec;
-import brut.androlib.res.data.ResResource;
-import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
+import brut.androlib.res.data.value.ResFileValue;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * Created by rover12421 on 8/2/14.
+ * Created by rover12421 on 7/31/15.
  */
 @Aspect
-public class ResResSpecAj {
-
-    @Around("execution(void brut.androlib.res.data.ResResSpec.addResource(..))" +
-            "&& args(res, overwrite)")
-    public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
+public class ResFileValueAj {
+    @Around("execution(* brut.androlib.res.data.value.ResFileValue.getStrippedPath())")
+    public String getStrippedPath(ProceedingJoinPoint joinPoint) {
         try {
-            joinPoint.proceed(joinPoint.getArgs());
-        } catch (AndrolibException e) {
-            LogHelper.warning(e.getMessage());
+            return (String) joinPoint.proceed(joinPoint.getArgs());
+        } catch (Throwable throwable) {
+            //不是标准res目录结构,返回完整路径
+            return ((ResFileValue)joinPoint.getThis()).getPath();
         }
-    }
-
-    public static void setName(ResResSpec spec, String name) throws Exception {
-        ReflectUtil.setFieldValue(spec, "mName", name);
     }
 }
