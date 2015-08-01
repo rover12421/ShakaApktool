@@ -32,12 +32,23 @@ import java.util.Map;
 @Aspect
 public class ResTypeAj {
 
-    public final static Map<String, ResResSpec> MultopleSpecs = new HashMap<>();
+    public final static Map<Integer, ResResSpec> MultipleSpecs = new HashMap<>();
+    public final static Map<Integer, ResResSpec> AllSpecs = new HashMap<>();
+
+    public static void addMultipleResResSpec(ResResSpec spec) {
+        MultipleSpecs.put(spec.getId().id, spec);
+    }
+
+    public static void addAllResResSpec(ResResSpec spec) {
+        AllSpecs.put(spec.getId().id, spec);
+    }
 
     @Around("execution(* brut.androlib.res.data.ResType.addResSpec(..))" +
             "&& args(spec)")
     public void addResSpec(ProceedingJoinPoint joinPoint, ResResSpec spec) throws Throwable {
         ResType thiz = (ResType) joinPoint.getThis();
+
+        addAllResResSpec(spec);
 
         ResResSpec exitsSpec = null;
         try {
@@ -51,11 +62,8 @@ public class ResTypeAj {
             LogHelper.warning(String.format(
                     "Multiple res specs: %s/%s", thiz.getName(), spec.getName()));
             if (exitsSpec.getId() != spec.getId()) {
-                String key = getKey(spec);
-                MultopleSpecs.put(key, spec);
-
-                key = getKey(exitsSpec);
-                MultopleSpecs.put(key, exitsSpec);
+                addMultipleResResSpec(spec);
+                addMultipleResResSpec(exitsSpec);
             }
         }
     }
@@ -73,13 +81,5 @@ public class ResTypeAj {
             } catch (AndrolibException e) {
             }
         }
-    }
-
-    public static String getKey(ResResSpec spec) {
-        return getKey(spec.getId().id);
-    }
-
-    public static String getKey(int id) {
-        return "?" + String.format("0x%08x", id);
     }
 }

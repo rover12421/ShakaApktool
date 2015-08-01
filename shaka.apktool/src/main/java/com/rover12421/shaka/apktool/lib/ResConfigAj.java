@@ -19,7 +19,8 @@ package com.rover12421.shaka.apktool.lib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.data.ResResource;
-import brut.androlib.res.data.value.*;
+import brut.androlib.res.data.value.ResFileValue;
+import brut.androlib.res.data.value.ResValue;
 import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -41,8 +42,7 @@ public class ResConfigAj {
     public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
         ResResSpec spec = res.getResSpec();
 
-        String key = ResTypeAj.getKey(spec);
-        ResResSpec resSpec = ResTypeAj.MultopleSpecs.get(key);
+        ResResSpec resSpec = ResTypeAj.MultipleSpecs.get(spec.getId().id);
         if (resSpec != null) {
             //有重复的ResResSpec
             ResValue resValue = res.getValue();

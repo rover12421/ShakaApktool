@@ -69,10 +69,9 @@ public class ResAttrDecoderAj {
         if (ResFileDecoderAj.DonotRecord) {
             return;
         }
-        String key = ResTypeAj.getKey(value);
-        ResResSpec spec = ResTypeAj.MultopleSpecs.get(key);
+        ResResSpec spec = ResTypeAj.AllSpecs.get(value);
         if (spec != null) {
-            //查找到重复的ResResSpec
+            //查找到ResResSpec
             String oldName = spec.getName();
             int index = ret.indexOf("/");   // type/name.ext
             if (index > 0) {
