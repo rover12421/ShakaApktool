@@ -37,6 +37,9 @@ public class ResConfigAj {
 
     public final static Map<Integer, ResResource> MultopleResFileValue = new HashMap<>();
 
+    //重复资源前缀
+    public final static String MultipleSpec_Perfix = "_?m@";
+
     @Around("execution(void brut.androlib.res.data.ResConfig.addResource(..))" +
             "&& args(res, overwrite)")
     public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
@@ -52,7 +55,7 @@ public class ResConfigAj {
                 rename = fileValue.getPath().replaceAll("/|\\\\|\\.", "_");
                 MultopleResFileValue.put(spec.getId().id, res);
             } else {
-                rename = spec.getName() + "_" + spec.getId();
+                rename = MultipleSpec_Perfix + spec.getId();
             }
 
             if (rename != null) {

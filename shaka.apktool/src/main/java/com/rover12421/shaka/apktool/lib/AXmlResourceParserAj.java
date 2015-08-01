@@ -16,10 +16,14 @@
 package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResResSpec;
+import brut.androlib.res.data.ResType;
 import brut.androlib.res.decoder.AXmlResourceParser;
 import brut.androlib.res.decoder.ResAttrDecoder;
 import brut.androlib.res.decoder.StringBlock;
+import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ReflectUtil;
+import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaRuntimeException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -112,6 +116,9 @@ public class AXmlResourceParserAj {
             value = mAttrDecoder(parser).decodeManifestAttr(parser.getAttributeNameResource(index));
         } catch (AndrolibException e) {
         }
+
+
+
         if (value == null) {
             int offset = getAttributeOffset(parser, index);
             int name = m_attributes(parser)[offset + ATTRIBUTE_IX_NAME];
@@ -119,6 +126,33 @@ public class AXmlResourceParserAj {
                 value = "";
             } else {
                 value = m_strings(parser).getString(name);
+            }
+        } else {
+            if (ShakaDecodeOption.getInstance().isXmlAttributeNameCorrect()) {
+                String value2 = "";
+                int offset = getAttributeOffset(parser, index);
+                int name = m_attributes(parser)[offset + ATTRIBUTE_IX_NAME];
+                if (name != -1) {
+                    value2 = m_strings(parser).getString(name);
+                }
+
+                if (value2.trim().length() > 0 && !value.equals(value2) && !value2.equals("name")) {
+                    LogHelper.warning("Xml attribute name correct : " + value + " to " + value2);
+                    if (value.startsWith(ResConfigAj.MultipleSpec_Perfix)) {
+                        try {
+                            // ResConfigAj.MultipleSpec_Perfix0xId
+                            String mId = value.substring(ResConfigAj.MultipleSpec_Perfix.length() + 2);
+                            int id = Integer.parseInt(mId, 16);
+                            ResResSpec spec = ResTypeAj.AllSpecs.get(id);
+                            if (spec != null && spec.getName().equals(value)) {
+                                ResResSpecAj.setName(spec, value2);
+                            }
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    value = value2;
+                }
             }
         }
         return value;

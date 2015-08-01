@@ -196,6 +196,10 @@ public class ApktoolMainAj {
                 .withDescription("ignore res decode error")
                 .create("ir");
 
+        Option xmlAttributeNameCorrect = OptionBuilder.withLongOpt("xml_attribute_name_correct")
+                .withDescription("xml attribute name correct. May be has problem, not recommended.")
+                .create("xn");
+
         try {
             Options normalOptions = normalOptions();
             Options DecodeOptions = DecodeOptions();
@@ -205,6 +209,7 @@ public class ApktoolMainAj {
             DecodeOptions.addOption(showMoreRecognizableCharacters);
             DecodeOptions.addOption(fuckUnkownId);
             DecodeOptions.addOption(ignoreResDecodeError);
+            DecodeOptions.addOption(xmlAttributeNameCorrect);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -231,6 +236,10 @@ public class ApktoolMainAj {
 
         if (cli.hasOption("ir") || cli.hasOption("ignore_res_decode_error")) {
             ShakaDecodeOption.getInstance().setIgnoreResDecodeError(true);
+        }
+
+        if (cli.hasOption("xn") || cli.hasOption("xml_attribute_name_correct")) {
+            ShakaDecodeOption.getInstance().setXmlAttributeNameCorrect(true);
         }
     }
 }
