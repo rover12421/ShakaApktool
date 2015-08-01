@@ -382,19 +382,21 @@ public class AndrolibAj {
                 }
             }
 
-            //删除空目录
-            Files.walkFileTree(Paths.get(unknownOut.getAbsolutePath()), new SimpleFileVisitor<Path>(){
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    try {
-                        Files.deleteIfExists(dir);
-                    } catch (Exception e){
-
+            if (unknownOut.exists()) {
+                //删除空目录
+                Files.walkFileTree(Paths.get(unknownOut.getAbsolutePath()), new SimpleFileVisitor<Path>(){
+                    @Override
+                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                        try {
+                            Files.deleteIfExists(dir);
+                        } catch (Exception e){
+                            // ignore exception
+                        }
+                        return FileVisitResult.CONTINUE;
                     }
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (NoSuchFieldException | IllegalAccessException | IOException e) {
+                });
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

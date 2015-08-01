@@ -94,15 +94,6 @@ public class ResFileDecoderAj {
             }
         }
 
-        try (
-                InputStream is = inDir.getFileInput(inFileName)
-        ){
-
-        } catch (NullPointerException e) {
-            LogHelper.warning("[ResFileDecoder] the file no exist : " + inFileName);
-            return;
-        }
-
         /**
          * 解决 .9.xml 被当成 nine patch images 处理
          * 如果
