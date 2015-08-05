@@ -116,7 +116,7 @@ public class ApktoolMainAj {
         System.out.println(
                 "ShakaApktool v" + ShakaProperties.getVersion() + " - a tool for reengineering Android apk files\n" +
                         "with\n" +
-                        "\tapktool v " + Androlib.getVersion() + ",\n" +
+                        "\tapktool v" + Androlib.getVersion() + ",\n" +
                         "\tsmali v" + ApktoolProperties.get("smaliVersion") + ",\n" +
                         "\tbaksmali v" + ApktoolProperties.get("baksmaliVersion") + "\n" +
                         "Copyright 2015 Rover12421 <rover12421@163.com>");
