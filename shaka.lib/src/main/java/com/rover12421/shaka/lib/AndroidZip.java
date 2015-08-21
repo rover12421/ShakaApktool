@@ -24,7 +24,7 @@ public class AndroidZip {
     /**
      * 来源于aapt源代码
      * 位置:
-     * /android-2.3.3_r1/frameworks/base/tools/aapt/Package.cpp
+     * /frameworks/base/tools/aapt/Package.cpp
      */
 		/* these formats are already compressed, or don't compress well */
     private final static String kNoCompressExt[] = {
