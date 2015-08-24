@@ -63,6 +63,17 @@ public class ResAttrDecoderAj {
 //        }
 //    }
 
+    private String getResSpecName(String name) {
+        /**
+         * 过滤包名
+         */
+        int index = name.indexOf(":");
+        if (index > 0) {
+            name = name.substring(index+1);
+        }
+        return name;
+    }
+
     @AfterReturning(pointcut = "execution(* brut.androlib.res.decoder.ResAttrDecoder.decode(..))" +
             "&& args(type, value, rawValue, attrResId)", returning = "ret")
     public void decode_afterRetruning(int type, int value, String rawValue, int attrResId, String ret) throws Exception {
@@ -76,6 +87,7 @@ public class ResAttrDecoderAj {
             int index = ret.indexOf("/");   // type/name.ext
             if (index > 0) {
                 String newName = ret.substring(index + 1);
+                newName = getResSpecName(newName);
                 if (!oldName.equals(newName)) {
                     LogHelper.warning("Rename ResResSpec " + oldName + " to " + newName);
                     ResResSpecAj.setName(spec, newName);
