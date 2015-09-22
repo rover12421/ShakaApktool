@@ -95,14 +95,28 @@ public class ResFileDecoderAj {
         }
 
         /**
-         * 解决 .9.xml 被当成 nine patch images 处理
-         * 如果
+         * .9.xml 被当成 nine patch images 已经在 099cc0fcb3baec56f0ba3150c82dda56a63501d5 修复
+         * 方法类似,他用的inFileName做判断
+         * 这里不再处理,移除
          */
-        if (outFileName.endsWith(".xml") && decoder.equals("9patch")) {
-            LogHelper.warning(String.format("Correct decoder [%s] : %s >>> xml", outFileName, decoder));
-            decoder = "xml";
+//        /**
+//         * 解决 .9.xml 被当成 nine patch images 处理
+//         */
+//        if (outFileName.endsWith(".xml") && decoder.equals("9patch")) {
+//            LogHelper.warning(String.format("Correct decoder [%s] : %s >>> xml", outFileName, decoder));
+//            decoder = "xml";
+//        }
+        try {
+            joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
+        } catch (AndrolibException e) {
+            if (outFileName.endsWith(".9.png")) {
+                /**
+                 * 如果异常的文件 9patch 图片,使用raw方式copy一次
+                 */
+                LogHelper.info("Decode 9patch exception, Using raw decode try again : " + inFileName);
+                joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, "raw"});
+            }
         }
-        joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
     }
 
     @Before("execution(* brut.androlib.res.decoder.ResFileDecoder.decodeManifest(..))" +
