@@ -17,9 +17,11 @@ package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResource;
+import brut.androlib.res.data.value.ResFileValue;
 import brut.androlib.res.decoder.ResFileDecoder;
 import brut.directory.Directory;
 import com.rover12421.shaka.lib.LogHelper;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -56,6 +58,9 @@ public class ResFileDecoderAj {
         }
     }
 
+    /**
+     * 是否记录需要重新decode的资源
+     */
     public static boolean DonotRecord = false;
     public static void ReDecodeFiles() throws AndrolibException {
         if (NeedReDecodeFiles) {
@@ -72,10 +77,29 @@ public class ResFileDecoderAj {
     @Before("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
             "&& args(res, inDir, outDir)")
     public void decode_before(JoinPoint joinPoint, ResResource res, Directory inDir, Directory outDir) {
-        if (DonotRecord) {
-            return;
+        /**
+         * SystemUI
+         * menu/sidebar_popup_menu_fill 的ResFileValue是空的
+         */
+        ResFileValue fileValue = (ResFileValue) res.getValue();
+
+        if (fileValue.getPath() == null) {
+            String outResName = res.getFilePath();
+            String inPath = outResName + ".";
+            for (String file : inDir.getFiles(true)) {
+                file.replace("\\", "/");
+                if (file.startsWith(inPath)) {
+                    inPath = "res/" + file;
+                    LogHelper.warning("Find null res path. Fix to : " + inPath);
+                    Reflect.on(fileValue).set("mPath", inPath);
+                    break;
+                }
+            }
         }
-        CanNeedReDecodeFiles.add(new ReDecodeResFile((ResFileDecoder) joinPoint.getThis(), res, inDir, outDir));
+
+        if (!DonotRecord) {
+            CanNeedReDecodeFiles.add(new ReDecodeResFile((ResFileDecoder) joinPoint.getThis(), res, inDir, outDir));
+        }
     }
 
     @Around("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
