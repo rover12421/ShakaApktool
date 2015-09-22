@@ -23,8 +23,8 @@ import brut.androlib.res.decoder.ARSCDecoder;
 import brut.androlib.res.decoder.StringBlock;
 import brut.util.ExtDataInput;
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -49,23 +49,23 @@ public class ARSCDecoderAj {
     }
 
     public ExtDataInput mIn(ARSCDecoder thiz) throws Exception {
-        return  (ExtDataInput) ReflectUtil.getFieldValue(thiz, "mIn");
+        return  Reflect.on(thiz).get("mIn");
     }
 
     public ResPackage mPkg(ARSCDecoder thiz) throws Exception {
-        return  (ResPackage) ReflectUtil.getFieldValue(thiz, "mPkg");
+        return  Reflect.on(thiz).get("mPkg");
     }
 
     public ARSCDecoder.Header mHeader(ARSCDecoder thiz) throws Exception {
-        return  (ARSCDecoder.Header) ReflectUtil.getFieldValue(thiz, "mHeader");
+        return  Reflect.on(thiz).get("mHeader");
     }
 
     public StringBlock mTableStrings(ARSCDecoder thiz) throws Exception {
-        return  (StringBlock) ReflectUtil.getFieldValue(thiz, "mTableStrings");
+        return  Reflect.on(thiz).get("mTableStrings");
     }
 
     public ResType mType(ARSCDecoder thiz) throws Exception {
-        return  (ResType) ReflectUtil.getFieldValue(thiz, "mType");
+        return  Reflect.on(thiz).get("mType");
     }
 
     @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.nextChunk())")
@@ -73,7 +73,7 @@ public class ARSCDecoderAj {
 //        return mHeader = Header.read(mIn);
         ExtDataInput mIn = mIn((ARSCDecoder) joinPoint.getThis());
         ARSCDecoder.Header mHeader = ResChunk_header.read(mIn);
-        ReflectUtil.setFieldValue(joinPoint.getThis(), "mHeader", mHeader);
+        Reflect.on(joinPoint.getThis()).set("mHeader", mHeader);
         return mHeader;
     }
 
@@ -82,8 +82,9 @@ public class ARSCDecoderAj {
         ARSCDecoder decoder = (ARSCDecoder) joinPoint.getThis();
         ExtDataInput mIn = mIn(decoder);
 
+        Reflect decoderReflect = Reflect.on(decoder);
 //        nextChunkCheckType(ARSCDecoder.Header.TYPE_TABLE);
-        ReflectUtil.getMethod(decoder, "nextChunkCheckType", int.class)
+        decoderReflect.method("nextChunkCheckType", int.class)
                 .invoke(decoder, ARSCDecoder.Header.TYPE_TABLE);
         int packageCount = mIn.readInt();
 
@@ -100,16 +101,16 @@ public class ARSCDecoderAj {
 
 
         StringBlock mTableStrings = StringBlock.read(mIn);
-        ReflectUtil.setFieldValue(decoder, "mTableStrings", mTableStrings);
+        decoderReflect.set("mTableStrings", mTableStrings);
 
         ResPackage[] packages = new ResPackage[packageCount];
 
 //        nextChunk();
-        ReflectUtil.invokeMethod(decoder, "nextChunk");
+        decoderReflect.call("nextChunk");
 
         for (int i = 0; i < packageCount; i++) {
 //            packages[i] = readPackage();
-            packages[i] = (ResPackage) ReflectUtil.invokeMethod(decoder, "readPackage");
+            packages[i] = decoderReflect.call("readPackage").get();
         }
         return packages;
     }

@@ -20,10 +20,10 @@ import brut.androlib.Androlib;
 import brut.androlib.ApktoolProperties;
 import brut.apktool.Main;
 import com.rover12421.shaka.lib.HookMain;
-import com.rover12421.shaka.lib.ReflectUtil;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaProperties;
 import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import com.rover12421.shaka.smali.baksmali.baksmaliMainAj;
 import com.rover12421.shaka.smali.smali.smaliMainAj;
 import org.apache.commons.cli.CommandLine;
@@ -63,37 +63,39 @@ public class ApktoolMainAj {
         return hookMain;
     }
 
+    private static final Reflect MainReflect = Reflect.on(Main.class);
+
     public static Options normalOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(Main.class, "normalOptions");
+        return MainReflect.get("normalOptions");
     }
 
     public static Options DecodeOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(Main.class, "DecodeOptions");
+        return MainReflect.get("DecodeOptions");
     }
 
     public static Options BuildOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(Main.class, "BuildOptions");
+        return MainReflect.get("BuildOptions");
     }
 
     public static Options frameOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(Main.class, "frameOptions");
+        return MainReflect.get("frameOptions");
     }
 
     public static Options allOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(Main.class, "allOptions");
+        return MainReflect.get("allOptions");
     }
 
     public static Options emptyOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(Main.class, "emptyOptions");
+        return MainReflect.get("emptyOptions");
     }
 
     private static String verbosityHelp() throws Exception {
-        return (String) ReflectUtil.invokeMethod(Main.class, "verbosityHelp");
+        return MainReflect.get("verbosityHelp");
     }
 
     private void _Options() {
         try {
-            ReflectUtil.invokeMethod(Main.class, "_Options");
+            MainReflect.call("_Options");
         } catch (Exception e) {
             e.printStackTrace();
         }

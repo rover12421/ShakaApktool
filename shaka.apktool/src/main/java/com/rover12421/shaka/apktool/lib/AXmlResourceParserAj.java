@@ -17,14 +17,13 @@ package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
-import brut.androlib.res.data.ResType;
 import brut.androlib.res.decoder.AXmlResourceParser;
 import brut.androlib.res.decoder.ResAttrDecoder;
 import brut.androlib.res.decoder.StringBlock;
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaRuntimeException;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -41,7 +40,7 @@ public class AXmlResourceParserAj {
 
     private int getAttributeOffset(AXmlResourceParser parser, int index) {
         try {
-            return (int) ReflectUtil.getMethod(parser, "getAttributeOffset", int.class).invoke(parser, index);
+            return Reflect.on(parser).method("getAttributeOffset", int.class).invoke(parser, index).get();
         } catch (Exception e) {
             throw new ShakaRuntimeException(e);
         }
@@ -49,7 +48,7 @@ public class AXmlResourceParserAj {
 
     private int[] m_attributes(AXmlResourceParser parser) {
         try {
-            return (int[]) ReflectUtil.getFieldValue(parser, "m_attributes");
+            return Reflect.on(parser).get("m_attributes");
         } catch (Exception e) {
             throw new ShakaRuntimeException(e);
         }
@@ -57,7 +56,7 @@ public class AXmlResourceParserAj {
 
     private StringBlock m_strings(AXmlResourceParser parser) {
         try {
-            return (StringBlock) ReflectUtil.getFieldValue(parser, "m_strings");
+            return Reflect.on(parser).get("m_strings");
         } catch (Exception e) {
             throw new ShakaRuntimeException(e);
         }
@@ -65,7 +64,7 @@ public class AXmlResourceParserAj {
 
     private String android_ns(AXmlResourceParser parser) {
         try {
-            return (String) ReflectUtil.getFieldValue(parser, "android_ns");
+            return Reflect.on(parser).get("android_ns");
         } catch (Exception e) {
             throw new ShakaRuntimeException(e);
         }
@@ -73,7 +72,7 @@ public class AXmlResourceParserAj {
 
     private ResAttrDecoder mAttrDecoder(AXmlResourceParser parser) {
         try {
-            return (ResAttrDecoder) ReflectUtil.getFieldValue(parser, "mAttrDecoder");
+            return Reflect.on(parser).get("mAttrDecoder");
         } catch (Exception e) {
             throw new ShakaRuntimeException(e);
         }

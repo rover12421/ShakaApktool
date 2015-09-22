@@ -41,6 +41,7 @@ import brut.androlib.res.decoder.ResStreamDecoderContainer;
 import brut.androlib.res.util.ExtFile;
 import brut.util.Duo;
 import com.rover12421.shaka.lib.*;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -249,7 +250,7 @@ public class AndrolibResourcesAj {
         }
         ResFileDecoder fileDecoder = duo.m1;
         try {
-            ResStreamDecoderContainer mDecoders = (ResStreamDecoderContainer) ReflectUtil.getFieldValue(fileDecoder, "mDecoders");
+            ResStreamDecoderContainer mDecoders = Reflect.on(fileDecoder).get("mDecoders");
             mDecoders.setDecoder("9patch", new ResRawStreamDecoder());
         } catch (Exception e) {
             e.printStackTrace();

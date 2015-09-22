@@ -20,7 +20,7 @@ import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.data.ResResource;
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -42,6 +42,6 @@ public class ResResSpecAj {
     }
 
     public static void setName(ResResSpec spec, String name) throws Exception {
-        ReflectUtil.setFieldValue(spec, "mName", name);
+        Reflect.on(spec).set("mName", name);
     }
 }

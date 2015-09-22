@@ -16,7 +16,7 @@
 package com.rover12421.shaka.smali.baksmali;
 
 import com.rover12421.shaka.lib.HookMain;
-import com.rover12421.shaka.lib.ReflectUtil;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.apache.commons.cli.Options;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -27,16 +27,18 @@ import org.jf.baksmali.main;
  */
 @Aspect
 public class baksmaliMainAj {
-    public static Options basicOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(main.class, "basicOptions");
+    private final static Reflect mainReflect = Reflect.on(main.class);
+
+    public static Options basicOptions() {
+        return mainReflect.get("basicOptions");
     }
 
-    public static Options debugOptions() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(main.class, "debugOptions");
+    public static Options debugOptions() {
+        return mainReflect.get("debugOptions");
     }
 
-    public static Options options() throws Exception {
-        return (Options) ReflectUtil.getFieldValue(main.class, "options");
+    public static Options options() {
+        return mainReflect.get("options");
     }
 
     private static HookMain hookMain;

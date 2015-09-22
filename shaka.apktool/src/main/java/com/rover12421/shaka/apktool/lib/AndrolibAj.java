@@ -45,7 +45,7 @@ import brut.util.OS;
 import com.rover12421.shaka.lib.ShakaProperties;
 import com.rover12421.shaka.lib.AndroidZip;
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -91,7 +91,7 @@ public class AndrolibAj {
                 Set<String> addFiles = directory.getFiles(true);
                 Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
                 if (files == null) {
-                    ResUnknownFiles mResUnknownFiles = (ResUnknownFiles) ReflectUtil.getFieldValue(joinPoint.getThis(), "mResUnknownFiles");
+                    ResUnknownFiles mResUnknownFiles = Reflect.on(joinPoint.getThis()).get("mResUnknownFiles");
                     files = mResUnknownFiles.getUnknownFiles();
                     meta.put("unknownFiles", files);
                 }
@@ -104,7 +104,7 @@ public class AndrolibAj {
             } catch (DirectoryException e) {
                 e.printStackTrace();
             }
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
 
@@ -321,7 +321,7 @@ public class AndrolibAj {
     public void decodeUnknownFiles_after(JoinPoint joinPoint, ExtFile apkFile, File outDir, ResTable resTable) {
         try {
             File unknownOut = new File(outDir, getUNK_DIRNAME());
-            ResUnknownFiles mResUnknownFiles = (ResUnknownFiles) ReflectUtil.getFieldValue(joinPoint.getThis(), "mResUnknownFiles");
+            ResUnknownFiles mResUnknownFiles = Reflect.on(joinPoint.getThis()).get("mResUnknownFiles");
             ZipFile zipFile = new ZipFile(apkFile.getAbsolutePath());
             try (
                     FileInputStream fis = new FileInputStream(apkFile.getAbsoluteFile());

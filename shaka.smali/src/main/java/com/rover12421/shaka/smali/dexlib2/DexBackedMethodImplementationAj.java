@@ -16,7 +16,7 @@
 package com.rover12421.shaka.smali.dexlib2;
 
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -38,7 +38,7 @@ import java.util.List;
 @Aspect
 public class DexBackedMethodImplementationAj {
     private int codeOffset(DexBackedMethodImplementation thiz) throws NoSuchFieldException, IllegalAccessException {
-        return (int) ReflectUtil.getFieldValue(thiz, "codeOffset");
+        return Reflect.on(thiz).get("codeOffset");
     }
 
     @Around("execution(* org.jf.dexlib2.dexbacked.DexBackedMethodImplementation.getInstructions(..))")

@@ -18,8 +18,8 @@ package com.rover12421.shaka.apktool.lib;
 import brut.androlib.err.UndefinedResObject;
 import brut.androlib.res.data.*;
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.ReflectUtil;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,7 +31,7 @@ import org.aspectj.lang.annotation.Aspect;
 public class ResPackageAj {
 
     public ResTable mResTable(ResPackage thiz) throws NoSuchFieldException, IllegalAccessException {
-        return (ResTable) ReflectUtil.getFieldValue(thiz, "mResTable");
+        return Reflect.on(thiz).get("mResTable");
     }
 
     @Around("execution(* brut.androlib.res.data.ResPackage.getResSpec(..))" +

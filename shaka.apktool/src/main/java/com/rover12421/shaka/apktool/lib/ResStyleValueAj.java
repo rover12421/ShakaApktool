@@ -23,7 +23,7 @@ import brut.androlib.res.data.value.ResReferenceValue;
 import brut.androlib.res.data.value.ResScalarValue;
 import brut.androlib.res.data.value.ResValue;
 import brut.util.Duo;
-import com.rover12421.shaka.lib.ReflectUtil;
+import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -59,8 +59,9 @@ public class ResStyleValueAj {
     public void serializeToResValuesXml(ProceedingJoinPoint joinPoint, XmlSerializer serializer,
                                         ResResource res) throws IOException, AndrolibException {
         try {
-            ResReferenceValue mParent = (ResReferenceValue) ReflectUtil.getFieldValue(joinPoint.getThis(), "mParent");
-            Duo<ResReferenceValue, ResScalarValue>[] mItems = (Duo<ResReferenceValue, ResScalarValue>[]) ReflectUtil.getFieldValue(joinPoint.getThis(), "mItems");
+            Reflect thizRelect = Reflect.on(joinPoint.getThis());
+            ResReferenceValue mParent = thizRelect.get("mParent");
+            Duo<ResReferenceValue, ResScalarValue>[] mItems = thizRelect.get("mItems");
             serializer.startTag(null, "style");
             serializer.attribute(null, "name", res.getResSpec().getName());
             if (!mParent.isNull()) {
@@ -105,7 +106,7 @@ public class ResStyleValueAj {
                 serializer.endTag(null, "item");
             }
             serializer.endTag(null, "style");
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
