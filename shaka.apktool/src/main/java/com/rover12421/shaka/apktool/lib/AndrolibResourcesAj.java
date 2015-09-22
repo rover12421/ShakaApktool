@@ -307,4 +307,18 @@ public class AndrolibResourcesAj {
     public void generatePublicXml() throws AndrolibException {
         ResFileDecoderAj.ReDecodeFiles();
     }
+
+    @Before("execution(* brut.androlib.res.AndrolibResources.setVersionInfo(..))" +
+            "&& args(map)")
+    public void setVersionInfo(Map<String, String> map) {
+        if (map != null) {
+            String mVersionName = map.get("versionName");
+            if (mVersionName != null && mVersionName.contains(" ")) {
+                //versionName包含空白字符会有问题
+                String mVersionNameNew = mVersionName.replaceAll(" ", "_");
+                LogHelper.info("Modify versionName from : " + mVersionName + " to : " + mVersionNameNew);
+                map.put("versionName", mVersionNameNew);
+            }
+        }
+    }
 }
