@@ -322,64 +322,57 @@ public class AndrolibAj {
         try {
             File unknownOut = new File(outDir, getUNK_DIRNAME());
             ResUnknownFiles mResUnknownFiles = Reflect.on(joinPoint.getThis()).get("mResUnknownFiles");
-            ZipFile zipFile = new ZipFile(apkFile.getAbsolutePath());
-            try (
-                    FileInputStream fis = new FileInputStream(apkFile.getAbsoluteFile());
-                    ZipInputStream zis = new ZipInputStream(fis)
-                    ){
-                ZipEntry entry;
-                while ((entry = zis.getNextEntry()) != null) {
-                    String entryName = entry.getName();
 
-                    if (entry.isDirectory()
-                            || entryName.equals("classes.dex")
-                            || entryName.equals("resources.arsc")
-                            ) {
-                        continue;
-                    }
-
-                    /**
-                     * 过滤签名文件
-                     */
-                    if (entryName.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
-                        continue;
-                    }
-
-                    /**
-                     * 过滤dex文件
-                     */
-                    if (DexMaps.containsKey(entryName)) {
-                        continue;
-                    }
-
-                    String decodeMapFileName = getDecodeFileMapName(entryName);
-                    File resFile = new File(outDir, decodeMapFileName);
-                    if (resFile.exists()) {
-                        //已经编码过的文件,从未知表中移除
-                        mResUnknownFiles.getUnknownFiles().remove(entryName);
-                        File needDeleteFile = new File(unknownOut, entryName);
-                        if (needDeleteFile.exists()) {
-                            //已编码文件在未知目录中,需要删除
-                            needDeleteFile.delete();
-                        }
-                    } else {
-                        File unFile = new File(unknownOut, entryName);
-                        if (unFile.exists()) {
-                            //未知文件已经存在
-                            continue;
-                        }
-
-                        //不存在,解压文件
-                        unFile.getParentFile().mkdirs();
-                        try (
-                                FileOutputStream fos = new FileOutputStream(unFile);
-                                InputStream is = zipFile.getInputStream(entry)
-                        ){
-                            IOUtils.copy(is, fos);
-                        }
-                        mResUnknownFiles.addUnknownFileInfo(entryName, String.valueOf(entry.getMethod()));
-                    }
+            Directory unk = apkFile.getDirectory();
+            // loop all items in container recursively, ignoring any that are pre-defined by aapt
+            Set<String> files = unk.getFiles(true);
+            for (String file : files) {
+                if (
+                        file.equals("classes.dex")
+                        || file.equals("resources.arsc")) {
+                    continue;
                 }
+
+                /**
+                 * 过滤签名文件
+                 */
+                if (file.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
+                    continue;
+                }
+
+                /**
+                 * 过滤dex文件
+                 */
+                if (DexMaps.containsKey(file)) {
+                    continue;
+                }
+
+                String decodeMapFileName = getDecodeFileMapName(file);
+                File resFile = new File(outDir, decodeMapFileName);
+                if (resFile.exists()) {
+                    //已经编码过的文件,从未知表中移除
+                    mResUnknownFiles.getUnknownFiles().remove(file);
+                    File needDeleteFile = new File(unknownOut, file);
+                    if (needDeleteFile.exists()) {
+                        //已编码文件在未知目录中,需要删除
+                        needDeleteFile.delete();
+                    }
+                } else {
+                    File unFile = new File(unknownOut, file);
+                    if (unFile.exists()) {
+                        //未知文件已经存在
+                        continue;
+                    }
+
+                    //不存在,解压文件
+                    // copy file out of archive into special "unknown" folder
+                    unk.copyToDir(unknownOut, file);
+                    // lets record the name of the file, and its compression type
+                    // so that we may re-include it the same way
+                    mResUnknownFiles.addUnknownFileInfo(file, String.valueOf(unk.getCompressionLevel(file)));
+                }
+
+
             }
 
             if (unknownOut.exists()) {
