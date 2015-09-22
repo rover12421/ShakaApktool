@@ -213,14 +213,14 @@ if (genGrammarSource) {
         args testAccessorOutputFile
     }
 
-    task deleteGeneratedCodePathPrefix() {
+    task deleteGeneratedCodePathPrefix() << {
         def genSrcDir = new File(projectDir.path, genDir)
         if (genSrcDir.exists()) {
             def prefix = genSrcDir.absoluteFile.parentFile.parent + File.separator
             genSrcDir.eachFileRecurse(
                     {file ->
                         if (file.name.endsWith(".java")) {
-                            file.write(file.text.replaceAll(prefix, ""))
+                            file.write(file.text.replace(prefix, ""))
                         }
                     }
             )
