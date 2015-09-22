@@ -22,6 +22,7 @@ import brut.apktool.Main;
 import com.rover12421.shaka.lib.HookMain;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaProperties;
+import com.rover12421.shaka.lib.cli.CommandLineArgEnum;
 import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
 import com.rover12421.shaka.lib.reflect.Reflect;
 import com.rover12421.shaka.smali.baksmali.baksmaliMainAj;
@@ -172,46 +173,16 @@ public class ApktoolMainAj {
 
     @Before("execution(void brut.apktool.Main._Options())")
     public void before_Options() {
-        Option language = OptionBuilder.withLongOpt("language")
-                .withDescription("Display language, e.g. zh-CN, zh-TW")
-                .hasArg(true)
-                .withArgName("Locale")
-                .create("lng");
-
-        Option no9png = OptionBuilder.withLongOpt("no-9png")
-                .withDescription("Do not decode .9 png file.")
-                .create("n9");
-
-        Option usingDefaultFramework = OptionBuilder.withLongOpt("default-framework")
-                .withDescription("Using default framework file.")
-                .create("df");
-
-        Option showMoreRecognizableCharacters = OptionBuilder.withLongOpt("more-recognizable-characters")
-                .withDescription("Show more recognizable characters")
-                .create("mc");
-
-        Option fuckUnkownId = OptionBuilder.withLongOpt("fuck-unkown-id")
-                .withDescription("Fuck unkown id")
-                .create("fui");
-
-        Option ignoreResDecodeError = OptionBuilder.withLongOpt("ignore-res-decode-error")
-                .withDescription("ignore res decode error")
-                .create("ir");
-
-        Option xmlAttributeNameCorrect = OptionBuilder.withLongOpt("xml-attribute-name-correct")
-                .withDescription("xml attribute name correct. May be has problem, not recommended.")
-                .create("xn");
-
         try {
             Options normalOptions = normalOptions();
             Options DecodeOptions = DecodeOptions();
-            normalOptions.addOption(language);
-            DecodeOptions.addOption(no9png);
-            DecodeOptions.addOption(usingDefaultFramework);
-            DecodeOptions.addOption(showMoreRecognizableCharacters);
-            DecodeOptions.addOption(fuckUnkownId);
-            DecodeOptions.addOption(ignoreResDecodeError);
-            DecodeOptions.addOption(xmlAttributeNameCorrect);
+            normalOptions.addOption(CommandLineArgEnum.LANGUAGE.getOption());
+            DecodeOptions.addOption(CommandLineArgEnum.NO_9_PNG.getOption());
+            DecodeOptions.addOption(CommandLineArgEnum.USING_DEFAULT_FRAMEWORK.getOption());
+            DecodeOptions.addOption(CommandLineArgEnum.SHOW_MORE_RECOGNIZABLE_CHARACTERS.getOption());
+            DecodeOptions.addOption(CommandLineArgEnum.FUCK_UNKOWN_ID.getOption());
+            DecodeOptions.addOption(CommandLineArgEnum.IGNORE_RES_DECODE_ERROR.getOption());
+            DecodeOptions.addOption(CommandLineArgEnum.XML_ATTRIBUTE_NAME_CORRECT.getOption());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,28 +191,30 @@ public class ApktoolMainAj {
     @Before("execution(void brut.apktool.Main.cmdDecode(..))" +
             "&& args(cli)")
     public void cmdDecode_before(CommandLine cli) {
-        if (cli.hasOption("n9") || cli.hasOption("no-9png")) {
-            ShakaDecodeOption.getInstance().setNo9png(true);
+        ShakaDecodeOption decodeOption = ShakaDecodeOption.getInstance();
+
+        if (CommandLineArgEnum.NO_9_PNG.hasMatch(cli)) {
+            decodeOption.setNo9png(true);
         }
 
-        if (cli.hasOption("df") || cli.hasOption("default-framework")) {
-            ShakaDecodeOption.getInstance().setUsingDefaultFramework(true);
+        if (CommandLineArgEnum.USING_DEFAULT_FRAMEWORK.hasMatch(cli)) {
+            decodeOption.setUsingDefaultFramework(true);
         }
 
-        if (cli.hasOption("mc") || cli.hasOption("more-recognizable-characters")) {
-            ShakaDecodeOption.getInstance().setShowMoreRecognizableCharacters(true);
+        if (CommandLineArgEnum.SHOW_MORE_RECOGNIZABLE_CHARACTERS.hasMatch(cli)) {
+            decodeOption.setShowMoreRecognizableCharacters(true);
         }
 
-        if (cli.hasOption("fui") || cli.hasOption("fuck-unkown-id")) {
-            ShakaDecodeOption.getInstance().setFuckUnkownId(true);
+        if (CommandLineArgEnum.FUCK_UNKOWN_ID.hasMatch(cli)) {
+            decodeOption.setFuckUnkownId(true);
         }
 
-        if (cli.hasOption("ir") || cli.hasOption("ignore-res-decode-error")) {
-            ShakaDecodeOption.getInstance().setIgnoreResDecodeError(true);
+        if (CommandLineArgEnum.IGNORE_RES_DECODE_ERROR.hasMatch(cli)) {
+            decodeOption.setIgnoreResDecodeError(true);
         }
 
-        if (cli.hasOption("xn") || cli.hasOption("xml-attribute-name-correct")) {
-            ShakaDecodeOption.getInstance().setXmlAttributeNameCorrect(true);
+        if (CommandLineArgEnum.XML_ATTRIBUTE_NAME_CORRECT.hasMatch(cli)) {
+            decodeOption.setXmlAttributeNameCorrect(true);
         }
     }
 }

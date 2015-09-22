@@ -16,6 +16,7 @@
 package com.rover12421.shaka.cli;
 
 import com.rover12421.shaka.apktool.cli.ApktoolMainAj;
+import com.rover12421.shaka.lib.cli.CommandLineArgEnum;
 import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
 import com.rover12421.shaka.smali.baksmali.baksmaliMainAj;
 import com.rover12421.shaka.smali.smali.smaliMainAj;
@@ -65,19 +66,15 @@ public class Main {
         CommandLineParser parser = new IgnoreUnkownArgsPosixParser();
         CommandLine commandLine;
 
-        Option language = OptionBuilder.withLongOpt("language")
-            .withDescription("Display language, e.g. zh-CN, zh-TW")
-            .hasArg(true)
-            .withArgName("Locale")
-            .create("lng");
+        Option language = CommandLineArgEnum.LANGUAGE.getOption();
 
         Options options = new Options();
         options.addOption(language);
 
         try {
             commandLine = parser.parse(options, args, false);
-            if (commandLine.hasOption("lng") || commandLine.hasOption("language")) {
-                String lngStr = commandLine.getOptionValue("lng");
+            if (CommandLineArgEnum.LANGUAGE.hasMatch(commandLine)) {
+                String lngStr = commandLine.getOptionValue(CommandLineArgEnum.LANGUAGE.getOpt());
                 Locale locale = Locale.forLanguageTag(lngStr);
                 if (locale.toString().isEmpty()) {
                     lngStr = lngStr.replaceAll("_", "-");
