@@ -190,15 +190,15 @@ public class ApktoolMainAj {
                 .withDescription("Show more recognizable characters")
                 .create("mc");
 
-        Option fuckUnkownId = OptionBuilder.withLongOpt("fuck_unkown_id")
+        Option fuckUnkownId = OptionBuilder.withLongOpt("fuck-unkown-id")
                 .withDescription("Fuck unkown id")
                 .create("fui");
 
-        Option ignoreResDecodeError = OptionBuilder.withLongOpt("ignore_res_decode_error")
+        Option ignoreResDecodeError = OptionBuilder.withLongOpt("ignore-res-decode-error")
                 .withDescription("ignore res decode error")
                 .create("ir");
 
-        Option xmlAttributeNameCorrect = OptionBuilder.withLongOpt("xml_attribute_name_correct")
+        Option xmlAttributeNameCorrect = OptionBuilder.withLongOpt("xml-attribute-name-correct")
                 .withDescription("xml attribute name correct. May be has problem, not recommended.")
                 .create("xn");
 
@@ -232,15 +232,15 @@ public class ApktoolMainAj {
             ShakaDecodeOption.getInstance().setShowMoreRecognizableCharacters(true);
         }
 
-        if (cli.hasOption("fui") || cli.hasOption("fuck_unkown_id")) {
+        if (cli.hasOption("fui") || cli.hasOption("fuck-unkown-id")) {
             ShakaDecodeOption.getInstance().setFuckUnkownId(true);
         }
 
-        if (cli.hasOption("ir") || cli.hasOption("ignore_res_decode_error")) {
+        if (cli.hasOption("ir") || cli.hasOption("ignore-res-decode-error")) {
             ShakaDecodeOption.getInstance().setIgnoreResDecodeError(true);
         }
 
-        if (cli.hasOption("xn") || cli.hasOption("xml_attribute_name_correct")) {
+        if (cli.hasOption("xn") || cli.hasOption("xml-attribute-name-correct")) {
             ShakaDecodeOption.getInstance().setXmlAttributeNameCorrect(true);
         }
     }
