@@ -76,6 +76,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-keepclassmembers class brut.androlib.res.decoder.ARSCDecoder { *** mIn; *** mPkg; *** mType; *** mHeader; *** mTableStrings; *** nextChunkCheckType(...); *** nextChunk(...); *** readPackage(...); }'
     args '-keepclassmembers class brut.androlib.res.data.ResResSpec { *** mName; }'
     args '-keepclassmembers class brut.androlib.res.data.value.ResFileValue { *** mPath; }'
+    args '-keepclassmembers class org.jf.dexlib2.analysis.AnalyzedInstruction { *** instruction; }'
 }
 
 tasks.getByPath(':release').dependsOn(proguard)
