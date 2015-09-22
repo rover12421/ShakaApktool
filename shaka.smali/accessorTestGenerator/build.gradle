@@ -14,16 +14,16 @@
  *  limitations under the License.
  */
 
-task delSrcDir(type: Delete) {
-    delete 'src'
-}
-task copySrcDir(type: Copy) {
-    from '../smali/dexlib2/accessorTestGenerator/src'
-    into 'src'
-}
-
-copySrcDir.dependsOn delSrcDir
-compileJava.dependsOn copySrcDir
+//task delSrcDir(type: Delete) {
+//    delete 'src'
+//}
+//task copySrcDir(type: Copy) {
+//    from '../smali/dexlib2/accessorTestGenerator/src'
+//    into 'src'
+//}
+//
+//copySrcDir.dependsOn delSrcDir
+//compileJava.dependsOn copySrcDir
 
 dependencies {
     compile depends.findbugs,

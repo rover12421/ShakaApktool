@@ -16,5 +16,4 @@ bin/
 TestApk/
 libs/
 shaka.cli/src/test/
-generated/
 !**/src/main/resources/**/bin/

@@ -189,15 +189,15 @@ if (genGrammarSource) {
     }
 
     generateTestGrammarSource {
-        outputDirectory = new File("${projectDir.name}/$genDir/test/", 'org/jf/smali')
+        outputDirectory = new File("${projectDir.path}/$genDir/test/", 'org/jf/smali')
     }
 
     generateGrammarSource {
-        outputDirectory = new File("${projectDir.name}/$genDir/main/", 'org/jf/smali')
+        outputDirectory = new File("${projectDir.path}/$genDir/main/", 'org/jf/smali')
     }
 
     generateJFlexSource {
-        outputDirectory = new File("${projectDir.name}/$genDir/main/", 'org/jf/smali')
+        outputDirectory = new File("${projectDir.path}/$genDir/main/", 'org/jf/smali')
     }
 
     task generateAccessorTestSource(type: JavaExec) {
@@ -214,7 +214,7 @@ if (genGrammarSource) {
     }
 
     task deleteGeneratedCodePathPrefix() {
-        def genSrcDir = new File(projectDir.name, genDir)
+        def genSrcDir = new File(projectDir.path, genDir)
         if (genSrcDir.exists()) {
             def prefix = genSrcDir.absoluteFile.parentFile.parent + File.separator
             genSrcDir.eachFileRecurse(
