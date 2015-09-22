@@ -42,17 +42,22 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        ArrayList<String> list = new ArrayList<>();
         boolean smali = false;
         boolean baksmali = false;
 
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("s") || arg.equalsIgnoreCase("smali")) {
+        String[] realyArgs = args;
+
+        if (args.length > 0) {
+            String cmd = args[0];
+            if (cmd.equalsIgnoreCase("s") || cmd.equalsIgnoreCase("smali")) {
                 smali = true;
-            } else if (arg.equalsIgnoreCase("bs") || arg.equalsIgnoreCase("baksmali")) {
+            } else if (cmd.equalsIgnoreCase("bs") || cmd.equalsIgnoreCase("baksmali")) {
                 baksmali = true;
-            } else {
-                list.add(arg);
+            }
+
+            if (smali || baksmali) {
+                realyArgs = new String[args.length-1];
+                System.arraycopy(args, 1, realyArgs, 0, realyArgs.length);
             }
         }
 
@@ -83,17 +88,14 @@ public class Main {
         } catch (Exception ex) {
         }
 
-        String[] newArgs = new String[list.size()];
-        newArgs = list.toArray(newArgs);
-
         if (smali) {
             smaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
-            org.jf.smali.main.main(newArgs);
+            org.jf.smali.main.main(realyArgs);
         } else if (baksmali) {
             baksmaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
-            org.jf.baksmali.main.main(newArgs);
+            org.jf.baksmali.main.main(realyArgs);
         } else {
-            brut.apktool.Main.main(args);
+            brut.apktool.Main.main(realyArgs);
         }
     }
 }
