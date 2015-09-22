@@ -65,9 +65,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by rover12421 on 8/9/14.
@@ -78,8 +83,232 @@ public class AndrolibResourcesAj {
     /**
      * Androidlib.UNK_DIRNAME
      */
-    private final static String SHAKA_PNG  = "/png/Shaka.png";
-    private final static String SHAKA_9_PNG  = "/png/Shaka.9.png";
+    private final static String SHAKA_PNG       = "/png/Shaka.png";
+    private final static String SHAKA_9_PNG     = "/png/Shaka.9.png";
+    private final static String SHAKA_XML       = "/xml/Shaka.xml";
+
+    public final static Set<String> notDefinedRes = new HashSet<>();
+
+    /**
+     * 处理aapt抛出`declared here is not defined`错误
+     * @param errInfo
+     * @param rootDir
+     */
+    private boolean fuckNotDefinedRes(String errInfo, String rootDir) {
+        if (ShakaBuildOption.getInstance().isFuckNotDefinedRes()) {
+            //Public symbol drawable/? declared here is not defined.
+            Pattern patternRes = Pattern.compile("Public symbol (.+?) declared here is not defined");
+            Matcher matcherRes = patternRes.matcher(errInfo);
+            while (matcherRes.find()) {
+                String res = matcherRes.group(1);
+                String fileName = "res/" + res + ".xml";
+                LogHelper.warning("Add temp res : " + fileName);
+                notDefinedRes.add(fileName);
+            }
+
+            if (notDefinedRes.size() > 0) {
+                for (String resName : notDefinedRes) {
+                    Path des = Paths.get(rootDir + File.separator + resName);
+                    // 保证目录存在
+                    des.toFile().getParentFile().mkdirs();
+                    InputStream is = this.getClass().getResourceAsStream(SHAKA_XML);
+                    try {
+                        Files.copy(is, des, StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    IOUtils.closeQuietly(is);
+                }
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 清理多添加的资源
+     */
+    private void fuckNotDefinedRes_clearAddRes(File apkFile) throws IOException, ShakaException {
+        if (notDefinedRes.size() <= 0) {
+            return;
+        }
+
+        File tempFile = File.createTempFile(apkFile.getName(), null);
+        tempFile.delete();
+        tempFile.deleteOnExit();
+        boolean renameOk = apkFile.renameTo(tempFile);
+        if (!renameOk)
+        {
+            throw new ShakaException("could not rename the file " + apkFile.getAbsolutePath() + " to " + tempFile.getAbsolutePath());
+        }
+
+        try (
+                ZipInputStream zin = new ZipInputStream(new FileInputStream(tempFile));
+                ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(apkFile))
+        ) {
+            ZipEntry entry = zin.getNextEntry();
+            while (entry != null) {
+                String name = entry.getName();
+                boolean toBeDeleted = false;
+                for (String f : notDefinedRes) {
+                    if (f.equals(name)) {
+                        toBeDeleted = true;
+                        LogHelper.warning("Delete temp res : " + f);
+                        break;
+                    }
+                }
+                if (!toBeDeleted) {
+                    // Add ZIP entry to output stream.
+                    zout.putNextEntry(new ZipEntry(name));
+                    // Transfer bytes from the ZIP file to the output file
+                    IOUtils.copy(zin, zout);
+                }
+                entry = zin.getNextEntry();
+            }
+        }
+
+        tempFile.delete();
+        notDefinedRes.clear();
+    }
+
+    private boolean horizontalScrollView_check(String errInfo) throws Exception {
+        if (errInfo.indexOf("'@android:style/Widget.HorizontalScrollView'") > 0) {
+            Pattern xmlPathPattern = Pattern.compile("(.+?):\\d+:.+?(Error retrieving parent for item).+?'@android:style/Widget.HorizontalScrollView'");
+            Matcher xmlPathMatcher = xmlPathPattern.matcher(errInfo);
+            if (xmlPathMatcher.find()) {
+                String xmlPathStr = xmlPathMatcher.group(1);
+                File xmlPathFile = new File(xmlPathStr);
+                if (xmlPathFile.exists()) {
+                    LogHelper.warning("Find HorizontalScrollView exception xml : " + xmlPathStr);
+                    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                    Document document = documentBuilder.parse(xmlPathStr);
+                    NodeList list = document.getChildNodes().item(0).getChildNodes();
+                    for (int i=0; i<list.getLength(); i++) {
+                        Node node = list.item(i);
+                        if (node.getAttributes() != null) {
+                            Node attr = node.getAttributes().getNamedItem("parent");
+                            if (attr != null && attr.getNodeValue().equals("@android:style/Widget.HorizontalScrollView")) {
+                                /**
+                                 * 首先把HorizontalScrollView替换成aapt能识别的ScrollView
+                                 */
+                                attr.setNodeValue("@android:style/Widget.ScrollView");
+                                /**
+                                 * 再判断时候有 android:scrollbars 和 android:fadingEdge 属性
+                                 * 有的话不修改,没有就添加
+                                 * 这样是为了保持样式不变化
+                                 */
+                                Element scrollbars = document.createElement("item");
+                                scrollbars.setAttribute("name", "android:scrollbars");
+                                scrollbars.setNodeValue("horizontal");
+
+                                Element fadingEdge = document.createElement("item");
+                                fadingEdge.setAttribute("name", "android:fadingEdge");
+                                fadingEdge.setNodeValue("horizontal");
+                                Element element = (Element) node;
+                                NodeList items = element.getElementsByTagName("item");
+                                for (int j=0; j<items.getLength(); j++) {
+                                    Element item = (Element) items.item(j);
+                                    if (item.getAttribute("name").equals("android:scrollbars")) {
+                                        scrollbars = null;
+                                    }
+                                    if (item.getAttribute("name").equals("android:fadingEdge")) {
+                                        fadingEdge = null;
+                                    }
+                                }
+
+                                if (scrollbars != null) {
+                                    node.appendChild(scrollbars);
+                                }
+
+                                if (fadingEdge != null) {
+                                    node.appendChild(fadingEdge);
+                                }
+                            }
+                        }
+                    }
+
+                    /**
+                     * 保存修改过的xml
+                     */
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+                    transformer.transform(new DOMSource(document), new StreamResult(xmlPathStr));
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkPng(String errInfo, String rootDir) {
+        //Androlib.class, "UNK_DIRNAME"
+        String UNK_DIRNAME = "unknown";
+
+        Pattern patternPng = Pattern.compile("ERROR: Failure processing PNG image (.+)");
+        Pattern pattern9Png = Pattern.compile("ERROR: 9-patch image (.+) malformed\\.");
+
+
+        Matcher matcherPng = patternPng.matcher(errInfo);
+        Matcher matcher9Png = pattern9Png.matcher(errInfo);
+
+        Map<String, String> replacePng = new HashMap<>();
+
+        while (matcherPng.find()) {
+            String png = matcherPng.group(1);
+            String desPath = rootDir + File.separatorChar + UNK_DIRNAME + png.substring(rootDir.length());
+            replacePng.put(png, desPath);
+        }
+
+        while (matcher9Png.find()) {
+            String png = matcher9Png.group(1);
+            String desPath = rootDir + File.separatorChar + UNK_DIRNAME + png.substring(rootDir.length());
+            replacePng.put(png, desPath);
+        }
+
+        if (replacePng.size() > 0 ) {
+            for (String srcPng : replacePng.keySet()) {
+                if (!new File(srcPng).exists()) {
+                    /**
+                     * 文件不存在.跳过.
+                     * 发现错误流有被篡写的现象
+                     */
+                    continue;
+                }
+
+                String desPng = replacePng.get(srcPng);
+                //创建目录
+                new File(desPng).getParentFile().mkdirs();
+
+                try {
+                    //备份原始文件
+                    Path srcPath = Paths.get(srcPng);
+                    Path desPath = Paths.get(desPng);
+                    LogHelper.warning("Found exception png file : " + srcPng);
+                    Files.copy(srcPath, desPath, StandardCopyOption.REPLACE_EXISTING);
+
+                    //用ok的png替换异常png
+                    InputStream pngIs;
+                    if (srcPng.endsWith(".9.png")) {
+                        pngIs = this.getClass().getResourceAsStream(SHAKA_9_PNG);
+                    } else {
+                        pngIs = this.getClass().getResourceAsStream(SHAKA_PNG);
+                    }
+                    Files.copy(pngIs, srcPath, StandardCopyOption.REPLACE_EXISTING);
+                    IOUtils.closeQuietly(pngIs);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * 异常png图片处理
@@ -90,154 +319,60 @@ public class AndrolibResourcesAj {
             "&& args(apkFile, manifest, resDir, rawDir, assetDir, include)")
     public void aaptPackage_around(ProceedingJoinPoint joinPoint,
                                    File apkFile, File manifest, File resDir, File rawDir, File assetDir, File[] include) throws Throwable {
-//        String UNK_DIRNAME = (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
-        String UNK_DIRNAME = "unknown";
         /**
          * 最大尝试10次,防止无限循环
          */
         int max = 10;
+        PrintStream olderr = System.err;
+        String lastErrInfo = null;
         while (max-- > 0) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            PrintStream ps = new PrintStream(baos);
-            PrintStream olderr = System.err;
-            System.setErr(ps);
-            try {
-                joinPoint.proceed(joinPoint.getArgs());
-                System.setErr(olderr);
-                break;
-            } catch (Throwable e) {
-                System.setErr(olderr);
-                String errStr = new String(baos.toByteArray());
-                Pattern patternPng = Pattern.compile("ERROR: Failure processing PNG image (.+)");
-                Pattern pattern9Png = Pattern.compile("ERROR: 9-patch image (.+) malformed\\.");
 
-                String rootDir = manifest.getParentFile().getAbsolutePath();
+            try (
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    PrintStream ps = new PrintStream(baos)
+            ) {
+                System.setErr(ps);
+                try {
+                    joinPoint.proceed(joinPoint.getArgs());
+                    System.setErr(olderr);
+                    /**
+                     * 只有正常执行才需要清理
+                     */
+                    fuckNotDefinedRes_clearAddRes(apkFile);
+                    break;
+                } catch (Throwable e) {
+                    System.setErr(olderr);
 
-                Matcher matcherPng = patternPng.matcher(errStr);
-                Matcher matcher9Png = pattern9Png.matcher(errStr);
+                    String errStr = new String(baos.toByteArray());
 
-                Map<String, String> replacePng = new HashMap<>();
-
-                while (matcherPng.find()) {
-                    String png = matcherPng.group(1);
-                    String desPath = rootDir + File.separatorChar + UNK_DIRNAME + png.substring(rootDir.length());
-                    replacePng.put(png, desPath);
-                }
-
-                while (matcher9Png.find()) {
-                    String png = matcher9Png.group(1);
-                    String desPath = rootDir + File.separatorChar + UNK_DIRNAME + png.substring(rootDir.length());
-                    replacePng.put(png, desPath);
-                }
-
-                if (replacePng.size() > 0 ) {
-                    for (String srcPng : replacePng.keySet()) {
-                        if (!new File(srcPng).exists()) {
-                            /**
-                             * 文件不存在.跳过.
-                             * 发现错误流有被篡写的现象
-                             */
-                            continue;
-                        }
-
-                        String desPng = replacePng.get(srcPng);
-                        //创建目录
-                        new File(desPng).getParentFile().mkdirs();
-
-                        try {
-                            //备份原始文件
-                            Path srcPath = Paths.get(srcPng);
-                            Path desPath = Paths.get(desPng);
-                            LogHelper.warning("Found exception png file : " + srcPng);
-                            Files.copy(srcPath, desPath, StandardCopyOption.REPLACE_EXISTING);
-
-                            //用ok的png替换异常png
-                            InputStream pngIs;
-                            if (srcPng.endsWith(".9.png")) {
-                                pngIs = this.getClass().getResourceAsStream(SHAKA_9_PNG);
-                            } else {
-                                pngIs = this.getClass().getResourceAsStream(SHAKA_PNG);
-                            }
-                            Files.copy(pngIs, srcPath, StandardCopyOption.REPLACE_EXISTING);
-                            IOUtils.closeQuietly(pngIs);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                    /**
+                     * 两个错误相同,说明该错误无法处理,直接抛出异常
+                     */
+                    if (errStr.equals(lastErrInfo)) {
+                        throw new ShakaException(errStr, e);
                     }
-                } else {
-                    if (errStr.indexOf("'@android:style/Widget.HorizontalScrollView'") > 0) {
-                        Pattern xmlPathPattern = Pattern.compile("(.+?):\\d+:.+?(Error retrieving parent for item).+?'@android:style/Widget.HorizontalScrollView'");
-                        Matcher xmlPathMatcher = xmlPathPattern.matcher(errStr);
-                        if (xmlPathMatcher.find()) {
-                            String xmlPathStr = xmlPathMatcher.group(1);
-                            File xmlPathFile = new File(xmlPathStr);
-                            if (xmlPathFile.exists()) {
-                                LogHelper.warning("Find HorizontalScrollView exception xml : " + xmlPathStr);
-                                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-                                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-                                Document document = documentBuilder.parse(xmlPathStr);
-                                NodeList list = document.getChildNodes().item(0).getChildNodes();
-                                for (int i=0; i<list.getLength(); i++) {
-                                    Node node = list.item(i);
-                                    if (node.getAttributes() != null) {
-                                        Node attr = node.getAttributes().getNamedItem("parent");
-                                        if (attr != null && attr.getNodeValue().equals("@android:style/Widget.HorizontalScrollView")) {
-                                            /**
-                                             * 首先把HorizontalScrollView替换成aapt能识别的ScrollView
-                                             */
-                                            attr.setNodeValue("@android:style/Widget.ScrollView");
-                                            /**
-                                             * 再判断时候有 android:scrollbars 和 android:fadingEdge 属性
-                                             * 有的话不修改,没有就添加
-                                             * 这样是为了保持样式不变化
-                                             */
-                                            Element scrollbars = document.createElement("item");
-                                            scrollbars.setAttribute("name", "android:scrollbars");
-                                            scrollbars.setNodeValue("horizontal");
+                    lastErrInfo = errStr;
 
-                                            Element fadingEdge = document.createElement("item");
-                                            fadingEdge.setAttribute("name", "android:fadingEdge");
-                                            fadingEdge.setNodeValue("horizontal");
-                                            Element element = (Element) node;
-                                            NodeList items = element.getElementsByTagName("item");
-                                            for (int j=0; j<items.getLength(); j++) {
-                                                Element item = (Element) items.item(j);
-                                                if (item.getAttribute("name").equals("android:scrollbars")) {
-                                                    scrollbars = null;
-                                                }
-                                                if (item.getAttribute("name").equals("android:fadingEdge")) {
-                                                    fadingEdge = null;
-                                                }
-                                            }
+                    String rootDir = manifest.getParentFile().getAbsolutePath();
 
-                                            if (scrollbars != null) {
-                                                node.appendChild(scrollbars);
-                                            }
+                    boolean bContinue = fuckNotDefinedRes(errStr, rootDir);
 
-                                            if (fadingEdge != null) {
-                                                node.appendChild(fadingEdge);
-                                            }
-                                        }
-                                    }
-                                }
-
-                                /**
-                                 * 保存修改过的xml
-                                 */
-                                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                                Transformer transformer = transformerFactory.newTransformer();
-                                transformer.transform(new DOMSource(document), new StreamResult(xmlPathStr));
-                                continue;
-                            }
-                        }
+                    if (checkPng(errStr, rootDir)) {
+                        bContinue = true;
                     }
-                    throw new ShakaException(errStr, e);
-                }
 
-            } finally {
-                System.setErr(olderr);
-                ps.close();
-                IOUtils.closeQuietly(baos);
+                    if (horizontalScrollView_check(errStr)) {
+                        bContinue = true;
+                    }
+
+                    if (bContinue) {
+                        continue;
+                    } else {
+                        throw new ShakaException(errStr, e);
+                    }
+                } finally {
+                    System.setErr(olderr);
+                }
             }
         }
 

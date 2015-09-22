@@ -20,6 +20,7 @@ import brut.androlib.Androlib;
 import brut.androlib.ApktoolProperties;
 import brut.apktool.Main;
 import com.rover12421.shaka.lib.HookMain;
+import com.rover12421.shaka.lib.ShakaBuildOption;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaProperties;
 import com.rover12421.shaka.lib.cli.CommandLineArgEnum;
@@ -176,13 +177,18 @@ public class ApktoolMainAj {
         try {
             Options normalOptions = normalOptions();
             Options DecodeOptions = DecodeOptions();
+            Options BuildOptions = BuildOptions();
+
             normalOptions.addOption(CommandLineArgEnum.LANGUAGE.getOption());
+
             DecodeOptions.addOption(CommandLineArgEnum.NO_9_PNG.getOption());
             DecodeOptions.addOption(CommandLineArgEnum.USING_DEFAULT_FRAMEWORK.getOption());
             DecodeOptions.addOption(CommandLineArgEnum.SHOW_MORE_RECOGNIZABLE_CHARACTERS.getOption());
             DecodeOptions.addOption(CommandLineArgEnum.FUCK_UNKOWN_ID.getOption());
             DecodeOptions.addOption(CommandLineArgEnum.IGNORE_RES_DECODE_ERROR.getOption());
             DecodeOptions.addOption(CommandLineArgEnum.XML_ATTRIBUTE_NAME_CORRECT.getOption());
+
+            BuildOptions.addOption(CommandLineArgEnum.FUCK_NOT_DEFINED_RES.getOption());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -215,6 +221,16 @@ public class ApktoolMainAj {
 
         if (CommandLineArgEnum.XML_ATTRIBUTE_NAME_CORRECT.hasMatch(cli)) {
             decodeOption.setXmlAttributeNameCorrect(true);
+        }
+    }
+
+    @Before("execution(void brut.apktool.Main.cmdBuild(..))" +
+            "&& args(cli)")
+    public void cmdBuild_before(CommandLine cli) {
+        ShakaBuildOption buildOption = ShakaBuildOption.getInstance();
+
+        if (CommandLineArgEnum.FUCK_NOT_DEFINED_RES.hasMatch(cli)) {
+            buildOption.setFuckNotDefinedRes(true);
         }
     }
 }
