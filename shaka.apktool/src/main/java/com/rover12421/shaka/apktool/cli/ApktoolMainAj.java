@@ -90,7 +90,7 @@ public class ApktoolMainAj {
     }
 
     private static String verbosityHelp() throws Exception {
-        return MainReflect.get("verbosityHelp");
+        return MainReflect.call("verbosityHelp").get();
     }
 
     private void _Options() {
