@@ -140,17 +140,17 @@ public class ApktoolMainAj {
 
         System.out.println("\n******************** smali ********************\n");
 
-        formatter.printHelp("ShakaApktool " + verbosityHelp() + "s[mali] [options] [--] [<smali-file>|folder]*",
+        formatter.printHelp("ShakaApktool " + "s[mali] [options] [--] [<smali-file>|folder]*",
                 "assembles a set of smali files into a dex file", smaliMainAj.basicOptions(), smaliMainAj.debugOptions());
 
         System.out.println("\n******************** baksmali ********************\n");
 
-        formatter.printHelp("ShakaApktool " + verbosityHelp() + "bs|baksmali [options] <dex-file>",
+        formatter.printHelp("ShakaApktool " + "bs|baksmali [options] <dex-file>",
                 "disassembles and/or dumps a dex file", baksmaliMainAj.basicOptions(), baksmaliMainAj.debugOptions());
 
         if (Main.isAdvanceMode()) {
             System.out.println("\n******************** AdvanceMode ********************\n");
-            formatter.printHelp("ShakaApktool " + verbosityHelp() + "publicize-resources <file_path>",
+            formatter.printHelp("ShakaApktool " + "publicize-resources <file_path>",
                     "Make all framework resources public.", emptyOptions(), (String)null);
         }
 
