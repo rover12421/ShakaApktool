@@ -336,7 +336,7 @@ public class AndrolibAj {
                 /**
                  * 过滤签名文件
                  */
-                if (file.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA)", "").isEmpty()) {
+                if (file.replaceFirst("META-INF[/\\\\]+[^/\\\\]+\\.(SF|RSA|DSA)", "").isEmpty()) {
                     continue;
                 }
 
