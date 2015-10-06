@@ -40,7 +40,7 @@ task genShakaAaptCrc32 {
             crc32.update(buff, 0, len)
         }
         fis.close()
-        String name = it.absolutePath.substring(binDir_len).replaceAll("/", ".")
+        String name = it.absolutePath.substring(binDir_len).replace("/", ".").replace("\\", ".")
         String prop = name + "=" + Long.toHexString(crc32.value)
         props.add(prop)
     }
