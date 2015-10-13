@@ -68,10 +68,16 @@ public class ShakaApktoolFiles {
     private static void checkShakaAapt(String fileStr) throws ShakaException {
         boolean skip = false;
         File file = new File(fileStr);
+
+        long crc32 = ShakaAaptProperties.getFileCrc32(fileStr);
+        if (crc32 == -1) {
+            file.delete();
+            return;
+        }
+
         if (file.exists()) {
-            long crc32 = ShakaAaptProperties.getFileCrc32(fileStr);
             try {
-                if (crc32 == -1 || CRC32Util.getCRC32(file) == crc32) {
+                if (CRC32Util.getCRC32(file) == crc32) {
                     skip = true;
                 }
             } catch (IOException e) {
@@ -96,9 +102,7 @@ public class ShakaApktoolFiles {
         checkShakaAapt(ShakaAaptBinPath);
 
         //检查lib库
-        if (!EnvironmentDetection.isWindows()) {
-            checkShakaAapt(ShakaAaptlibPath);
-        }
+        checkShakaAapt(ShakaAaptlibPath);
     }
 
     public static String getShakaAaptBinPath() throws ShakaException {
