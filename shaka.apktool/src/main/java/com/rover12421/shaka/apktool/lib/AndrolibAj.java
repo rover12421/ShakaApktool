@@ -42,12 +42,10 @@ import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
 import brut.util.BrutIO;
 import brut.util.OS;
-import com.rover12421.shaka.lib.ShakaProperties;
 import com.rover12421.shaka.lib.AndroidZip;
 import com.rover12421.shaka.lib.LogHelper;
+import com.rover12421.shaka.lib.ShakaProperties;
 import com.rover12421.shaka.lib.reflect.Reflect;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -55,7 +53,10 @@ import org.aspectj.lang.annotation.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-import java.util.zip.*;
+import java.util.zip.CRC32;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by rover12421 on 8/9/14.
