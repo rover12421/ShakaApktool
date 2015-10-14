@@ -32,6 +32,7 @@
 package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
+import brut.androlib.ApkOptions;
 import brut.androlib.res.AndrolibResources;
 import brut.androlib.res.data.ResTable;
 import brut.androlib.res.decoder.AXmlResourceParser;
@@ -64,10 +65,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -310,6 +308,22 @@ public class AndrolibResourcesAj {
         return false;
     }
 
+    public static Collection<String> doNotCompress = null;
+
+    public void doNotCompress_in_windows_fix(AndrolibResources androlibResources) {
+        if (!EnvironmentDetection.isWindows()) {
+            return;
+        }
+
+        if (doNotCompress != null) {
+            return;
+        }
+
+        ApkOptions apkOptions = androlibResources.apkOptions;
+        doNotCompress = apkOptions.doNotCompress;
+        apkOptions.doNotCompress = null;
+    }
+
     /**
      * 异常png图片处理
      * brut.androlib.res.AndrolibResources
@@ -319,6 +333,10 @@ public class AndrolibResourcesAj {
             "&& args(apkFile, manifest, resDir, rawDir, assetDir, include)")
     public void aaptPackage_around(ProceedingJoinPoint joinPoint,
                                    File apkFile, File manifest, File resDir, File rawDir, File assetDir, File[] include) throws Throwable {
+
+        AndrolibResources thiz = (AndrolibResources) joinPoint.getThis();
+        doNotCompress_in_windows_fix(thiz);
+
         /**
          * 最大尝试10次,防止无限循环
          */

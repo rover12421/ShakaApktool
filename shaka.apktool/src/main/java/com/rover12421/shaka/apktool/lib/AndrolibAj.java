@@ -46,6 +46,7 @@ import com.rover12421.shaka.lib.ShakaProperties;
 import com.rover12421.shaka.lib.AndroidZip;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.reflect.Reflect;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -53,10 +54,7 @@ import org.aspectj.lang.annotation.*;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.zip.*;
 
 /**
@@ -79,6 +77,20 @@ public class AndrolibAj {
     @Before("execution(void brut.androlib.Androlib.buildUnknownFiles(..))" +
             "&& args(appDir, outFile, meta)")
     public void buildUnknownFiles_before(JoinPoint joinPoint, File appDir, File outFile, Map<String, Object> meta) {
+
+        Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
+        if (files == null) {
+            ResUnknownFiles mResUnknownFiles = Reflect.on(joinPoint.getThis()).get("mResUnknownFiles");
+            files = mResUnknownFiles.getUnknownFiles();
+            meta.put("unknownFiles", files);
+        }
+
+        if (AndrolibResourcesAj.doNotCompress != null) {
+            for (String file : AndrolibResourcesAj.doNotCompress) {
+                files.put(file, String.valueOf(ZipEntry.STORED));
+            }
+        }
+
         try {
             String UNK_DIRNAME = getUNK_DIRNAME();
             File unknownFile = new File(appDir, UNK_DIRNAME);
@@ -89,12 +101,7 @@ public class AndrolibAj {
             try {
                 Directory directory = new FileDirectory(unknownFile);
                 Set<String> addFiles = directory.getFiles(true);
-                Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
-                if (files == null) {
-                    ResUnknownFiles mResUnknownFiles = Reflect.on(joinPoint.getThis()).get("mResUnknownFiles");
-                    files = mResUnknownFiles.getUnknownFiles();
-                    meta.put("unknownFiles", files);
-                }
+
                 for (String file : addFiles) {
                     //判断下.是否已经存在.已经存在的,压缩模式使用原包的模式
                     if (!files.containsKey(file)) {
@@ -270,11 +277,30 @@ public class AndrolibAj {
             throws IOException {
         String UNK_DIRNAME = getUNK_DIRNAME();
         File unknownFileDir = new File(appDir, UNK_DIRNAME);
+        File buildDir = new File(appDir, "build/apk");
 
         // loop through unknown files
         for (Map.Entry<String,String> unknownFileInfo : files.entrySet()) {
-            File inputFile = new File(unknownFileDir, unknownFileInfo.getKey());
+            String file = unknownFileInfo.getKey();
+            File inputFile = new File(unknownFileDir, file);
             if(inputFile.isDirectory()) {
+                continue;
+            }
+
+            if (!inputFile.exists()) {
+                inputFile = new File(buildDir, file);
+                if (!inputFile.exists()) {
+                    inputFile = new File(appDir, file);
+//                    if (inputFile.exists()) {
+//                        LogHelper.info("Find unkown file in app dir : " + file);
+//                    }
+//                } else {
+//                    LogHelper.info("Find unkown file in build dir : " + file);
+                }
+            }
+
+            if (!inputFile.exists()) {
+                LogHelper.info("Not fount unkown file : " + file);
                 continue;
             }
 
@@ -422,5 +448,25 @@ public class AndrolibAj {
             mapName = name;
         }
         return mapName;
+    }
+
+    @Around("execution(* brut.androlib.Androlib.recordUncompressedFiles(..))" +
+            "&& args(apkFile, uncompressedFiles)")
+    public void recordUncompressedFiles(ExtFile apkFile, Collection<String> uncompressedFiles) throws AndrolibException {
+        try {
+            Directory unk = apkFile.getDirectory();
+            Set<String> files = unk.getFiles(true);
+
+            for (String file : files) {
+                if (AndroidZip.isAPKFileNames(file) && !AndroidZip.needCompress(file)) {
+                    if (unk.getCompressionLevel(file) == 0) {
+                        // 还是使用文件,不使用扩展名
+                        uncompressedFiles.add(file);
+                    }
+                }
+            }
+        } catch (DirectoryException ex) {
+            throw new AndrolibException(ex);
+        }
     }
 }

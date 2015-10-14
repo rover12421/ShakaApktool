@@ -69,4 +69,15 @@ public class AndroidZip {
         }
     }
 
+    private final static String[] APK_STANDARD_ALL_FILENAMES = new String[] {
+            "classes.dex", "AndroidManifest.xml", "resources.arsc", "res", "lib", "libs", "assets", "META-INF" };
+    public static boolean isAPKFileNames(String file) {
+        for (String apkFile : APK_STANDARD_ALL_FILENAMES) {
+            if (apkFile.equals(file) || file.startsWith(apkFile + "/")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
