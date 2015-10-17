@@ -390,6 +390,8 @@ public class Reflect {
             throws ReflectException {
         try {
             return on(accessible(constructor).newInstance(args));
+        } catch (InvocationTargetException e) {
+            throw new ReflectException(e.getTargetException());
         } catch (Exception e) {
             throw new ReflectException(e);
         }
@@ -406,6 +408,8 @@ public class Reflect {
             } else {
                 return on(method.invoke(object, args));
             }
+        } catch (InvocationTargetException e) {
+            throw new ReflectException(e.getTargetException());
         } catch (Exception e) {
             throw new ReflectException(e);
         }
