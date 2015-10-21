@@ -310,10 +310,14 @@ public class AndrolibResourcesAj {
 
     public static Collection<String> doNotCompress = null;
 
-    public void doNotCompress_in_windows_fix(AndrolibResources androlibResources) {
-        if (!EnvironmentDetection.isWindows()) {
-            return;
-        }
+    public void doNotCompress_in_aapt_fix(AndrolibResources androlibResources) {
+        /**
+         * https://github.com/iBotPeaches/Apktool/issues/1071
+         * 可以看出OSX也有这个问题,不再判断系统,所有平台使用相同操作
+         */
+//        if (!EnvironmentDetection.isWindows()) {
+//            return;
+//        }
 
         if (doNotCompress != null) {
             return;
@@ -335,7 +339,7 @@ public class AndrolibResourcesAj {
                                    File apkFile, File manifest, File resDir, File rawDir, File assetDir, File[] include) throws Throwable {
 
         AndrolibResources thiz = (AndrolibResources) joinPoint.getThis();
-        doNotCompress_in_windows_fix(thiz);
+        doNotCompress_in_aapt_fix(thiz);
 
         /**
          * 最大尝试10次,防止无限循环
