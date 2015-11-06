@@ -377,14 +377,18 @@ public class AndrolibResourcesAj {
 
                     String rootDir = manifest.getParentFile().getAbsolutePath();
 
-                    boolean bContinue = fuckNotDefinedRes(errStr, rootDir);
-
+                    boolean bContinue = false;
                     if (checkPng(errStr, rootDir)) {
                         bContinue = true;
                     }
 
                     if (horizontalScrollView_check(errStr)) {
                         bContinue = true;
+                    }
+
+                    if (!bContinue) {
+                        //需要最后才处理,避免和其他的处理起冲突
+                        bContinue = fuckNotDefinedRes(errStr, rootDir);
                     }
 
                     if (bContinue) {
