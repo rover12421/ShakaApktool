@@ -285,6 +285,7 @@ public class AndrolibAj {
         // loop through unknown files
         for (Map.Entry<String,String> unknownFileInfo : files.entrySet()) {
             String file = unknownFileInfo.getKey();
+            file = getDecodeFileMapName(file);
             File inputFile = new File(unknownFileDir, file);
             if(inputFile.isDirectory()) {
                 continue;
