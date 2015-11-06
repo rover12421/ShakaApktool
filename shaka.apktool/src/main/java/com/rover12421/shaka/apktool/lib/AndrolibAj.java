@@ -88,7 +88,8 @@ public class AndrolibAj {
 
         if (AndrolibResourcesAj.doNotCompress != null) {
             for (String file : AndrolibResourcesAj.doNotCompress) {
-                files.put(file, String.valueOf(ZipEntry.STORED));
+                String pFile = file.replace("\\", "/");
+                files.put(pFile, String.valueOf(ZipEntry.STORED));
             }
         }
 
@@ -105,6 +106,7 @@ public class AndrolibAj {
 
                 for (String file : addFiles) {
                     //判断下.是否已经存在.已经存在的,压缩模式使用原包的模式
+                    file = file.replace("\\", "/");
                     if (!files.containsKey(file)) {
                         files.put(file, AndroidZip.getZipMethod(new File(appDir, file).getAbsolutePath()) + "");
                     }
