@@ -69,7 +69,7 @@ public class ClassDefinitionAj {
                 writer.write(stringWriter.toString());
             } catch (Throwable e) {
                 String str = "write writeDirectMethods error : " + methodString + "\n";
-                LogHelper.warning(str);
+                LogHelper.fine(str);
                 writer.write(str);
             }
         }
@@ -128,7 +128,7 @@ public class ClassDefinitionAj {
                 writer.write(stringWriter.toString());
             } catch (Throwable e) {
                 String str = "write writeVirtualMethods error : " + methodString + "\n";
-                LogHelper.warning(str);
+                LogHelper.fine(str);
                 writer.write(str);
             }
         }
