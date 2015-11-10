@@ -21,11 +21,13 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.jf.dexlib2.Opcode;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.dexbacked.DexBackedMethodImplementation;
 import org.jf.dexlib2.dexbacked.DexReader;
 import org.jf.dexlib2.dexbacked.instruction.DexBackedInstruction;
 import org.jf.dexlib2.dexbacked.instruction.DexBackedInstruction10x;
 import org.jf.dexlib2.dexbacked.raw.CodeItem;
+import org.jf.dexlib2.dexbacked.util.DebugInfo;
 import org.jf.dexlib2.iface.instruction.Instruction;
 import org.jf.dexlib2.iface.instruction.OffsetInstruction;
 
@@ -37,18 +39,17 @@ import java.util.List;
  */
 @Aspect
 public class DexBackedMethodImplementationAj {
-    private int codeOffset(DexBackedMethodImplementation thiz) throws NoSuchFieldException, IllegalAccessException {
-        return Reflect.on(thiz).get("codeOffset");
-    }
 
     @Around("execution(* org.jf.dexlib2.dexbacked.DexBackedMethodImplementation.getInstructions(..))")
     public Iterable<? extends Instruction> getInstructions(ProceedingJoinPoint joinPoint) throws Exception {
         DexBackedMethodImplementation thiz = (DexBackedMethodImplementation) joinPoint.getThis();
 
-        // instructionsSize is the number of 16-bit code units in the instruction list, not the number of instructions
-        int instructionsSize = thiz.dexFile.readSmallUint(codeOffset(thiz) + CodeItem.INSTRUCTION_COUNT_OFFSET);
+        int codeOffset = getCodeOffset(thiz);
 
-        final int instructionsStartOffset = codeOffset(thiz) + CodeItem.INSTRUCTION_START_OFFSET;
+        // instructionsSize is the number of 16-bit code units in the instruction list, not the number of instructions
+        int instructionsSize = thiz.dexFile.readSmallUint(codeOffset + CodeItem.INSTRUCTION_COUNT_OFFSET);
+
+        final int instructionsStartOffset = codeOffset + CodeItem.INSTRUCTION_START_OFFSET;
         final int endOffset = instructionsStartOffset + (instructionsSize*2);
 
         List<Instruction> instructions = new ArrayList<>();
@@ -83,5 +84,23 @@ public class DexBackedMethodImplementationAj {
             }
         }
         return instructions;
+    }
+
+    private int getCodeOffset(DexBackedMethodImplementation dexBackedMethodImplementation) {
+        return Reflect.on(dexBackedMethodImplementation).get("codeOffset");
+    }
+
+    @Around("execution(* org.jf.dexlib2.dexbacked.DexBackedMethodImplementation.getDebugInfo())")
+    public DebugInfo getDebugInfo(ProceedingJoinPoint joinPoint) {
+        DexBackedMethodImplementation thiz = (DexBackedMethodImplementation) joinPoint.getThis();
+        DexBackedDexFile dexFile = thiz.dexFile;
+        int codeOffset = getCodeOffset(thiz);
+
+        int debugOffset = dexFile.readInt(codeOffset + CodeItem.DEBUG_INFO_OFFSET);
+        try {
+            return DebugInfo.newOrEmpty(dexFile, debugOffset, thiz);
+        } catch (Throwable e) {
+            return DebugInfo.newOrEmpty(dexFile, 0, thiz);
+        }
     }
 }
