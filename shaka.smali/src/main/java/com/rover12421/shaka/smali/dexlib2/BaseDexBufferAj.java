@@ -32,7 +32,7 @@ public class BaseDexBufferAj {
                 ((buf[offset+2] & 0xff) << 16) |
                 ((buf[offset+3]) << 24);
         if (result < 0) {
-            LogHelper.warning(String.format("Encountered small uint that is out of range at offset 0x%x", offset));
+            LogHelper.fine(String.format("Encountered small uint that is out of range at offset 0x%x", offset));
         }
         return result;
     }
@@ -49,7 +49,7 @@ public class BaseDexBufferAj {
                 ((buf[offset+2] & 0xff) << 16) |
                 ((buf[offset+3]) << 24);
         if (result < -1) {
-            LogHelper.warning(String.format("Encountered optional uint that is out of range at offset 0x%x", offset));
+            LogHelper.fine(String.format("Encountered optional uint that is out of range at offset 0x%x", offset));
         }
         return result;
     }
