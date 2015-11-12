@@ -304,7 +304,7 @@ public class AndrolibAj {
             }
 
             if (!inputFile.exists()) {
-                LogHelper.info("Not fount unkown file : " + file);
+                LogHelper.info("Not found unkown file : " + file);
                 continue;
             }
 
