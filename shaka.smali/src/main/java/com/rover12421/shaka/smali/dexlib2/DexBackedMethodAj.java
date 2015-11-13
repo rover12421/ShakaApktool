@@ -18,15 +18,11 @@ public class DexBackedMethodAj {
 
     @Around("execution(* org.jf.dexlib2.dexbacked.DexBackedMethod.getImplementation())")
     public DexBackedMethodImplementation getImplementation(ProceedingJoinPoint joinPoint) {
-//        if (codeOffset > 0) {
-//            return new DexBackedMethodImplementation(dexFile, this, codeOffset);
-//        }
-//        return null;
         DexBackedMethod thiz = (DexBackedMethod) joinPoint.getThis();
-        try {
-            return new DexBackedMethodImplementation(thiz.dexFile, thiz, getCodeOffset(thiz));
-        } catch (Throwable e) {
-            return null;
+        int codeOffset = getCodeOffset(thiz);
+        if (codeOffset != 0) {
+            return new DexBackedMethodImplementation(thiz.dexFile, thiz, codeOffset);
         }
+        return null;
     }
 }
