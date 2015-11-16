@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g 2015-05-08 11:45:50
+// $ANTLR 3.5.2 shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g 2015-11-16 17:52:42
 
 package org.jf.smali;
 
@@ -62,7 +62,7 @@ public class expectedTokensTestGrammarParser extends Parser {
 			}
 		}
 
-		private final ArrayList<ExpectedToken> expectedTokens = new ArrayList<ExpectedToken>();
+		protected final ArrayList<ExpectedToken> expectedTokens = new ArrayList<ExpectedToken>();
 		
 		public List<ExpectedToken> getExpectedTokens() {
 			return Collections.unmodifiableList(expectedTokens);

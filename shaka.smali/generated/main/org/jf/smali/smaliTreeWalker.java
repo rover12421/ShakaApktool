@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g 2015-05-07 18:19:43
+// $ANTLR 3.5.2 shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g 2015-11-16 17:52:39
 
 package org.jf.smali;
 
@@ -333,10 +333,10 @@ public class smaliTreeWalker extends TreeParser {
 
 
 	  public String classType;
-	  private boolean verboseErrors = false;
-	  private int apiLevel = 15;
-	  private Opcodes opcodes = new Opcodes(apiLevel, false);
-	  private DexBuilder dexBuilder;
+	  protected boolean verboseErrors = false;
+	  protected int apiLevel = 15;
+	  protected Opcodes opcodes = Opcodes.forApi(apiLevel);
+	  protected DexBuilder dexBuilder;
 
 	  public void setDexBuilder(DexBuilder dexBuilder) {
 	      this.dexBuilder = dexBuilder;
@@ -351,7 +351,7 @@ public class smaliTreeWalker extends TreeParser {
 	    this.verboseErrors = verboseErrors;
 	  }
 
-	  private byte parseRegister_nibble(String register)
+	  protected byte parseRegister_nibble(String register)
 	      throws SemanticException {
 	    int totalMethodRegisters = method_stack.peek().totalMethodRegisters;
 	    int methodParameterRegisters = method_stack.peek().methodParameterRegisters;
@@ -369,7 +369,7 @@ public class smaliTreeWalker extends TreeParser {
 	  }
 
 	  //return a short, because java's byte is signed
-	  private short parseRegister_byte(String register)
+	  protected short parseRegister_byte(String register)
 	      throws SemanticException {
 	    int totalMethodRegisters = method_stack.peek().totalMethodRegisters;
 	    int methodParameterRegisters = method_stack.peek().methodParameterRegisters;
@@ -385,7 +385,7 @@ public class smaliTreeWalker extends TreeParser {
 	  }
 
 	  //return an int because java's short is signed
-	  private int parseRegister_short(String register)
+	  protected int parseRegister_short(String register)
 	      throws SemanticException {
 	    int totalMethodRegisters = method_stack.peek().totalMethodRegisters;
 	    int methodParameterRegisters = method_stack.peek().methodParameterRegisters;
