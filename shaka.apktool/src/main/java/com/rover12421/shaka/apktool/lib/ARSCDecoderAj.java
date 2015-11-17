@@ -16,6 +16,8 @@
 package com.rover12421.shaka.apktool.lib;
 
 import android.util.TypedValue;
+import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResConfigFlags;
 import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.ResType;
 import brut.androlib.res.data.value.ResIntBasedValue;
@@ -31,6 +33,7 @@ import org.aspectj.lang.annotation.Aspect;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.math.BigInteger;
 
 /**
  * Created by rover12421 on 8/16/14.
@@ -154,5 +157,144 @@ public class ARSCDecoderAj {
                 : mPkg.getValueFactory().factory(type, data, null);
     }
 
+    /**
+     * > readConfigFlags_read_setDeafultValue_28
+     * https://github.com/iBotPeaches/Apktool/pull/1084
+     * 如果合并到主分支,则可以移除
+     * @param joinPoint
+     * @return
+     * @throws Exception
+     */
+    @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.readConfigFlags())")
+    public ResConfigFlags readConfigFlags(ProceedingJoinPoint joinPoint) throws Exception {
+        ARSCDecoder decoder = (ARSCDecoder) joinPoint.getThis();
+        ExtDataInput mIn = mIn(decoder);
+
+        int size = mIn.readInt();
+        int read = 28;
+
+        if (size < 28) {
+            throw new AndrolibException("Config size < 28");
+        }
+
+        boolean isInvalid = false;
+
+        short mcc = mIn.readShort();
+        short mnc = mIn.readShort();
+
+        char[] language = unpackLanguageOrRegion(mIn.readByte(), mIn.readByte(), 'a');
+        char[] country = unpackLanguageOrRegion(mIn.readByte(), mIn.readByte(), '0');
+
+        byte orientation = mIn.readByte();
+        byte touchscreen = mIn.readByte();
+
+        int density = mIn.readUnsignedShort();
+
+        byte keyboard = mIn.readByte();
+        byte navigation = mIn.readByte();
+        byte inputFlags = mIn.readByte();
+		/* inputPad0 */mIn.skipBytes(1);
+
+        short screenWidth = mIn.readShort();
+        short screenHeight = mIn.readShort();
+
+        short sdkVersion = mIn.readShort();
+		/* minorVersion, now must always be 0 */mIn.skipBytes(2);
+
+        byte screenLayout = 0;
+        byte uiMode = 0;
+        short smallestScreenWidthDp = 0;
+        if (size >= 32) {
+            screenLayout = mIn.readByte();
+            uiMode = mIn.readByte();
+            smallestScreenWidthDp = mIn.readShort();
+            read = 32;
+        }
+
+        short screenWidthDp = 0;
+        short screenHeightDp = 0;
+        if (size >= 36) {
+            screenWidthDp = mIn.readShort();
+            screenHeightDp = mIn.readShort();
+            read = 36;
+        }
+
+        char[] localeScript = null;
+        char[] localeVariant = null;
+        if (size >= 48) {
+            localeScript = readScriptOrVariantChar(mIn, 4).toCharArray();
+            localeVariant = readScriptOrVariantChar(mIn, 8).toCharArray();
+            read = 48;
+        }
+
+        byte screenLayout2 = 0;
+        if (size >= 52) {
+            screenLayout2 = mIn.readByte();
+            mIn.skipBytes(3); // reserved padding
+            read = 52;
+        }
+
+//        int exceedingSize = size - decoder.KNOWN_CONFIG_BYTES;
+        int exceedingSize = size - 52;
+        if (exceedingSize > 0) {
+            byte[] buf = new byte[exceedingSize];
+            read += exceedingSize;
+            mIn.readFully(buf);
+            BigInteger exceedingBI = new BigInteger(1, buf);
+
+            if (exceedingBI.equals(BigInteger.ZERO)) {
+                LogHelper.fine(String
+                        .format("Config flags size > %d, but exceeding bytes are all zero, so it should be ok.",
+                                52));
+            } else {
+                LogHelper.warning(String.format("Config flags size > %d. Exceeding bytes: 0x%X.",
+                        52, exceedingBI));
+                isInvalid = true;
+            }
+        }
+
+        int remainingSize = size - read;
+        if (remainingSize > 0) {
+            mIn.skipBytes(remainingSize);
+        }
+
+        return new ResConfigFlags(mcc, mnc, language, country,
+                orientation, touchscreen, density, keyboard, navigation,
+                inputFlags, screenWidth, screenHeight, sdkVersion,
+                screenLayout, uiMode, smallestScreenWidthDp, screenWidthDp,
+                screenHeightDp, localeScript, localeVariant, screenLayout2, isInvalid);
+    }
+
+    private char[] unpackLanguageOrRegion(byte in0, byte in1, char base) throws AndrolibException {
+        // check high bit, if so we have a packed 3 letter code
+        if (((in0 >> 7) & 1) == 1) {
+            int first = in1 & 0x1F;
+            int second = ((in1 & 0xE0) >> 5) + ((in0 & 0x03) << 3);
+            int third = (in0 & 0x7C) >> 2;
+
+            // since this function handles languages & regions, we add the value(s) to the base char
+            // which is usually 'a' or '0' depending on language or region.
+            return new char[] { (char) (first + base), (char) (second + base), (char) (third + base) };
+        }
+        return new char[] { (char) in0, (char) in1 };
+    }
+
+    private String readScriptOrVariantChar(ExtDataInput mIn, int length) throws AndrolibException, IOException {
+        StringBuilder string = new StringBuilder(16);
+
+        while(length-- != 0) {
+            short ch = mIn.readByte();
+            if (ch == 0) {
+                break;
+            }
+            string.append((char) ch);
+        }
+        mIn.skipBytes(length);
+
+        return string.toString();
+    }
+    /**
+     * < readConfigFlags_read_setDeafultValue_28
+     */
 
 }
