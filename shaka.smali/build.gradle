@@ -227,6 +227,7 @@ if (genGrammarSource) {
                                     file.text
                                             .replace(prefix, "")
                                             .replaceAll("(\\s+)private(\\s+)", "\$1protected\$2")
+                                            .replaceAll("(//\\s+\\\$ANTLR\\s+.+?\\.g)(\\s+\\d+-\\d+-\\d+\\s+\\d+:\\d+:\\d+)", "\$1")
                             )
                         }
                     }

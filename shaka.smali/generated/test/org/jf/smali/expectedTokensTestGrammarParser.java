@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g 2015-11-16 17:52:42
+// $ANTLR 3.5.2 shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g
 
 package org.jf.smali;
 

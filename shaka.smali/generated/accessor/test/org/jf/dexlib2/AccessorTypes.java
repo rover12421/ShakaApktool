@@ -31,7 +31,17 @@
 
 package org.jf.dexlib2;
 
-public class AccessorTypes {1protected2boolean boolean_val;1protected2byte byte_val;1protected2char char_val;1protected2short short_val;1protected2int int_val;1protected2long long_val;1protected2float float_val;1protected2double double_val;1protected2class Accessors {
+public class AccessorTypes {
+    protected boolean boolean_val;
+    protected byte byte_val;
+    protected char char_val;
+    protected short short_val;
+    protected int int_val;
+    protected long long_val;
+    protected float float_val;
+    protected double double_val;
+
+    protected class Accessors {
         public void boolean_and(boolean val) {
             boolean_val &= val;
         }

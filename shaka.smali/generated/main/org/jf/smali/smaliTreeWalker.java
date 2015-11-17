@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g 2015-11-16 17:52:39
+// $ANTLR 3.5.2 shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g
 
 package org.jf.smali;
 
