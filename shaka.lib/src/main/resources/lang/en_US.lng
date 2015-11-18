@@ -247,6 +247,7 @@
 246=ignores any non-fatal errors that occur while disassembling/deodexing, ignoring the class if needed, and continuing with the next class. The default behavior is to stop disassembling and exit once an error is encountered
 247=suppresses the output of the disassembly
 248=specify a file containing a custom inline method table to use for deodexing
+249=xml attribute name correct. May be has problem, not recommended
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...
@@ -257,3 +258,4 @@ r5=Arsc file contains multiple packages. Using package $1 as default
 r6=Using Apktool $1
 r7=Copying unknown file $1 with method $2
 r8=Copying raw $1 file...
+r9=Xml attribute name correct : $1 to $2

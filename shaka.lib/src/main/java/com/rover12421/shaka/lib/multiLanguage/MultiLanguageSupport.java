@@ -124,7 +124,8 @@ public class MultiLanguageSupport {
             "Arsc file contains multiple packages\\. Using package (.+?) as default",
             "Using Apktool (.+?)",
             "^Copying unknown file (.+?) with method (.+?)$",
-            "Copying raw (.+?) file\\.\\.\\."
+            "Copying raw (.+?) file\\.\\.\\.",
+            "Xml attribute name correct : (.+?) to (.+?)"
     };
 
     private static final String[] langRpStrDef = new String[]{
@@ -136,7 +137,8 @@ public class MultiLanguageSupport {
             "Arsc file contains multiple packages. Using package $1 as default",
             "Using Apktool $1",
             "Copying unknown file $1 with method $2",
-            "Copying raw $1 file..."
+            "Copying raw $1 file...",
+            "Xml attribute name correct : $1 to $2"
     };
 
     public static String covertLocaleInfo(String str) {
