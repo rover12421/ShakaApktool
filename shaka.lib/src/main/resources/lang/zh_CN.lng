@@ -198,7 +198,7 @@
 196=无法反编译 XML
 197=无法判断应用程序框架
 198=未设置反编译目录
-199=使用默然的框架资源文件
+199=使用默认的框架资源文件
 200=不解析.9格式的资源
 201=不能重命名临时文件
 202=显示更多的可识别字符
@@ -248,6 +248,7 @@
 246=ignores any non-fatal errors that occur while disassembling/deodexing, ignoring the class if needed, and continuing with the next class. The default behavior is to stop disassembling and exit once an error is encountered
 247=suppresses the output of the disassembly
 248=specify a file containing a custom inline method table to use for deodexing
+249=纠正xml属性名. 可能有问题, 不推荐
 
 r0=拷贝文件 $1 ...
 r1=编译 $1 到 $2...
@@ -258,3 +259,4 @@ r5=Arsc 文件包含多个包.正在使用 $1 包作为默认
 r6=使用 Apktool $1
 r7=正在使用 $2 方法复制未知文件 $1
 r8=复制原版 $1 文件...
+r9=纠正xml属性名: $1 转 $2
