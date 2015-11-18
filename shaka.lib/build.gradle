@@ -44,13 +44,11 @@ task genShakaAaptCrc32 {
         String prop = name + "=" + Long.toHexString(crc32.value)
         props.add(prop)
     }
-    Collections.sort(props, new Comparator() {
+    Collections.sort(props, new Comparator<String>() {
         @Override
-        int compare(Object o1, Object o2) {
-            String s1 = o1
-            String s2 = o2
+        int compare(String s1, String s2) {
             if (s1.length() == s2.length()) {
-                return s1.compareTo(s2);
+                return s1.compareTo(s2)
             } else {
                 return s1.length() - s2.length()
             }
