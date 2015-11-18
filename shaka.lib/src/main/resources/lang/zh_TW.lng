@@ -248,7 +248,7 @@
 246=ignores any non-fatal errors that occur while disassembling/deodexing, ignoring the class if needed, and continuing with the next class. The default behavior is to stop disassembling and exit once an error is encountered
 247=suppresses the output of the disassembly
 248=specify a file containing a custom inline method table to use for deodexing
-249=xml 屬性名稱正確. 可能有問題, 不推薦
+249=糾正XML屬性名. 可能有問題, 不推薦
 
 r0=拷貝文件 $1 ...
 r1=編譯 $1 到 $2...
@@ -259,4 +259,4 @@ r5=Arsc 文件包含多個包.正在使用$1包作為默認
 r6=使用 Apktool $1
 r7=正在使用 $2 方法复制未知文件 $1
 r8=複製原版 $1 文件...
-r9=Xml 屬性名稱正確: $1 轉 $2
+r9=糾正XML屬性名: $1 轉 $2
