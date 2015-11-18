@@ -20,6 +20,7 @@ import brut.androlib.res.data.ResResource;
 import brut.androlib.res.data.value.ResFileValue;
 import brut.androlib.res.decoder.ResFileDecoder;
 import brut.directory.Directory;
+import brut.directory.PathNotExist;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.JoinPoint;
@@ -132,6 +133,11 @@ public class ResFileDecoderAj {
         try {
             joinPoint.proceed(new Object[]{inDir, inFileName, outDir, outFileName, decoder});
         } catch (AndrolibException e) {
+            Throwable cause = e.getCause();
+            if (cause != null && (cause instanceof PathNotExist)) {
+                LogHelper.warning("File not exist, Try using [fnd|fuck-not-defined-res] parameter when build the project : " + inFileName);
+                return;
+            }
             if (outFileName.endsWith(".9.png")) {
                 /**
                  * 如果异常的文件 9patch 图片,使用raw方式copy一次
