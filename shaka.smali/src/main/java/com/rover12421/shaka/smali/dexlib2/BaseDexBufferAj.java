@@ -20,8 +20,8 @@ public class BaseDexBufferAj {
         return Reflect.on(baseDexBuffer).get("buf");
     }
 
-    @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexBuffer.readSmallUint(..))" +
-            "&& args(offset)")
+//    @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexBuffer.readSmallUint(..))" +
+//            "&& args(offset)")
     public int readSmallUint(ProceedingJoinPoint joinPoint, int offset) {
         BaseDexBuffer thiz = (BaseDexBuffer) joinPoint.getThis();
 
@@ -37,8 +37,8 @@ public class BaseDexBufferAj {
         return result;
     }
 
-    @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexBuffer.readOptionalUint(..))" +
-            "&& args(offset)")
+//    @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexBuffer.readOptionalUint(..))" +
+//            "&& args(offset)")
     public int readOptionalUint(ProceedingJoinPoint joinPoint, int offset) {
         BaseDexBuffer thiz = (BaseDexBuffer) joinPoint.getThis();
 
