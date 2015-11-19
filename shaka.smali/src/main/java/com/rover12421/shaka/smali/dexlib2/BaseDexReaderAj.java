@@ -115,8 +115,8 @@ public class BaseDexReaderAj {
         thiz.setOffset(end - baseOffset);
     }
 
-    @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexReader.readSizedSmallUint(..))" +
-            "&& args(bytes)")
+//    @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexReader.readSizedSmallUint(..))" +
+//            "&& args(bytes)")
     public int readSizedSmallUint(ProceedingJoinPoint joinPoint, int bytes) {
         BaseDexReader thiz = (BaseDexReader) joinPoint.getThis();
         int baseOffset = getBaseOffset(thiz);
