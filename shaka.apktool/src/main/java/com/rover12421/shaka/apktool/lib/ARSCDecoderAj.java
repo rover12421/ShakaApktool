@@ -150,10 +150,33 @@ public class ARSCDecoderAj {
         int data = mIn.readInt();
 
         ResType mType = mType(decoder);
+        StringBlock stringBlock = mTableStrings(decoder);
+
+        if (mType.isString()) {
+            /**
+             * 字符串数量大于 0x01000000 或者等于 0 就没法判断是字符串还是id引用了,所以没法纠正
+             */
+            if (stringBlock.getCount() < 0x01000000 && data > 0) {
+                int oldType = type;
+                String tmpVale = stringBlock.getString(data);
+                if (tmpVale != null && type != TypedValue.TYPE_STRING) {
+                    type = TypedValue.TYPE_STRING;
+                } else if (tmpVale == null
+                        && type != TypedValue.TYPE_REFERENCE
+                        && type != TypedValue.TYPE_DYNAMIC_REFERENCE) {
+                    // TYPE_REFERENCE 和 TYPE_DYNAMIC_REFERENCE 目前是一样的操作
+                    type = TypedValue.TYPE_REFERENCE;
+                }
+
+                if (oldType != type) {
+                    LogHelper.warning("Correct value type : " + oldType + " > " + type);
+                }
+            }
+        }
 
         return type == TypedValue.TYPE_STRING
 //                ? mPkg.getValueFactory().factory(mTableStrings(decoder).getHTML(data), data)
-                ? ResValueFactoryAj.factory(mType, mTableStrings(decoder).getHTML(data), data)
+                ? ResValueFactoryAj.factory(mType, stringBlock.getHTML(data), data)
                 : mPkg.getValueFactory().factory(type, data, null);
     }
 
