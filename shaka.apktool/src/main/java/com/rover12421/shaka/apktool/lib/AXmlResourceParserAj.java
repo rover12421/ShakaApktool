@@ -20,6 +20,7 @@ import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.decoder.AXmlResourceParser;
 import brut.androlib.res.decoder.ResAttrDecoder;
 import brut.androlib.res.decoder.StringBlock;
+import com.rover12421.shaka.apktool.util.Global;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaRuntimeException;
@@ -27,6 +28,7 @@ import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Created by rover12421 on 4/3/15.
@@ -62,13 +64,7 @@ public class AXmlResourceParserAj {
         }
     }
 
-    private String android_ns(AXmlResourceParser parser) {
-        try {
-            return Reflect.on(parser).get("android_ns");
-        } catch (Exception e) {
-            throw new ShakaRuntimeException(e);
-        }
-    }
+    private final static String android_ns = "http://schemas.android.com/apk/res/android";
 
     private ResAttrDecoder mAttrDecoder(AXmlResourceParser parser) {
         try {
@@ -90,17 +86,52 @@ public class AXmlResourceParserAj {
         }
 
         String value = m_strings(parser).getString(namespace);
-
-        try {
-            String name = mAttrDecoder(parser).decodeManifestAttr(parser.getAttributeNameResource(index));
-            if (name == null && value.equalsIgnoreCase(android_ns(parser))) {
-                m_attributes(parser)[offset + ATTRIBUTE_IX_NAMESPACE_URI] = -1;
+        if (value == null || value.isEmpty()) {
+            int resId = parser.getAttributeNameResource(index);
+            if (resId > 0) {
+                value = android_ns;
+                int depth = parser.getDepth();
+                try {
+                    int nameSpaceCount = parser.getNamespaceCount(depth);
+                    if (nameSpaceCount == 0) {
+                        // 没有命名空间,不需要前缀
+                        value = "";
+                    } else if (nameSpaceCount == 1) {
+                        // 只有一个命名空间的时候,直接返回这个命名空间
+                        value = parser.getNamespaceUri(0);
+                    } else {
+                        int packageId = (resId >> 24) & 0xFF;
+                        if (packageId >= 0x7f) {    //这个判断可能会不准确,等遇到非正常样本再修改
+                            // 系统包,使用"android"命名空间, 非系统包需要选择
+                            if (nameSpaceCount == 2) {
+                                // 不使用非"android"的命名空间
+                                value = parser.getNamespaceUri(0);
+                                if (value.equalsIgnoreCase(android_ns)) {
+                                    value = parser.getNamespaceUri(1);
+                                }
+                            } else {
+                                // 多于两个的时候,尝试使用本身的命名空间
+                                LogHelper.warning("Namespace quantities greater than 2, " +
+                                        "may not select the correct namespace, " +
+                                        "attempt to automatically select. 0x" + Integer.toHexString(resId));
+                                String pkg_ns = "http://schemas.android.com/apk/res/" + Global.getPackageName();
+                                for (int i=0; i<nameSpaceCount; i++) {
+                                    String ns = parser.getNamespaceUri(i);
+                                    if (ns.equalsIgnoreCase("http://schemas.android.com/apk/res-auto")
+                                            || ns.equalsIgnoreCase(pkg_ns)) {
+                                        value = ns;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                }
+            } else {
                 value = "";
-            } else if (name != null && value.isEmpty()) {
-                value = android_ns(parser);
             }
-        } catch (AndrolibException e) {
-            value = "";
         }
 
         return value;
@@ -115,8 +146,6 @@ public class AXmlResourceParserAj {
             value = mAttrDecoder(parser).decodeManifestAttr(parser.getAttributeNameResource(index));
         } catch (AndrolibException e) {
         }
-
-
 
         if (value == null) {
             int offset = getAttributeOffset(parser, index);
