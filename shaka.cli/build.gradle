@@ -71,7 +71,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-keepclassmembers class brut.androlib.res.data.value.ResBagValue { *** mParent; }'
     args '-keepclassmembers class brut.androlib.res.data.value.ResStyleValue { *** mItems; }'
     args '-keepclassmembers class brut.androlib.res.decoder.ResFileDecoder { *** mDecoders; }'
-    args '-keepclassmembers class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** android_ns; *** getAttributeOffset(...);}'
+    args '-keepclassmembers class brut.androlib.res.decoder.AXmlResourceParser { *** mAttrDecoder; *** m_attributes; *** m_strings; *** getAttributeOffset(...);}'
     args '-keepclassmembers class org.jf.dexlib2.dexbacked.DexBackedMethodImplementation { *** codeOffset; }'
     args '-keepclassmembers class brut.androlib.res.data.ResPackage { *** mResTable; }'
     args '-keepclassmembers class brut.androlib.res.decoder.ARSCDecoder { *** mIn; *** mPkg; *** mType; *** mHeader; *** mTableStrings; *** nextChunkCheckType(...); *** nextChunk(...); *** readPackage(...); }'
