@@ -157,15 +157,26 @@ public class AXmlResourceParserAj {
             }
         } else {
             if (ShakaDecodeOption.getInstance().isXmlAttributeNameCorrect()) {
-                String value2 = "";
+                String newName = "";
                 int offset = getAttributeOffset(parser, index);
                 int name = m_attributes(parser)[offset + ATTRIBUTE_IX_NAME];
                 if (name != -1) {
-                    value2 = m_strings(parser).getString(name);
+                    newName = m_strings(parser).getString(name);
                 }
 
-                if (value2.trim().length() > 0 && !value.equals(value2) && !value2.equals("name")) {
-                    LogHelper.warning("Xml attribute name correct : " + value + " to " + value2);
+                if (newName.trim().length() > 0 && !value.equals(newName) && !newName.equals("name")) {
+                    LogHelper.warning("Xml attribute name correct : " + value + " to " + newName);
+                    int resId = parser.getAttributeNameResource(index);
+                    if (resId > 0) {
+                        ResResSpec spec = ResTypeAj.AllSpecs.get(resId);
+                        if (spec != null && spec.getName().equals(value)) {
+                            try {
+                                ResResSpecAj.setName(spec, newName);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                     if (value.startsWith(ResConfigAj.MultipleSpec_Perfix)) {
                         try {
                             // ResConfigAj.MultipleSpec_Perfix0xId
@@ -173,13 +184,13 @@ public class AXmlResourceParserAj {
                             int id = Integer.parseInt(mId, 16);
                             ResResSpec spec = ResTypeAj.AllSpecs.get(id);
                             if (spec != null && spec.getName().equals(value)) {
-                                ResResSpecAj.setName(spec, value2);
+                                ResResSpecAj.setName(spec, newName);
                             }
                         } catch (Throwable e) {
                             e.printStackTrace();
                         }
                     }
-                    value = value2;
+                    value = newName;
                 }
             }
         }
