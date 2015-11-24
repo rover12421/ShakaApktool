@@ -473,4 +473,18 @@ public class AndrolibAj {
             throw new AndrolibException(ex);
         }
     }
+
+    @After("execution(* brut.androlib.Androlib.decodeResourcesFull(..))" +
+            "&& args(apkFile, outDir, resTable)")
+    public void decodeResourcesFull(JoinPoint joinPoint, ExtFile apkFile, File outDir, ResTable resTable) {
+        if (ResResSpecAj.RenameResResSpec) {
+            //只要有重命名资源,就重新反编译 AndroidManifest.xml, 其实只要和 `decodeManifestWithResources`换下执行顺序即可.
+            Androlib thiz = (Androlib) joinPoint.getThis();
+            try {
+                thiz.decodeManifestWithResources(apkFile, outDir, resTable);
+            } catch (AndrolibException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

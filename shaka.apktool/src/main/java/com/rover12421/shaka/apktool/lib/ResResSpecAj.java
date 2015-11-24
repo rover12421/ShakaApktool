@@ -30,6 +30,7 @@ import org.aspectj.lang.annotation.Aspect;
  */
 @Aspect
 public class ResResSpecAj {
+    public static boolean RenameResResSpec = false;
 
     @Around("execution(void brut.androlib.res.data.ResResSpec.addResource(..))" +
             "&& args(res, overwrite)")
@@ -42,6 +43,7 @@ public class ResResSpecAj {
     }
 
     public static void setName(ResResSpec spec, String name) throws Exception {
+        RenameResResSpec = true;
         Reflect.on(spec).set("mName", name);
     }
 }
