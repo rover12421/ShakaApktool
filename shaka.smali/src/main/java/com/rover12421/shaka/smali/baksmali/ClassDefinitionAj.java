@@ -1,6 +1,7 @@
 package com.rover12421.shaka.smali.baksmali;
 
 import com.rover12421.shaka.lib.LogHelper;
+import com.rover12421.shaka.smali.util.NIOIndentingWriter;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,13 +30,19 @@ public class ClassDefinitionAj {
         ClassDefinition thiz = (ClassDefinition) joinPoint.getThis();
 
         boolean wroteHeader = false;
-        Set<String> writtenMethods = new HashSet<String>();
+        Set<String> writtenMethods = new HashSet<>();
 
         Iterable<? extends Method> directMethods;
         if (thiz.classDef instanceof DexBackedClassDef) {
             directMethods = ((DexBackedClassDef)thiz.classDef).getDirectMethods(false);
         } else {
             directMethods = thiz.classDef.getDirectMethods();
+        }
+
+        NIOIndentingWriter nioIndentingWriter = null;
+        long point = -1;
+        if (writer instanceof NIOIndentingWriter) {
+            nioIndentingWriter = (NIOIndentingWriter) writer;
         }
 
         for (Method method: directMethods) {
@@ -50,8 +57,11 @@ public class ClassDefinitionAj {
             String methodString = ReferenceUtil.getMethodDescriptor(method, true);
 
             try {
-                StringWriter stringWriter = new StringWriter();
-                IndentingWriter methodWriter = new IndentingWriter(stringWriter);
+                IndentingWriter methodWriter = writer;
+
+                if (nioIndentingWriter != null) {
+                    point = nioIndentingWriter.getPosition();
+                }
 
                 if (!writtenMethods.add(methodString)) {
                     writer.write("# duplicate method ignored\n");
@@ -65,11 +75,12 @@ public class ClassDefinitionAj {
                     MethodDefinition methodDefinition = new MethodDefinition(thiz, method, methodImpl);
                     methodDefinition.writeTo(methodWriter);
                 }
-
-                writer.write(stringWriter.toString());
             } catch (Throwable e) {
                 String str = "# write writeDirectMethods error : " + methodString + "\n";
                 LogHelper.fine(str);
+                if (nioIndentingWriter != null) {
+                    nioIndentingWriter.position(point);
+                }
                 writer.write(str);
             }
         }
@@ -82,13 +93,19 @@ public class ClassDefinitionAj {
         ClassDefinition thiz = (ClassDefinition) joinPoint.getThis();
 
         boolean wroteHeader = false;
-        Set<String> writtenMethods = new HashSet<String>();
+        Set<String> writtenMethods = new HashSet<>();
 
         Iterable<? extends Method> virtualMethods;
         if (thiz.classDef instanceof DexBackedClassDef) {
             virtualMethods = ((DexBackedClassDef)thiz.classDef).getVirtualMethods(false);
         } else {
             virtualMethods = thiz.classDef.getVirtualMethods();
+        }
+
+        NIOIndentingWriter nioIndentingWriter = null;
+        long point = -1;
+        if (writer instanceof NIOIndentingWriter) {
+            nioIndentingWriter = (NIOIndentingWriter) writer;
         }
 
         for (Method method: virtualMethods) {
@@ -103,8 +120,11 @@ public class ClassDefinitionAj {
             String methodString = ReferenceUtil.getMethodDescriptor(method, true);
 
             try {
-                StringWriter stringWriter = new StringWriter();
-                IndentingWriter methodWriter = new IndentingWriter(stringWriter);
+                IndentingWriter methodWriter = writer;
+
+                if (nioIndentingWriter != null) {
+                    point = nioIndentingWriter.getPosition();
+                }
 
                 if (!writtenMethods.add(methodString)) {
                     writer.write("# duplicate method ignored\n");
@@ -124,11 +144,12 @@ public class ClassDefinitionAj {
                     MethodDefinition methodDefinition = new MethodDefinition(thiz, method, methodImpl);
                     methodDefinition.writeTo(methodWriter);
                 }
-
-                writer.write(stringWriter.toString());
             } catch (Throwable e) {
                 String str = "# write writeVirtualMethods error : " + methodString + "\n";
                 LogHelper.fine(str);
+                if (nioIndentingWriter != null) {
+                    nioIndentingWriter.position(point);
+                }
                 writer.write(str);
             }
         }
