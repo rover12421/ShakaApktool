@@ -89,6 +89,7 @@ public class AndrolibAj {
         if (AndrolibResourcesAj.doNotCompress != null) {
             for (String file : AndrolibResourcesAj.doNotCompress) {
                 String pFile = file.replace("\\", "/");
+                pFile = getDecodeFileMapName(pFile);
                 files.put(pFile, String.valueOf(ZipEntry.STORED));
             }
         }
