@@ -156,7 +156,10 @@ public class ARSCDecoderAj {
             /**
              * 字符串数量大于 0x01000000 或者等于 0 就没法判断是字符串还是id引用了,所以没法纠正
              */
-            if (stringBlock.getCount() < 0x01000000 && data > 0) {
+            if (stringBlock.getCount() < 0x01000000
+                    && data > 0
+                    && data < stringBlock.getCount()
+                    ) {
                 int oldType = type;
                 String tmpVale = stringBlock.getString(data);
                 if (tmpVale != null && type != TypedValue.TYPE_STRING) {
