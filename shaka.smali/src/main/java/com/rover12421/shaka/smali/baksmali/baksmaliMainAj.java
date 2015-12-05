@@ -18,16 +18,13 @@ package com.rover12421.shaka.smali.baksmali;
 import com.rover12421.shaka.lib.HookMain;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.cli.CommandLineArgEnum;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.jf.baksmali.main;
 
 import java.util.Arrays;
 
@@ -36,20 +33,6 @@ import java.util.Arrays;
  */
 @Aspect
 public class baksmaliMainAj {
-    private final static Reflect mainReflect = Reflect.on(main.class);
-
-    public static Options basicOptions() {
-        return mainReflect.get("basicOptions");
-    }
-
-    public static Options debugOptions() {
-        return mainReflect.get("debugOptions");
-    }
-
-    public static Options options() {
-        return mainReflect.get("options");
-    }
-
     private static HookMain hookMain;
 
     public static void setHookMain(HookMain hookMain) {
@@ -69,8 +52,8 @@ public class baksmaliMainAj {
 
     @After("execution(* org.jf.baksmali.main.buildOptions(..))")
     public void buildOptions() {
-        basicOptions().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
-        options().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
+        org.jf.baksmali.main.getBasicOptions().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
+        org.jf.baksmali.main.getOptions().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
     }
 
     @Around("execution(* org.jf.baksmali.main.main(..))" +
@@ -78,7 +61,7 @@ public class baksmaliMainAj {
     public void main(ProceedingJoinPoint joinPoint, String[] args) throws Throwable {
         try {
             CommandLineParser parser = new PosixParser();
-            CommandLine cli = parser.parse(options(), args);
+            CommandLine cli = parser.parse(org.jf.baksmali.main.getOptions(), args);
             if (CommandLineArgEnum.InlieMethodResolverFromFile.hasMatch(cli)) {
                 ShakaBaksmaliOption.setInlineMethodResolverFile(cli.getOptionValue(CommandLineArgEnum.InlieMethodResolverFromFile.getOpt()));
                 int index = Arrays.binarySearch(args, CommandLineArgEnum.InlieMethodResolverFromFile.getOpt());

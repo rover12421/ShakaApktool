@@ -45,7 +45,6 @@ import brut.util.OS;
 import com.rover12421.shaka.lib.AndroidZip;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaProperties;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -78,10 +77,10 @@ public class AndrolibAj {
     @Before("execution(void brut.androlib.Androlib.buildUnknownFiles(..))" +
             "&& args(appDir, outFile, meta)")
     public void buildUnknownFiles_before(JoinPoint joinPoint, File appDir, File outFile, Map<String, Object> meta) {
-
+        Androlib thiz = (Androlib) joinPoint.getThis();
         Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
         if (files == null) {
-            ResUnknownFiles mResUnknownFiles = Reflect.on(joinPoint.getThis()).get("mResUnknownFiles");
+            ResUnknownFiles mResUnknownFiles = thiz.getResUnknownFiles();
             files = mResUnknownFiles.getUnknownFiles();
             meta.put("unknownFiles", files);
         }
@@ -351,8 +350,9 @@ public class AndrolibAj {
             "&& args(apkFile, outDir, resTable)")
     public void decodeUnknownFiles_after(JoinPoint joinPoint, ExtFile apkFile, File outDir, ResTable resTable) {
         try {
+            Androlib thiz = (Androlib) joinPoint.getThis();
             File unknownOut = new File(outDir, getUNK_DIRNAME());
-            ResUnknownFiles mResUnknownFiles = Reflect.on(joinPoint.getThis()).get("mResUnknownFiles");
+            ResUnknownFiles mResUnknownFiles = thiz.getResUnknownFiles();
 
             Directory unk = apkFile.getDirectory();
             // loop all items in container recursively, ignoring any that are pre-defined by aapt

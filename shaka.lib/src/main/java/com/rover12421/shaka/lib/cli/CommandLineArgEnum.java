@@ -65,11 +65,7 @@ public enum CommandLineArgEnum {
      * @return
      */
     public boolean hasMatch(CommandLine cli) {
-        if (cli.hasOption(opt) || cli.hasOption(longOpt)) {
-            return true;
-        }
-
-        return false;
+        return cli.hasOption(opt) || cli.hasOption(longOpt);
     }
 
     public String getLongOpt() {

@@ -1,9 +1,7 @@
 package com.rover12421.shaka.smali.dexlib2;
 
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.jf.dexlib2.dexbacked.BaseDexBuffer;
 
@@ -12,21 +10,14 @@ import org.jf.dexlib2.dexbacked.BaseDexBuffer;
  */
 @Aspect
 public class BaseDexBufferAj {
-    public static int getBaseOffset(BaseDexBuffer baseDexBuffer) {
-        return Reflect.on(baseDexBuffer).get("baseOffset");
-    }
-
-    public static byte[] getBuf(BaseDexBuffer baseDexBuffer) {
-        return Reflect.on(baseDexBuffer).get("buf");
-    }
 
 //    @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexBuffer.readSmallUint(..))" +
 //            "&& args(offset)")
     public int readSmallUint(ProceedingJoinPoint joinPoint, int offset) {
         BaseDexBuffer thiz = (BaseDexBuffer) joinPoint.getThis();
 
-        byte[] buf = getBuf(thiz);
-        offset += getBaseOffset(thiz);
+        byte[] buf = thiz.getBuf0();
+        offset += thiz.getBaseOffset0();
         int result = (buf[offset] & 0xff) |
                 ((buf[offset+1] & 0xff) << 8) |
                 ((buf[offset+2] & 0xff) << 16) |
@@ -42,8 +33,8 @@ public class BaseDexBufferAj {
     public int readOptionalUint(ProceedingJoinPoint joinPoint, int offset) {
         BaseDexBuffer thiz = (BaseDexBuffer) joinPoint.getThis();
 
-        byte[] buf = getBuf(thiz);
-        offset += getBaseOffset(thiz);
+        byte[] buf = thiz.getBuf0();
+        offset += thiz.getBaseOffset0();
         int result = (buf[offset] & 0xff) |
                 ((buf[offset+1] & 0xff) << 8) |
                 ((buf[offset+2] & 0xff) << 16) |

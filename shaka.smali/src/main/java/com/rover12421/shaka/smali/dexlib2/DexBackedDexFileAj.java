@@ -2,7 +2,6 @@ package com.rover12421.shaka.smali.dexlib2;
 
 import com.google.common.io.ByteStreams;
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.jf.dexlib2.Opcodes;
@@ -87,9 +86,6 @@ public class DexBackedDexFileAj {
 
         byte[] buf = ByteStreams.toByteArray(is);
 //        return new DexBackedDexFile(opcodes, buf, 0, false);
-        return Reflect.on(DexBackedDexFile.class)
-                .constructor(Opcodes.class, byte[].class, int.class, boolean.class)
-                .newInstance(opcodes, buf, skip, false)
-                .get();
+        return new DexBackedDexFile(opcodes, buf, 0, false, null);
     }
 }

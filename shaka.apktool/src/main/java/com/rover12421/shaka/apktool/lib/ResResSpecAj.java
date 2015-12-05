@@ -42,7 +42,7 @@ public class ResResSpecAj {
         }
     }
 
-    public static void setName(ResResSpec spec, String name) throws Exception {
+    public static void setName(ResResSpec spec, String name) {
         RenameResResSpec = true;
         Reflect.on(spec).set("mName", name);
     }

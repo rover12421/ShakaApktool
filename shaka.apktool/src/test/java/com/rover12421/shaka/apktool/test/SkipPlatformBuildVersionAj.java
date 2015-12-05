@@ -2,8 +2,6 @@ package com.rover12421.shaka.apktool.test;
 
 import brut.androlib.BuildAndDecodeTest;
 import brut.androlib.res.util.ExtFile;
-import com.rover12421.shaka.lib.reflect.Reflect;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,11 +33,10 @@ public class SkipPlatformBuildVersionAj {
 
     @Before("execution(* brut.androlib.BuildAndDecodeTest.compareXmlFiles(..))" +
             "&& args(path, qualifier)")
-    public void compareXmlFiles(JoinPoint joinPoint, String path, ElementQualifier qualifier) {
+    public void compareXmlFiles(String path, ElementQualifier qualifier) {
         try {
-            BuildAndDecodeTest thiz = (BuildAndDecodeTest) joinPoint.getThis();
-            ExtFile sTestOrigDir = Reflect.on(thiz).get("sTestOrigDir");
-            ExtFile sTestNewDir = Reflect.on(thiz).get("sTestNewDir");
+            ExtFile sTestOrigDir = BuildAndDecodeTest.getTestOrigDir();
+            ExtFile sTestNewDir = BuildAndDecodeTest.getTestNewDir();
             Path originPath = Paths.get(sTestOrigDir.getAbsolutePath(), path);
             Path newPath = Paths.get(sTestNewDir.getAbsolutePath(), path);
             String originString = new String(Files.readAllBytes(originPath));

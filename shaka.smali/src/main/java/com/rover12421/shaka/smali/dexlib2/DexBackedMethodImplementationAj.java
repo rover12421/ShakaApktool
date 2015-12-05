@@ -16,7 +16,6 @@
 package com.rover12421.shaka.smali.dexlib2;
 
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -44,7 +43,7 @@ public class DexBackedMethodImplementationAj {
     public Iterable<? extends Instruction> getInstructions(ProceedingJoinPoint joinPoint) throws Exception {
         DexBackedMethodImplementation thiz = (DexBackedMethodImplementation) joinPoint.getThis();
 
-        int codeOffset = getCodeOffset(thiz);
+        int codeOffset = thiz.getCodeOffset();
 
         // instructionsSize is the number of 16-bit code units in the instruction list, not the number of instructions
         int instructionsSize = thiz.dexFile.readSmallUint(codeOffset + CodeItem.INSTRUCTION_COUNT_OFFSET);
@@ -86,15 +85,11 @@ public class DexBackedMethodImplementationAj {
         return instructions;
     }
 
-    private int getCodeOffset(DexBackedMethodImplementation dexBackedMethodImplementation) {
-        return Reflect.on(dexBackedMethodImplementation).get("codeOffset");
-    }
-
     @Around("execution(* org.jf.dexlib2.dexbacked.DexBackedMethodImplementation.getDebugInfo())")
     public DebugInfo getDebugInfo(ProceedingJoinPoint joinPoint) {
         DexBackedMethodImplementation thiz = (DexBackedMethodImplementation) joinPoint.getThis();
         DexBackedDexFile dexFile = thiz.dexFile;
-        int codeOffset = getCodeOffset(thiz);
+        int codeOffset = thiz.getCodeOffset();
 
         int debugOffset = dexFile.readInt(codeOffset + CodeItem.DEBUG_INFO_OFFSET);
         try {

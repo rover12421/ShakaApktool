@@ -16,31 +16,14 @@
 package com.rover12421.shaka.smali.smali;
 
 import com.rover12421.shaka.lib.HookMain;
-import com.rover12421.shaka.lib.reflect.Reflect;
-import org.apache.commons.cli.Options;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.jf.smali.main;
 
 /**
  * Created by rover12421 on 5/17/15.
  */
 @Aspect
 public class smaliMainAj {
-    private final static Reflect mainReflect = Reflect.on(main.class);
-
-    public static Options basicOptions() throws Exception {
-        return mainReflect.get("basicOptions");
-    }
-
-    public static Options debugOptions() throws Exception {
-        return mainReflect.get("debugOptions");
-    }
-
-    public static Options options() throws Exception {
-        return mainReflect.get("options");
-    }
-
     private static HookMain hookMain;
 
     public static void setHookMain(HookMain hookMain) {

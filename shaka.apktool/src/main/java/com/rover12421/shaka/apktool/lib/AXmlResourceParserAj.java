@@ -18,13 +18,9 @@ package com.rover12421.shaka.apktool.lib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.decoder.AXmlResourceParser;
-import brut.androlib.res.decoder.ResAttrDecoder;
-import brut.androlib.res.decoder.StringBlock;
 import com.rover12421.shaka.apktool.util.Global;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
-import com.rover12421.shaka.lib.ShakaRuntimeException;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -40,52 +36,20 @@ public class AXmlResourceParserAj {
             ATTRIBUTE_IX_VALUE_TYPE = 3, ATTRIBUTE_IX_VALUE_DATA = 4,
             ATTRIBUTE_LENGTH = 5;
 
-    private int getAttributeOffset(AXmlResourceParser parser, int index) {
-        try {
-            return Reflect.on(parser).method("getAttributeOffset", int.class).invoke(parser, index).get();
-        } catch (Exception e) {
-            throw new ShakaRuntimeException(e);
-        }
-    }
-
-    private int[] m_attributes(AXmlResourceParser parser) {
-        try {
-            return Reflect.on(parser).get("m_attributes");
-        } catch (Exception e) {
-            throw new ShakaRuntimeException(e);
-        }
-    }
-
-    private StringBlock m_strings(AXmlResourceParser parser) {
-        try {
-            return Reflect.on(parser).get("m_strings");
-        } catch (Exception e) {
-            throw new ShakaRuntimeException(e);
-        }
-    }
-
     private final static String android_ns = "http://schemas.android.com/apk/res/android";
-
-    private ResAttrDecoder mAttrDecoder(AXmlResourceParser parser) {
-        try {
-            return Reflect.on(parser).get("mAttrDecoder");
-        } catch (Exception e) {
-            throw new ShakaRuntimeException(e);
-        }
-    }
 
     @Around("execution(* brut.androlib.res.decoder.AXmlResourceParser.getAttributeNamespace(..))" +
             "&& args(index)")
     public String getAttributeNamespace(ProceedingJoinPoint joinPoint, int index) {
         AXmlResourceParser parser = (AXmlResourceParser) joinPoint.getThis();
 
-        int offset = getAttributeOffset(parser, index);
-        int namespace = m_attributes(parser)[offset + ATTRIBUTE_IX_NAMESPACE_URI];
+        int offset = parser.getAttributeOffset0(index);
+        int namespace = parser.getAttributes()[offset + ATTRIBUTE_IX_NAMESPACE_URI];
         if (namespace == -1) {
             return "";
         }
 
-        String value = m_strings(parser).getString(namespace);
+        String value = parser.getStrings0().getString(namespace);
         if (value == null || value.isEmpty()) {
             int resId = parser.getAttributeNameResource(index);
             if (resId > 0) {
@@ -143,25 +107,25 @@ public class AXmlResourceParserAj {
         AXmlResourceParser parser = (AXmlResourceParser) joinPoint.getThis();
         String value = null;
         try {
-            value = mAttrDecoder(parser).decodeManifestAttr(parser.getAttributeNameResource(index));
+            value = parser.getAttrDecoder().decodeManifestAttr(parser.getAttributeNameResource(index));
         } catch (AndrolibException e) {
         }
 
         if (value == null) {
-            int offset = getAttributeOffset(parser, index);
-            int name = m_attributes(parser)[offset + ATTRIBUTE_IX_NAME];
+            int offset = parser.getAttributeOffset0(index);
+            int name = parser.getAttributes()[offset + ATTRIBUTE_IX_NAME];
             if (name == -1) {
                 value = "";
             } else {
-                value = m_strings(parser).getString(name);
+                value = parser.getStrings0().getString(name);
             }
         } else {
             if (ShakaDecodeOption.getInstance().isXmlAttributeNameCorrect()) {
                 String newName = "";
-                int offset = getAttributeOffset(parser, index);
-                int name = m_attributes(parser)[offset + ATTRIBUTE_IX_NAME];
+                int offset = parser.getAttributeOffset0(index);
+                int name = parser.getAttributes()[offset + ATTRIBUTE_IX_NAME];
                 if (name != -1) {
-                    newName = m_strings(parser).getString(name);
+                    newName = parser.getStrings0().getString(name);
                 }
 
                 if (newName.trim().length() > 0 && !value.equals(newName) && !newName.equals("name")) {

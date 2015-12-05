@@ -16,8 +16,6 @@
 package com.rover12421.shaka.apktool.lib;
 
 import android.util.TypedValue;
-import brut.androlib.AndrolibException;
-import brut.androlib.res.data.ResConfigFlags;
 import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.ResType;
 import brut.androlib.res.data.value.ResIntBasedValue;
@@ -26,14 +24,12 @@ import brut.androlib.res.decoder.StringBlock;
 import brut.util.ExtDataInput;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.math.BigInteger;
 
 /**
  * Created by rover12421 on 8/16/14.
@@ -51,48 +47,27 @@ public class ARSCDecoderAj {
         }
     }
 
-    public ExtDataInput mIn(ARSCDecoder thiz) throws Exception {
-        return  Reflect.on(thiz).get("mIn");
-    }
-
-    public ResPackage mPkg(ARSCDecoder thiz) throws Exception {
-        return  Reflect.on(thiz).get("mPkg");
-    }
-
-    public ARSCDecoder.Header mHeader(ARSCDecoder thiz) throws Exception {
-        return  Reflect.on(thiz).get("mHeader");
-    }
-
-    public StringBlock mTableStrings(ARSCDecoder thiz) throws Exception {
-        return  Reflect.on(thiz).get("mTableStrings");
-    }
-
-    public ResType mType(ARSCDecoder thiz) throws Exception {
-        return  Reflect.on(thiz).get("mType");
-    }
-
     @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.nextChunk())")
     public ARSCDecoder.Header nextChunk(ProceedingJoinPoint joinPoint) throws Exception {
 //        return mHeader = Header.read(mIn);
-        ExtDataInput mIn = mIn((ARSCDecoder) joinPoint.getThis());
+        ARSCDecoder decoder = (ARSCDecoder) joinPoint.getThis();
+        ExtDataInput mIn = decoder.getIn();
         ARSCDecoder.Header mHeader = ResChunk_header.read(mIn);
-        Reflect.on(joinPoint.getThis()).set("mHeader", mHeader);
+        decoder.setHeader(mHeader);
         return mHeader;
     }
 
     @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.readTable())")
     public ResPackage[] readTable(ProceedingJoinPoint joinPoint) throws Exception {
         ARSCDecoder decoder = (ARSCDecoder) joinPoint.getThis();
-        ExtDataInput mIn = mIn(decoder);
+        ExtDataInput mIn = decoder.getIn();
 
-        Reflect decoderReflect = Reflect.on(decoder);
 //        nextChunkCheckType(ARSCDecoder.Header.TYPE_TABLE);
-        decoderReflect.method("nextChunkCheckType", int.class)
-                .invoke(decoder, ARSCDecoder.Header.TYPE_TABLE);
+        decoder.nextChunkCheckType0(ARSCDecoder.Header.TYPE_TABLE);
         int packageCount = mIn.readInt();
 
         try {
-            ResChunk_header header = (ResChunk_header) mHeader(decoder);
+            ResChunk_header header = (ResChunk_header) decoder.getHeader();
             if (header.headerSize > ResTable_header_SIZE) {
                 int skip = header.headerSize - ResTable_header_SIZE;
                 LogHelper.warning("ResChunk_header exception : read size = " + header.headerSize + ", skip " + skip);
@@ -104,16 +79,16 @@ public class ARSCDecoderAj {
 
 
         StringBlock mTableStrings = StringBlock.read(mIn);
-        decoderReflect.set("mTableStrings", mTableStrings);
+        decoder.setTableStrings(mTableStrings);
 
         ResPackage[] packages = new ResPackage[packageCount];
 
 //        nextChunk();
-        decoderReflect.call("nextChunk");
+        decoder.nextChunk0();
 
         for (int i = 0; i < packageCount; i++) {
 //            packages[i] = readPackage();
-            packages[i] = decoderReflect.call("readPackage").get();
+            packages[i] = decoder.readPackage0();
         }
         return packages;
     }
@@ -141,41 +116,47 @@ public class ARSCDecoderAj {
     @Around("execution(* brut.androlib.res.decoder.ARSCDecoder.readValue())")
     public ResIntBasedValue readValue(ProceedingJoinPoint joinPoint) throws Exception {
         ARSCDecoder decoder = (ARSCDecoder) joinPoint.getThis();
-        ExtDataInput mIn = mIn(decoder);
-        ResPackage mPkg = mPkg(decoder);
+        ExtDataInput mIn = decoder.getIn();
+        ResPackage mPkg = decoder.getPkg();
 
 		/* size */mIn.skipCheckShort((short) 8);
 		/* zero */mIn.skipCheckByte((byte) 0);
         byte type = mIn.readByte();
         int data = mIn.readInt();
 
-        ResType mType = mType(decoder);
-        StringBlock stringBlock = mTableStrings(decoder);
+        ResType mType = decoder.getType();
+        StringBlock stringBlock = decoder.getTableStrings();
 
-        if (mType.isString()) {
-            /**
-             * 字符串数量大于 0x01000000 或者等于 0 就没法判断是字符串还是id引用了,所以没法纠正
-             */
-            if (stringBlock.getCount() < 0x01000000
-                    && data > 0
-                    && data < stringBlock.getCount()
-                    ) {
-                int oldType = type;
-                String tmpVale = stringBlock.getString(data);
-                if (tmpVale != null && type != TypedValue.TYPE_STRING) {
-                    type = TypedValue.TYPE_STRING;
-                } else if (tmpVale == null
-                        && type != TypedValue.TYPE_REFERENCE
-                        && type != TypedValue.TYPE_DYNAMIC_REFERENCE) {
-                    // TYPE_REFERENCE 和 TYPE_DYNAMIC_REFERENCE 目前是一样的操作
-                    type = TypedValue.TYPE_REFERENCE;
-                }
-
-                if (oldType != type) {
-                    LogHelper.warning("Correct value type : " + oldType + " > " + type);
-                }
-            }
-        }
+        /**
+         * BuildAndDecodeTest.crossTypeTest
+         * 这个测试案例中可以知,mType.isString() 他实际type可能是int类型
+         * 但这个实际可能是一个被有意为之的值
+         * 这里不再进行类型纠正,出现异常请自行处理!
+         */
+//        if (mType.isString()) {
+//            /**
+//             * 字符串数量大于 0x01000000 或者等于 0 就没法判断是字符串还是id引用了,所以没法纠正
+//             */
+//            if (stringBlock.getCount() < 0x01000000
+//                    && data > 0
+//                    && data < stringBlock.getCount()
+//                    ) {
+//                int oldType = type;
+//                String tmpVale = stringBlock.getString(data);
+//                if (tmpVale != null && type != TypedValue.TYPE_STRING) {
+//                    type = TypedValue.TYPE_STRING;
+//                } else if (tmpVale == null
+//                        && type != TypedValue.TYPE_REFERENCE
+//                        && type != TypedValue.TYPE_DYNAMIC_REFERENCE) {
+//                    // TYPE_REFERENCE 和 TYPE_DYNAMIC_REFERENCE 目前是一样的操作
+//                    type = TypedValue.TYPE_REFERENCE;
+//                }
+//
+//                if (oldType != type) {
+//                    LogHelper.warning("Correct value type : " + oldType + " > " + type);
+//                }
+//            }
+//        }
 
         return type == TypedValue.TYPE_STRING
 //                ? mPkg.getValueFactory().factory(mTableStrings(decoder).getHTML(data), data)

@@ -18,12 +18,8 @@ package com.rover12421.shaka.apktool.lib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.data.ResResource;
-import brut.androlib.res.data.value.ResAttr;
-import brut.androlib.res.data.value.ResReferenceValue;
-import brut.androlib.res.data.value.ResScalarValue;
-import brut.androlib.res.data.value.ResValue;
+import brut.androlib.res.data.value.*;
 import brut.util.Duo;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -59,9 +55,9 @@ public class ResStyleValueAj {
     public void serializeToResValuesXml(ProceedingJoinPoint joinPoint, XmlSerializer serializer,
                                         ResResource res) throws IOException, AndrolibException {
         try {
-            Reflect thizRelect = Reflect.on(joinPoint.getThis());
-            ResReferenceValue mParent = thizRelect.get("mParent");
-            Duo<ResReferenceValue, ResScalarValue>[] mItems = thizRelect.get("mItems");
+            ResStyleValue thiz = (ResStyleValue) joinPoint.getThis();
+            ResReferenceValue mParent = thiz.getParent();
+            Duo<ResReferenceValue, ResScalarValue>[] mItems = thiz.getItems();
             serializer.startTag(null, "style");
             serializer.attribute(null, "name", res.getResSpec().getName());
             if (!mParent.isNull()) {

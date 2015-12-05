@@ -16,10 +16,12 @@
 package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.err.UndefinedResObject;
-import brut.androlib.res.data.*;
+import brut.androlib.res.data.ResID;
+import brut.androlib.res.data.ResPackage;
+import brut.androlib.res.data.ResResSpec;
+import brut.androlib.res.data.ResType;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -30,10 +32,6 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class ResPackageAj {
 
-    public ResTable mResTable(ResPackage thiz) throws NoSuchFieldException, IllegalAccessException {
-        return Reflect.on(thiz).get("mResTable");
-    }
-
     @Around("execution(* brut.androlib.res.data.ResPackage.getResSpec(..))" +
             "&& args(resID)")
     public ResResSpec getResSpec(ProceedingJoinPoint joinPoint, ResID resID) throws Throwable {
@@ -42,7 +40,7 @@ public class ResPackageAj {
         } catch (UndefinedResObject e) {
             if (ShakaDecodeOption.getInstance().isFuckUnkownId()) {
                 ResPackage thiz = (ResPackage) joinPoint.getThis();
-                return new ResResSpec(resID, String.format("[%08x]", resID.id), thiz, new ResType("FuckUnkownId", mResTable(thiz), thiz));
+                return new ResResSpec(resID, String.format("[%08x]", resID.id), thiz, new ResType("FuckUnkownId", thiz.getResTable(), thiz));
             } else {
                 throw e;
             }

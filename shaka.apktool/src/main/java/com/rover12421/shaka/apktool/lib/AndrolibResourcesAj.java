@@ -42,7 +42,6 @@ import brut.androlib.res.decoder.ResStreamDecoderContainer;
 import brut.androlib.res.util.ExtFile;
 import brut.util.Duo;
 import com.rover12421.shaka.lib.*;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -391,9 +390,7 @@ public class AndrolibResourcesAj {
                         bContinue = fuckNotDefinedRes(errStr, rootDir);
                     }
 
-                    if (bContinue) {
-                        continue;
-                    } else {
+                    if (!bContinue) {
                         throw new ShakaException(errStr, e);
                     }
                 } finally {
@@ -411,7 +408,7 @@ public class AndrolibResourcesAj {
         }
         ResFileDecoder fileDecoder = duo.m1;
         try {
-            ResStreamDecoderContainer mDecoders = Reflect.on(fileDecoder).get("mDecoders");
+            ResStreamDecoderContainer mDecoders = fileDecoder.getDecoders();
             mDecoders.setDecoder("9patch", new ResRawStreamDecoder());
         } catch (Exception e) {
             e.printStackTrace();

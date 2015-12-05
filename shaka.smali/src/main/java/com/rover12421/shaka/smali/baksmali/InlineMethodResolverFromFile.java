@@ -2,7 +2,6 @@ package com.rover12421.shaka.smali.baksmali;
 
 import com.google.common.collect.ImmutableList;
 import com.rover12421.shaka.lib.LogHelper;
-import com.rover12421.shaka.lib.reflect.Reflect;
 import org.jf.dexlib2.analysis.AnalyzedInstruction;
 import org.jf.dexlib2.analysis.InlineMethodResolver;
 import org.jf.dexlib2.iface.Method;
@@ -42,10 +41,7 @@ public class InlineMethodResolverFromFile extends InlineMethodResolver {
             for (String line : lines) {
                 lineNum++;
                 line = line.trim();
-                if (line.startsWith("#")) {
-                    //注释.跳过
-                    continue;
-                } else {
+                if (!line.startsWith("#")) {
                     String[] info = line.split(",");
                     if (info.length != 5) {
                         LogHelper.warning("Error line (" + lineNum + "): " + line);
@@ -87,7 +83,7 @@ public class InlineMethodResolverFromFile extends InlineMethodResolver {
     @Override
     @Nonnull
     public Method resolveExecuteInline(@Nonnull AnalyzedInstruction analyzedInstruction) {
-        InlineIndexInstruction instruction = Reflect.on(analyzedInstruction).get("instruction");
+        InlineIndexInstruction instruction = (InlineIndexInstruction) analyzedInstruction.getInstruction();
         int inlineIndex = instruction.getInlineIndex();
 
         if (inlineIndex < 0 || inlineIndex >= inlineMethods.size()) {

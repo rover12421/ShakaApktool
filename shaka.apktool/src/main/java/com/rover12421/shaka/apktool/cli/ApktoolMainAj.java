@@ -25,9 +25,6 @@ import com.rover12421.shaka.lib.ShakaDecodeOption;
 import com.rover12421.shaka.lib.ShakaProperties;
 import com.rover12421.shaka.lib.cli.CommandLineArgEnum;
 import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
-import com.rover12421.shaka.lib.reflect.Reflect;
-import com.rover12421.shaka.smali.baksmali.baksmaliMainAj;
-import com.rover12421.shaka.smali.smali.smaliMainAj;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.aspectj.lang.annotation.Around;
@@ -63,49 +60,11 @@ public class ApktoolMainAj {
         return hookMain;
     }
 
-    private static final Reflect MainReflect = Reflect.on(Main.class);
-
-    public static Options normalOptions() throws Exception {
-        return MainReflect.get("normalOptions");
-    }
-
-    public static Options DecodeOptions() throws Exception {
-        return MainReflect.get("DecodeOptions");
-    }
-
-    public static Options BuildOptions() throws Exception {
-        return MainReflect.get("BuildOptions");
-    }
-
-    public static Options frameOptions() throws Exception {
-        return MainReflect.get("frameOptions");
-    }
-
-    public static Options allOptions() throws Exception {
-        return MainReflect.get("allOptions");
-    }
-
-    public static Options emptyOptions() throws Exception {
-        return MainReflect.get("emptyOptions");
-    }
-
-    private static String verbosityHelp() throws Exception {
-        return MainReflect.call("verbosityHelp").get();
-    }
-
-    private void _Options() {
-        try {
-            MainReflect.call("_Options");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Around("execution(void brut.apktool.Main.usage(..))" +
             "&& args(commandLine)")
     public void usage_around(CommandLine commandLine) throws Exception {
         // load basicOptions
-        _Options();
+        Main._Options0();
         SmaliHelpFormatter formatter = new SmaliHelpFormatter();
 //        formatter.setWidth(120);
         int consoleWidth = ConsoleUtil.getConsoleWidth();
@@ -133,25 +92,25 @@ public class ApktoolMainAj {
         System.out.println("\n******************** apktool ********************\n");
 
         // 4 usage outputs (general, frameworks, decode, build)
-        formatter.printHelp("ShakaApktool " + verbosityHelp(), normalOptions());
-        formatter.printHelp("ShakaApktool " + verbosityHelp() + "if|install-framework [options] <framework.apk>", frameOptions());
-        formatter.printHelp("ShakaApktool " + verbosityHelp() + "d[ecode] [options] <file_apk>", DecodeOptions());
-        formatter.printHelp("ShakaApktool " + verbosityHelp() + "b[uild] [options] <app_path>", BuildOptions());
+        formatter.printHelp("ShakaApktool " + Main.verbosityHelp0(), Main.getNormalOptions());
+        formatter.printHelp("ShakaApktool " + Main.verbosityHelp0() + "if|install-framework [options] <framework.apk>", Main.getFrameOptions());
+        formatter.printHelp("ShakaApktool " + Main.verbosityHelp0() + "d[ecode] [options] <file_apk>", Main.getDecodeOptions());
+        formatter.printHelp("ShakaApktool " + Main.verbosityHelp0() + "b[uild] [options] <app_path>", Main.getBuildOptions());
 
         System.out.println("\n******************** smali ********************\n");
 
         formatter.printHelp("ShakaApktool " + "s[mali] [options] [--] [<smali-file>|folder]*",
-                "assembles a set of smali files into a dex file", smaliMainAj.basicOptions(), smaliMainAj.debugOptions());
+                "assembles a set of smali files into a dex file", org.jf.smali.main.getBasicOptions(), org.jf.smali.main.getDebugOptions());
 
         System.out.println("\n******************** baksmali ********************\n");
 
         formatter.printHelp("ShakaApktool " + "bs|baksmali [options] <dex-file>",
-                "disassembles and/or dumps a dex file", baksmaliMainAj.basicOptions(), baksmaliMainAj.debugOptions());
+                "disassembles and/or dumps a dex file", org.jf.baksmali.main.getBasicOptions(), org.jf.baksmali.main.getDebugOptions());
 
         if (Main.isAdvanceMode()) {
             System.out.println("\n******************** AdvanceMode ********************\n");
             formatter.printHelp("ShakaApktool " + "publicize-resources <file_path>",
-                    "Make all framework resources public.", emptyOptions(), (String)null);
+                    "Make all framework resources public.", Main.getEmptyOptions(), (String)null);
         }
 
         // print out more information
@@ -173,9 +132,9 @@ public class ApktoolMainAj {
     @Before("execution(void brut.apktool.Main._Options())")
     public void before_Options() {
         try {
-            Options normalOptions = normalOptions();
-            Options DecodeOptions = DecodeOptions();
-            Options BuildOptions = BuildOptions();
+            Options normalOptions = Main.getNormalOptions();
+            Options DecodeOptions = Main.getDecodeOptions();
+            Options BuildOptions = Main.getBuildOptions();
 
             normalOptions.addOption(CommandLineArgEnum.LANGUAGE.getOption());
 

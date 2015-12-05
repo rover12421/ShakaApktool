@@ -13,11 +13,11 @@ import org.jf.util.ExceptionWithContext;
 @Aspect
 public class BaseDexReaderAj {
     private int getBaseOffset(BaseDexReader baseDexReader) {
-        return BaseDexBufferAj.getBaseOffset(baseDexReader.dexBuf);
+        return baseDexReader.dexBuf.getBaseOffset0();
     }
 
     private byte[] getBuf(BaseDexReader baseDexReader) {
-        return BaseDexBufferAj.getBuf(baseDexReader.dexBuf);
+        return baseDexReader.dexBuf.getBuf0();
     }
 
     @Around("execution(* org.jf.dexlib2.dexbacked.BaseDexReader.readUleb128(..))" +
