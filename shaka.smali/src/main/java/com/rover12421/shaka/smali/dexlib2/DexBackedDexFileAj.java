@@ -86,6 +86,6 @@ public class DexBackedDexFileAj {
 
         byte[] buf = ByteStreams.toByteArray(is);
 //        return new DexBackedDexFile(opcodes, buf, 0, false);
-        return new DexBackedDexFile(opcodes, buf, 0, false, null);
+        return new DexBackedDexFile(opcodes, buf, skip, false, null);
     }
 }
