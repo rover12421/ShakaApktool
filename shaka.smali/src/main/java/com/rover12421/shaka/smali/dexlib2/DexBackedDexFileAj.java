@@ -2,8 +2,10 @@ package com.rover12421.shaka.smali.dexlib2;
 
 import com.google.common.io.ByteStreams;
 import com.rover12421.shaka.lib.LogHelper;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.jf.baksmali.main;
 import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.dexbacked.raw.HeaderItem;
@@ -11,7 +13,6 @@ import org.jf.util.ExceptionWithContext;
 
 import javax.annotation.Nonnull;
 import java.io.EOFException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
@@ -43,8 +44,14 @@ public class DexBackedDexFileAj {
 
     @Around("execution(org.jf.dexlib2.dexbacked.DexBackedDexFile org.jf.dexlib2.dexbacked.DexBackedDexFile.fromInputStream(..))" +
             "&& args(opcodes, is)")
-    public DexBackedDexFile fromInputStream(Opcodes opcodes, InputStream is)
-            throws IOException {
+    public DexBackedDexFile fromInputStream(ProceedingJoinPoint joinPoint, Opcodes opcodes, InputStream is)
+            throws Throwable {
+
+        //如果是反odex,使用原逻辑
+        if (main.getOptions().hasOption("x")) {
+            return (DexBackedDexFile) joinPoint.proceed(joinPoint.getArgs());
+        }
+
         if (!is.markSupported()) {
             throw new IllegalArgumentException("InputStream must support mark");
         }
