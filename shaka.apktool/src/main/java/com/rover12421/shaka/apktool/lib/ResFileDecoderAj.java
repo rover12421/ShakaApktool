@@ -106,8 +106,9 @@ public class ResFileDecoderAj {
             "&& args(inDir, inFileName, outDir, outFileName, decoder)")
     public void decode(ProceedingJoinPoint joinPoint, Directory inDir, String inFileName, Directory outDir,
                        String outFileName, String decoder) throws Throwable {
-        if (inDir == null) {
-            //inDir == null,说明不是标准的资源目录结构
+        if (inFileName.startsWith("/")) {
+            //inFileName是完整路径,说明不是标准的资源目录结构
+            inFileName = inFileName.substring(1);
             inDir = AndrolibResourcesAj.getApkFile().getDirectory();
             if (!inFileName.equals(outFileName)) {
                 AndrolibAj.DecodeFileMaps.put(inFileName, "res/" + outFileName);

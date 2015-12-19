@@ -31,7 +31,8 @@ public class ResFileValueAj {
             return (String) joinPoint.proceed(joinPoint.getArgs());
         } catch (Throwable throwable) {
             //不是标准res目录结构,返回完整路径
-            return ((ResFileValue)joinPoint.getThis()).getPath();
+            //添加"/"前缀,后面用来区分是完整路径,还是资源相对路径
+            return "/" + ((ResFileValue)joinPoint.getThis()).getPath();
         }
     }
 }
