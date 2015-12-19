@@ -114,7 +114,7 @@ idea {
 
     module {
         excludeDirs += files(
-                'TestApk',
+                'ApkSample',
                 'src/test/resources/temp'
         )
     }
