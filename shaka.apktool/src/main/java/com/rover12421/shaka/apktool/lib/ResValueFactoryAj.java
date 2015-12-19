@@ -15,7 +15,7 @@
  */
 package com.rover12421.shaka.apktool.lib;
 
-import brut.androlib.res.data.ResType;
+import brut.androlib.res.data.ResTypeSpec;
 import brut.androlib.res.data.value.ResFileValue;
 import brut.androlib.res.data.value.ResIntBasedValue;
 import brut.androlib.res.data.value.ResStringValue;
@@ -46,8 +46,8 @@ public class ResValueFactoryAj {
             "xml"
     );
 
-    public static ResIntBasedValue factory(ResType mType, String value, int rawValue) {
-        String typeName = mType.getName();
+    public static ResIntBasedValue factory(ResTypeSpec mTypeSpec, String value, int rawValue) {
+        String typeName = mTypeSpec.getName();
         if (HavaFileTypes.contains(typeName) &&
             (
                     !typeName.startsWith("@") ||
@@ -57,9 +57,6 @@ public class ResValueFactoryAj {
         ) {
             return new ResFileValue(value, rawValue);
         }
-//        if (value.startsWith("res/")) {
-//            return new ResFileValue(value, rawValue);
-//        }
         return new ResStringValue(value, rawValue);
     }
 }

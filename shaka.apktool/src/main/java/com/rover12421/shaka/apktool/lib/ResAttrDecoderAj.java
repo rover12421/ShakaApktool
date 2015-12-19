@@ -31,38 +31,6 @@ import java.io.File;
 @Aspect
 public class ResAttrDecoderAj {
 
-    /**
-     * 9cb3df8 已经修复.和这个完全相同.移除
-     */
-//    @Around("execution(* brut.androlib.res.decoder.ResAttrDecoder.decode(..))" +
-//            "&& args(type, value, rawValue, attrResId)")
-//    public String decode_around(ProceedingJoinPoint joinPoint, int type, int value, String rawValue, int attrResId) {
-//        try {
-//            ResAttrDecoder resAttrDecoder = (ResAttrDecoder) joinPoint.getThis();
-//            ResPackage mCurrentPackage = resAttrDecoder.getCurrentPackage();
-//            ResScalarValue resValue = mCurrentPackage.getValueFactory().factory(
-//                    type, value, rawValue);
-//
-//            String decoded = null;
-////            if (attrResId != 0) {
-//            if (attrResId > 0) {
-////                ResAttr attr = (ResAttr) getCurrentPackage().getResTable()
-//                try {
-//                    ResAttr attr = (ResAttr) mCurrentPackage.getResTable()
-//                            .getResSpec(attrResId).getDefaultResource().getValue();
-//                    decoded = attr.convertToResXmlFormat(resValue);
-//                } catch (AndrolibException e) {
-////                e.printStackTrace();
-//                }
-//            }
-//
-//            return decoded != null ? decoded : resValue.encodeAsResXmlAttr();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new ShakaRuntimeException(e);
-//        }
-//    }
-
     private String getResSpecName(String name) {
         /**
          * 过滤包名
@@ -80,7 +48,7 @@ public class ResAttrDecoderAj {
         if (ResFileDecoderAj.DonotRecord) {
             return;
         }
-        ResResSpec spec = ResTypeAj.AllSpecs.get(value);
+        ResResSpec spec = ResTypeSpecAj.AllSpecs.get(value);
         if (spec != null) {
             //查找到ResResSpec
             String oldName = spec.getName();
@@ -91,7 +59,7 @@ public class ResAttrDecoderAj {
                 if (!oldName.equals(newName)) {
                     LogHelper.warning("Rename ResResSpec " + oldName + " to " + newName);
                     ResResSpecAj.setName(spec, newName);
-                    ResTypeAj.addSpecToResType(spec);
+                    ResTypeSpecAj.addSpecToResType(spec);
 
                     /**
                      * 需要再次Decode
@@ -99,7 +67,7 @@ public class ResAttrDecoderAj {
                      */
                     ResFileDecoderAj.NeedReDecodeFiles = true;
 
-                    ResResource res = ResConfigAj.MultopleResFileValue.get(spec.getId().id);
+                    ResResource res = ResTypeAj.MultopleResFileValue.get(spec.getId().id);
                     if (res != null) {
                         ResFileValue fileValue = (ResFileValue) res.getValue();
                         String mapPath = AndrolibAj.DecodeFileMaps.get(fileValue.getPath());

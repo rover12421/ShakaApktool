@@ -132,7 +132,7 @@ public class AXmlResourceParserAj {
                     LogHelper.warning("Xml attribute name correct : " + value + " to " + newName);
                     int resId = parser.getAttributeNameResource(index);
                     if (resId > 0) {
-                        ResResSpec spec = ResTypeAj.AllSpecs.get(resId);
+                        ResResSpec spec = ResTypeSpecAj.AllSpecs.get(resId);
                         if (spec != null && spec.getName().equals(value)) {
                             try {
                                 ResResSpecAj.setName(spec, newName);
@@ -141,12 +141,12 @@ public class AXmlResourceParserAj {
                             }
                         }
                     }
-                    if (value.startsWith(ResConfigAj.MultipleSpec_Perfix)) {
+                    if (value.startsWith(ResTypeAj.MultipleSpec_Perfix)) {
                         try {
                             // ResConfigAj.MultipleSpec_Perfix0xId
-                            String mId = value.substring(ResConfigAj.MultipleSpec_Perfix.length() + 2);
+                            String mId = value.substring(ResTypeAj.MultipleSpec_Perfix.length() + 2);
                             int id = Integer.parseInt(mId, 16);
-                            ResResSpec spec = ResTypeAj.AllSpecs.get(id);
+                            ResResSpec spec = ResTypeSpecAj.AllSpecs.get(id);
                             if (spec != null && spec.getName().equals(value)) {
                                 ResResSpecAj.setName(spec, newName);
                             }

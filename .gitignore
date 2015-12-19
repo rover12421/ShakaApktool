@@ -13,7 +13,7 @@ bin/
 *.iws
 .idea/
 /out
-TestApk/
+ApkSample/
 libs/
 shaka.cli/src/test/
 !**/src/main/resources/**/bin/

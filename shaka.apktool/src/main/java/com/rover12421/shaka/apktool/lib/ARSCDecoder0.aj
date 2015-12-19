@@ -3,6 +3,7 @@ package com.rover12421.shaka.apktool.lib;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.ResType;
+import brut.androlib.res.data.ResTypeSpec;
 import brut.androlib.res.decoder.ARSCDecoder;
 import brut.androlib.res.decoder.StringBlock;
 import brut.util.ExtDataInput;
@@ -15,10 +16,6 @@ import java.io.IOException;
 privileged public aspect ARSCDecoder0 {
     public Header ARSCDecoder.getHeader() {
         return this.mHeader;
-    }
-
-    public void ARSCDecoder.setHeader(Header header) {
-        this.mHeader = header;
     }
 
     public ExtDataInput ARSCDecoder.getIn() {
@@ -38,7 +35,11 @@ privileged public aspect ARSCDecoder0 {
     }
 
     public ResType ARSCDecoder.getType() {
-        return this.mType;
+        return mType;
+    }
+
+    public ResTypeSpec ARSCDecoder.getTypeSpec() {
+        return mTypeSpec;
     }
 
     public void ARSCDecoder.nextChunkCheckType0(int expectedType) throws IOException,
@@ -50,7 +51,7 @@ privileged public aspect ARSCDecoder0 {
         return this.nextChunk();
     }
 
-    public ResPackage ARSCDecoder.readPackage0() throws IOException, AndrolibException {
-        return this.readPackage();
+    public ResPackage ARSCDecoder.readTablePackage0() throws IOException, AndrolibException {
+        return this.readTablePackage();
     }
 }

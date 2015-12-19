@@ -16,10 +16,7 @@
 package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.err.UndefinedResObject;
-import brut.androlib.res.data.ResID;
-import brut.androlib.res.data.ResPackage;
-import brut.androlib.res.data.ResResSpec;
-import brut.androlib.res.data.ResType;
+import brut.androlib.res.data.*;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -40,7 +37,7 @@ public class ResPackageAj {
         } catch (UndefinedResObject e) {
             if (ShakaDecodeOption.getInstance().isFuckUnkownId()) {
                 ResPackage thiz = (ResPackage) joinPoint.getThis();
-                return new ResResSpec(resID, String.format("[%08x]", resID.id), thiz, new ResType("FuckUnkownId", thiz.getResTable(), thiz));
+                return new ResResSpec(resID, String.format("[%08x]", resID.id), thiz, new ResTypeSpec("FuckUnkownId", thiz.getResTable(), thiz, (byte) (resID.id&0xFF), 0));
             } else {
                 throw e;
             }

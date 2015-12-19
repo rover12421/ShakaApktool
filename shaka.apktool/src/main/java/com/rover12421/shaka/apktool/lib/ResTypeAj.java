@@ -13,11 +13,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
 package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResSpec;
-import brut.androlib.res.data.ResType;
+import brut.androlib.res.data.ResResource;
+import brut.androlib.res.data.value.ResFileValue;
+import brut.androlib.res.data.value.ResValue;
 import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,59 +30,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by rover12421 on 7/30/15.
+ * Created by rover12421 on 8/2/14.
  */
 @Aspect
 public class ResTypeAj {
 
-    public final static Map<Integer, ResResSpec> MultipleSpecs = new HashMap<>();
-    public final static Map<Integer, ResResSpec> AllSpecs = new HashMap<>();
+    public final static Map<Integer, ResResource> MultopleResFileValue = new HashMap<>();
 
-    public static void addMultipleResResSpec(ResResSpec spec) {
-        MultipleSpecs.put(spec.getId().id, spec);
-    }
+    //重复资源前缀
+    public final static String MultipleSpec_Perfix = "_?m@";
 
-    public static void addAllResResSpec(ResResSpec spec) {
-        AllSpecs.put(spec.getId().id, spec);
-    }
+    @Around("execution(void brut.androlib.res.data.ResType.addResource(..))" +
+            "&& args(res, overwrite)")
+    public void addResource(ProceedingJoinPoint joinPoint, ResResource res, boolean overwrite) throws Throwable {
+        ResResSpec spec = res.getResSpec();
 
-    @Around("execution(* brut.androlib.res.data.ResType.addResSpec(..))" +
-            "&& args(spec)")
-    public void addResSpec(ProceedingJoinPoint joinPoint, ResResSpec spec) throws Throwable {
-        ResType thiz = (ResType) joinPoint.getThis();
+        ResResSpec resSpec = ResTypeSpecAj.MultipleSpecs.get(spec.getId().id);
+        if (resSpec != null) {
+            //有重复的ResResSpec
+            ResValue resValue = res.getValue();
+            String rename;
+            if (resValue instanceof ResFileValue) {
+                ResFileValue fileValue = (ResFileValue) resValue;
+                rename = fileValue.getPath().replaceAll("/|\\\\|\\.", "_");
+                MultopleResFileValue.put(spec.getId().id, res);
+            } else {
+                rename = MultipleSpec_Perfix + spec.getId();
+            }
 
-        addAllResResSpec(spec);
-
-        ResResSpec exitsSpec = null;
-        try {
-            exitsSpec = thiz.getResSpec(spec.getName());
-        } catch (Exception e) {
+            if (rename != null) {
+//                LogHelper.warning("Rename ResResSpec " + spec.getName() + " to " + rename);
+                ResResSpecAj.setName(spec, rename);
+                ResTypeSpecAj.addSpecToResType(spec);
+            }
         }
 
-        if (exitsSpec == null) {
+        try {
             joinPoint.proceed(joinPoint.getArgs());
-        } else {
-            LogHelper.warning(String.format(
-                    "Multiple res specs: %s/%s", thiz.getName(), spec.getName()));
-            if (exitsSpec.getId() != spec.getId()) {
-                addMultipleResResSpec(spec);
-                addMultipleResResSpec(exitsSpec);
-            }
-        }
-    }
-
-    public static void addSpecToResType(ResResSpec spec) {
-        ResType type = spec.getType();
-        ResResSpec findSpec = null;
-        try {
-            findSpec = type.getResSpec(spec.getName());
-        } catch (Exception e) {
-        }
-        if (findSpec == null) {
-            try {
-                type.addResSpec(spec);
-            } catch (AndrolibException e) {
-            }
+        } catch (AndrolibException e) {
+            LogHelper.warning(e.getMessage());
         }
     }
 }
