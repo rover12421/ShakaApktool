@@ -120,15 +120,15 @@ public class AXmlResourceParserAj {
                 value = parser.getStrings0().getString(name);
             }
         } else {
-            if (ShakaDecodeOption.getInstance().isXmlAttributeNameCorrect()) {
-                String newName = "";
-                int offset = parser.getAttributeOffset0(index);
-                int name = parser.getAttributes()[offset + ATTRIBUTE_IX_NAME];
-                if (name != -1) {
-                    newName = parser.getStrings0().getString(name);
-                }
+            String newName = "";
+            int offset = parser.getAttributeOffset0(index);
+            int name = parser.getAttributes()[offset + ATTRIBUTE_IX_NAME];
+            if (name != -1) {
+                newName = parser.getStrings0().getString(name);
+            }
 
-                if (newName.trim().length() > 0 && !value.equals(newName) && !newName.equals("name")) {
+            if (newName.trim().length() > 0 && !value.equals(newName) && !newName.equals("name")) {
+                if (ShakaDecodeOption.getInstance().isXmlAttributeNameCorrect()) {
                     LogHelper.warning("Xml attribute name correct : " + value + " to " + newName);
                     int resId = parser.getAttributeNameResource(index);
                     if (resId > 0) {
@@ -155,8 +155,12 @@ public class AXmlResourceParserAj {
                         }
                     }
                     value = newName;
+                } else {
+                    // 不自动纠正,提示下
+                    LogHelper.info("You can use [-xn|--xml-attribute-name-correct] parameter to correct the xml attribute name : " + value + " to " + newName);
                 }
             }
+
         }
         return value;
     }
