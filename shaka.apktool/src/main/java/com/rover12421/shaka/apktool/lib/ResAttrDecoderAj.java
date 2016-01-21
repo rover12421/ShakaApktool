@@ -70,7 +70,7 @@ public class ResAttrDecoderAj {
                     ResResource res = ResTypeAj.MultopleResFileValue.get(spec.getId().id);
                     if (res != null) {
                         ResFileValue fileValue = (ResFileValue) res.getValue();
-                        String mapPath = AndrolibAj.DecodeFileMaps.get(fileValue.getPath());
+                        String mapPath = AndrolibAj.metaInfo.decodeFileMaps.get(fileValue.getPath());
                         File outfile = new File(AndrolibResourcesAj.getOutDir().getAbsolutePath() + File.separator +  mapPath);
                         if (outfile.exists()) {
                             String fileName = outfile.getName();
@@ -83,7 +83,7 @@ public class ResAttrDecoderAj {
                             outfile.renameTo(renamefile);
 
                             String newMapFile = renamefile.getAbsolutePath().substring(AndrolibResourcesAj.getOutDir().getAbsolutePath().length()+1);
-                            AndrolibAj.DecodeFileMaps.put(fileValue.getPath(), newMapFile);
+                            AndrolibAj.metaInfo.decodeFileMaps.put(fileValue.getPath(), newMapFile);
                             LogHelper.warning("Rename resource file " + fileValue.getPath() + " to " + newMapFile);
                         }
                     }

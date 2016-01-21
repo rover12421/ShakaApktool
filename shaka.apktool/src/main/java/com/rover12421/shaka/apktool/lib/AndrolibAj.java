@@ -33,6 +33,7 @@ package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.Androlib;
 import brut.androlib.AndrolibException;
+import brut.androlib.meta.MetaInfo;
 import brut.androlib.res.data.ResTable;
 import brut.androlib.res.data.ResUnknownFiles;
 import brut.androlib.res.util.ExtFile;
@@ -47,11 +48,17 @@ import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaProperties;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
 import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -62,12 +69,9 @@ import java.util.zip.ZipOutputStream;
  */
 @Aspect
 public class AndrolibAj {
+    public static MetaInfo metaInfo;
 
-    public String getUNK_DIRNAME() {
-//        return (String) ReflectUtil.getFieldValue(Androlib.class, "UNK_DIRNAME");
-        return "unknown";
-    }
-
+    public static final String UNK_DIRNAME = "unknown";
     private final static String SMALI_DIRNAME = "smali";
     private final static String APK_DIRNAME = "build/apk";
 
@@ -76,13 +80,13 @@ public class AndrolibAj {
      */
     @Before("execution(void brut.androlib.Androlib.buildUnknownFiles(..))" +
             "&& args(appDir, outFile, meta)")
-    public void buildUnknownFiles_before(JoinPoint joinPoint, File appDir, File outFile, Map<String, Object> meta) {
+    public void buildUnknownFiles_before(JoinPoint joinPoint, File appDir, File outFile, MetaInfo meta) {
         Androlib thiz = (Androlib) joinPoint.getThis();
-        Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
+        Map<String, String> files = meta.unknownFiles;
         if (files == null) {
             ResUnknownFiles mResUnknownFiles = thiz.getResUnknownFiles();
             files = mResUnknownFiles.getUnknownFiles();
-            meta.put("unknownFiles", files);
+            meta.unknownFiles = files;
         }
 
         if (AndrolibResourcesAj.doNotCompress != null) {
@@ -94,7 +98,6 @@ public class AndrolibAj {
         }
 
         try {
-            String UNK_DIRNAME = getUNK_DIRNAME();
             File unknownFile = new File(appDir, UNK_DIRNAME);
             if (!unknownFile.exists()) {
                 return;
@@ -166,7 +169,7 @@ public class AndrolibAj {
             SmaliDecoder.decode(apkFile, smaliDir, filename, debug, debugLinePrefix, bakdeb, api);
             //没有异常才添加
             if (mapDirName != null) {
-                DexMaps.put(filename, mapDirName);
+                metaInfo.dexMaps.put(filename, mapDirName);
             }
         } catch (Exception ex) {
             //只要不是反编译classes.dex的时候抛出异常,都不终止程序
@@ -193,19 +196,19 @@ public class AndrolibAj {
         if (files != null) {
             for (File file : files) {
                 String name = file.getName();
-                if (file.isDirectory() && !DexMaps.containsKey(name) && name.startsWith("smali_")) {
+                if (file.isDirectory() && !metaInfo.dexMaps.containsKey(name) && name.startsWith("smali_")) {
                     String key = name.substring("smali_".length()) + ".dex";
-                    DexMaps.put(key, name);
+                    metaInfo.dexMaps.put(key, name);
                 }
             }
         }
 
-        for (String dex : DexMaps.keySet()) {
+        for (String dex : metaInfo.dexMaps.keySet()) {
             try {
                 Androlib androlib = (Androlib) joinPoint.getThis();
                 File dexFile = new File(appDir, APK_DIRNAME + "/" + dex);
                 dexFile.getParentFile().mkdirs();
-                androlib.buildSourcesSmali(appDir, DexMaps.get(dex), dex);
+                androlib.buildSourcesSmali(appDir, metaInfo.dexMaps.get(dex), dex);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -225,12 +228,12 @@ public class AndrolibAj {
 
     @Around("execution(* brut.androlib.Androlib.buildUnknownFiles(..))" +
             "&& args(appDir, outFile, meta)")
-    public void buildUnknownFiles_around(File appDir, File outFile, Map<String, Object> meta)
+    public void buildUnknownFiles_around(File appDir, File outFile, MetaInfo meta)
             throws Throwable {
-        if (meta.containsKey("unknownFiles")) {
+        if (meta.unknownFiles != null) {
             LogHelper.info("Copying unknown files/dir...");
 
-            Map<String, String> files = (Map<String, String>)meta.get("unknownFiles");
+            Map<String, String> files = meta.unknownFiles;
             File tempFile = File.createTempFile("buildUnknownFiles", "tmp", outFile.getParentFile());
             tempFile.delete();
             boolean renamed = outFile.renameTo(tempFile);
@@ -278,7 +281,6 @@ public class AndrolibAj {
 
     private void copyUnknownFiles(File appDir, ZipOutputStream outputFile, Map<String, String> files)
             throws IOException {
-        String UNK_DIRNAME = getUNK_DIRNAME();
         File unknownFileDir = new File(appDir, UNK_DIRNAME);
         File buildDir = new File(appDir, "build/apk");
 
@@ -351,7 +353,7 @@ public class AndrolibAj {
     public void decodeUnknownFiles_after(JoinPoint joinPoint, ExtFile apkFile, File outDir, ResTable resTable) {
         try {
             Androlib thiz = (Androlib) joinPoint.getThis();
-            File unknownOut = new File(outDir, getUNK_DIRNAME());
+            File unknownOut = new File(outDir, UNK_DIRNAME);
             ResUnknownFiles mResUnknownFiles = thiz.getResUnknownFiles();
 
             Directory unk = apkFile.getDirectory();
@@ -374,7 +376,7 @@ public class AndrolibAj {
                 /**
                  * 过滤dex文件
                  */
-                if (DexMaps.containsKey(file)) {
+                if (metaInfo.dexMaps.containsKey(file)) {
                     continue;
                 }
 
@@ -425,30 +427,36 @@ public class AndrolibAj {
         }
     }
 
-    public static final String DecodeFileMapsMetaName = "DecodeFileMaps";
-    public static Map<String, String> DecodeFileMaps = new LinkedHashMap<>();
-    public static final String DexMapsMetaName = "DexMaps";
-    public static Map<String, String> DexMaps = new LinkedHashMap<>();
+//    public static final String DecodeFileMapsMetaName = "DecodeFileMaps";
+//    public static Map<String, String> DecodeFileMaps = new LinkedHashMap<>();
+//    public static final String DexMapsMetaName = "DexMaps";
+//    public static Map<String, String> DexMaps = new LinkedHashMap<>();
 
-    @Before("execution(* brut.androlib.Androlib.writeMetaFile(..))" +
-            "&& args(mOutDir, meta)")
-    public void writeMetaFile(File mOutDir, Map<String, Object> meta) {
-        meta.put(DecodeFileMapsMetaName, DecodeFileMaps);
-        meta.put(DexMapsMetaName, DexMaps);
-    }
+//    @Before("execution(* brut.androlib.Androlib.writeMetaFile(..))" +
+//            "&& args(mOutDir, meta)")
+//    public void writeMetaFile(File mOutDir, Map<String, Object> meta) {
+//        meta.put(DecodeFileMapsMetaName, DecodeFileMaps);
+//        meta.put(DexMapsMetaName, DexMaps);
+//    }
 
-    @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")
-    public void readMetaFile(Map<String, Object> meta) {
-        if (meta.get(DecodeFileMapsMetaName) != null) {
-            DecodeFileMaps = (Map<String, String>) meta.get(DecodeFileMapsMetaName);
-        }
-        if (meta.get(DexMapsMetaName) != null) {
-            DexMaps = (Map<String, String>) meta.get(DexMapsMetaName);
-        }
+//    @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")
+//    public void readMetaFile(Map<String, Object> meta) {
+//        if (meta.get(DecodeFileMapsMetaName) != null) {
+//            DecodeFileMaps = (Map<String, String>) meta.get(DecodeFileMapsMetaName);
+//        }
+//        if (meta.get(DexMapsMetaName) != null) {
+//            DexMaps = (Map<String, String>) meta.get(DexMapsMetaName);
+//        }
+//    }
+
+    @Around("execution(* brut.androlib.Androlib.readMetaFile(..))")
+    public MetaInfo readMetaFile(ProceedingJoinPoint joinPoint) throws Throwable {
+        metaInfo = (MetaInfo) joinPoint.proceed(joinPoint.getArgs());
+        return metaInfo;
     }
 
     public String getDecodeFileMapName(String name) {
-        String mapName = DecodeFileMaps.get(name);
+        String mapName = metaInfo.decodeFileMaps.get(name);
         if (mapName == null) {
             mapName = name;
         }

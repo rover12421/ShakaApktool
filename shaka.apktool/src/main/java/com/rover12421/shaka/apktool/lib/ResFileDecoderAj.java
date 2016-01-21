@@ -111,11 +111,11 @@ public class ResFileDecoderAj {
             inFileName = inFileName.substring(1);
             inDir = AndrolibResourcesAj.getApkFile().getDirectory();
             if (!inFileName.equals(outFileName)) {
-                AndrolibAj.DecodeFileMaps.put(inFileName, "res/" + outFileName);
+                AndrolibAj.metaInfo.decodeFileMaps.put(inFileName, "res/" + outFileName);
             }
         } else {
             if (!inFileName.equals(outFileName)) {
-                AndrolibAj.DecodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
+                AndrolibAj.metaInfo.decodeFileMaps.put("res/" + inFileName, "res/" + outFileName);
             }
         }
 
@@ -154,7 +154,7 @@ public class ResFileDecoderAj {
     public void decodeManifest(Directory inDir, String inFileName,
                                Directory outDir, String outFileName) {
         if (!inFileName.equals(outFileName)) {
-            AndrolibAj.DecodeFileMaps.put(inFileName, outFileName);
+            AndrolibAj.metaInfo.decodeFileMaps.put(inFileName, outFileName);
         }
     }
 

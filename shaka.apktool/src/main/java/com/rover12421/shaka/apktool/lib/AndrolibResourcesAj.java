@@ -33,6 +33,7 @@ package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.ApkOptions;
+import brut.androlib.meta.VersionInfo;
 import brut.androlib.res.AndrolibResources;
 import brut.androlib.res.data.ResTable;
 import brut.androlib.res.decoder.AXmlResourceParser;
@@ -467,15 +468,15 @@ public class AndrolibResourcesAj {
     }
 
     @Before("execution(* brut.androlib.res.AndrolibResources.setVersionInfo(..))" +
-            "&& args(map)")
-    public void setVersionInfo(Map<String, String> map) {
-        if (map != null) {
-            String mVersionName = map.get("versionName");
+            "&& args(versionInfo)")
+    public void setVersionInfo(VersionInfo versionInfo) {
+        if (versionInfo != null) {
+            String mVersionName = versionInfo.versionName;
             if (mVersionName != null && mVersionName.contains(" ")) {
                 //versionName包含空白字符会有问题
                 String mVersionNameNew = mVersionName.replaceAll(" ", "_");
                 LogHelper.info("Modify versionName from : " + mVersionName + " to : " + mVersionNameNew);
-                map.put("versionName", mVersionNameNew);
+                versionInfo.versionName = mVersionNameNew;
             }
         }
     }
