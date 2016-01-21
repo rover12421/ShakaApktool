@@ -43,6 +43,7 @@ public class BaseDexBufferAj {
                 ((buf[offset+3]) << 24);
         if (result < -1) {
             LogHelper.warning(String.format("Encountered optional uint that is out of range at offset 0x%x. Set result to 0", offset));
+            result = 0;
         }
         return result;
     }
