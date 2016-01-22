@@ -249,6 +249,8 @@
 247=suppresses the output of the disassembly
 248=specify a file containing a custom inline method table to use for deodexing
 249=纠正xml属性名. 可能有问题, 不推荐
+250=你可以使用
+251=重新反编译资源文件
 
 r0=拷贝文件 $1 ...
 r1=编译 $1 到 $2...
@@ -260,3 +262,5 @@ r6=使用 Apktool $1
 r7=正在使用 $2 方法复制未知文件 $1
 r8=复制原版 $1 文件...
 r9=纠正xml属性名: $1 转 $2
+r10=参数来纠正xml属性名: $1 转 $2
+r11=重命名 ResResSpec $1 为 $2
