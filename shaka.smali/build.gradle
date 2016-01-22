@@ -16,7 +16,7 @@
 
 def branch = getCheckedOutBranchFromModule('smali')
 def hash   = getCheckedOutGitCommitHashFromModule('smali')
-def smaliVersion = '2.1.0'
+def smaliVersion = '2.1.1'
 def smali_version = "$smaliVersion-$branch-$hash"
 
 ext {
