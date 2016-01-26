@@ -146,6 +146,7 @@ public class ApktoolMainAj {
             DecodeOptions.addOption(CommandLineArgEnum.XML_ATTRIBUTE_NAME_CORRECT.getOption());
 
             BuildOptions.addOption(CommandLineArgEnum.FUCK_NOT_DEFINED_RES.getOption());
+            BuildOptions.addOption(CommandLineArgEnum.USING_DEFAULT_FRAMEWORK.getOption());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -188,6 +189,10 @@ public class ApktoolMainAj {
 
         if (CommandLineArgEnum.FUCK_NOT_DEFINED_RES.hasMatch(cli)) {
             buildOption.setFuckNotDefinedRes(true);
+        }
+
+        if (CommandLineArgEnum.USING_DEFAULT_FRAMEWORK.hasMatch(cli)) {
+            buildOption.setUsingDefaultFramework(true);
         }
     }
 }

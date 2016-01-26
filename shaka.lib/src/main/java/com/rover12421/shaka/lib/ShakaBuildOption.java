@@ -5,6 +5,7 @@ package com.rover12421.shaka.lib;
  */
 public class ShakaBuildOption {
     private static final ShakaBuildOption option = new ShakaBuildOption();
+    private boolean usingDefaultFramework = false;
 
     public static ShakaBuildOption getInstance() {
         return option;
@@ -21,5 +22,13 @@ public class ShakaBuildOption {
 
     public void setFuckNotDefinedRes(boolean fuckNotDefinedRes) {
         this.fuckNotDefinedRes = fuckNotDefinedRes;
+    }
+
+    public boolean isUsingDefaultFramework() {
+        return usingDefaultFramework;
+    }
+
+    public void setUsingDefaultFramework(boolean usingDefaultFramework) {
+        this.usingDefaultFramework = usingDefaultFramework;
     }
 }

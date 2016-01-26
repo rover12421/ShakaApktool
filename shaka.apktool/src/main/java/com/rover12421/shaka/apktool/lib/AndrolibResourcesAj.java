@@ -419,7 +419,8 @@ public class AndrolibResourcesAj {
     @AfterReturning(pointcut = "execution(* brut.androlib.res.AndrolibResources.getFrameworkApk(..))" +
             "&& args(id, frameTag)", returning = "apk")
     public void getFrameworkApk(int id, String frameTag, File apk) throws AndrolibException {
-        if (!ShakaDecodeOption.getInstance().isUsingDefaultFramework()) {
+        if (!ShakaDecodeOption.getInstance().isUsingDefaultFramework()
+                && !ShakaBuildOption.getInstance().isUsingDefaultFramework()) {
             return;
         }
 
