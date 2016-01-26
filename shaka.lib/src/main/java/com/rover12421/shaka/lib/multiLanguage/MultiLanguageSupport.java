@@ -125,7 +125,9 @@ public class MultiLanguageSupport {
             "Using Apktool (.+?)",
             "^Copying unknown file (.+?) with method (.+?)$",
             "Copying raw (.+?) file\\.\\.\\.",
-            "Xml attribute name correct : (.+?) to (.+?)"
+            "Xml attribute name correct : (.+?) to (.+?)",
+            "parameter to correct the xml attribute name : (.+?) to (.+?)",
+            "Rename ResResSpec (.+?) to (.+?)"
     };
 
     private static final String[] langRpStrDef = new String[]{
@@ -138,7 +140,9 @@ public class MultiLanguageSupport {
             "Using Apktool $1",
             "Copying unknown file $1 with method $2",
             "Copying raw $1 file...",
-            "Xml attribute name correct : $1 to $2"
+            "Xml attribute name correct : $1 to $2",
+            "parameter to correct the xml attribute name : $1 to $2",
+            "Rename ResResSpec $1 to $2"
     };
 
     public static String covertLocaleInfo(String str) {

@@ -248,6 +248,8 @@
 247=suppresses the output of the disassembly
 248=specify a file containing a custom inline method table to use for deodexing
 249=xml attribute name correct. May be has problem, not recommended
+250=You can use
+251=Re Decoding file-resources
 
 r0=Copying $1 file...
 r1=Smaling $1 folder into $2...
@@ -259,3 +261,5 @@ r6=Using Apktool $1
 r7=Copying unknown file $1 with method $2
 r8=Copying raw $1 file...
 r9=Xml attribute name correct : $1 to $2
+r10=parameter to correct the xml attribute name : $1 to $2
+r11=Rename ResResSpec $1 to $2

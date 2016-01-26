@@ -16,7 +16,7 @@
 
 import org.apache.tools.ant.filters.*
 
-def apktoolversion_major = '2.0.3'
+def apktoolversion_major = '2.1.0'
 def apktoolversion_minor = 'SNAPSHOT'
 
 def branch = getCheckedOutBranchFromModule('apktool')
