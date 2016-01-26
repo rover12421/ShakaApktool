@@ -66,6 +66,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }'
     args '-keepclassmembers class brut.androlib.res.data.ResResSpec { *** mName; }'
     args '-keepclassmembers class brut.androlib.res.data.value.ResFileValue { *** mPath; }'
+    args '-keepclassmembers class brut.androlib.meta.** { public <fields>; }'
 }
 
 tasks.getByPath(':release').dependsOn(proguard)
