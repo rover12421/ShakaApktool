@@ -55,10 +55,7 @@ import org.aspectj.lang.annotation.Before;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -69,7 +66,7 @@ import java.util.zip.ZipOutputStream;
  */
 @Aspect
 public class AndrolibAj {
-    public static MetaInfo metaInfo;
+    public static MetaInfo metaInfo = new MetaInfo();
 
     public static final String UNK_DIRNAME = "unknown";
     private final static String SMALI_DIRNAME = "smali";
@@ -169,7 +166,7 @@ public class AndrolibAj {
             SmaliDecoder.decode(apkFile, smaliDir, filename, debug, debugLinePrefix, bakdeb, api);
             //没有异常才添加
             if (mapDirName != null) {
-                metaInfo.dexMaps.put(filename, mapDirName);
+                metaInfo.addDexMap(filename, mapDirName);
             }
         } catch (Exception ex) {
             //只要不是反编译classes.dex的时候抛出异常,都不终止程序
@@ -196,19 +193,22 @@ public class AndrolibAj {
         if (files != null) {
             for (File file : files) {
                 String name = file.getName();
-                if (file.isDirectory() && !metaInfo.dexMaps.containsKey(name) && name.startsWith("smali_")) {
+                if (file.isDirectory() &&
+                        metaInfo.getDexMap(name) == null &&
+                        name.startsWith("smali_")) {
                     String key = name.substring("smali_".length()) + ".dex";
-                    metaInfo.dexMaps.put(key, name);
+                    metaInfo.addDexMap(key, name);
                 }
             }
         }
 
+        if (metaInfo.dexMaps == null) return;
         for (String dex : metaInfo.dexMaps.keySet()) {
             try {
                 Androlib androlib = (Androlib) joinPoint.getThis();
                 File dexFile = new File(appDir, APK_DIRNAME + "/" + dex);
                 dexFile.getParentFile().mkdirs();
-                androlib.buildSourcesSmali(appDir, metaInfo.dexMaps.get(dex), dex);
+                androlib.buildSourcesSmali(appDir, metaInfo.getDexMap(dex), dex);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -376,7 +376,7 @@ public class AndrolibAj {
                 /**
                  * 过滤dex文件
                  */
-                if (metaInfo.dexMaps.containsKey(file)) {
+                if (metaInfo.getDexMap(file) != null) {
                     continue;
                 }
 
@@ -432,12 +432,12 @@ public class AndrolibAj {
 //    public static final String DexMapsMetaName = "DexMaps";
 //    public static Map<String, String> DexMaps = new LinkedHashMap<>();
 
-//    @Before("execution(* brut.androlib.Androlib.writeMetaFile(..))" +
-//            "&& args(mOutDir, meta)")
-//    public void writeMetaFile(File mOutDir, Map<String, Object> meta) {
-//        meta.put(DecodeFileMapsMetaName, DecodeFileMaps);
-//        meta.put(DexMapsMetaName, DexMaps);
-//    }
+    @Before("execution(* brut.androlib.Androlib.writeMetaFile(..))" +
+            "&& args(mOutDir, meta)")
+    public void writeMetaFile(File mOutDir, MetaInfo meta) {
+        meta.dexMaps = metaInfo.dexMaps;
+        meta.decodeFileMaps = metaInfo.decodeFileMaps;
+    }
 
 //    @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")
 //    public void readMetaFile(Map<String, Object> meta) {
@@ -456,7 +456,7 @@ public class AndrolibAj {
     }
 
     public String getDecodeFileMapName(String name) {
-        String mapName = metaInfo.decodeFileMaps.get(name);
+        String mapName = metaInfo.getDecodeFileMap(name);
         if (mapName == null) {
             mapName = name;
         }
