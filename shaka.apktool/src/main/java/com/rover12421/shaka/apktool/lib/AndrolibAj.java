@@ -38,6 +38,7 @@ import brut.androlib.res.data.ResTable;
 import brut.androlib.res.data.ResUnknownFiles;
 import brut.androlib.res.util.ExtFile;
 import brut.androlib.src.SmaliDecoder;
+import brut.apktool.Main;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
@@ -441,6 +442,7 @@ public class AndrolibAj {
     public void writeMetaFile(File mOutDir, MetaInfo meta) {
         meta.dexMaps = metaInfo.dexMaps;
         meta.decodeFileMaps = metaInfo.decodeFileMaps;
+        meta.shakaVer = ShakaProperties.getVersion();
     }
 
 //    @AfterReturning(pointcut = "execution(* brut.androlib.Androlib.readMetaFile(..))", returning = "meta")

@@ -11,6 +11,7 @@ import java.util.Map;
 public aspect MetaInfo0 {
     public Map<String, String> MetaInfo.decodeFileMaps;
     public Map<String, String> MetaInfo.dexMaps;
+    public String MetaInfo.shakaVer;
 
     public String MetaInfo.addDexMap(String key, String val) {
         if (dexMaps == null) {
