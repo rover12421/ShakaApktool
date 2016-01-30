@@ -16,7 +16,10 @@
 package com.rover12421.shaka.apktool.lib;
 
 import brut.androlib.err.UndefinedResObject;
-import brut.androlib.res.data.*;
+import brut.androlib.res.data.ResID;
+import brut.androlib.res.data.ResPackage;
+import brut.androlib.res.data.ResResSpec;
+import brut.androlib.res.data.ResTypeSpec;
 import com.rover12421.shaka.lib.LogHelper;
 import com.rover12421.shaka.lib.ShakaDecodeOption;
 import org.aspectj.lang.ProceedingJoinPoint;

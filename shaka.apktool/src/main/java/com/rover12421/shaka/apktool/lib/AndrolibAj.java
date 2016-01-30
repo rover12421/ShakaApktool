@@ -41,11 +41,14 @@ import brut.androlib.src.SmaliDecoder;
 import brut.directory.Directory;
 import brut.directory.DirectoryException;
 import brut.directory.FileDirectory;
-import brut.util.BrutIO;
 import brut.util.OS;
 import com.rover12421.shaka.lib.AndroidZip;
 import com.rover12421.shaka.lib.LogHelper;
+import com.rover12421.shaka.lib.ShakaIO;
 import com.rover12421.shaka.lib.ShakaProperties;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -55,11 +58,11 @@ import org.aspectj.lang.annotation.Before;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
 import java.util.zip.CRC32;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
 
 /**
  * Created by rover12421 on 8/9/14.
@@ -90,7 +93,7 @@ public class AndrolibAj {
             for (String file : AndrolibResourcesAj.doNotCompress) {
                 String pFile = file.replace("\\", "/");
                 pFile = getDecodeFileMapName(pFile);
-                files.put(pFile, String.valueOf(ZipEntry.STORED));
+                files.put(pFile, String.valueOf(ZipArchiveEntry.STORED));
             }
         }
 
@@ -241,45 +244,46 @@ public class AndrolibAj {
                 throw new AndrolibException("Unable to rename temporary file");
             }
 
+            ZipFile inputFile = new ZipFile(tempFile);
             try (
-                    ZipFile inputFile = new ZipFile(tempFile);
-                    FileOutputStream fos = new FileOutputStream(outFile);
-                    ZipOutputStream actualOutput = new ZipOutputStream(fos)
+                    ZipArchiveOutputStream actualOutput = new ZipArchiveOutputStream(outFile)
             ) {
                 copyExistingFiles(inputFile, actualOutput, files);
                 copyUnknownFiles(appDir, actualOutput, files);
             } catch (IOException ex) {
                 throw new AndrolibException(ex);
             } finally {
+                inputFile.close();
                 // Remove our temporary file.
                 tempFile.delete();
             }
         }
     }
 
-    private void copyExistingFiles(ZipFile inputFile, ZipOutputStream outputFile, Map<String, String> excludeFiles) throws IOException {
+    private void copyExistingFiles(ZipFile inputFile, ZipArchiveOutputStream outputFile, Map<String, String> excludeFiles) throws IOException {
         // First, copy the contents from the existing outFile:
-        Enumeration<? extends ZipEntry> entries = inputFile.entries();
+        Enumeration<? extends ZipArchiveEntry> entries = inputFile.getEntries();
         while (entries.hasMoreElements()) {
-            ZipEntry entry = new ZipEntry(entries.nextElement());
+            ZipArchiveEntry oldEntry = entries.nextElement();
+            ZipArchiveEntry entry = new ZipArchiveEntry(oldEntry);
             if (excludeFiles.get(entry.getName()) != null) {
                 //排除的文件不处理.
                 continue;
             }
             // We can't reuse the compressed size because it depends on compression sizes.
             entry.setCompressedSize(-1);
-            outputFile.putNextEntry(entry);
+            outputFile.putArchiveEntry(entry);
 
             // No need to create directory entries in the final apk
             if (!entry.isDirectory()) {
-                BrutIO.copy(inputFile, outputFile, entry);
+                ShakaIO.copy(inputFile, outputFile, oldEntry);
             }
 
-            outputFile.closeEntry();
+            outputFile.closeArchiveEntry();
         }
     }
 
-    private void copyUnknownFiles(File appDir, ZipOutputStream outputFile, Map<String, String> files)
+    private void copyUnknownFiles(File appDir, ZipArchiveOutputStream outputFile, Map<String, String> files)
             throws IOException {
         File unknownFileDir = new File(appDir, UNK_DIRNAME);
         File buildDir = new File(appDir, "build/apk");
@@ -310,11 +314,11 @@ public class AndrolibAj {
                 continue;
             }
 
-            ZipEntry newEntry = new ZipEntry(unknownFileInfo.getKey());
+            ZipArchiveEntry newEntry = new ZipArchiveEntry(unknownFileInfo.getKey());
             int method = Integer.valueOf(unknownFileInfo.getValue());
             LogHelper.fine(String.format("Copying unknown file %s with method %d", unknownFileInfo.getKey(), method));
-            if(method == ZipEntry.STORED) {
-                newEntry.setMethod(ZipEntry.STORED);
+            if(method == ZipArchiveEntry.STORED) {
+                newEntry.setMethod(ZipArchiveEntry.STORED);
                 newEntry.setSize(inputFile.length());
                 newEntry.setCompressedSize(-1);
                 BufferedInputStream unknownFile = new BufferedInputStream(new FileInputStream(inputFile));
@@ -323,12 +327,12 @@ public class AndrolibAj {
 
 //                LogHelper.getLogger().fine("\tsize: " + newEntry.getSize());
             } else {
-                newEntry.setMethod(ZipEntry.DEFLATED);
+                newEntry.setMethod(ZipArchiveEntry.DEFLATED);
             }
-            outputFile.putNextEntry(newEntry);
+            outputFile.putArchiveEntry(newEntry);
 
-            BrutIO.copy(inputFile, outputFile);
-            outputFile.closeEntry();
+            ShakaIO.copy(inputFile, outputFile);
+            outputFile.closeArchiveEntry();
         }
     }
 

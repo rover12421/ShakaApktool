@@ -85,7 +85,7 @@ dependencies {
             depends.commons_lang,
             depends.commons_io,
             depends.commons_cli,
-            depends.antlr
+            depends.commons_compress
 
     testCompile depends.xmlunit
 }

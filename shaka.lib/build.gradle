@@ -69,5 +69,6 @@ processResources.dependsOn genShakaAaptCrc32
 
 dependencies {
     compile depends.commons_cli,
-            depends.commons_io
+            depends.commons_io,
+            depends.commons_compress
 }
