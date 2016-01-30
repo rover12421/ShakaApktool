@@ -40,7 +40,7 @@ buildscript {
     }
     dependencies {
         classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
-        classpath 'nl.eveoh:gradle-aspectj:1.5'
+        classpath 'nl.eveoh:gradle-aspectj:1.6'
     }
 }
 
