@@ -15,6 +15,7 @@
  */
 package com.rover12421.shaka.apktool.lib;
 
+import brut.androlib.res.decoder.StringBlock;
 import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -34,5 +35,21 @@ public class StringBlockAj {
         }
 
         joinPoint.proceed(new Object[]{newTag, builder, close});
+    }
+
+    @Around("execution(* brut.androlib.res.decoder.StringBlock.getStyle(..))" +
+            "&& args(index)")
+    public int[] getStyle(ProceedingJoinPoint joinPoint, int index) throws Throwable {
+        StringBlock thiz = (StringBlock) joinPoint.getThis();
+        int[] m_styleOffsets = thiz.getStyleOffsets();
+        int[] m_styles = thiz.getStyles();
+        if (m_styleOffsets == null || m_styles == null|| index >= m_styleOffsets.length) {
+            return null;
+        }
+        int offset = m_styleOffsets[index] / 4;
+        if (offset < 0 || offset > m_styles.length) {
+            return null;
+        }
+        return (int[]) joinPoint.proceed(joinPoint.getArgs());
     }
 }
