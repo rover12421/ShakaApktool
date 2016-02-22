@@ -108,14 +108,17 @@ public class AndrolibResourcesAj {
                 for (String resName : notDefinedRes) {
                     Path des = Paths.get(rootDir + File.separator + resName);
                     // 保证目录存在
-                    des.toFile().getParentFile().mkdirs();
-                    InputStream is = this.getClass().getResourceAsStream(SHAKA_XML);
-                    try {
+                    File desFile = des.toFile();
+                    desFile.getParentFile().mkdirs();
+                    desFile.deleteOnExit(); //退出的时候自动删除临时文件
+
+                    try(
+                            InputStream is = this.getClass().getResourceAsStream(SHAKA_XML)
+                    ) {
                         Files.copy(is, des, StandardCopyOption.REPLACE_EXISTING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    IOUtils.closeQuietly(is);
                 }
 
                 return true;
