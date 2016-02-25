@@ -119,6 +119,12 @@ public class ResFileDecoderAj {
             }
         }
 
+        if (inDir == null) {
+            //没有资源目录,skip!
+            LogHelper.warning("No resources directory, skip res : " + inFileName);
+            return;
+        }
+
         /**
          * .9.xml 被当成 nine patch images 已经在 099cc0fcb3baec56f0ba3150c82dda56a63501d5 修复
          * 方法类似,他用的inFileName做判断
