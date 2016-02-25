@@ -469,6 +469,12 @@ public class AndrolibAj {
         return mapName;
     }
 
+    /**
+     * 针对的是指定文件,而不使用扩展名
+     * @param apkFile
+     * @param uncompressedFiles
+     * @throws AndrolibException
+     */
     @Around("execution(* brut.androlib.Androlib.recordUncompressedFiles(..))" +
             "&& args(apkFile, uncompressedFiles)")
     public void recordUncompressedFiles(ExtFile apkFile, Collection<String> uncompressedFiles) throws AndrolibException {
@@ -477,11 +483,11 @@ public class AndrolibAj {
             Set<String> files = unk.getFiles(true);
 
             for (String file : files) {
-                if (AndroidZip.isAPKFileNames(file) && !AndroidZip.needCompress(file)) {
-                    if (unk.getCompressionLevel(file) == 0) {
-                        // 还是使用文件,不使用扩展名
-                        uncompressedFiles.add(file);
-                    }
+                if (unk.getCompressionLevel(file) == ZipArchiveEntry.STORED //原本是存储模式
+                        && AndroidZip.needCompress(file)   // Android 默然情况下是需要压缩的
+                        ) {
+                    //只有想冲突的时候才需要记录
+                    uncompressedFiles.add(file);
                 }
             }
         } catch (DirectoryException ex) {
