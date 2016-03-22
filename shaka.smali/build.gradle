@@ -216,22 +216,24 @@ if (genGrammarSource) {
     /**
      * gradle -PgenGrammarSource=true modifyGeneratedCodePathPrefix
      */
-    task modifyGeneratedCodePathPrefix() << {
-        def genSrcDir = new File(projectDir.path, genDir)
-        if (genSrcDir.exists()) {
-            def prefix = genSrcDir.absoluteFile.parentFile.parent + File.separator
-            genSrcDir.eachFileRecurse(
-                    {file ->
-                        if (file.name.endsWith(".java")) {
-                            file.write(
-                                    file.text
-                                            .replace(prefix, "")
-                                            .replaceAll("(\\s+)private(\\s+)", "\$1protected\$2")
-                                            .replaceAll("(//\\s+\\\$ANTLR\\s+.+?\\.g)(\\s+\\d+-\\d+-\\d+\\s+\\d+:\\d+:\\d+)", "\$1")
-                            )
+    task modifyGeneratedCodePathPrefix() {
+        doLast {
+            def genSrcDir = new File(projectDir.path, genDir)
+            if (genSrcDir.exists()) {
+                def prefix = genSrcDir.absoluteFile.parentFile.parent + File.separator
+                genSrcDir.eachFileRecurse(
+                        {file ->
+                            if (file.name.endsWith(".java")) {
+                                file.write(
+                                        file.text
+                                                .replace(prefix, "")
+                                                .replaceAll("(\\s+)private(\\s+)", "\$1protected\$2")
+                                                .replaceAll("(//\\s+\\\$ANTLR\\s+.+?\\.g)(\\s+\\d+-\\d+-\\d+\\s+\\d+:\\d+:\\d+)", "\$1")
+                                )
+                            }
                         }
-                    }
-            )
+                )
+            }
         }
     }
 

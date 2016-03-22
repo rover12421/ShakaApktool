@@ -49,8 +49,8 @@ import java.util.ArrayList;
 public class smaliTreeWalker extends TreeParser {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACCESS_SPEC", "ANNOTATION_DIRECTIVE", 
-		"ANNOTATION_VISIBILITY", "ARRAY_DATA_DIRECTIVE", "ARRAY_DESCRIPTOR", "ARROW", 
-		"BOOL_LITERAL", "BYTE_LITERAL", "CATCHALL_DIRECTIVE", "CATCH_DIRECTIVE", 
+		"ANNOTATION_VISIBILITY", "ARRAY_DATA_DIRECTIVE", "ARRAY_TYPE_PREFIX", 
+		"ARROW", "BOOL_LITERAL", "BYTE_LITERAL", "CATCHALL_DIRECTIVE", "CATCH_DIRECTIVE", 
 		"CHAR_LITERAL", "CLASS_DESCRIPTOR", "CLASS_DIRECTIVE", "CLOSE_BRACE", 
 		"CLOSE_PAREN", "COLON", "COMMA", "DOTDOT", "DOUBLE_LITERAL", "DOUBLE_LITERAL_OR_ID", 
 		"END_ANNOTATION_DIRECTIVE", "END_ARRAY_DATA_DIRECTIVE", "END_FIELD_DIRECTIVE", 
@@ -99,11 +99,10 @@ public class smaliTreeWalker extends TreeParser {
 		"I_SUBANNOTATION", "I_SUPER", "LINE_COMMENT", "LINE_DIRECTIVE", "LOCALS_DIRECTIVE", 
 		"LOCAL_DIRECTIVE", "LONG_LITERAL", "MEMBER_NAME", "METHOD_DIRECTIVE", 
 		"NEGATIVE_INTEGER_LITERAL", "NULL_LITERAL", "OPEN_BRACE", "OPEN_PAREN", 
-		"PACKED_SWITCH_DIRECTIVE", "PARAMETER_DIRECTIVE", "PARAM_LIST_END", "PARAM_LIST_OR_ID_END", 
-		"PARAM_LIST_OR_ID_START", "PARAM_LIST_START", "POSITIVE_INTEGER_LITERAL", 
-		"PRIMITIVE_TYPE", "PROLOGUE_DIRECTIVE", "REGISTER", "REGISTERS_DIRECTIVE", 
-		"RESTART_LOCAL_DIRECTIVE", "SHORT_LITERAL", "SIMPLE_NAME", "SOURCE_DIRECTIVE", 
-		"SPARSE_SWITCH_DIRECTIVE", "STRING_LITERAL", "SUBANNOTATION_DIRECTIVE", 
+		"PACKED_SWITCH_DIRECTIVE", "PARAMETER_DIRECTIVE", "PARAM_LIST_OR_ID_PRIMITIVE_TYPE", 
+		"POSITIVE_INTEGER_LITERAL", "PRIMITIVE_TYPE", "PROLOGUE_DIRECTIVE", "REGISTER", 
+		"REGISTERS_DIRECTIVE", "RESTART_LOCAL_DIRECTIVE", "SHORT_LITERAL", "SIMPLE_NAME", 
+		"SOURCE_DIRECTIVE", "SPARSE_SWITCH_DIRECTIVE", "STRING_LITERAL", "SUBANNOTATION_DIRECTIVE", 
 		"SUPER_DIRECTIVE", "VERIFICATION_ERROR_TYPE", "VOID_TYPE", "VTABLE_INDEX", 
 		"WHITE_SPACE"
 	};
@@ -112,7 +111,7 @@ public class smaliTreeWalker extends TreeParser {
 	public static final int ANNOTATION_DIRECTIVE=5;
 	public static final int ANNOTATION_VISIBILITY=6;
 	public static final int ARRAY_DATA_DIRECTIVE=7;
-	public static final int ARRAY_DESCRIPTOR=8;
+	public static final int ARRAY_TYPE_PREFIX=8;
 	public static final int ARROW=9;
 	public static final int BOOL_LITERAL=10;
 	public static final int BYTE_LITERAL=11;
@@ -291,27 +290,24 @@ public class smaliTreeWalker extends TreeParser {
 	public static final int OPEN_PAREN=184;
 	public static final int PACKED_SWITCH_DIRECTIVE=185;
 	public static final int PARAMETER_DIRECTIVE=186;
-	public static final int PARAM_LIST_END=187;
-	public static final int PARAM_LIST_OR_ID_END=188;
-	public static final int PARAM_LIST_OR_ID_START=189;
-	public static final int PARAM_LIST_START=190;
-	public static final int POSITIVE_INTEGER_LITERAL=191;
-	public static final int PRIMITIVE_TYPE=192;
-	public static final int PROLOGUE_DIRECTIVE=193;
-	public static final int REGISTER=194;
-	public static final int REGISTERS_DIRECTIVE=195;
-	public static final int RESTART_LOCAL_DIRECTIVE=196;
-	public static final int SHORT_LITERAL=197;
-	public static final int SIMPLE_NAME=198;
-	public static final int SOURCE_DIRECTIVE=199;
-	public static final int SPARSE_SWITCH_DIRECTIVE=200;
-	public static final int STRING_LITERAL=201;
-	public static final int SUBANNOTATION_DIRECTIVE=202;
-	public static final int SUPER_DIRECTIVE=203;
-	public static final int VERIFICATION_ERROR_TYPE=204;
-	public static final int VOID_TYPE=205;
-	public static final int VTABLE_INDEX=206;
-	public static final int WHITE_SPACE=207;
+	public static final int PARAM_LIST_OR_ID_PRIMITIVE_TYPE=187;
+	public static final int POSITIVE_INTEGER_LITERAL=188;
+	public static final int PRIMITIVE_TYPE=189;
+	public static final int PROLOGUE_DIRECTIVE=190;
+	public static final int REGISTER=191;
+	public static final int REGISTERS_DIRECTIVE=192;
+	public static final int RESTART_LOCAL_DIRECTIVE=193;
+	public static final int SHORT_LITERAL=194;
+	public static final int SIMPLE_NAME=195;
+	public static final int SOURCE_DIRECTIVE=196;
+	public static final int SPARSE_SWITCH_DIRECTIVE=197;
+	public static final int STRING_LITERAL=198;
+	public static final int SUBANNOTATION_DIRECTIVE=199;
+	public static final int SUPER_DIRECTIVE=200;
+	public static final int VERIFICATION_ERROR_TYPE=201;
+	public static final int VOID_TYPE=202;
+	public static final int VTABLE_INDEX=203;
+	public static final int WHITE_SPACE=204;
 
 	// delegates
 	public TreeParser[] getDelegates() {
@@ -1201,7 +1197,7 @@ public class smaliTreeWalker extends TreeParser {
 				alt9=10;
 				}
 				break;
-			case ARRAY_DESCRIPTOR:
+			case ARRAY_TYPE_PREFIX:
 			case CLASS_DESCRIPTOR:
 			case PRIMITIVE_TYPE:
 			case VOID_TYPE:
@@ -2407,7 +2403,7 @@ public class smaliTreeWalker extends TreeParser {
 			while (true) {
 				int alt17=2;
 				int LA17_0 = input.LA(1);
-				if ( (LA17_0==ARRAY_DESCRIPTOR||LA17_0==CLASS_DESCRIPTOR||LA17_0==PRIMITIVE_TYPE) ) {
+				if ( (LA17_0==ARRAY_TYPE_PREFIX||LA17_0==CLASS_DESCRIPTOR||LA17_0==PRIMITIVE_TYPE) ) {
 					alt17=1;
 				}
 
@@ -2463,7 +2459,7 @@ public class smaliTreeWalker extends TreeParser {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:505:5: ( reference_type_descriptor )?
 			int alt18=2;
 			int LA18_0 = input.LA(1);
-			if ( (LA18_0==ARRAY_DESCRIPTOR||LA18_0==CLASS_DESCRIPTOR) ) {
+			if ( (LA18_0==ARRAY_TYPE_PREFIX||LA18_0==CLASS_DESCRIPTOR) ) {
 				alt18=1;
 			}
 			switch (alt18) {
@@ -2527,7 +2523,7 @@ public class smaliTreeWalker extends TreeParser {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:518:5: ( reference_type_descriptor )?
 			int alt19=2;
 			int LA19_0 = input.LA(1);
-			if ( (LA19_0==ARRAY_DESCRIPTOR||LA19_0==CLASS_DESCRIPTOR) ) {
+			if ( (LA19_0==ARRAY_TYPE_PREFIX||LA19_0==CLASS_DESCRIPTOR) ) {
 				alt19=1;
 			}
 			switch (alt19) {
@@ -3224,7 +3220,7 @@ public class smaliTreeWalker extends TreeParser {
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:614:62: ( nonvoid_type_descriptor )?
 					int alt27=2;
 					int LA27_0 = input.LA(1);
-					if ( (LA27_0==ARRAY_DESCRIPTOR||LA27_0==CLASS_DESCRIPTOR||LA27_0==PRIMITIVE_TYPE) ) {
+					if ( (LA27_0==ARRAY_TYPE_PREFIX||LA27_0==CLASS_DESCRIPTOR||LA27_0==PRIMITIVE_TYPE) ) {
 						alt27=1;
 					}
 					switch (alt27) {
@@ -3873,7 +3869,7 @@ public class smaliTreeWalker extends TreeParser {
 				}
 				else if ( (LA36_1==SIMPLE_NAME) ) {
 					int LA36_3 = input.LA(3);
-					if ( (LA36_3==ARRAY_DESCRIPTOR||LA36_3==CLASS_DESCRIPTOR||LA36_3==PRIMITIVE_TYPE) ) {
+					if ( (LA36_3==ARRAY_TYPE_PREFIX||LA36_3==CLASS_DESCRIPTOR||LA36_3==PRIMITIVE_TYPE) ) {
 						alt36=2;
 					}
 					else if ( (LA36_3==I_METHOD_PROTOTYPE) ) {
@@ -3910,16 +3906,34 @@ public class smaliTreeWalker extends TreeParser {
 
 				}
 				break;
-			case ARRAY_DESCRIPTOR:
+			case ARRAY_TYPE_PREFIX:
 				{
 				int LA36_2 = input.LA(2);
-				if ( (LA36_2==SIMPLE_NAME) ) {
-					int LA36_3 = input.LA(3);
-					if ( (LA36_3==ARRAY_DESCRIPTOR||LA36_3==CLASS_DESCRIPTOR||LA36_3==PRIMITIVE_TYPE) ) {
-						alt36=2;
-					}
-					else if ( (LA36_3==I_METHOD_PROTOTYPE) ) {
-						alt36=3;
+				if ( (LA36_2==PRIMITIVE_TYPE) ) {
+					int LA36_5 = input.LA(3);
+					if ( (LA36_5==SIMPLE_NAME) ) {
+						int LA36_3 = input.LA(4);
+						if ( (LA36_3==ARRAY_TYPE_PREFIX||LA36_3==CLASS_DESCRIPTOR||LA36_3==PRIMITIVE_TYPE) ) {
+							alt36=2;
+						}
+						else if ( (LA36_3==I_METHOD_PROTOTYPE) ) {
+							alt36=3;
+						}
+
+						else {
+							int nvaeMark = input.mark();
+							try {
+								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
+									input.consume();
+								}
+								NoViableAltException nvae =
+									new NoViableAltException("", 36, 3, input);
+								throw nvae;
+							} finally {
+								input.rewind(nvaeMark);
+							}
+						}
+
 					}
 
 					else {
@@ -3929,7 +3943,49 @@ public class smaliTreeWalker extends TreeParser {
 								input.consume();
 							}
 							NoViableAltException nvae =
-								new NoViableAltException("", 36, 3, input);
+								new NoViableAltException("", 36, 5, input);
+							throw nvae;
+						} finally {
+							input.rewind(nvaeMark);
+						}
+					}
+
+				}
+				else if ( (LA36_2==CLASS_DESCRIPTOR) ) {
+					int LA36_6 = input.LA(3);
+					if ( (LA36_6==SIMPLE_NAME) ) {
+						int LA36_3 = input.LA(4);
+						if ( (LA36_3==ARRAY_TYPE_PREFIX||LA36_3==CLASS_DESCRIPTOR||LA36_3==PRIMITIVE_TYPE) ) {
+							alt36=2;
+						}
+						else if ( (LA36_3==I_METHOD_PROTOTYPE) ) {
+							alt36=3;
+						}
+
+						else {
+							int nvaeMark = input.mark();
+							try {
+								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
+									input.consume();
+								}
+								NoViableAltException nvae =
+									new NoViableAltException("", 36, 3, input);
+								throw nvae;
+							} finally {
+								input.rewind(nvaeMark);
+							}
+						}
+
+					}
+
+					else {
+						int nvaeMark = input.mark();
+						try {
+							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
+								input.consume();
+							}
+							NoViableAltException nvae =
+								new NoViableAltException("", 36, 6, input);
 							throw nvae;
 						} finally {
 							input.rewind(nvaeMark);
@@ -3955,7 +4011,7 @@ public class smaliTreeWalker extends TreeParser {
 			case SIMPLE_NAME:
 				{
 				int LA36_3 = input.LA(2);
-				if ( (LA36_3==ARRAY_DESCRIPTOR||LA36_3==CLASS_DESCRIPTOR||LA36_3==PRIMITIVE_TYPE) ) {
+				if ( (LA36_3==ARRAY_TYPE_PREFIX||LA36_3==CLASS_DESCRIPTOR||LA36_3==PRIMITIVE_TYPE) ) {
 					alt36=2;
 				}
 				else if ( (LA36_3==I_METHOD_PROTOTYPE) ) {
@@ -6313,32 +6369,139 @@ public class smaliTreeWalker extends TreeParser {
 	// $ANTLR end "insn_sparse_switch_directive"
 
 
+
+	// $ANTLR start "array_descriptor"
+	// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1222:1: array_descriptor returns [String type] : ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR ) ;
+	public final String array_descriptor() throws RecognitionException {
+		String type = null;
+
+
+		CommonTree ARRAY_TYPE_PREFIX194=null;
+		CommonTree PRIMITIVE_TYPE195=null;
+		CommonTree CLASS_DESCRIPTOR196=null;
+
+		try {
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1223:3: ( ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR ) )
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1223:5: ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR )
+			{
+			ARRAY_TYPE_PREFIX194=(CommonTree)match(input,ARRAY_TYPE_PREFIX,FOLLOW_ARRAY_TYPE_PREFIX_in_array_descriptor3255); 
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1223:23: ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR )
+			int alt38=2;
+			int LA38_0 = input.LA(1);
+			if ( (LA38_0==PRIMITIVE_TYPE) ) {
+				alt38=1;
+			}
+			else if ( (LA38_0==CLASS_DESCRIPTOR) ) {
+				alt38=2;
+			}
+
+			else {
+				NoViableAltException nvae =
+					new NoViableAltException("", 38, 0, input);
+				throw nvae;
+			}
+
+			switch (alt38) {
+				case 1 :
+					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1223:25: PRIMITIVE_TYPE
+					{
+					PRIMITIVE_TYPE195=(CommonTree)match(input,PRIMITIVE_TYPE,FOLLOW_PRIMITIVE_TYPE_in_array_descriptor3259); 
+					 type = (ARRAY_TYPE_PREFIX194!=null?ARRAY_TYPE_PREFIX194.getText():null) + (PRIMITIVE_TYPE195!=null?PRIMITIVE_TYPE195.getText():null); 
+					}
+					break;
+				case 2 :
+					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1224:25: CLASS_DESCRIPTOR
+					{
+					CLASS_DESCRIPTOR196=(CommonTree)match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_array_descriptor3287); 
+					 type = (ARRAY_TYPE_PREFIX194!=null?ARRAY_TYPE_PREFIX194.getText():null) + (CLASS_DESCRIPTOR196!=null?CLASS_DESCRIPTOR196.getText():null); 
+					}
+					break;
+
+			}
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		return type;
+	}
+	// $ANTLR end "array_descriptor"
+
+
 	public static class nonvoid_type_descriptor_return extends TreeRuleReturnScope {
 		public String type;
 	};
 
 
 	// $ANTLR start "nonvoid_type_descriptor"
-	// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1222:1: nonvoid_type_descriptor returns [String type] : ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR ) ;
+	// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1226:1: nonvoid_type_descriptor returns [String type] : ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor ) ;
 	public final smaliTreeWalker.nonvoid_type_descriptor_return nonvoid_type_descriptor() throws RecognitionException {
 		smaliTreeWalker.nonvoid_type_descriptor_return retval = new smaliTreeWalker.nonvoid_type_descriptor_return();
 		retval.start = input.LT(1);
 
+		String array_descriptor197 =null;
+
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1223:3: ( ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1223:5: ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1227:3: ( ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor ) )
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1227:5: ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor )
 			{
-			if ( input.LA(1)==ARRAY_DESCRIPTOR||input.LA(1)==CLASS_DESCRIPTOR||input.LA(1)==PRIMITIVE_TYPE ) {
-				input.consume();
-				state.errorRecovery=false;
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1227:5: ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor )
+			int alt39=3;
+			switch ( input.LA(1) ) {
+			case PRIMITIVE_TYPE:
+				{
+				alt39=1;
+				}
+				break;
+			case CLASS_DESCRIPTOR:
+				{
+				alt39=2;
+				}
+				break;
+			case ARRAY_TYPE_PREFIX:
+				{
+				alt39=3;
+				}
+				break;
+			default:
+				NoViableAltException nvae =
+					new NoViableAltException("", 39, 0, input);
+				throw nvae;
 			}
-			else {
-				MismatchedSetException mse = new MismatchedSetException(null,input);
-				throw mse;
+			switch (alt39) {
+				case 1 :
+					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1227:6: PRIMITIVE_TYPE
+					{
+					match(input,PRIMITIVE_TYPE,FOLLOW_PRIMITIVE_TYPE_in_nonvoid_type_descriptor3305); 
+					 retval.type = input.getTokenStream().toString(input.getTreeAdaptor().getTokenStartIndex(retval.start),input.getTreeAdaptor().getTokenStopIndex(retval.start)); 
+					}
+					break;
+				case 2 :
+					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1228:5: CLASS_DESCRIPTOR
+					{
+					match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_nonvoid_type_descriptor3313); 
+					 retval.type = input.getTokenStream().toString(input.getTreeAdaptor().getTokenStartIndex(retval.start),input.getTreeAdaptor().getTokenStopIndex(retval.start)); 
+					}
+					break;
+				case 3 :
+					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1229:5: array_descriptor
+					{
+					pushFollow(FOLLOW_array_descriptor_in_nonvoid_type_descriptor3321);
+					array_descriptor197=array_descriptor();
+					state._fsp--;
+
+					 retval.type = array_descriptor197; 
+					}
+					break;
+
 			}
 
-			    retval.type = ((CommonTree)retval.start).getText();
-			  
 			}
 
 		}
@@ -6360,26 +6523,54 @@ public class smaliTreeWalker extends TreeParser {
 
 
 	// $ANTLR start "reference_type_descriptor"
-	// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1230:1: reference_type_descriptor returns [String type] : ( CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR ) ;
+	// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1232:1: reference_type_descriptor returns [String type] : ( CLASS_DESCRIPTOR | array_descriptor ) ;
 	public final smaliTreeWalker.reference_type_descriptor_return reference_type_descriptor() throws RecognitionException {
 		smaliTreeWalker.reference_type_descriptor_return retval = new smaliTreeWalker.reference_type_descriptor_return();
 		retval.start = input.LT(1);
 
+		String array_descriptor198 =null;
+
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1231:3: ( ( CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1231:5: ( CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1233:3: ( ( CLASS_DESCRIPTOR | array_descriptor ) )
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1233:5: ( CLASS_DESCRIPTOR | array_descriptor )
 			{
-			if ( input.LA(1)==ARRAY_DESCRIPTOR||input.LA(1)==CLASS_DESCRIPTOR ) {
-				input.consume();
-				state.errorRecovery=false;
+			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1233:5: ( CLASS_DESCRIPTOR | array_descriptor )
+			int alt40=2;
+			int LA40_0 = input.LA(1);
+			if ( (LA40_0==CLASS_DESCRIPTOR) ) {
+				alt40=1;
 			}
-			else {
-				MismatchedSetException mse = new MismatchedSetException(null,input);
-				throw mse;
+			else if ( (LA40_0==ARRAY_TYPE_PREFIX) ) {
+				alt40=2;
 			}
 
-			    retval.type = ((CommonTree)retval.start).getText();
-			  
+			else {
+				NoViableAltException nvae =
+					new NoViableAltException("", 40, 0, input);
+				throw nvae;
+			}
+
+			switch (alt40) {
+				case 1 :
+					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1233:6: CLASS_DESCRIPTOR
+					{
+					match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_reference_type_descriptor3342); 
+					 retval.type = input.getTokenStream().toString(input.getTreeAdaptor().getTokenStartIndex(retval.start),input.getTreeAdaptor().getTokenStopIndex(retval.start)); 
+					}
+					break;
+				case 2 :
+					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1234:5: array_descriptor
+					{
+					pushFollow(FOLLOW_array_descriptor_in_reference_type_descriptor3350);
+					array_descriptor198=array_descriptor();
+					state._fsp--;
+
+					 retval.type = array_descriptor198; 
+					}
+					break;
+
+			}
+
 			}
 
 		}
@@ -6402,41 +6593,41 @@ public class smaliTreeWalker extends TreeParser {
 		String type = null;
 
 
-		TreeRuleReturnScope nonvoid_type_descriptor194 =null;
+		TreeRuleReturnScope nonvoid_type_descriptor199 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1238:3: ( VOID_TYPE | nonvoid_type_descriptor )
-			int alt38=2;
-			int LA38_0 = input.LA(1);
-			if ( (LA38_0==VOID_TYPE) ) {
-				alt38=1;
+			int alt41=2;
+			int LA41_0 = input.LA(1);
+			if ( (LA41_0==VOID_TYPE) ) {
+				alt41=1;
 			}
-			else if ( (LA38_0==ARRAY_DESCRIPTOR||LA38_0==CLASS_DESCRIPTOR||LA38_0==PRIMITIVE_TYPE) ) {
-				alt38=2;
+			else if ( (LA41_0==ARRAY_TYPE_PREFIX||LA41_0==CLASS_DESCRIPTOR||LA41_0==PRIMITIVE_TYPE) ) {
+				alt41=2;
 			}
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 38, 0, input);
+					new NoViableAltException("", 41, 0, input);
 				throw nvae;
 			}
 
-			switch (alt38) {
+			switch (alt41) {
 				case 1 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1238:5: VOID_TYPE
 					{
-					match(input,VOID_TYPE,FOLLOW_VOID_TYPE_in_type_descriptor3313); 
+					match(input,VOID_TYPE,FOLLOW_VOID_TYPE_in_type_descriptor3370); 
 					type = "V";
 					}
 					break;
 				case 2 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1239:5: nonvoid_type_descriptor
 					{
-					pushFollow(FOLLOW_nonvoid_type_descriptor_in_type_descriptor3321);
-					nonvoid_type_descriptor194=nonvoid_type_descriptor();
+					pushFollow(FOLLOW_nonvoid_type_descriptor_in_type_descriptor3378);
+					nonvoid_type_descriptor199=nonvoid_type_descriptor();
 					state._fsp--;
 
-					type = (nonvoid_type_descriptor194!=null?((smaliTreeWalker.nonvoid_type_descriptor_return)nonvoid_type_descriptor194).type:null);
+					type = (nonvoid_type_descriptor199!=null?((smaliTreeWalker.nonvoid_type_descriptor_return)nonvoid_type_descriptor199).type:null);
 					}
 					break;
 
@@ -6461,101 +6652,101 @@ public class smaliTreeWalker extends TreeParser {
 		short value = 0;
 
 
-		long long_literal195 =0;
-		int integer_literal196 =0;
-		short short_literal197 =0;
-		char char_literal198 =0;
-		byte byte_literal199 =0;
+		long long_literal200 =0;
+		int integer_literal201 =0;
+		short short_literal202 =0;
+		char char_literal203 =0;
+		byte byte_literal204 =0;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1243:3: ( long_literal | integer_literal | short_literal | char_literal | byte_literal )
-			int alt39=5;
+			int alt42=5;
 			switch ( input.LA(1) ) {
 			case LONG_LITERAL:
 				{
-				alt39=1;
+				alt42=1;
 				}
 				break;
 			case INTEGER_LITERAL:
 				{
-				alt39=2;
+				alt42=2;
 				}
 				break;
 			case SHORT_LITERAL:
 				{
-				alt39=3;
+				alt42=3;
 				}
 				break;
 			case CHAR_LITERAL:
 				{
-				alt39=4;
+				alt42=4;
 				}
 				break;
 			case BYTE_LITERAL:
 				{
-				alt39=5;
+				alt42=5;
 				}
 				break;
 			default:
 				NoViableAltException nvae =
-					new NoViableAltException("", 39, 0, input);
+					new NoViableAltException("", 42, 0, input);
 				throw nvae;
 			}
-			switch (alt39) {
+			switch (alt42) {
 				case 1 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1243:5: long_literal
 					{
-					pushFollow(FOLLOW_long_literal_in_short_integral_literal3339);
-					long_literal195=long_literal();
+					pushFollow(FOLLOW_long_literal_in_short_integral_literal3396);
+					long_literal200=long_literal();
 					state._fsp--;
 
 
-					      LiteralTools.checkShort(long_literal195);
-					      value = (short)long_literal195;
+					      LiteralTools.checkShort(long_literal200);
+					      value = (short)long_literal200;
 					    
 					}
 					break;
 				case 2 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1248:5: integer_literal
 					{
-					pushFollow(FOLLOW_integer_literal_in_short_integral_literal3351);
-					integer_literal196=integer_literal();
+					pushFollow(FOLLOW_integer_literal_in_short_integral_literal3408);
+					integer_literal201=integer_literal();
 					state._fsp--;
 
 
-					      LiteralTools.checkShort(integer_literal196);
-					      value = (short)integer_literal196;
+					      LiteralTools.checkShort(integer_literal201);
+					      value = (short)integer_literal201;
 					    
 					}
 					break;
 				case 3 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1253:5: short_literal
 					{
-					pushFollow(FOLLOW_short_literal_in_short_integral_literal3363);
-					short_literal197=short_literal();
+					pushFollow(FOLLOW_short_literal_in_short_integral_literal3420);
+					short_literal202=short_literal();
 					state._fsp--;
 
-					value = short_literal197;
+					value = short_literal202;
 					}
 					break;
 				case 4 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1254:5: char_literal
 					{
-					pushFollow(FOLLOW_char_literal_in_short_integral_literal3371);
-					char_literal198=char_literal();
+					pushFollow(FOLLOW_char_literal_in_short_integral_literal3428);
+					char_literal203=char_literal();
 					state._fsp--;
 
-					value = (short)char_literal198;
+					value = (short)char_literal203;
 					}
 					break;
 				case 5 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1255:5: byte_literal
 					{
-					pushFollow(FOLLOW_byte_literal_in_short_integral_literal3379);
-					byte_literal199=byte_literal();
+					pushFollow(FOLLOW_byte_literal_in_short_integral_literal3436);
+					byte_literal204=byte_literal();
 					state._fsp--;
 
-					value = byte_literal199;
+					value = byte_literal204;
 					}
 					break;
 
@@ -6580,82 +6771,82 @@ public class smaliTreeWalker extends TreeParser {
 		int value = 0;
 
 
-		long long_literal200 =0;
-		int integer_literal201 =0;
-		short short_literal202 =0;
-		byte byte_literal203 =0;
+		long long_literal205 =0;
+		int integer_literal206 =0;
+		short short_literal207 =0;
+		byte byte_literal208 =0;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1258:3: ( long_literal | integer_literal | short_literal | byte_literal )
-			int alt40=4;
+			int alt43=4;
 			switch ( input.LA(1) ) {
 			case LONG_LITERAL:
 				{
-				alt40=1;
+				alt43=1;
 				}
 				break;
 			case INTEGER_LITERAL:
 				{
-				alt40=2;
+				alt43=2;
 				}
 				break;
 			case SHORT_LITERAL:
 				{
-				alt40=3;
+				alt43=3;
 				}
 				break;
 			case BYTE_LITERAL:
 				{
-				alt40=4;
+				alt43=4;
 				}
 				break;
 			default:
 				NoViableAltException nvae =
-					new NoViableAltException("", 40, 0, input);
+					new NoViableAltException("", 43, 0, input);
 				throw nvae;
 			}
-			switch (alt40) {
+			switch (alt43) {
 				case 1 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1258:5: long_literal
 					{
-					pushFollow(FOLLOW_long_literal_in_integral_literal3394);
-					long_literal200=long_literal();
+					pushFollow(FOLLOW_long_literal_in_integral_literal3451);
+					long_literal205=long_literal();
 					state._fsp--;
 
 
-					      LiteralTools.checkInt(long_literal200);
-					      value = (int)long_literal200;
+					      LiteralTools.checkInt(long_literal205);
+					      value = (int)long_literal205;
 					    
 					}
 					break;
 				case 2 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1263:5: integer_literal
 					{
-					pushFollow(FOLLOW_integer_literal_in_integral_literal3406);
-					integer_literal201=integer_literal();
+					pushFollow(FOLLOW_integer_literal_in_integral_literal3463);
+					integer_literal206=integer_literal();
 					state._fsp--;
 
-					value = integer_literal201;
+					value = integer_literal206;
 					}
 					break;
 				case 3 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1264:5: short_literal
 					{
-					pushFollow(FOLLOW_short_literal_in_integral_literal3414);
-					short_literal202=short_literal();
+					pushFollow(FOLLOW_short_literal_in_integral_literal3471);
+					short_literal207=short_literal();
 					state._fsp--;
 
-					value = short_literal202;
+					value = short_literal207;
 					}
 					break;
 				case 4 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1265:5: byte_literal
 					{
-					pushFollow(FOLLOW_byte_literal_in_integral_literal3422);
-					byte_literal203=byte_literal();
+					pushFollow(FOLLOW_byte_literal_in_integral_literal3479);
+					byte_literal208=byte_literal();
 					state._fsp--;
 
-					value = byte_literal203;
+					value = byte_literal208;
 					}
 					break;
 
@@ -6680,14 +6871,14 @@ public class smaliTreeWalker extends TreeParser {
 		int value = 0;
 
 
-		CommonTree INTEGER_LITERAL204=null;
+		CommonTree INTEGER_LITERAL209=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1269:3: ( INTEGER_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1269:5: INTEGER_LITERAL
 			{
-			INTEGER_LITERAL204=(CommonTree)match(input,INTEGER_LITERAL,FOLLOW_INTEGER_LITERAL_in_integer_literal3438); 
-			 value = LiteralTools.parseInt((INTEGER_LITERAL204!=null?INTEGER_LITERAL204.getText():null)); 
+			INTEGER_LITERAL209=(CommonTree)match(input,INTEGER_LITERAL,FOLLOW_INTEGER_LITERAL_in_integer_literal3495); 
+			 value = LiteralTools.parseInt((INTEGER_LITERAL209!=null?INTEGER_LITERAL209.getText():null)); 
 			}
 
 		}
@@ -6710,14 +6901,14 @@ public class smaliTreeWalker extends TreeParser {
 		long value = 0;
 
 
-		CommonTree LONG_LITERAL205=null;
+		CommonTree LONG_LITERAL210=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1272:3: ( LONG_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1272:5: LONG_LITERAL
 			{
-			LONG_LITERAL205=(CommonTree)match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_long_literal3453); 
-			 value = LiteralTools.parseLong((LONG_LITERAL205!=null?LONG_LITERAL205.getText():null)); 
+			LONG_LITERAL210=(CommonTree)match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_long_literal3510); 
+			 value = LiteralTools.parseLong((LONG_LITERAL210!=null?LONG_LITERAL210.getText():null)); 
 			}
 
 		}
@@ -6740,14 +6931,14 @@ public class smaliTreeWalker extends TreeParser {
 		short value = 0;
 
 
-		CommonTree SHORT_LITERAL206=null;
+		CommonTree SHORT_LITERAL211=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1275:3: ( SHORT_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1275:5: SHORT_LITERAL
 			{
-			SHORT_LITERAL206=(CommonTree)match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_short_literal3468); 
-			 value = LiteralTools.parseShort((SHORT_LITERAL206!=null?SHORT_LITERAL206.getText():null)); 
+			SHORT_LITERAL211=(CommonTree)match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_short_literal3525); 
+			 value = LiteralTools.parseShort((SHORT_LITERAL211!=null?SHORT_LITERAL211.getText():null)); 
 			}
 
 		}
@@ -6770,14 +6961,14 @@ public class smaliTreeWalker extends TreeParser {
 		byte value = 0;
 
 
-		CommonTree BYTE_LITERAL207=null;
+		CommonTree BYTE_LITERAL212=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1278:3: ( BYTE_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1278:5: BYTE_LITERAL
 			{
-			BYTE_LITERAL207=(CommonTree)match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_byte_literal3483); 
-			 value = LiteralTools.parseByte((BYTE_LITERAL207!=null?BYTE_LITERAL207.getText():null)); 
+			BYTE_LITERAL212=(CommonTree)match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_byte_literal3540); 
+			 value = LiteralTools.parseByte((BYTE_LITERAL212!=null?BYTE_LITERAL212.getText():null)); 
 			}
 
 		}
@@ -6800,14 +6991,14 @@ public class smaliTreeWalker extends TreeParser {
 		float value = 0.0f;
 
 
-		CommonTree FLOAT_LITERAL208=null;
+		CommonTree FLOAT_LITERAL213=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1281:3: ( FLOAT_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1281:5: FLOAT_LITERAL
 			{
-			FLOAT_LITERAL208=(CommonTree)match(input,FLOAT_LITERAL,FOLLOW_FLOAT_LITERAL_in_float_literal3498); 
-			 value = LiteralTools.parseFloat((FLOAT_LITERAL208!=null?FLOAT_LITERAL208.getText():null)); 
+			FLOAT_LITERAL213=(CommonTree)match(input,FLOAT_LITERAL,FOLLOW_FLOAT_LITERAL_in_float_literal3555); 
+			 value = LiteralTools.parseFloat((FLOAT_LITERAL213!=null?FLOAT_LITERAL213.getText():null)); 
 			}
 
 		}
@@ -6830,14 +7021,14 @@ public class smaliTreeWalker extends TreeParser {
 		double value = 0.0;
 
 
-		CommonTree DOUBLE_LITERAL209=null;
+		CommonTree DOUBLE_LITERAL214=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1284:3: ( DOUBLE_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1284:5: DOUBLE_LITERAL
 			{
-			DOUBLE_LITERAL209=(CommonTree)match(input,DOUBLE_LITERAL,FOLLOW_DOUBLE_LITERAL_in_double_literal3513); 
-			 value = LiteralTools.parseDouble((DOUBLE_LITERAL209!=null?DOUBLE_LITERAL209.getText():null)); 
+			DOUBLE_LITERAL214=(CommonTree)match(input,DOUBLE_LITERAL,FOLLOW_DOUBLE_LITERAL_in_double_literal3570); 
+			 value = LiteralTools.parseDouble((DOUBLE_LITERAL214!=null?DOUBLE_LITERAL214.getText():null)); 
 			}
 
 		}
@@ -6860,14 +7051,14 @@ public class smaliTreeWalker extends TreeParser {
 		char value = 0;
 
 
-		CommonTree CHAR_LITERAL210=null;
+		CommonTree CHAR_LITERAL215=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1287:3: ( CHAR_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1287:5: CHAR_LITERAL
 			{
-			CHAR_LITERAL210=(CommonTree)match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_char_literal3528); 
-			 value = (CHAR_LITERAL210!=null?CHAR_LITERAL210.getText():null).charAt(1); 
+			CHAR_LITERAL215=(CommonTree)match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_char_literal3585); 
+			 value = (CHAR_LITERAL215!=null?CHAR_LITERAL215.getText():null).charAt(1); 
 			}
 
 		}
@@ -6890,15 +7081,15 @@ public class smaliTreeWalker extends TreeParser {
 		String value = null;
 
 
-		CommonTree STRING_LITERAL211=null;
+		CommonTree STRING_LITERAL216=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1290:3: ( STRING_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1290:5: STRING_LITERAL
 			{
-			STRING_LITERAL211=(CommonTree)match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_string_literal3543); 
+			STRING_LITERAL216=(CommonTree)match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_string_literal3600); 
 
-			      value = (STRING_LITERAL211!=null?STRING_LITERAL211.getText():null);
+			      value = (STRING_LITERAL216!=null?STRING_LITERAL216.getText():null);
 			      value = value.substring(1,value.length()-1);
 			    
 			}
@@ -6923,14 +7114,14 @@ public class smaliTreeWalker extends TreeParser {
 		boolean value = false;
 
 
-		CommonTree BOOL_LITERAL212=null;
+		CommonTree BOOL_LITERAL217=null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1297:3: ( BOOL_LITERAL )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1297:5: BOOL_LITERAL
 			{
-			BOOL_LITERAL212=(CommonTree)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_bool_literal3562); 
-			 value = Boolean.parseBoolean((BOOL_LITERAL212!=null?BOOL_LITERAL212.getText():null)); 
+			BOOL_LITERAL217=(CommonTree)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_bool_literal3619); 
+			 value = Boolean.parseBoolean((BOOL_LITERAL217!=null?BOOL_LITERAL217.getText():null)); 
 			}
 
 		}
@@ -6953,39 +7144,39 @@ public class smaliTreeWalker extends TreeParser {
 		List<EncodedValue> elements = null;
 
 
-		EncodedValue literal213 =null;
+		EncodedValue literal218 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1300:3: ( ^( I_ENCODED_ARRAY ( literal )* ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1300:5: ^( I_ENCODED_ARRAY ( literal )* )
 			{
 			elements = Lists.newArrayList();
-			match(input,I_ENCODED_ARRAY,FOLLOW_I_ENCODED_ARRAY_in_array_literal3584); 
+			match(input,I_ENCODED_ARRAY,FOLLOW_I_ENCODED_ARRAY_in_array_literal3641); 
 			if ( input.LA(1)==Token.DOWN ) {
 				match(input, Token.DOWN, null); 
 				// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1301:23: ( literal )*
-				loop41:
+				loop44:
 				while (true) {
-					int alt41=2;
-					int LA41_0 = input.LA(1);
-					if ( (LA41_0==ARRAY_DESCRIPTOR||(LA41_0 >= BOOL_LITERAL && LA41_0 <= BYTE_LITERAL)||(LA41_0 >= CHAR_LITERAL && LA41_0 <= CLASS_DESCRIPTOR)||LA41_0==DOUBLE_LITERAL||LA41_0==FLOAT_LITERAL||LA41_0==INTEGER_LITERAL||(LA41_0 >= I_ENCODED_ARRAY && LA41_0 <= I_ENCODED_METHOD)||LA41_0==I_SUBANNOTATION||LA41_0==LONG_LITERAL||LA41_0==NULL_LITERAL||LA41_0==PRIMITIVE_TYPE||LA41_0==SHORT_LITERAL||LA41_0==STRING_LITERAL||LA41_0==VOID_TYPE) ) {
-						alt41=1;
+					int alt44=2;
+					int LA44_0 = input.LA(1);
+					if ( (LA44_0==ARRAY_TYPE_PREFIX||(LA44_0 >= BOOL_LITERAL && LA44_0 <= BYTE_LITERAL)||(LA44_0 >= CHAR_LITERAL && LA44_0 <= CLASS_DESCRIPTOR)||LA44_0==DOUBLE_LITERAL||LA44_0==FLOAT_LITERAL||LA44_0==INTEGER_LITERAL||(LA44_0 >= I_ENCODED_ARRAY && LA44_0 <= I_ENCODED_METHOD)||LA44_0==I_SUBANNOTATION||LA44_0==LONG_LITERAL||LA44_0==NULL_LITERAL||LA44_0==PRIMITIVE_TYPE||LA44_0==SHORT_LITERAL||LA44_0==STRING_LITERAL||LA44_0==VOID_TYPE) ) {
+						alt44=1;
 					}
 
-					switch (alt41) {
+					switch (alt44) {
 					case 1 :
 						// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1301:24: literal
 						{
-						pushFollow(FOLLOW_literal_in_array_literal3587);
-						literal213=literal();
+						pushFollow(FOLLOW_literal_in_array_literal3644);
+						literal218=literal();
 						state._fsp--;
 
-						elements.add(literal213);
+						elements.add(literal218);
 						}
 						break;
 
 					default :
-						break loop41;
+						break loop44;
 					}
 				}
 
@@ -7014,35 +7205,35 @@ public class smaliTreeWalker extends TreeParser {
 		Set<Annotation> annotations = null;
 
 
-		Annotation annotation214 =null;
+		Annotation annotation219 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1304:3: ( ^( I_ANNOTATIONS ( annotation )* ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1304:5: ^( I_ANNOTATIONS ( annotation )* )
 			{
 			HashMap<String, Annotation> annotationMap = Maps.newHashMap();
-			match(input,I_ANNOTATIONS,FOLLOW_I_ANNOTATIONS_in_annotations3612); 
+			match(input,I_ANNOTATIONS,FOLLOW_I_ANNOTATIONS_in_annotations3669); 
 			if ( input.LA(1)==Token.DOWN ) {
 				match(input, Token.DOWN, null); 
 				// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1305:21: ( annotation )*
-				loop42:
+				loop45:
 				while (true) {
-					int alt42=2;
-					int LA42_0 = input.LA(1);
-					if ( (LA42_0==I_ANNOTATION) ) {
-						alt42=1;
+					int alt45=2;
+					int LA45_0 = input.LA(1);
+					if ( (LA45_0==I_ANNOTATION) ) {
+						alt45=1;
 					}
 
-					switch (alt42) {
+					switch (alt45) {
 					case 1 :
 						// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1305:22: annotation
 						{
-						pushFollow(FOLLOW_annotation_in_annotations3615);
-						annotation214=annotation();
+						pushFollow(FOLLOW_annotation_in_annotations3672);
+						annotation219=annotation();
 						state._fsp--;
 
 
-						        Annotation anno = annotation214;
+						        Annotation anno = annotation219;
 						        Annotation old = annotationMap.put(anno.getType(), anno);
 						        if (old != null) {
 						            throw new SemanticException(input, "Multiple annotations of type %s", anno.getType());
@@ -7052,7 +7243,7 @@ public class smaliTreeWalker extends TreeParser {
 						break;
 
 					default :
-						break loop42;
+						break loop45;
 					}
 				}
 
@@ -7086,25 +7277,25 @@ public class smaliTreeWalker extends TreeParser {
 		Annotation annotation = null;
 
 
-		CommonTree ANNOTATION_VISIBILITY215=null;
-		TreeRuleReturnScope subannotation216 =null;
+		CommonTree ANNOTATION_VISIBILITY220=null;
+		TreeRuleReturnScope subannotation221 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1320:3: ( ^( I_ANNOTATION ANNOTATION_VISIBILITY subannotation ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1320:5: ^( I_ANNOTATION ANNOTATION_VISIBILITY subannotation )
 			{
-			match(input,I_ANNOTATION,FOLLOW_I_ANNOTATION_in_annotation3644); 
+			match(input,I_ANNOTATION,FOLLOW_I_ANNOTATION_in_annotation3701); 
 			match(input, Token.DOWN, null); 
-			ANNOTATION_VISIBILITY215=(CommonTree)match(input,ANNOTATION_VISIBILITY,FOLLOW_ANNOTATION_VISIBILITY_in_annotation3646); 
-			pushFollow(FOLLOW_subannotation_in_annotation3648);
-			subannotation216=subannotation();
+			ANNOTATION_VISIBILITY220=(CommonTree)match(input,ANNOTATION_VISIBILITY,FOLLOW_ANNOTATION_VISIBILITY_in_annotation3703); 
+			pushFollow(FOLLOW_subannotation_in_annotation3705);
+			subannotation221=subannotation();
 			state._fsp--;
 
 			match(input, Token.UP, null); 
 
 
-			      int visibility = AnnotationVisibility.getVisibility((ANNOTATION_VISIBILITY215!=null?ANNOTATION_VISIBILITY215.getText():null));
-			      annotation = new ImmutableAnnotation(visibility, (subannotation216!=null?((smaliTreeWalker.subannotation_return)subannotation216).annotationType:null), (subannotation216!=null?((smaliTreeWalker.subannotation_return)subannotation216).elements:null));
+			      int visibility = AnnotationVisibility.getVisibility((ANNOTATION_VISIBILITY220!=null?ANNOTATION_VISIBILITY220.getText():null));
+			      annotation = new ImmutableAnnotation(visibility, (subannotation221!=null?((smaliTreeWalker.subannotation_return)subannotation221).annotationType:null), (subannotation221!=null?((smaliTreeWalker.subannotation_return)subannotation221).elements:null));
 			    
 			}
 
@@ -7128,24 +7319,24 @@ public class smaliTreeWalker extends TreeParser {
 		AnnotationElement element = null;
 
 
-		CommonTree SIMPLE_NAME217=null;
-		EncodedValue literal218 =null;
+		CommonTree SIMPLE_NAME222=null;
+		EncodedValue literal223 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1327:3: ( ^( I_ANNOTATION_ELEMENT SIMPLE_NAME literal ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1327:5: ^( I_ANNOTATION_ELEMENT SIMPLE_NAME literal )
 			{
-			match(input,I_ANNOTATION_ELEMENT,FOLLOW_I_ANNOTATION_ELEMENT_in_annotation_element3669); 
+			match(input,I_ANNOTATION_ELEMENT,FOLLOW_I_ANNOTATION_ELEMENT_in_annotation_element3726); 
 			match(input, Token.DOWN, null); 
-			SIMPLE_NAME217=(CommonTree)match(input,SIMPLE_NAME,FOLLOW_SIMPLE_NAME_in_annotation_element3671); 
-			pushFollow(FOLLOW_literal_in_annotation_element3673);
-			literal218=literal();
+			SIMPLE_NAME222=(CommonTree)match(input,SIMPLE_NAME,FOLLOW_SIMPLE_NAME_in_annotation_element3728); 
+			pushFollow(FOLLOW_literal_in_annotation_element3730);
+			literal223=literal();
 			state._fsp--;
 
 			match(input, Token.UP, null); 
 
 
-			      element = new ImmutableAnnotationElement((SIMPLE_NAME217!=null?SIMPLE_NAME217.getText():null), literal218);
+			      element = new ImmutableAnnotationElement((SIMPLE_NAME222!=null?SIMPLE_NAME222.getText():null), literal223);
 			    
 			}
 
@@ -7174,49 +7365,49 @@ public class smaliTreeWalker extends TreeParser {
 		smaliTreeWalker.subannotation_return retval = new smaliTreeWalker.subannotation_return();
 		retval.start = input.LT(1);
 
-		CommonTree CLASS_DESCRIPTOR220=null;
-		AnnotationElement annotation_element219 =null;
+		CommonTree CLASS_DESCRIPTOR225=null;
+		AnnotationElement annotation_element224 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1333:3: ( ^( I_SUBANNOTATION CLASS_DESCRIPTOR ( annotation_element )* ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1333:5: ^( I_SUBANNOTATION CLASS_DESCRIPTOR ( annotation_element )* )
 			{
 			ArrayList<AnnotationElement> elements = Lists.newArrayList();
-			match(input,I_SUBANNOTATION,FOLLOW_I_SUBANNOTATION_in_subannotation3700); 
+			match(input,I_SUBANNOTATION,FOLLOW_I_SUBANNOTATION_in_subannotation3757); 
 			match(input, Token.DOWN, null); 
-			CLASS_DESCRIPTOR220=(CommonTree)match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_subannotation3710); 
+			CLASS_DESCRIPTOR225=(CommonTree)match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_subannotation3767); 
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1336:9: ( annotation_element )*
-			loop43:
+			loop46:
 			while (true) {
-				int alt43=2;
-				int LA43_0 = input.LA(1);
-				if ( (LA43_0==I_ANNOTATION_ELEMENT) ) {
-					alt43=1;
+				int alt46=2;
+				int LA46_0 = input.LA(1);
+				if ( (LA46_0==I_ANNOTATION_ELEMENT) ) {
+					alt46=1;
 				}
 
-				switch (alt43) {
+				switch (alt46) {
 				case 1 :
 					// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1336:10: annotation_element
 					{
-					pushFollow(FOLLOW_annotation_element_in_subannotation3721);
-					annotation_element219=annotation_element();
+					pushFollow(FOLLOW_annotation_element_in_subannotation3778);
+					annotation_element224=annotation_element();
 					state._fsp--;
 
 
-					           elements.add(annotation_element219);
+					           elements.add(annotation_element224);
 					        
 					}
 					break;
 
 				default :
-					break loop43;
+					break loop46;
 				}
 			}
 
 			match(input, Token.UP, null); 
 
 
-			      retval.annotationType = (CLASS_DESCRIPTOR220!=null?CLASS_DESCRIPTOR220.getText():null);
+			      retval.annotationType = (CLASS_DESCRIPTOR225!=null?CLASS_DESCRIPTOR225.getText():null);
 			      retval.elements = elements;
 			    
 			}
@@ -7241,22 +7432,22 @@ public class smaliTreeWalker extends TreeParser {
 		FieldReference value = null;
 
 
-		ImmutableFieldReference field_reference221 =null;
+		ImmutableFieldReference field_reference226 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1347:3: ( ^( I_ENCODED_FIELD field_reference ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1347:5: ^( I_ENCODED_FIELD field_reference )
 			{
-			match(input,I_ENCODED_FIELD,FOLLOW_I_ENCODED_FIELD_in_field_literal3760); 
+			match(input,I_ENCODED_FIELD,FOLLOW_I_ENCODED_FIELD_in_field_literal3817); 
 			match(input, Token.DOWN, null); 
-			pushFollow(FOLLOW_field_reference_in_field_literal3762);
-			field_reference221=field_reference();
+			pushFollow(FOLLOW_field_reference_in_field_literal3819);
+			field_reference226=field_reference();
 			state._fsp--;
 
 			match(input, Token.UP, null); 
 
 
-			      value = field_reference221;
+			      value = field_reference226;
 			    
 			}
 
@@ -7280,22 +7471,22 @@ public class smaliTreeWalker extends TreeParser {
 		MethodReference value = null;
 
 
-		ImmutableMethodReference method_reference222 =null;
+		ImmutableMethodReference method_reference227 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1353:3: ( ^( I_ENCODED_METHOD method_reference ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1353:5: ^( I_ENCODED_METHOD method_reference )
 			{
-			match(input,I_ENCODED_METHOD,FOLLOW_I_ENCODED_METHOD_in_method_literal3783); 
+			match(input,I_ENCODED_METHOD,FOLLOW_I_ENCODED_METHOD_in_method_literal3840); 
 			match(input, Token.DOWN, null); 
-			pushFollow(FOLLOW_method_reference_in_method_literal3785);
-			method_reference222=method_reference();
+			pushFollow(FOLLOW_method_reference_in_method_literal3842);
+			method_reference227=method_reference();
 			state._fsp--;
 
 			match(input, Token.UP, null); 
 
 
-			      value = method_reference222;
+			      value = method_reference227;
 			    
 			}
 
@@ -7319,22 +7510,22 @@ public class smaliTreeWalker extends TreeParser {
 		FieldReference value = null;
 
 
-		ImmutableFieldReference field_reference223 =null;
+		ImmutableFieldReference field_reference228 =null;
 
 		try {
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1359:3: ( ^( I_ENCODED_ENUM field_reference ) )
 			// shaka.smali/smali/smali/src/main/antlr/smaliTreeWalker.g:1359:5: ^( I_ENCODED_ENUM field_reference )
 			{
-			match(input,I_ENCODED_ENUM,FOLLOW_I_ENCODED_ENUM_in_enum_literal3806); 
+			match(input,I_ENCODED_ENUM,FOLLOW_I_ENCODED_ENUM_in_enum_literal3863); 
 			match(input, Token.DOWN, null); 
-			pushFollow(FOLLOW_field_reference_in_enum_literal3808);
-			field_reference223=field_reference();
+			pushFollow(FOLLOW_field_reference_in_enum_literal3865);
+			field_reference228=field_reference();
 			state._fsp--;
 
 			match(input, Token.UP, null); 
 
 
-			      value = field_reference223;
+			      value = field_reference228;
 			    
 			}
 
@@ -7427,12 +7618,12 @@ public class smaliTreeWalker extends TreeParser {
 	public static final BitSet FOLLOW_char_literal_in_fixed_32bit_literal762 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_bool_literal_in_fixed_32bit_literal770 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_I_ARRAY_ELEMENTS_in_array_elements792 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_fixed_64bit_literal_number_in_array_elements801 = new BitSet(new long[]{0x0000004000404C08L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_fixed_64bit_literal_number_in_array_elements801 = new BitSet(new long[]{0x0000004000404C08L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_I_PACKED_SWITCH_ELEMENTS_in_packed_switch_elements837 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_label_ref_in_packed_switch_elements846 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_label_ref_in_packed_switch_elements846 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_I_SPARSE_SWITCH_ELEMENTS_in_sparse_switch_elements881 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_fixed_32bit_literal_in_sparse_switch_elements891 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_label_ref_in_sparse_switch_elements893 = new BitSet(new long[]{0x0000004000004C08L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_fixed_32bit_literal_in_sparse_switch_elements891 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_label_ref_in_sparse_switch_elements893 = new BitSet(new long[]{0x0000004000004C08L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_I_METHOD_in_method945 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_method_name_and_prototype_in_method953 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
 	public static final BitSet FOLLOW_access_list_in_method961 = new BitSet(new long[]{0x0000000000000000L,0x0210000000000000L,0x0000000000000001L});
@@ -7447,12 +7638,12 @@ public class smaliTreeWalker extends TreeParser {
 	public static final BitSet FOLLOW_method_type_list_in_method_prototype1102 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_SIMPLE_NAME_in_method_name_and_prototype1120 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
 	public static final BitSet FOLLOW_method_prototype_in_method_name_and_prototype1122 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_method_type_list1156 = new BitSet(new long[]{0x0000000000008102L,0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
-	public static final BitSet FOLLOW_reference_type_descriptor_in_method_reference1185 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_method_type_list1156 = new BitSet(new long[]{0x0000000000008102L,0x0000000000000000L,0x2000000000000000L});
+	public static final BitSet FOLLOW_reference_type_descriptor_in_method_reference1185 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_SIMPLE_NAME_in_method_reference1188 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
 	public static final BitSet FOLLOW_method_prototype_in_method_reference1190 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_reference_type_descriptor_in_field_reference1207 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_SIMPLE_NAME_in_field_reference1210 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_reference_type_descriptor_in_field_reference1207 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_SIMPLE_NAME_in_field_reference1210 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x2000000000000000L});
 	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_field_reference1212 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_I_REGISTERS_in_registers_directive1238 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_I_LOCALS_in_registers_directive1250 = new BitSet(new long[]{0x0000000000000004L});
@@ -7463,18 +7654,18 @@ public class smaliTreeWalker extends TreeParser {
 	public static final BitSet FOLLOW_catch_directive_in_catches1318 = new BitSet(new long[]{0x0000000000000008L,0x0000000C00000000L});
 	public static final BitSet FOLLOW_catchall_directive_in_catches1321 = new BitSet(new long[]{0x0000000000000008L,0x0000000800000000L});
 	public static final BitSet FOLLOW_I_CATCH_in_catch_directive1334 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_catch_directive1336 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_label_ref_in_catch_directive1340 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_label_ref_in_catch_directive1344 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_catch_directive1336 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_label_ref_in_catch_directive1340 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_label_ref_in_catch_directive1344 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_catch_directive1348 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_CATCHALL_in_catchall_directive1364 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_label_ref_in_catchall_directive1368 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_label_ref_in_catchall_directive1372 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_label_ref_in_catchall_directive1368 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_label_ref_in_catchall_directive1372 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_catchall_directive1376 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_PARAMETERS_in_parameters1393 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_parameter_in_parameters1396 = new BitSet(new long[]{0x0000000000000008L,0x1000000000000000L});
 	public static final BitSet FOLLOW_I_PARAMETER_in_parameter1412 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_parameter1414 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L,0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_REGISTER_in_parameter1414 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L,0x0000000000000000L,0x0000000000000040L});
 	public static final BitSet FOLLOW_string_literal_in_parameter1416 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
 	public static final BitSet FOLLOW_annotations_in_parameter1419 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_line_in_debug_directive1436 = new BitSet(new long[]{0x0000000000000002L});
@@ -7487,10 +7678,10 @@ public class smaliTreeWalker extends TreeParser {
 	public static final BitSet FOLLOW_I_LINE_in_line1483 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_integral_literal_in_line1485 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_LOCAL_in_local1503 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_local1505 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0040000000000000L,0x0000000000000200L});
-	public static final BitSet FOLLOW_NULL_LITERAL_in_local1509 = new BitSet(new long[]{0x0000000000008108L,0x0000000000000000L,0x0000000000000000L,0x0000000000000201L});
-	public static final BitSet FOLLOW_string_literal_in_local1515 = new BitSet(new long[]{0x0000000000008108L,0x0000000000000000L,0x0000000000000000L,0x0000000000000201L});
-	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_local1518 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_REGISTER_in_local1505 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0040000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_NULL_LITERAL_in_local1509 = new BitSet(new long[]{0x0000000000008108L,0x0000000000000000L,0x2000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_string_literal_in_local1515 = new BitSet(new long[]{0x0000000000008108L,0x0000000000000000L,0x2000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_local1518 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
 	public static final BitSet FOLLOW_string_literal_in_local1523 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_END_LOCAL_in_end_local1544 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_REGISTER_in_end_local1546 = new BitSet(new long[]{0x0000000000000008L});
@@ -7506,11 +7697,11 @@ public class smaliTreeWalker extends TreeParser {
 	public static final BitSet FOLLOW_debug_directive_in_ordered_method_items1648 = new BitSet(new long[]{0x0000000000000008L,0x800E0C0000000000L,0x00000FFFFFFFFFD8L});
 	public static final BitSet FOLLOW_SIMPLE_NAME_in_label_ref1664 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_I_REGISTER_LIST_in_register_list1689 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_register_list1698 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_REGISTER_in_register_list1698 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_I_REGISTER_LIST_in_register_list41732 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_register_list41741 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_REGISTER_in_register_list41741 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_I_REGISTER_RANGE_in_register_range1766 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_register_range1771 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_REGISTER_in_register_range1771 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_REGISTER_in_register_range1775 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_verification_error_reference1798 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_field_reference_in_verification_error_reference1808 = new BitSet(new long[]{0x0000000000000002L});
@@ -7555,145 +7746,145 @@ public class smaliTreeWalker extends TreeParser {
 	public static final BitSet FOLLOW_insn_packed_switch_directive_in_instruction2065 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_insn_sparse_switch_directive_in_instruction2071 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT10t_in_insn_format10t2095 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT10t_in_insn_format10t2097 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT10t_in_insn_format10t2097 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_insn_format10t2099 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT10x_in_insn_format10x2122 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_INSTRUCTION_FORMAT10x_in_insn_format10x2124 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT11n_in_insn_format11n2147 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT11n_in_insn_format11n2149 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format11n2151 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT11n_in_insn_format11n2149 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format11n2151 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_short_integral_literal_in_insn_format11n2153 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT11x_in_insn_format11x2176 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT11x_in_insn_format11x2178 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT11x_in_insn_format11x2178 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_REGISTER_in_insn_format11x2180 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT12x_in_insn_format12x2203 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT12x_in_insn_format12x2205 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format12x2209 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT12x_in_insn_format12x2205 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format12x2209 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_REGISTER_in_insn_format12x2213 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT20bc_in_insn_format20bc2236 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT20bc_in_insn_format20bc2238 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000001000L});
-	public static final BitSet FOLLOW_verification_error_type_in_insn_format20bc2240 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT20bc_in_insn_format20bc2238 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_verification_error_type_in_insn_format20bc2240 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_verification_error_reference_in_insn_format20bc2242 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT20t_in_insn_format20t2265 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT20t_in_insn_format20t2267 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT20t_in_insn_format20t2267 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_insn_format20t2269 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21c_FIELD_in_insn_format21c_field2292 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_set_in_insn_format21c_field2296 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_field2304 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_set_in_insn_format21c_field2296 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_field2304 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_field_reference_in_insn_format21c_field2306 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21c_STRING_in_insn_format21c_string2329 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_insn_format21c_string2331 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_string2333 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_insn_format21c_string2331 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_string2333 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
 	public static final BitSet FOLLOW_string_literal_in_insn_format21c_string2335 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21c_TYPE_in_insn_format21c_type2358 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_insn_format21c_type2360 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_type2362 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_insn_format21c_type2360 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_type2362 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x2000000000000000L});
 	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format21c_type2364 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21c_LAMBDA_in_insn_format21c_lambda2387 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_LAMBDA_in_insn_format21c_lambda2389 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_lambda2391 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_LAMBDA_in_insn_format21c_lambda2389 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_lambda2391 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
 	public static final BitSet FOLLOW_string_literal_in_insn_format21c_lambda2393 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21c_METHOD_in_insn_format21c_method2416 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_METHOD_in_insn_format21c_method2418 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_method2420 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_METHOD_in_insn_format21c_method2418 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21c_method2420 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_method_reference_in_insn_format21c_method2422 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21ih_in_insn_format21ih2445 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21ih_in_insn_format21ih2447 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21ih2449 = new BitSet(new long[]{0x0000004000004C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21ih_in_insn_format21ih2447 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21ih2449 = new BitSet(new long[]{0x0000004000004C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_format21ih2451 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21lh_in_insn_format21lh2474 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21lh_in_insn_format21lh2476 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21lh2478 = new BitSet(new long[]{0x0000004000404C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21lh_in_insn_format21lh2476 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21lh2478 = new BitSet(new long[]{0x0000004000404C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_fixed_64bit_literal_in_insn_format21lh2480 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21s_in_insn_format21s2503 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21s_in_insn_format21s2505 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21s2507 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21s_in_insn_format21s2505 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21s2507 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_short_integral_literal_in_insn_format21s2509 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT21t_in_insn_format21t2532 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21t_in_insn_format21t2534 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format21t2536 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT21t_in_insn_format21t2534 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format21t2536 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_insn_format21t2538 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT22b_in_insn_format22b2561 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22b_in_insn_format22b2563 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22b2567 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22b2571 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22b_in_insn_format22b2563 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22b2567 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22b2571 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_short_integral_literal_in_insn_format22b2573 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT22c_FIELD_in_insn_format22c_field2596 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_set_in_insn_format22c_field2600 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2610 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2614 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_set_in_insn_format22c_field2600 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2610 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2614 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_field_reference_in_insn_format22c_field2616 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT22c_TYPE_in_insn_format22c_type2639 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_insn_format22c_type2641 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2645 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2649 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_insn_format22c_type2641 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2645 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2649 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x2000000000000000L});
 	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format22c_type2651 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT22c_STRING_in_insn_format22c_string2674 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_STRING_in_insn_format22c_string2676 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_string2680 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_string2684 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_STRING_in_insn_format22c_string2676 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_string2680 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22c_string2684 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
 	public static final BitSet FOLLOW_string_literal_in_insn_format22c_string2686 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT22s_in_insn_format22s2709 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22s_in_insn_format22s2711 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22s2715 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22s2719 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22s_in_insn_format22s2711 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22s2715 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22s2719 = new BitSet(new long[]{0x0000000000004800L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_short_integral_literal_in_insn_format22s2721 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT22t_in_insn_format22t2744 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22t_in_insn_format22t2746 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22t2750 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22t2754 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22t_in_insn_format22t2746 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22t2750 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22t2754 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_insn_format22t2756 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT22x_in_insn_format22x2779 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22x_in_insn_format22x2781 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format22x2785 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT22x_in_insn_format22x2781 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format22x2785 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_REGISTER_in_insn_format22x2789 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT23x_in_insn_format23x2812 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT23x_in_insn_format23x2814 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format23x2818 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format23x2822 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT23x_in_insn_format23x2814 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format23x2818 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format23x2822 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_REGISTER_in_insn_format23x2826 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT25x_in_insn_format25x2849 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT25x_in_insn_format25x2851 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT25x_in_insn_format25x2851 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_REGISTER_in_insn_format25x2853 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000002L});
 	public static final BitSet FOLLOW_register_list4_in_insn_format25x2855 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT30t_in_insn_format30t2878 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT30t_in_insn_format30t2880 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT30t_in_insn_format30t2880 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_insn_format30t2882 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT31c_in_insn_format31c2905 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT31c_in_insn_format31c2907 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format31c2909 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT31c_in_insn_format31c2907 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format31c2909 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
 	public static final BitSet FOLLOW_string_literal_in_insn_format31c2911 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT31i_in_insn_format31i2934 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT31i_in_insn_format31i2936 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format31i2938 = new BitSet(new long[]{0x0000004000004C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT31i_in_insn_format31i2936 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format31i2938 = new BitSet(new long[]{0x0000004000004C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_format31i2940 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT31t_in_insn_format31t2963 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT31t_in_insn_format31t2965 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format31t2967 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT31t_in_insn_format31t2965 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format31t2967 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_label_ref_in_insn_format31t2969 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT32x_in_insn_format32x2992 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT32x_in_insn_format32x2994 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format32x2998 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT32x_in_insn_format32x2994 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format32x2998 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
 	public static final BitSet FOLLOW_REGISTER_in_insn_format32x3002 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT35c_METHOD_in_insn_format35c_method3025 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_insn_format35c_method3027 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000002L});
-	public static final BitSet FOLLOW_register_list_in_insn_format35c_method3029 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_register_list_in_insn_format35c_method3029 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_method_reference_in_insn_format35c_method3031 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT35c_TYPE_in_insn_format35c_type3054 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_insn_format35c_type3056 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000002L});
-	public static final BitSet FOLLOW_register_list_in_insn_format35c_type3058 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_register_list_in_insn_format35c_type3058 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x2000000000000000L});
 	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format35c_type3060 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT3rc_METHOD_in_insn_format3rc_method3083 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_insn_format3rc_method3085 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_register_range_in_insn_format3rc_method3087 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_register_range_in_insn_format3rc_method3087 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
 	public static final BitSet FOLLOW_method_reference_in_insn_format3rc_method3089 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT3rc_TYPE_in_insn_format3rc_type3112 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_insn_format3rc_type3114 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_register_range_in_insn_format3rc_type3116 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_register_range_in_insn_format3rc_type3116 = new BitSet(new long[]{0x0000000000008100L,0x0000000000000000L,0x2000000000000000L});
 	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format3rc_type3118 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_FORMAT51l_in_insn_format51l_type3141 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_INSTRUCTION_FORMAT51l_in_insn_format51l_type3143 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_REGISTER_in_insn_format51l_type3145 = new BitSet(new long[]{0x0000004000404C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_INSTRUCTION_FORMAT51l_in_insn_format51l_type3143 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x8000000000000000L});
+	public static final BitSet FOLLOW_REGISTER_in_insn_format51l_type3145 = new BitSet(new long[]{0x0000004000404C00L,0x0000000004000000L,0x0004000000000000L,0x0000000000000004L});
 	public static final BitSet FOLLOW_fixed_64bit_literal_in_insn_format51l_type3147 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_ARRAY_DATA_in_insn_array_data_directive3170 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_I_ARRAY_ELEMENT_SIZE_in_insn_array_data_directive3173 = new BitSet(new long[]{0x0000000000000004L});
@@ -7705,45 +7896,51 @@ public class smaliTreeWalker extends TreeParser {
 	public static final BitSet FOLLOW_packed_switch_elements_in_insn_packed_switch_directive3208 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_I_STATEMENT_SPARSE_SWITCH_in_insn_sparse_switch_directive3232 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_sparse_switch_elements_in_insn_sparse_switch_directive3234 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_set_in_nonvoid_type_descriptor3255 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_reference_type_descriptor3287 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_VOID_TYPE_in_type_descriptor3313 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_type_descriptor3321 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_long_literal_in_short_integral_literal3339 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_integer_literal_in_short_integral_literal3351 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_short_literal_in_short_integral_literal3363 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_char_literal_in_short_integral_literal3371 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_byte_literal_in_short_integral_literal3379 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_long_literal_in_integral_literal3394 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_integer_literal_in_integral_literal3406 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_short_literal_in_integral_literal3414 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_byte_literal_in_integral_literal3422 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INTEGER_LITERAL_in_integer_literal3438 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LONG_LITERAL_in_long_literal3453 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_SHORT_LITERAL_in_short_literal3468 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BYTE_LITERAL_in_byte_literal3483 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FLOAT_LITERAL_in_float_literal3498 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLE_LITERAL_in_double_literal3513 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_CHAR_LITERAL_in_char_literal3528 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STRING_LITERAL_in_string_literal3543 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BOOL_LITERAL_in_bool_literal3562 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_I_ENCODED_ARRAY_in_array_literal3584 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_literal_in_array_literal3587 = new BitSet(new long[]{0x000000400040CD08L,0x000003C004000000L,0x0044100000000000L,0x0000000000002221L});
-	public static final BitSet FOLLOW_I_ANNOTATIONS_in_annotations3612 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_annotation_in_annotations3615 = new BitSet(new long[]{0x0000000000000008L,0x0000000020000000L});
-	public static final BitSet FOLLOW_I_ANNOTATION_in_annotation3644 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ANNOTATION_VISIBILITY_in_annotation3646 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000100000000000L});
-	public static final BitSet FOLLOW_subannotation_in_annotation3648 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_I_ANNOTATION_ELEMENT_in_annotation_element3669 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_SIMPLE_NAME_in_annotation_element3671 = new BitSet(new long[]{0x000000400040CD00L,0x000003C004000000L,0x0044100000000000L,0x0000000000002221L});
-	public static final BitSet FOLLOW_literal_in_annotation_element3673 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_I_SUBANNOTATION_in_subannotation3700 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_subannotation3710 = new BitSet(new long[]{0x0000000000000008L,0x0000000080000000L});
-	public static final BitSet FOLLOW_annotation_element_in_subannotation3721 = new BitSet(new long[]{0x0000000000000008L,0x0000000080000000L});
-	public static final BitSet FOLLOW_I_ENCODED_FIELD_in_field_literal3760 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_field_reference_in_field_literal3762 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_I_ENCODED_METHOD_in_method_literal3783 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_method_reference_in_method_literal3785 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_I_ENCODED_ENUM_in_enum_literal3806 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_field_reference_in_enum_literal3808 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_ARRAY_TYPE_PREFIX_in_array_descriptor3255 = new BitSet(new long[]{0x0000000000008000L,0x0000000000000000L,0x2000000000000000L});
+	public static final BitSet FOLLOW_PRIMITIVE_TYPE_in_array_descriptor3259 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_array_descriptor3287 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PRIMITIVE_TYPE_in_nonvoid_type_descriptor3305 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_nonvoid_type_descriptor3313 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_descriptor_in_nonvoid_type_descriptor3321 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_reference_type_descriptor3342 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_descriptor_in_reference_type_descriptor3350 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_VOID_TYPE_in_type_descriptor3370 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nonvoid_type_descriptor_in_type_descriptor3378 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_long_literal_in_short_integral_literal3396 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_integer_literal_in_short_integral_literal3408 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_short_literal_in_short_integral_literal3420 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_char_literal_in_short_integral_literal3428 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_byte_literal_in_short_integral_literal3436 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_long_literal_in_integral_literal3451 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_integer_literal_in_integral_literal3463 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_short_literal_in_integral_literal3471 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_byte_literal_in_integral_literal3479 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INTEGER_LITERAL_in_integer_literal3495 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LONG_LITERAL_in_long_literal3510 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SHORT_LITERAL_in_short_literal3525 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BYTE_LITERAL_in_byte_literal3540 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FLOAT_LITERAL_in_float_literal3555 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLE_LITERAL_in_double_literal3570 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CHAR_LITERAL_in_char_literal3585 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STRING_LITERAL_in_string_literal3600 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BOOL_LITERAL_in_bool_literal3619 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_I_ENCODED_ARRAY_in_array_literal3641 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_literal_in_array_literal3644 = new BitSet(new long[]{0x000000400040CD08L,0x000003C004000000L,0x2044100000000000L,0x0000000000000444L});
+	public static final BitSet FOLLOW_I_ANNOTATIONS_in_annotations3669 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_annotation_in_annotations3672 = new BitSet(new long[]{0x0000000000000008L,0x0000000020000000L});
+	public static final BitSet FOLLOW_I_ANNOTATION_in_annotation3701 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ANNOTATION_VISIBILITY_in_annotation3703 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000100000000000L});
+	public static final BitSet FOLLOW_subannotation_in_annotation3705 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_I_ANNOTATION_ELEMENT_in_annotation_element3726 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_SIMPLE_NAME_in_annotation_element3728 = new BitSet(new long[]{0x000000400040CD00L,0x000003C004000000L,0x2044100000000000L,0x0000000000000444L});
+	public static final BitSet FOLLOW_literal_in_annotation_element3730 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_I_SUBANNOTATION_in_subannotation3757 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_subannotation3767 = new BitSet(new long[]{0x0000000000000008L,0x0000000080000000L});
+	public static final BitSet FOLLOW_annotation_element_in_subannotation3778 = new BitSet(new long[]{0x0000000000000008L,0x0000000080000000L});
+	public static final BitSet FOLLOW_I_ENCODED_FIELD_in_field_literal3817 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_field_reference_in_field_literal3819 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_I_ENCODED_METHOD_in_method_literal3840 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_method_reference_in_method_literal3842 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_I_ENCODED_ENUM_in_enum_literal3863 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_field_reference_in_enum_literal3865 = new BitSet(new long[]{0x0000000000000008L});
 }

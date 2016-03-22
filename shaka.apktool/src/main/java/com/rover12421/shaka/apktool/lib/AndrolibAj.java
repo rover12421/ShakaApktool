@@ -148,9 +148,9 @@ public class AndrolibAj {
      at brut.apktool.Main.main(Main.java:86)
      */
     @Around("execution(* brut.androlib.Androlib.decodeSourcesSmali(..))" +
-            "&& args(apkFile, outDir, filename, debug, debugLinePrefix, bakdeb, api)")
-    public void decodeSourcesSmali_around(ProceedingJoinPoint joinPoint, File apkFile, File outDir, String filename, boolean debug, String debugLinePrefix,
-                            boolean bakdeb, int api) throws Throwable {
+            "&& args(apkFile, outDir, filename, bakdeb, api)")
+    public void decodeSourcesSmali_around(ProceedingJoinPoint joinPoint,
+                                          File apkFile, File outDir, String filename, boolean bakdeb, int api) throws Throwable {
 
         File smaliDir = null;
         String mapDirName = null;
@@ -167,7 +167,7 @@ public class AndrolibAj {
             OS.rmdir(smaliDir);
             smaliDir.mkdirs();
             LogHelper.info("Baksmaling " + filename + "...");
-            SmaliDecoder.decode(apkFile, smaliDir, filename, debug, debugLinePrefix, bakdeb, api);
+            SmaliDecoder.decode(apkFile, smaliDir, filename, bakdeb, api);
             //没有异常才添加
             if (mapDirName != null) {
                 metaInfo.addDexMap(filename, mapDirName);
