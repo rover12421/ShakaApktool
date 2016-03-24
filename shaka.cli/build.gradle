@@ -59,6 +59,7 @@ task proguard(type: JavaExec, dependsOn: fatJar) {
     args '-dontwarn com.rover12421.shaka.**'
     args '-dontwarn brut.androlib.**'
     args '-dontwarn org.jf.dexlib2.**'
+    args '-dontwarn org.jf.smali.**'
     args '-dontwarn org.jf.baksmali.**'
     args '-keep public class Main { public static void main(java.lang.String[]); }'
     args '-keep public class com.rover12421.shaka.cli.Main { public static void main(java.lang.String[]); }'
