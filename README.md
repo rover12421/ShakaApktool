@@ -1,4 +1,6 @@
 ### About
+
+[![Join the chat at https://gitter.im/rover12421/ShakaApktool](https://badges.gitter.im/rover12421/ShakaApktool.svg)](https://gitter.im/rover12421/ShakaApktool?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 You know and not know are in progress.
 
 
