@@ -57,7 +57,7 @@ public class ResStyleValueAj {
         try {
             ResStyleValue thiz = (ResStyleValue) joinPoint.getThis();
             ResReferenceValue mParent = thiz.getParent();
-            Duo<ResReferenceValue, ResScalarValue>[] mItems = thiz.getItems();
+            Duo<ResReferenceValue, ResScalarValue>[] mItems = (Duo<ResReferenceValue, ResScalarValue>[])thiz.getItems();
             serializer.startTag(null, "style");
             serializer.attribute(null, "name", res.getResSpec().getName());
             if (!mParent.isNull()) {

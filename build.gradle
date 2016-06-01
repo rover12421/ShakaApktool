@@ -17,7 +17,7 @@
 apply from  : 'gradle/functions.gradle'
 
 ext.langLevel = '1.7'
-ext.aspectjVersion = '1.8.4'
+ext.aspectjVersion = '1.8.9'
 version = '2.0.0'
 
 def branch = getCheckedOutBranchFromProject()
