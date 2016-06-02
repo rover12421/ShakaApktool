@@ -76,7 +76,7 @@ subprojects {
                 commons_cli     : 'commons-cli:commons-cli:1.2',
                 commons_compress: 'org.apache.commons:commons-compress:1.11',
                 commons_io      : 'commons-io:commons-io:2.4',
-                commons_lang    : 'org.apache.commons:commons-lang3:3.1',
+                commons_lang    : 'org.apache.commons:commons-lang3:3.4',
                 dx              : 'com.google.android.tools:dx:1.7',
                 findbugs        : 'com.google.code.findbugs:jsr305:1.3.9',
                 gson            : 'com.google.code.gson:gson:2.3.1',
