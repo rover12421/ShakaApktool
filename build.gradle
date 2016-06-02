@@ -72,7 +72,6 @@ subprojects {
         depends = [
                 antlr           : 'org.antlr:antlr:3.5.2',
                 antlr_runtime   : 'org.antlr:antlr-runtime:3.5.2',
-                aspectj         : 'org.aspectj:aspectjrt:1.8.4',
                 commons_cli     : 'commons-cli:commons-cli:1.2',
                 commons_compress: 'org.apache.commons:commons-compress:1.11',
                 commons_io      : 'commons-io:commons-io:2.4',
