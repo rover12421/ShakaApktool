@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g
+// $ANTLR 3.5.2 expectedTokensTestGrammar.g
 
 package org.jf.smali;
 
@@ -44,7 +44,7 @@ public class expectedTokensTestGrammarParser extends Parser {
 	}
 
 	@Override public String[] getTokenNames() { return expectedTokensTestGrammarParser.tokenNames; }
-	@Override public String getGrammarFileName() { return "shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g"; }
+	@Override public String getGrammarFileName() { return "expectedTokensTestGrammar.g"; }
 
 
 		public static class ExpectedToken {
@@ -71,13 +71,13 @@ public class expectedTokensTestGrammarParser extends Parser {
 
 
 	// $ANTLR start "top"
-	// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:144:1: top : ( token )* ;
+	// expectedTokensTestGrammar.g:144:1: top : ( token )* ;
 	public final void top() throws RecognitionException {
 		try {
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:144:5: ( ( token )* )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:144:7: ( token )*
+			// expectedTokensTestGrammar.g:144:5: ( ( token )* )
+			// expectedTokensTestGrammar.g:144:7: ( token )*
 			{
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:144:7: ( token )*
+			// expectedTokensTestGrammar.g:144:7: ( token )*
 			loop1:
 			while (true) {
 				int alt1=2;
@@ -88,7 +88,7 @@ public class expectedTokensTestGrammarParser extends Parser {
 
 				switch (alt1) {
 				case 1 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:144:7: token
+					// expectedTokensTestGrammar.g:144:7: token
 					{
 					pushFollow(FOLLOW_token_in_top305);
 					token();
@@ -118,14 +118,14 @@ public class expectedTokensTestGrammarParser extends Parser {
 
 
 	// $ANTLR start "token"
-	// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:146:1: token : ( TOKEN_NAME ( '(' STRING_LITERAL ')' ) | TOKEN_NAME );
+	// expectedTokensTestGrammar.g:146:1: token : ( TOKEN_NAME ( '(' STRING_LITERAL ')' ) | TOKEN_NAME );
 	public final void token() throws RecognitionException {
 		Token TOKEN_NAME1=null;
 		Token STRING_LITERAL2=null;
 		Token TOKEN_NAME3=null;
 
 		try {
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:146:7: ( TOKEN_NAME ( '(' STRING_LITERAL ')' ) | TOKEN_NAME )
+			// expectedTokensTestGrammar.g:146:7: ( TOKEN_NAME ( '(' STRING_LITERAL ')' ) | TOKEN_NAME )
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( (LA2_0==TOKEN_NAME) ) {
@@ -159,11 +159,11 @@ public class expectedTokensTestGrammarParser extends Parser {
 
 			switch (alt2) {
 				case 1 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:146:9: TOKEN_NAME ( '(' STRING_LITERAL ')' )
+					// expectedTokensTestGrammar.g:146:9: TOKEN_NAME ( '(' STRING_LITERAL ')' )
 					{
 					TOKEN_NAME1=(Token)match(input,TOKEN_NAME,FOLLOW_TOKEN_NAME_in_token314); 
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:146:20: ( '(' STRING_LITERAL ')' )
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:146:22: '(' STRING_LITERAL ')'
+					// expectedTokensTestGrammar.g:146:20: ( '(' STRING_LITERAL ')' )
+					// expectedTokensTestGrammar.g:146:22: '(' STRING_LITERAL ')'
 					{
 					match(input,11,FOLLOW_11_in_token318); 
 					STRING_LITERAL2=(Token)match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_token320); 
@@ -176,7 +176,7 @@ public class expectedTokensTestGrammarParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:150:3: TOKEN_NAME
+					// expectedTokensTestGrammar.g:150:3: TOKEN_NAME
 					{
 					TOKEN_NAME3=(Token)match(input,TOKEN_NAME,FOLLOW_TOKEN_NAME_in_token334); 
 

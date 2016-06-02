@@ -104,7 +104,7 @@ sourceSets {
         if (genGrammarSource) {
             antlr {
                 srcDirs = [
-                        'smali/smali/src/test/antlr'
+                        'smali/smali/src/test/antlr/org/jf/smali'
                 ]
             }
         }

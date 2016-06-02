@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 shaka.smali/smali/smali/src/main/antlr/smaliParser.g
+// $ANTLR 3.5.2 smaliParser.g
 
 package org.jf.smali;
 
@@ -303,7 +303,7 @@ public class smaliParser extends Parser {
 		return adaptor;
 	}
 	@Override public String[] getTokenNames() { return smaliParser.tokenNames; }
-	@Override public String getGrammarFileName() { return "shaka.smali/smali/smali/src/main/antlr/smaliParser.g"; }
+	@Override public String getGrammarFileName() { return "smaliParser.g"; }
 
 
 	  public static final int ERROR_CHANNEL = 100;
@@ -485,7 +485,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "smali_file"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:419:1: smali_file : ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+ EOF -> ^( I_CLASS_DEF class_spec ( super_spec )? ( implements_spec )* ( source_spec )? ^( I_METHODS ( method )* ) ^( I_FIELDS ( field )* ) ) ;
+	// smaliParser.g:419:1: smali_file : ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+ EOF -> ^( I_CLASS_DEF class_spec ( super_spec )? ( implements_spec )* ( source_spec )? ^( I_METHODS ( method )* ) ^( I_FIELDS ( field )* ) ) ;
 	public final smaliParser.smali_file_return smali_file() throws RecognitionException {
 		smali_file_stack.push(new smali_file_scope());
 		smaliParser.smali_file_return retval = new smaliParser.smali_file_return();
@@ -504,22 +504,22 @@ public class smaliParser extends Parser {
 
 		CommonTree EOF8_tree=null;
 		RewriteRuleTokenStream stream_EOF=new RewriteRuleTokenStream(adaptor,"token EOF");
-		RewriteRuleSubtreeStream stream_field=new RewriteRuleSubtreeStream(adaptor,"rule field");
+		RewriteRuleSubtreeStream stream_class_spec=new RewriteRuleSubtreeStream(adaptor,"rule class_spec");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
+		RewriteRuleSubtreeStream stream_method=new RewriteRuleSubtreeStream(adaptor,"rule method");
+		RewriteRuleSubtreeStream stream_field=new RewriteRuleSubtreeStream(adaptor,"rule field");
 		RewriteRuleSubtreeStream stream_super_spec=new RewriteRuleSubtreeStream(adaptor,"rule super_spec");
 		RewriteRuleSubtreeStream stream_implements_spec=new RewriteRuleSubtreeStream(adaptor,"rule implements_spec");
 		RewriteRuleSubtreeStream stream_source_spec=new RewriteRuleSubtreeStream(adaptor,"rule source_spec");
-		RewriteRuleSubtreeStream stream_method=new RewriteRuleSubtreeStream(adaptor,"rule method");
-		RewriteRuleSubtreeStream stream_class_spec=new RewriteRuleSubtreeStream(adaptor,"rule class_spec");
 
 		 smali_file_stack.peek().hasClassSpec = smali_file_stack.peek().hasSuperSpec = smali_file_stack.peek().hasSourceSpec = false;
 		    smali_file_stack.peek().classAnnotations = new ArrayList<CommonTree>();
 		  
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:431:3: ( ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+ EOF -> ^( I_CLASS_DEF class_spec ( super_spec )? ( implements_spec )* ( source_spec )? ^( I_METHODS ( method )* ) ^( I_FIELDS ( field )* ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:432:3: ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+ EOF
+			// smaliParser.g:431:3: ( ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+ EOF -> ^( I_CLASS_DEF class_spec ( super_spec )? ( implements_spec )* ( source_spec )? ^( I_METHODS ( method )* ) ^( I_FIELDS ( field )* ) ) )
+			// smaliParser.g:432:3: ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+ EOF
 			{
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:432:3: ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+
+			// smaliParser.g:432:3: ({...}? => class_spec |{...}? => super_spec | implements_spec |{...}? => source_spec | method | field | annotation )+
 			int cnt1=0;
 			loop1:
 			while (true) {
@@ -549,7 +549,7 @@ public class smaliParser extends Parser {
 
 				switch (alt1) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:432:5: {...}? => class_spec
+					// smaliParser.g:432:5: {...}? => class_spec
 					{
 					if ( !((!smali_file_stack.peek().hasClassSpec)) ) {
 						throw new FailedPredicateException(input, "smali_file", "!$smali_file::hasClassSpec");
@@ -563,7 +563,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:433:5: {...}? => super_spec
+					// smaliParser.g:433:5: {...}? => super_spec
 					{
 					if ( !((!smali_file_stack.peek().hasSuperSpec)) ) {
 						throw new FailedPredicateException(input, "smali_file", "!$smali_file::hasSuperSpec");
@@ -577,7 +577,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:434:5: implements_spec
+					// smaliParser.g:434:5: implements_spec
 					{
 					pushFollow(FOLLOW_implements_spec_in_smali_file1114);
 					implements_spec3=implements_spec();
@@ -587,7 +587,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:435:5: {...}? => source_spec
+					// smaliParser.g:435:5: {...}? => source_spec
 					{
 					if ( !((!smali_file_stack.peek().hasSourceSpec)) ) {
 						throw new FailedPredicateException(input, "smali_file", "!$smali_file::hasSourceSpec");
@@ -601,7 +601,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:436:5: method
+					// smaliParser.g:436:5: method
 					{
 					pushFollow(FOLLOW_method_in_smali_file1131);
 					method5=method();
@@ -611,7 +611,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:437:5: field
+					// smaliParser.g:437:5: field
 					{
 					pushFollow(FOLLOW_field_in_smali_file1137);
 					field6=field();
@@ -621,7 +621,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:438:5: annotation
+					// smaliParser.g:438:5: annotation
 					{
 					pushFollow(FOLLOW_annotation_in_smali_file1143);
 					annotation7=annotation();
@@ -655,7 +655,7 @@ public class smaliParser extends Parser {
 			    }
 			  
 			// AST REWRITE
-			// elements: source_spec, super_spec, class_spec, field, method, implements_spec
+			// elements: implements_spec, source_spec, class_spec, super_spec, field, method
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -667,34 +667,34 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 452:3: -> ^( I_CLASS_DEF class_spec ( super_spec )? ( implements_spec )* ( source_spec )? ^( I_METHODS ( method )* ) ^( I_FIELDS ( field )* ) )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:452:6: ^( I_CLASS_DEF class_spec ( super_spec )? ( implements_spec )* ( source_spec )? ^( I_METHODS ( method )* ) ^( I_FIELDS ( field )* ) )
+				// smaliParser.g:452:6: ^( I_CLASS_DEF class_spec ( super_spec )? ( implements_spec )* ( source_spec )? ^( I_METHODS ( method )* ) ^( I_FIELDS ( field )* ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_CLASS_DEF, "I_CLASS_DEF"), root_1);
 				adaptor.addChild(root_1, stream_class_spec.nextTree());
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:454:8: ( super_spec )?
+				// smaliParser.g:454:8: ( super_spec )?
 				if ( stream_super_spec.hasNext() ) {
 					adaptor.addChild(root_1, stream_super_spec.nextTree());
 				}
 				stream_super_spec.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:455:8: ( implements_spec )*
+				// smaliParser.g:455:8: ( implements_spec )*
 				while ( stream_implements_spec.hasNext() ) {
 					adaptor.addChild(root_1, stream_implements_spec.nextTree());
 				}
 				stream_implements_spec.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:456:8: ( source_spec )?
+				// smaliParser.g:456:8: ( source_spec )?
 				if ( stream_source_spec.hasNext() ) {
 					adaptor.addChild(root_1, stream_source_spec.nextTree());
 				}
 				stream_source_spec.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:457:8: ^( I_METHODS ( method )* )
+				// smaliParser.g:457:8: ^( I_METHODS ( method )* )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_METHODS, "I_METHODS"), root_2);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:457:20: ( method )*
+				// smaliParser.g:457:20: ( method )*
 				while ( stream_method.hasNext() ) {
 					adaptor.addChild(root_2, stream_method.nextTree());
 				}
@@ -703,11 +703,11 @@ public class smaliParser extends Parser {
 				adaptor.addChild(root_1, root_2);
 				}
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:457:29: ^( I_FIELDS ( field )* )
+				// smaliParser.g:457:29: ^( I_FIELDS ( field )* )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_FIELDS, "I_FIELDS"), root_2);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:457:40: ( field )*
+				// smaliParser.g:457:40: ( field )*
 				while ( stream_field.hasNext() ) {
 					adaptor.addChild(root_2, stream_field.nextTree());
 				}
@@ -756,7 +756,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "class_spec"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:459:1: class_spec returns [String className] : CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR -> CLASS_DESCRIPTOR access_list ;
+	// smaliParser.g:459:1: class_spec returns [String className] : CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR -> CLASS_DESCRIPTOR access_list ;
 	public final smaliParser.class_spec_return class_spec() throws RecognitionException {
 		smaliParser.class_spec_return retval = new smaliParser.class_spec_return();
 		retval.start = input.LT(1);
@@ -769,13 +769,13 @@ public class smaliParser extends Parser {
 
 		CommonTree CLASS_DIRECTIVE9_tree=null;
 		CommonTree CLASS_DESCRIPTOR11_tree=null;
-		RewriteRuleTokenStream stream_CLASS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CLASS_DIRECTIVE");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_CLASS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CLASS_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:460:3: ( CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR -> CLASS_DESCRIPTOR access_list )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:460:5: CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR
+			// smaliParser.g:460:3: ( CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR -> CLASS_DESCRIPTOR access_list )
+			// smaliParser.g:460:5: CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR
 			{
 			CLASS_DIRECTIVE9=(Token)match(input,CLASS_DIRECTIVE,FOLLOW_CLASS_DIRECTIVE_in_class_spec1241);  
 			stream_CLASS_DIRECTIVE.add(CLASS_DIRECTIVE9);
@@ -790,7 +790,7 @@ public class smaliParser extends Parser {
 
 			retval.className = (CLASS_DESCRIPTOR11!=null?CLASS_DESCRIPTOR11.getText():null);
 			// AST REWRITE
-			// elements: access_list, CLASS_DESCRIPTOR
+			// elements: CLASS_DESCRIPTOR, access_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -838,7 +838,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "super_spec"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:462:1: super_spec : SUPER_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR ) ;
+	// smaliParser.g:462:1: super_spec : SUPER_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR ) ;
 	public final smaliParser.super_spec_return super_spec() throws RecognitionException {
 		smaliParser.super_spec_return retval = new smaliParser.super_spec_return();
 		retval.start = input.LT(1);
@@ -850,12 +850,12 @@ public class smaliParser extends Parser {
 
 		CommonTree SUPER_DIRECTIVE12_tree=null;
 		CommonTree CLASS_DESCRIPTOR13_tree=null;
-		RewriteRuleTokenStream stream_SUPER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SUPER_DIRECTIVE");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_SUPER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SUPER_DIRECTIVE");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:463:3: ( SUPER_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:463:5: SUPER_DIRECTIVE CLASS_DESCRIPTOR
+			// smaliParser.g:463:3: ( SUPER_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR ) )
+			// smaliParser.g:463:5: SUPER_DIRECTIVE CLASS_DESCRIPTOR
 			{
 			SUPER_DIRECTIVE12=(Token)match(input,SUPER_DIRECTIVE,FOLLOW_SUPER_DIRECTIVE_in_super_spec1263);  
 			stream_SUPER_DIRECTIVE.add(SUPER_DIRECTIVE12);
@@ -876,7 +876,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 463:38: -> ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:463:41: ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR )
+				// smaliParser.g:463:41: ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_SUPER, (retval.start), "I_SUPER"), root_1);
@@ -918,7 +918,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "implements_spec"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:465:1: implements_spec : IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_IMPLEMENTS[$start, \"I_IMPLEMENTS\"] CLASS_DESCRIPTOR ) ;
+	// smaliParser.g:465:1: implements_spec : IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_IMPLEMENTS[$start, \"I_IMPLEMENTS\"] CLASS_DESCRIPTOR ) ;
 	public final smaliParser.implements_spec_return implements_spec() throws RecognitionException {
 		smaliParser.implements_spec_return retval = new smaliParser.implements_spec_return();
 		retval.start = input.LT(1);
@@ -934,8 +934,8 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:466:3: ( IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_IMPLEMENTS[$start, \"I_IMPLEMENTS\"] CLASS_DESCRIPTOR ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:466:5: IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR
+			// smaliParser.g:466:3: ( IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_IMPLEMENTS[$start, \"I_IMPLEMENTS\"] CLASS_DESCRIPTOR ) )
+			// smaliParser.g:466:5: IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR
 			{
 			IMPLEMENTS_DIRECTIVE14=(Token)match(input,IMPLEMENTS_DIRECTIVE,FOLLOW_IMPLEMENTS_DIRECTIVE_in_implements_spec1284);  
 			stream_IMPLEMENTS_DIRECTIVE.add(IMPLEMENTS_DIRECTIVE14);
@@ -956,7 +956,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 466:43: -> ^( I_IMPLEMENTS[$start, \"I_IMPLEMENTS\"] CLASS_DESCRIPTOR )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:466:46: ^( I_IMPLEMENTS[$start, \"I_IMPLEMENTS\"] CLASS_DESCRIPTOR )
+				// smaliParser.g:466:46: ^( I_IMPLEMENTS[$start, \"I_IMPLEMENTS\"] CLASS_DESCRIPTOR )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_IMPLEMENTS, (retval.start), "I_IMPLEMENTS"), root_1);
@@ -998,7 +998,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "source_spec"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:468:1: source_spec : SOURCE_DIRECTIVE STRING_LITERAL -> ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL ) ;
+	// smaliParser.g:468:1: source_spec : SOURCE_DIRECTIVE STRING_LITERAL -> ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL ) ;
 	public final smaliParser.source_spec_return source_spec() throws RecognitionException {
 		smaliParser.source_spec_return retval = new smaliParser.source_spec_return();
 		retval.start = input.LT(1);
@@ -1010,12 +1010,12 @@ public class smaliParser extends Parser {
 
 		CommonTree SOURCE_DIRECTIVE16_tree=null;
 		CommonTree STRING_LITERAL17_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_SOURCE_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SOURCE_DIRECTIVE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:469:3: ( SOURCE_DIRECTIVE STRING_LITERAL -> ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:469:5: SOURCE_DIRECTIVE STRING_LITERAL
+			// smaliParser.g:469:3: ( SOURCE_DIRECTIVE STRING_LITERAL -> ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL ) )
+			// smaliParser.g:469:5: SOURCE_DIRECTIVE STRING_LITERAL
 			{
 			SOURCE_DIRECTIVE16=(Token)match(input,SOURCE_DIRECTIVE,FOLLOW_SOURCE_DIRECTIVE_in_source_spec1305);  
 			stream_SOURCE_DIRECTIVE.add(SOURCE_DIRECTIVE16);
@@ -1036,7 +1036,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 469:37: -> ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:469:40: ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL )
+				// smaliParser.g:469:40: ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_SOURCE, (retval.start), "I_SOURCE"), root_1);
@@ -1078,7 +1078,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "access_list"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:471:1: access_list : ( ACCESS_SPEC )* -> ^( I_ACCESS_LIST[$start,\"I_ACCESS_LIST\"] ( ACCESS_SPEC )* ) ;
+	// smaliParser.g:471:1: access_list : ( ACCESS_SPEC )* -> ^( I_ACCESS_LIST[$start,\"I_ACCESS_LIST\"] ( ACCESS_SPEC )* ) ;
 	public final smaliParser.access_list_return access_list() throws RecognitionException {
 		smaliParser.access_list_return retval = new smaliParser.access_list_return();
 		retval.start = input.LT(1);
@@ -1091,10 +1091,10 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_ACCESS_SPEC=new RewriteRuleTokenStream(adaptor,"token ACCESS_SPEC");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:472:3: ( ( ACCESS_SPEC )* -> ^( I_ACCESS_LIST[$start,\"I_ACCESS_LIST\"] ( ACCESS_SPEC )* ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:472:5: ( ACCESS_SPEC )*
+			// smaliParser.g:472:3: ( ( ACCESS_SPEC )* -> ^( I_ACCESS_LIST[$start,\"I_ACCESS_LIST\"] ( ACCESS_SPEC )* ) )
+			// smaliParser.g:472:5: ( ACCESS_SPEC )*
 			{
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:472:5: ( ACCESS_SPEC )*
+			// smaliParser.g:472:5: ( ACCESS_SPEC )*
 			loop2:
 			while (true) {
 				int alt2=2;
@@ -1109,7 +1109,7 @@ public class smaliParser extends Parser {
 
 				switch (alt2) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:472:5: ACCESS_SPEC
+					// smaliParser.g:472:5: ACCESS_SPEC
 					{
 					ACCESS_SPEC18=(Token)match(input,ACCESS_SPEC,FOLLOW_ACCESS_SPEC_in_access_list1326);  
 					stream_ACCESS_SPEC.add(ACCESS_SPEC18);
@@ -1135,11 +1135,11 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 472:18: -> ^( I_ACCESS_LIST[$start,\"I_ACCESS_LIST\"] ( ACCESS_SPEC )* )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:472:21: ^( I_ACCESS_LIST[$start,\"I_ACCESS_LIST\"] ( ACCESS_SPEC )* )
+				// smaliParser.g:472:21: ^( I_ACCESS_LIST[$start,\"I_ACCESS_LIST\"] ( ACCESS_SPEC )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ACCESS_LIST, (retval.start), "I_ACCESS_LIST"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:472:61: ( ACCESS_SPEC )*
+				// smaliParser.g:472:61: ( ACCESS_SPEC )*
 				while ( stream_ACCESS_SPEC.hasNext() ) {
 					adaptor.addChild(root_1, stream_ACCESS_SPEC.nextNode());
 				}
@@ -1182,7 +1182,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "field"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:479:1: field : FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor ( EQUAL literal )? ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) ) ;
+	// smaliParser.g:479:1: field : FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor ( EQUAL literal )? ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) ) ;
 	public final smaliParser.field_return field() throws RecognitionException {
 		smaliParser.field_return retval = new smaliParser.field_return();
 		retval.start = input.LT(1);
@@ -1203,20 +1203,20 @@ public class smaliParser extends Parser {
 		CommonTree COLON22_tree=null;
 		CommonTree EQUAL24_tree=null;
 		CommonTree END_FIELD_DIRECTIVE27_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
-		RewriteRuleTokenStream stream_FIELD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token FIELD_DIRECTIVE");
-		RewriteRuleTokenStream stream_EQUAL=new RewriteRuleTokenStream(adaptor,"token EQUAL");
 		RewriteRuleTokenStream stream_END_FIELD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_FIELD_DIRECTIVE");
+		RewriteRuleTokenStream stream_EQUAL=new RewriteRuleTokenStream(adaptor,"token EQUAL");
+		RewriteRuleTokenStream stream_FIELD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token FIELD_DIRECTIVE");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
 		RewriteRuleSubtreeStream stream_literal=new RewriteRuleSubtreeStream(adaptor,"rule literal");
 
 		List<CommonTree> annotations = new ArrayList<CommonTree>();
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:481:3: ( FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor ( EQUAL literal )? ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:481:5: FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor ( EQUAL literal )? ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) )
+			// smaliParser.g:481:3: ( FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor ( EQUAL literal )? ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) ) )
+			// smaliParser.g:481:5: FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor ( EQUAL literal )? ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) )
 			{
 			FIELD_DIRECTIVE19=(Token)match(input,FIELD_DIRECTIVE,FOLLOW_FIELD_DIRECTIVE_in_field1357);  
 			stream_FIELD_DIRECTIVE.add(FIELD_DIRECTIVE19);
@@ -1239,7 +1239,7 @@ public class smaliParser extends Parser {
 			state._fsp--;
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor23.getTree());
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:481:75: ( EQUAL literal )?
+			// smaliParser.g:481:75: ( EQUAL literal )?
 			int alt3=2;
 			int LA3_0 = input.LA(1);
 			if ( (LA3_0==EQUAL) ) {
@@ -1247,7 +1247,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt3) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:481:76: EQUAL literal
+					// smaliParser.g:481:76: EQUAL literal
 					{
 					EQUAL24=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_field1368);  
 					stream_EQUAL.add(EQUAL24);
@@ -1262,10 +1262,10 @@ public class smaliParser extends Parser {
 
 			}
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:482:5: ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:482:7: ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) )
+			// smaliParser.g:482:5: ( ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) ) )
+			// smaliParser.g:482:7: ({...}? annotation )* ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) )
 			{
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:482:7: ({...}? annotation )*
+			// smaliParser.g:482:7: ({...}? annotation )*
 			loop4:
 			while (true) {
 				int alt4=2;
@@ -1280,7 +1280,7 @@ public class smaliParser extends Parser {
 
 				switch (alt4) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:482:8: {...}? annotation
+					// smaliParser.g:482:8: {...}? annotation
 					{
 					if ( !((input.LA(1) == ANNOTATION_DIRECTIVE)) ) {
 						throw new FailedPredicateException(input, "field", "input.LA(1) == ANNOTATION_DIRECTIVE");
@@ -1299,7 +1299,7 @@ public class smaliParser extends Parser {
 				}
 			}
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:483:7: ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) )
+			// smaliParser.g:483:7: ( END_FIELD_DIRECTIVE -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) ) )
 			int alt5=2;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0==END_FIELD_DIRECTIVE) ) {
@@ -1317,13 +1317,13 @@ public class smaliParser extends Parser {
 
 			switch (alt5) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:483:9: END_FIELD_DIRECTIVE
+					// smaliParser.g:483:9: END_FIELD_DIRECTIVE
 					{
 					END_FIELD_DIRECTIVE27=(Token)match(input,END_FIELD_DIRECTIVE,FOLLOW_END_FIELD_DIRECTIVE_in_field1397);  
 					stream_END_FIELD_DIRECTIVE.add(END_FIELD_DIRECTIVE27);
 
 					// AST REWRITE
-					// elements: access_list, annotation, literal, nonvoid_type_descriptor, member_name
+					// elements: member_name, annotation, nonvoid_type_descriptor, access_list, literal
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1335,13 +1335,13 @@ public class smaliParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 					// 484:9: -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) )
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:484:12: ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) )
+						// smaliParser.g:484:12: ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ( annotation )* ) )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_FIELD, (retval.start), "I_FIELD"), root_1);
 						adaptor.addChild(root_1, stream_member_name.nextTree());
 						adaptor.addChild(root_1, stream_access_list.nextTree());
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:484:65: ^( I_FIELD_TYPE nonvoid_type_descriptor )
+						// smaliParser.g:484:65: ^( I_FIELD_TYPE nonvoid_type_descriptor )
 						{
 						CommonTree root_2 = (CommonTree)adaptor.nil();
 						root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_FIELD_TYPE, "I_FIELD_TYPE"), root_2);
@@ -1349,9 +1349,9 @@ public class smaliParser extends Parser {
 						adaptor.addChild(root_1, root_2);
 						}
 
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:484:105: ( ^( I_FIELD_INITIAL_VALUE literal ) )?
+						// smaliParser.g:484:105: ( ^( I_FIELD_INITIAL_VALUE literal ) )?
 						if ( stream_literal.hasNext() ) {
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:484:105: ^( I_FIELD_INITIAL_VALUE literal )
+							// smaliParser.g:484:105: ^( I_FIELD_INITIAL_VALUE literal )
 							{
 							CommonTree root_2 = (CommonTree)adaptor.nil();
 							root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_FIELD_INITIAL_VALUE, "I_FIELD_INITIAL_VALUE"), root_2);
@@ -1362,11 +1362,11 @@ public class smaliParser extends Parser {
 						}
 						stream_literal.reset();
 
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:484:139: ^( I_ANNOTATIONS ( annotation )* )
+						// smaliParser.g:484:139: ^( I_ANNOTATIONS ( annotation )* )
 						{
 						CommonTree root_2 = (CommonTree)adaptor.nil();
 						root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ANNOTATIONS, "I_ANNOTATIONS"), root_2);
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:484:155: ( annotation )*
+						// smaliParser.g:484:155: ( annotation )*
 						while ( stream_annotation.hasNext() ) {
 							adaptor.addChild(root_2, stream_annotation.nextTree());
 						}
@@ -1386,11 +1386,11 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:485:21: 
+					// smaliParser.g:485:21: 
 					{
 					smali_file_stack.peek().classAnnotations.addAll(annotations);
 					// AST REWRITE
-					// elements: nonvoid_type_descriptor, access_list, literal, member_name
+					// elements: nonvoid_type_descriptor, access_list, member_name, literal
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1402,13 +1402,13 @@ public class smaliParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 					// 486:9: -> ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) )
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:486:12: ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) )
+						// smaliParser.g:486:12: ^( I_FIELD[$start, \"I_FIELD\"] member_name access_list ^( I_FIELD_TYPE nonvoid_type_descriptor ) ( ^( I_FIELD_INITIAL_VALUE literal ) )? ^( I_ANNOTATIONS ) )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_FIELD, (retval.start), "I_FIELD"), root_1);
 						adaptor.addChild(root_1, stream_member_name.nextTree());
 						adaptor.addChild(root_1, stream_access_list.nextTree());
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:486:65: ^( I_FIELD_TYPE nonvoid_type_descriptor )
+						// smaliParser.g:486:65: ^( I_FIELD_TYPE nonvoid_type_descriptor )
 						{
 						CommonTree root_2 = (CommonTree)adaptor.nil();
 						root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_FIELD_TYPE, "I_FIELD_TYPE"), root_2);
@@ -1416,9 +1416,9 @@ public class smaliParser extends Parser {
 						adaptor.addChild(root_1, root_2);
 						}
 
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:486:105: ( ^( I_FIELD_INITIAL_VALUE literal ) )?
+						// smaliParser.g:486:105: ( ^( I_FIELD_INITIAL_VALUE literal ) )?
 						if ( stream_literal.hasNext() ) {
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:486:105: ^( I_FIELD_INITIAL_VALUE literal )
+							// smaliParser.g:486:105: ^( I_FIELD_INITIAL_VALUE literal )
 							{
 							CommonTree root_2 = (CommonTree)adaptor.nil();
 							root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_FIELD_INITIAL_VALUE, "I_FIELD_INITIAL_VALUE"), root_2);
@@ -1429,7 +1429,7 @@ public class smaliParser extends Parser {
 						}
 						stream_literal.reset();
 
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:486:139: ^( I_ANNOTATIONS )
+						// smaliParser.g:486:139: ^( I_ANNOTATIONS )
 						{
 						CommonTree root_2 = (CommonTree)adaptor.nil();
 						root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ANNOTATIONS, "I_ANNOTATIONS"), root_2);
@@ -1480,7 +1480,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:490:1: method : METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE -> ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives ) ;
+	// smaliParser.g:490:1: method : METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE -> ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives ) ;
 	public final smaliParser.method_return method() throws RecognitionException {
 		smaliParser.method_return retval = new smaliParser.method_return();
 		retval.start = input.LT(1);
@@ -1498,14 +1498,14 @@ public class smaliParser extends Parser {
 		CommonTree END_METHOD_DIRECTIVE33_tree=null;
 		RewriteRuleTokenStream stream_END_METHOD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_METHOD_DIRECTIVE");
 		RewriteRuleTokenStream stream_METHOD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token METHOD_DIRECTIVE");
-		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
 		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
-		RewriteRuleSubtreeStream stream_statements_and_directives=new RewriteRuleSubtreeStream(adaptor,"rule statements_and_directives");
+		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_statements_and_directives=new RewriteRuleSubtreeStream(adaptor,"rule statements_and_directives");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:491:3: ( METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE -> ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:491:5: METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE
+			// smaliParser.g:491:3: ( METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE -> ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives ) )
+			// smaliParser.g:491:5: METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE
 			{
 			METHOD_DIRECTIVE28=(Token)match(input,METHOD_DIRECTIVE,FOLLOW_METHOD_DIRECTIVE_in_method1508);  
 			stream_METHOD_DIRECTIVE.add(METHOD_DIRECTIVE28);
@@ -1534,7 +1534,7 @@ public class smaliParser extends Parser {
 			stream_END_METHOD_DIRECTIVE.add(END_METHOD_DIRECTIVE33);
 
 			// AST REWRITE
-			// elements: method_prototype, access_list, statements_and_directives, member_name
+			// elements: method_prototype, statements_and_directives, member_name, access_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1546,7 +1546,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 493:5: -> ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:493:8: ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives )
+				// smaliParser.g:493:8: ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_METHOD, (retval.start), "I_METHOD"), root_1);
@@ -1597,7 +1597,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "statements_and_directives"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:495:1: statements_and_directives : ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )* -> ( registers_directive )? ^( I_ORDERED_METHOD_ITEMS ( ordered_method_item )* ) ^( I_CATCHES ( catch_directive )* ( catchall_directive )* ) ^( I_PARAMETERS ( parameter_directive )* ) ;
+	// smaliParser.g:495:1: statements_and_directives : ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )* -> ( registers_directive )? ^( I_ORDERED_METHOD_ITEMS ( ordered_method_item )* ) ^( I_CATCHES ( catch_directive )* ( catchall_directive )* ) ^( I_PARAMETERS ( parameter_directive )* ) ;
 	public final smaliParser.statements_and_directives_return statements_and_directives() throws RecognitionException {
 		statements_and_directives_stack.push(new statements_and_directives_scope());
 		smaliParser.statements_and_directives_return retval = new smaliParser.statements_and_directives_return();
@@ -1612,22 +1612,22 @@ public class smaliParser extends Parser {
 		ParserRuleReturnScope parameter_directive38 =null;
 		ParserRuleReturnScope annotation39 =null;
 
-		RewriteRuleSubtreeStream stream_catchall_directive=new RewriteRuleSubtreeStream(adaptor,"rule catchall_directive");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
-		RewriteRuleSubtreeStream stream_ordered_method_item=new RewriteRuleSubtreeStream(adaptor,"rule ordered_method_item");
-		RewriteRuleSubtreeStream stream_catch_directive=new RewriteRuleSubtreeStream(adaptor,"rule catch_directive");
+		RewriteRuleSubtreeStream stream_catchall_directive=new RewriteRuleSubtreeStream(adaptor,"rule catchall_directive");
 		RewriteRuleSubtreeStream stream_registers_directive=new RewriteRuleSubtreeStream(adaptor,"rule registers_directive");
+		RewriteRuleSubtreeStream stream_catch_directive=new RewriteRuleSubtreeStream(adaptor,"rule catch_directive");
+		RewriteRuleSubtreeStream stream_ordered_method_item=new RewriteRuleSubtreeStream(adaptor,"rule ordered_method_item");
 		RewriteRuleSubtreeStream stream_parameter_directive=new RewriteRuleSubtreeStream(adaptor,"rule parameter_directive");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:501:3: ( ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )* -> ( registers_directive )? ^( I_ORDERED_METHOD_ITEMS ( ordered_method_item )* ) ^( I_CATCHES ( catch_directive )* ( catchall_directive )* ) ^( I_PARAMETERS ( parameter_directive )* ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:501:5: ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )*
+			// smaliParser.g:501:3: ( ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )* -> ( registers_directive )? ^( I_ORDERED_METHOD_ITEMS ( ordered_method_item )* ) ^( I_CATCHES ( catch_directive )* ( catchall_directive )* ) ^( I_PARAMETERS ( parameter_directive )* ) )
+			// smaliParser.g:501:5: ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )*
 			{
 
 			      statements_and_directives_stack.peek().hasRegistersDirective = false;
 			      statements_and_directives_stack.peek().methodAnnotations = new ArrayList<CommonTree>();
 			    
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:505:5: ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )*
+			// smaliParser.g:505:5: ( ordered_method_item | registers_directive | catch_directive | catchall_directive | parameter_directive | annotation )*
 			loop6:
 			while (true) {
 				int alt6=7;
@@ -1724,7 +1724,7 @@ public class smaliParser extends Parser {
 				}
 				switch (alt6) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:505:7: ordered_method_item
+					// smaliParser.g:505:7: ordered_method_item
 					{
 					pushFollow(FOLLOW_ordered_method_item_in_statements_and_directives1567);
 					ordered_method_item34=ordered_method_item();
@@ -1734,7 +1734,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:506:7: registers_directive
+					// smaliParser.g:506:7: registers_directive
 					{
 					pushFollow(FOLLOW_registers_directive_in_statements_and_directives1575);
 					registers_directive35=registers_directive();
@@ -1744,7 +1744,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:507:7: catch_directive
+					// smaliParser.g:507:7: catch_directive
 					{
 					pushFollow(FOLLOW_catch_directive_in_statements_and_directives1583);
 					catch_directive36=catch_directive();
@@ -1754,7 +1754,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:508:7: catchall_directive
+					// smaliParser.g:508:7: catchall_directive
 					{
 					pushFollow(FOLLOW_catchall_directive_in_statements_and_directives1591);
 					catchall_directive37=catchall_directive();
@@ -1764,7 +1764,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:509:7: parameter_directive
+					// smaliParser.g:509:7: parameter_directive
 					{
 					pushFollow(FOLLOW_parameter_directive_in_statements_and_directives1599);
 					parameter_directive38=parameter_directive();
@@ -1774,7 +1774,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:510:7: annotation
+					// smaliParser.g:510:7: annotation
 					{
 					pushFollow(FOLLOW_annotation_in_statements_and_directives1607);
 					annotation39=annotation();
@@ -1791,7 +1791,7 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: registers_directive, ordered_method_item, catchall_directive, catch_directive, parameter_directive
+			// elements: parameter_directive, registers_directive, catchall_directive, ordered_method_item, catch_directive
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1803,17 +1803,17 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 512:5: -> ( registers_directive )? ^( I_ORDERED_METHOD_ITEMS ( ordered_method_item )* ) ^( I_CATCHES ( catch_directive )* ( catchall_directive )* ) ^( I_PARAMETERS ( parameter_directive )* )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:512:8: ( registers_directive )?
+				// smaliParser.g:512:8: ( registers_directive )?
 				if ( stream_registers_directive.hasNext() ) {
 					adaptor.addChild(root_0, stream_registers_directive.nextTree());
 				}
 				stream_registers_directive.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:513:8: ^( I_ORDERED_METHOD_ITEMS ( ordered_method_item )* )
+				// smaliParser.g:513:8: ^( I_ORDERED_METHOD_ITEMS ( ordered_method_item )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ORDERED_METHOD_ITEMS, "I_ORDERED_METHOD_ITEMS"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:513:33: ( ordered_method_item )*
+				// smaliParser.g:513:33: ( ordered_method_item )*
 				while ( stream_ordered_method_item.hasNext() ) {
 					adaptor.addChild(root_1, stream_ordered_method_item.nextTree());
 				}
@@ -1822,17 +1822,17 @@ public class smaliParser extends Parser {
 				adaptor.addChild(root_0, root_1);
 				}
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:514:8: ^( I_CATCHES ( catch_directive )* ( catchall_directive )* )
+				// smaliParser.g:514:8: ^( I_CATCHES ( catch_directive )* ( catchall_directive )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_CATCHES, "I_CATCHES"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:514:20: ( catch_directive )*
+				// smaliParser.g:514:20: ( catch_directive )*
 				while ( stream_catch_directive.hasNext() ) {
 					adaptor.addChild(root_1, stream_catch_directive.nextTree());
 				}
 				stream_catch_directive.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:514:37: ( catchall_directive )*
+				// smaliParser.g:514:37: ( catchall_directive )*
 				while ( stream_catchall_directive.hasNext() ) {
 					adaptor.addChild(root_1, stream_catchall_directive.nextTree());
 				}
@@ -1841,11 +1841,11 @@ public class smaliParser extends Parser {
 				adaptor.addChild(root_0, root_1);
 				}
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:515:8: ^( I_PARAMETERS ( parameter_directive )* )
+				// smaliParser.g:515:8: ^( I_PARAMETERS ( parameter_directive )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_PARAMETERS, "I_PARAMETERS"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:515:23: ( parameter_directive )*
+				// smaliParser.g:515:23: ( parameter_directive )*
 				while ( stream_parameter_directive.hasNext() ) {
 					adaptor.addChild(root_1, stream_parameter_directive.nextTree());
 				}
@@ -1890,7 +1890,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "ordered_method_item"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:519:1: ordered_method_item : ( label | instruction | debug_directive );
+	// smaliParser.g:519:1: ordered_method_item : ( label | instruction | debug_directive );
 	public final smaliParser.ordered_method_item_return ordered_method_item() throws RecognitionException {
 		smaliParser.ordered_method_item_return retval = new smaliParser.ordered_method_item_return();
 		retval.start = input.LT(1);
@@ -1903,7 +1903,7 @@ public class smaliParser extends Parser {
 
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:520:3: ( label | instruction | debug_directive )
+			// smaliParser.g:520:3: ( label | instruction | debug_directive )
 			int alt7=3;
 			switch ( input.LA(1) ) {
 			case COLON:
@@ -1984,7 +1984,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt7) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:520:5: label
+					// smaliParser.g:520:5: label
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -1998,7 +1998,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:521:5: instruction
+					// smaliParser.g:521:5: instruction
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -2012,7 +2012,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:522:5: debug_directive
+					// smaliParser.g:522:5: debug_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -2054,7 +2054,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "registers_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:524:1: registers_directive : (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) ) ;
+	// smaliParser.g:524:1: registers_directive : (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) ) ;
 	public final smaliParser.registers_directive_return registers_directive() throws RecognitionException {
 		smaliParser.registers_directive_return retval = new smaliParser.registers_directive_return();
 		retval.start = input.LT(1);
@@ -2066,15 +2066,15 @@ public class smaliParser extends Parser {
 		ParserRuleReturnScope regCount2 =null;
 
 		CommonTree directive_tree=null;
-		RewriteRuleTokenStream stream_REGISTERS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token REGISTERS_DIRECTIVE");
 		RewriteRuleTokenStream stream_LOCALS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token LOCALS_DIRECTIVE");
+		RewriteRuleTokenStream stream_REGISTERS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token REGISTERS_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:525:3: ( (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:525:5: (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) )
+			// smaliParser.g:525:3: ( (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) ) )
+			// smaliParser.g:525:5: (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) )
 			{
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:525:5: (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) )
+			// smaliParser.g:525:5: (directive= REGISTERS_DIRECTIVE regCount= integral_literal -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount) |directive= LOCALS_DIRECTIVE regCount2= integral_literal -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2) )
 			int alt8=2;
 			int LA8_0 = input.LA(1);
 			if ( (LA8_0==REGISTERS_DIRECTIVE) ) {
@@ -2092,7 +2092,7 @@ public class smaliParser extends Parser {
 
 			switch (alt8) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:526:7: directive= REGISTERS_DIRECTIVE regCount= integral_literal
+					// smaliParser.g:526:7: directive= REGISTERS_DIRECTIVE regCount= integral_literal
 					{
 					directive=(Token)match(input,REGISTERS_DIRECTIVE,FOLLOW_REGISTERS_DIRECTIVE_in_registers_directive1724);  
 					stream_REGISTERS_DIRECTIVE.add(directive);
@@ -2105,18 +2105,18 @@ public class smaliParser extends Parser {
 					// AST REWRITE
 					// elements: regCount
 					// token labels: 
-					// rule labels: retval, regCount
+					// rule labels: regCount, retval
 					// token list labels: 
 					// rule list labels: 
 					// wildcard labels: 
 					retval.tree = root_0;
-					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 					RewriteRuleSubtreeStream stream_regCount=new RewriteRuleSubtreeStream(adaptor,"rule regCount",regCount!=null?regCount.getTree():null);
+					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
 					// 526:63: -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount)
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:526:66: ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount)
+						// smaliParser.g:526:66: ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount)
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_REGISTERS, directive, "I_REGISTERS"), root_1);
@@ -2132,7 +2132,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:527:7: directive= LOCALS_DIRECTIVE regCount2= integral_literal
+					// smaliParser.g:527:7: directive= LOCALS_DIRECTIVE regCount2= integral_literal
 					{
 					directive=(Token)match(input,LOCALS_DIRECTIVE,FOLLOW_LOCALS_DIRECTIVE_in_registers_directive1748);  
 					stream_LOCALS_DIRECTIVE.add(directive);
@@ -2145,18 +2145,18 @@ public class smaliParser extends Parser {
 					// AST REWRITE
 					// elements: regCount2
 					// token labels: 
-					// rule labels: retval, regCount2
+					// rule labels: regCount2, retval
 					// token list labels: 
 					// rule list labels: 
 					// wildcard labels: 
 					retval.tree = root_0;
-					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 					RewriteRuleSubtreeStream stream_regCount2=new RewriteRuleSubtreeStream(adaptor,"rule regCount2",regCount2!=null?regCount2.getTree():null);
+					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
 					// 527:61: -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2)
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:527:64: ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2)
+						// smaliParser.g:527:64: ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2)
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_LOCALS, directive, "I_LOCALS"), root_1);
@@ -2209,7 +2209,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "param_list_or_id"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:536:1: param_list_or_id : ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+ ;
+	// smaliParser.g:536:1: param_list_or_id : ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+ ;
 	public final smaliParser.param_list_or_id_return param_list_or_id() throws RecognitionException {
 		smaliParser.param_list_or_id_return retval = new smaliParser.param_list_or_id_return();
 		retval.start = input.LT(1);
@@ -2221,13 +2221,13 @@ public class smaliParser extends Parser {
 		CommonTree PARAM_LIST_OR_ID_PRIMITIVE_TYPE43_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:537:3: ( ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+ )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:537:5: ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+
+			// smaliParser.g:537:3: ( ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+ )
+			// smaliParser.g:537:5: ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:537:5: ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+
+			// smaliParser.g:537:5: ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE )+
 			int cnt9=0;
 			loop9:
 			while (true) {
@@ -2239,7 +2239,7 @@ public class smaliParser extends Parser {
 
 				switch (alt9) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:537:5: PARAM_LIST_OR_ID_PRIMITIVE_TYPE
+					// smaliParser.g:537:5: PARAM_LIST_OR_ID_PRIMITIVE_TYPE
 					{
 					PARAM_LIST_OR_ID_PRIMITIVE_TYPE43=(Token)match(input,PARAM_LIST_OR_ID_PRIMITIVE_TYPE,FOLLOW_PARAM_LIST_OR_ID_PRIMITIVE_TYPE_in_param_list_or_id1784); 
 					PARAM_LIST_OR_ID_PRIMITIVE_TYPE43_tree = (CommonTree)adaptor.create(PARAM_LIST_OR_ID_PRIMITIVE_TYPE43);
@@ -2285,7 +2285,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "simple_name"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:541:1: simple_name : ( SIMPLE_NAME | ACCESS_SPEC -> SIMPLE_NAME[$ACCESS_SPEC] | VERIFICATION_ERROR_TYPE -> SIMPLE_NAME[$VERIFICATION_ERROR_TYPE] | POSITIVE_INTEGER_LITERAL -> SIMPLE_NAME[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> SIMPLE_NAME[$NEGATIVE_INTEGER_LITERAL] | FLOAT_LITERAL_OR_ID -> SIMPLE_NAME[$FLOAT_LITERAL_OR_ID] | DOUBLE_LITERAL_OR_ID -> SIMPLE_NAME[$DOUBLE_LITERAL_OR_ID] | BOOL_LITERAL -> SIMPLE_NAME[$BOOL_LITERAL] | NULL_LITERAL -> SIMPLE_NAME[$NULL_LITERAL] | REGISTER -> SIMPLE_NAME[$REGISTER] | param_list_or_id ->| PRIMITIVE_TYPE -> SIMPLE_NAME[$PRIMITIVE_TYPE] | VOID_TYPE -> SIMPLE_NAME[$VOID_TYPE] | ANNOTATION_VISIBILITY -> SIMPLE_NAME[$ANNOTATION_VISIBILITY] | INSTRUCTION_FORMAT10t -> SIMPLE_NAME[$INSTRUCTION_FORMAT10t] | INSTRUCTION_FORMAT10x -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x] | INSTRUCTION_FORMAT10x_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x_ODEX] | INSTRUCTION_FORMAT11x -> SIMPLE_NAME[$INSTRUCTION_FORMAT11x] | INSTRUCTION_FORMAT12x_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT12x_OR_ID] | INSTRUCTION_FORMAT21c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD] | INSTRUCTION_FORMAT21c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD_ODEX] | INSTRUCTION_FORMAT21c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_STRING] | INSTRUCTION_FORMAT21c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_TYPE] | INSTRUCTION_FORMAT21c_LAMBDA -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_LAMBDA] | INSTRUCTION_FORMAT21c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_METHOD] | INSTRUCTION_FORMAT21t -> SIMPLE_NAME[$INSTRUCTION_FORMAT21t] | INSTRUCTION_FORMAT22c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD] | INSTRUCTION_FORMAT22c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD_ODEX] | INSTRUCTION_FORMAT22c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_TYPE] | INSTRUCTION_FORMAT22c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_STRING] | INSTRUCTION_FORMAT22cs_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22cs_FIELD] | INSTRUCTION_FORMAT22s_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT22s_OR_ID] | INSTRUCTION_FORMAT22t -> SIMPLE_NAME[$INSTRUCTION_FORMAT22t] | INSTRUCTION_FORMAT23x -> SIMPLE_NAME[$INSTRUCTION_FORMAT23x] | INSTRUCTION_FORMAT25x -> SIMPLE_NAME[$INSTRUCTION_FORMAT25x] | INSTRUCTION_FORMAT31i_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT31i_OR_ID] | INSTRUCTION_FORMAT31t -> SIMPLE_NAME[$INSTRUCTION_FORMAT31t] | INSTRUCTION_FORMAT35c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD] | INSTRUCTION_FORMAT35c_METHOD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD_ODEX] | INSTRUCTION_FORMAT35c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_TYPE] | INSTRUCTION_FORMAT35mi_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35mi_METHOD] | INSTRUCTION_FORMAT35ms_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35ms_METHOD] | INSTRUCTION_FORMAT51l -> SIMPLE_NAME[$INSTRUCTION_FORMAT51l] );
+	// smaliParser.g:541:1: simple_name : ( SIMPLE_NAME | ACCESS_SPEC -> SIMPLE_NAME[$ACCESS_SPEC] | VERIFICATION_ERROR_TYPE -> SIMPLE_NAME[$VERIFICATION_ERROR_TYPE] | POSITIVE_INTEGER_LITERAL -> SIMPLE_NAME[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> SIMPLE_NAME[$NEGATIVE_INTEGER_LITERAL] | FLOAT_LITERAL_OR_ID -> SIMPLE_NAME[$FLOAT_LITERAL_OR_ID] | DOUBLE_LITERAL_OR_ID -> SIMPLE_NAME[$DOUBLE_LITERAL_OR_ID] | BOOL_LITERAL -> SIMPLE_NAME[$BOOL_LITERAL] | NULL_LITERAL -> SIMPLE_NAME[$NULL_LITERAL] | REGISTER -> SIMPLE_NAME[$REGISTER] | param_list_or_id ->| PRIMITIVE_TYPE -> SIMPLE_NAME[$PRIMITIVE_TYPE] | VOID_TYPE -> SIMPLE_NAME[$VOID_TYPE] | ANNOTATION_VISIBILITY -> SIMPLE_NAME[$ANNOTATION_VISIBILITY] | INSTRUCTION_FORMAT10t -> SIMPLE_NAME[$INSTRUCTION_FORMAT10t] | INSTRUCTION_FORMAT10x -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x] | INSTRUCTION_FORMAT10x_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x_ODEX] | INSTRUCTION_FORMAT11x -> SIMPLE_NAME[$INSTRUCTION_FORMAT11x] | INSTRUCTION_FORMAT12x_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT12x_OR_ID] | INSTRUCTION_FORMAT21c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD] | INSTRUCTION_FORMAT21c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD_ODEX] | INSTRUCTION_FORMAT21c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_STRING] | INSTRUCTION_FORMAT21c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_TYPE] | INSTRUCTION_FORMAT21c_LAMBDA -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_LAMBDA] | INSTRUCTION_FORMAT21c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_METHOD] | INSTRUCTION_FORMAT21t -> SIMPLE_NAME[$INSTRUCTION_FORMAT21t] | INSTRUCTION_FORMAT22c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD] | INSTRUCTION_FORMAT22c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD_ODEX] | INSTRUCTION_FORMAT22c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_TYPE] | INSTRUCTION_FORMAT22c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_STRING] | INSTRUCTION_FORMAT22cs_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22cs_FIELD] | INSTRUCTION_FORMAT22s_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT22s_OR_ID] | INSTRUCTION_FORMAT22t -> SIMPLE_NAME[$INSTRUCTION_FORMAT22t] | INSTRUCTION_FORMAT23x -> SIMPLE_NAME[$INSTRUCTION_FORMAT23x] | INSTRUCTION_FORMAT25x -> SIMPLE_NAME[$INSTRUCTION_FORMAT25x] | INSTRUCTION_FORMAT31i_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT31i_OR_ID] | INSTRUCTION_FORMAT31t -> SIMPLE_NAME[$INSTRUCTION_FORMAT31t] | INSTRUCTION_FORMAT35c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD] | INSTRUCTION_FORMAT35c_METHOD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD_ODEX] | INSTRUCTION_FORMAT35c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_TYPE] | INSTRUCTION_FORMAT35mi_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35mi_METHOD] | INSTRUCTION_FORMAT35ms_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35ms_METHOD] | INSTRUCTION_FORMAT51l -> SIMPLE_NAME[$INSTRUCTION_FORMAT51l] );
 	public final smaliParser.simple_name_return simple_name() throws RecognitionException {
 		smaliParser.simple_name_return retval = new smaliParser.simple_name_return();
 		retval.start = input.LT(1);
@@ -2378,51 +2378,51 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT35mi_METHOD84_tree=null;
 		CommonTree INSTRUCTION_FORMAT35ms_METHOD85_tree=null;
 		CommonTree INSTRUCTION_FORMAT51l86_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT25x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT25x");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_TYPE");
-		RewriteRuleTokenStream stream_ANNOTATION_VISIBILITY=new RewriteRuleTokenStream(adaptor,"token ANNOTATION_VISIBILITY");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31i_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31i_OR_ID");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22s_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22s_OR_ID");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT51l=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT51l");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT23x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT23x");
-		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
-		RewriteRuleTokenStream stream_BOOL_LITERAL=new RewriteRuleTokenStream(adaptor,"token BOOL_LITERAL");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_LAMBDA=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_LAMBDA");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_FIELD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD_ODEX");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD");
-		RewriteRuleTokenStream stream_ACCESS_SPEC=new RewriteRuleTokenStream(adaptor,"token ACCESS_SPEC");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_STRING");
+		RewriteRuleTokenStream stream_ANNOTATION_VISIBILITY=new RewriteRuleTokenStream(adaptor,"token ANNOTATION_VISIBILITY");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22t");
+		RewriteRuleTokenStream stream_VOID_TYPE=new RewriteRuleTokenStream(adaptor,"token VOID_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10t");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35mi_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35mi_METHOD");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22s_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22s_OR_ID");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22cs_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22cs_FIELD");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT12x_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT12x_OR_ID");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35ms_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35ms_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35mi_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35mi_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22cs_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22cs_FIELD");
-		RewriteRuleTokenStream stream_VOID_TYPE=new RewriteRuleTokenStream(adaptor,"token VOID_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_TYPE");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10x");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_METHOD");
 		RewriteRuleTokenStream stream_FLOAT_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token FLOAT_LITERAL_OR_ID");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22t");
-		RewriteRuleTokenStream stream_PRIMITIVE_TYPE=new RewriteRuleTokenStream(adaptor,"token PRIMITIVE_TYPE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10x_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10x_ODEX");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
-		RewriteRuleTokenStream stream_DOUBLE_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token DOUBLE_LITERAL_OR_ID");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10t");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_STRING");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD_ODEX");
 		RewriteRuleTokenStream stream_NEGATIVE_INTEGER_LITERAL=new RewriteRuleTokenStream(adaptor,"token NEGATIVE_INTEGER_LITERAL");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
-		RewriteRuleTokenStream stream_VERIFICATION_ERROR_TYPE=new RewriteRuleTokenStream(adaptor,"token VERIFICATION_ERROR_TYPE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
+		RewriteRuleTokenStream stream_DOUBLE_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token DOUBLE_LITERAL_OR_ID");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31i_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31i_OR_ID");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT25x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT25x");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT23x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT23x");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT51l=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT51l");
 		RewriteRuleTokenStream stream_POSITIVE_INTEGER_LITERAL=new RewriteRuleTokenStream(adaptor,"token POSITIVE_INTEGER_LITERAL");
+		RewriteRuleTokenStream stream_BOOL_LITERAL=new RewriteRuleTokenStream(adaptor,"token BOOL_LITERAL");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10x_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10x_ODEX");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_FIELD");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD");
+		RewriteRuleTokenStream stream_VERIFICATION_ERROR_TYPE=new RewriteRuleTokenStream(adaptor,"token VERIFICATION_ERROR_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
+		RewriteRuleTokenStream stream_ACCESS_SPEC=new RewriteRuleTokenStream(adaptor,"token ACCESS_SPEC");
+		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
+		RewriteRuleTokenStream stream_PRIMITIVE_TYPE=new RewriteRuleTokenStream(adaptor,"token PRIMITIVE_TYPE");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_FIELD_ODEX");
 		RewriteRuleSubtreeStream stream_param_list_or_id=new RewriteRuleSubtreeStream(adaptor,"rule param_list_or_id");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:542:3: ( SIMPLE_NAME | ACCESS_SPEC -> SIMPLE_NAME[$ACCESS_SPEC] | VERIFICATION_ERROR_TYPE -> SIMPLE_NAME[$VERIFICATION_ERROR_TYPE] | POSITIVE_INTEGER_LITERAL -> SIMPLE_NAME[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> SIMPLE_NAME[$NEGATIVE_INTEGER_LITERAL] | FLOAT_LITERAL_OR_ID -> SIMPLE_NAME[$FLOAT_LITERAL_OR_ID] | DOUBLE_LITERAL_OR_ID -> SIMPLE_NAME[$DOUBLE_LITERAL_OR_ID] | BOOL_LITERAL -> SIMPLE_NAME[$BOOL_LITERAL] | NULL_LITERAL -> SIMPLE_NAME[$NULL_LITERAL] | REGISTER -> SIMPLE_NAME[$REGISTER] | param_list_or_id ->| PRIMITIVE_TYPE -> SIMPLE_NAME[$PRIMITIVE_TYPE] | VOID_TYPE -> SIMPLE_NAME[$VOID_TYPE] | ANNOTATION_VISIBILITY -> SIMPLE_NAME[$ANNOTATION_VISIBILITY] | INSTRUCTION_FORMAT10t -> SIMPLE_NAME[$INSTRUCTION_FORMAT10t] | INSTRUCTION_FORMAT10x -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x] | INSTRUCTION_FORMAT10x_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x_ODEX] | INSTRUCTION_FORMAT11x -> SIMPLE_NAME[$INSTRUCTION_FORMAT11x] | INSTRUCTION_FORMAT12x_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT12x_OR_ID] | INSTRUCTION_FORMAT21c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD] | INSTRUCTION_FORMAT21c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD_ODEX] | INSTRUCTION_FORMAT21c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_STRING] | INSTRUCTION_FORMAT21c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_TYPE] | INSTRUCTION_FORMAT21c_LAMBDA -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_LAMBDA] | INSTRUCTION_FORMAT21c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_METHOD] | INSTRUCTION_FORMAT21t -> SIMPLE_NAME[$INSTRUCTION_FORMAT21t] | INSTRUCTION_FORMAT22c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD] | INSTRUCTION_FORMAT22c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD_ODEX] | INSTRUCTION_FORMAT22c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_TYPE] | INSTRUCTION_FORMAT22c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_STRING] | INSTRUCTION_FORMAT22cs_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22cs_FIELD] | INSTRUCTION_FORMAT22s_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT22s_OR_ID] | INSTRUCTION_FORMAT22t -> SIMPLE_NAME[$INSTRUCTION_FORMAT22t] | INSTRUCTION_FORMAT23x -> SIMPLE_NAME[$INSTRUCTION_FORMAT23x] | INSTRUCTION_FORMAT25x -> SIMPLE_NAME[$INSTRUCTION_FORMAT25x] | INSTRUCTION_FORMAT31i_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT31i_OR_ID] | INSTRUCTION_FORMAT31t -> SIMPLE_NAME[$INSTRUCTION_FORMAT31t] | INSTRUCTION_FORMAT35c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD] | INSTRUCTION_FORMAT35c_METHOD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD_ODEX] | INSTRUCTION_FORMAT35c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_TYPE] | INSTRUCTION_FORMAT35mi_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35mi_METHOD] | INSTRUCTION_FORMAT35ms_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35ms_METHOD] | INSTRUCTION_FORMAT51l -> SIMPLE_NAME[$INSTRUCTION_FORMAT51l] )
+			// smaliParser.g:542:3: ( SIMPLE_NAME | ACCESS_SPEC -> SIMPLE_NAME[$ACCESS_SPEC] | VERIFICATION_ERROR_TYPE -> SIMPLE_NAME[$VERIFICATION_ERROR_TYPE] | POSITIVE_INTEGER_LITERAL -> SIMPLE_NAME[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> SIMPLE_NAME[$NEGATIVE_INTEGER_LITERAL] | FLOAT_LITERAL_OR_ID -> SIMPLE_NAME[$FLOAT_LITERAL_OR_ID] | DOUBLE_LITERAL_OR_ID -> SIMPLE_NAME[$DOUBLE_LITERAL_OR_ID] | BOOL_LITERAL -> SIMPLE_NAME[$BOOL_LITERAL] | NULL_LITERAL -> SIMPLE_NAME[$NULL_LITERAL] | REGISTER -> SIMPLE_NAME[$REGISTER] | param_list_or_id ->| PRIMITIVE_TYPE -> SIMPLE_NAME[$PRIMITIVE_TYPE] | VOID_TYPE -> SIMPLE_NAME[$VOID_TYPE] | ANNOTATION_VISIBILITY -> SIMPLE_NAME[$ANNOTATION_VISIBILITY] | INSTRUCTION_FORMAT10t -> SIMPLE_NAME[$INSTRUCTION_FORMAT10t] | INSTRUCTION_FORMAT10x -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x] | INSTRUCTION_FORMAT10x_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT10x_ODEX] | INSTRUCTION_FORMAT11x -> SIMPLE_NAME[$INSTRUCTION_FORMAT11x] | INSTRUCTION_FORMAT12x_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT12x_OR_ID] | INSTRUCTION_FORMAT21c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD] | INSTRUCTION_FORMAT21c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_FIELD_ODEX] | INSTRUCTION_FORMAT21c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_STRING] | INSTRUCTION_FORMAT21c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_TYPE] | INSTRUCTION_FORMAT21c_LAMBDA -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_LAMBDA] | INSTRUCTION_FORMAT21c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT21c_METHOD] | INSTRUCTION_FORMAT21t -> SIMPLE_NAME[$INSTRUCTION_FORMAT21t] | INSTRUCTION_FORMAT22c_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD] | INSTRUCTION_FORMAT22c_FIELD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_FIELD_ODEX] | INSTRUCTION_FORMAT22c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_TYPE] | INSTRUCTION_FORMAT22c_STRING -> SIMPLE_NAME[$INSTRUCTION_FORMAT22c_STRING] | INSTRUCTION_FORMAT22cs_FIELD -> SIMPLE_NAME[$INSTRUCTION_FORMAT22cs_FIELD] | INSTRUCTION_FORMAT22s_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT22s_OR_ID] | INSTRUCTION_FORMAT22t -> SIMPLE_NAME[$INSTRUCTION_FORMAT22t] | INSTRUCTION_FORMAT23x -> SIMPLE_NAME[$INSTRUCTION_FORMAT23x] | INSTRUCTION_FORMAT25x -> SIMPLE_NAME[$INSTRUCTION_FORMAT25x] | INSTRUCTION_FORMAT31i_OR_ID -> SIMPLE_NAME[$INSTRUCTION_FORMAT31i_OR_ID] | INSTRUCTION_FORMAT31t -> SIMPLE_NAME[$INSTRUCTION_FORMAT31t] | INSTRUCTION_FORMAT35c_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD] | INSTRUCTION_FORMAT35c_METHOD_ODEX -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_METHOD_ODEX] | INSTRUCTION_FORMAT35c_TYPE -> SIMPLE_NAME[$INSTRUCTION_FORMAT35c_TYPE] | INSTRUCTION_FORMAT35mi_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35mi_METHOD] | INSTRUCTION_FORMAT35ms_METHOD -> SIMPLE_NAME[$INSTRUCTION_FORMAT35ms_METHOD] | INSTRUCTION_FORMAT51l -> SIMPLE_NAME[$INSTRUCTION_FORMAT51l] )
 			int alt10=43;
 			switch ( input.LA(1) ) {
 			case SIMPLE_NAME:
@@ -2647,7 +2647,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt10) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:542:5: SIMPLE_NAME
+					// smaliParser.g:542:5: SIMPLE_NAME
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -2659,7 +2659,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:543:5: ACCESS_SPEC
+					// smaliParser.g:543:5: ACCESS_SPEC
 					{
 					ACCESS_SPEC45=(Token)match(input,ACCESS_SPEC,FOLLOW_ACCESS_SPEC_in_simple_name1803);  
 					stream_ACCESS_SPEC.add(ACCESS_SPEC45);
@@ -2686,7 +2686,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:544:5: VERIFICATION_ERROR_TYPE
+					// smaliParser.g:544:5: VERIFICATION_ERROR_TYPE
 					{
 					VERIFICATION_ERROR_TYPE46=(Token)match(input,VERIFICATION_ERROR_TYPE,FOLLOW_VERIFICATION_ERROR_TYPE_in_simple_name1814);  
 					stream_VERIFICATION_ERROR_TYPE.add(VERIFICATION_ERROR_TYPE46);
@@ -2713,7 +2713,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:545:5: POSITIVE_INTEGER_LITERAL
+					// smaliParser.g:545:5: POSITIVE_INTEGER_LITERAL
 					{
 					POSITIVE_INTEGER_LITERAL47=(Token)match(input,POSITIVE_INTEGER_LITERAL,FOLLOW_POSITIVE_INTEGER_LITERAL_in_simple_name1825);  
 					stream_POSITIVE_INTEGER_LITERAL.add(POSITIVE_INTEGER_LITERAL47);
@@ -2740,7 +2740,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:546:5: NEGATIVE_INTEGER_LITERAL
+					// smaliParser.g:546:5: NEGATIVE_INTEGER_LITERAL
 					{
 					NEGATIVE_INTEGER_LITERAL48=(Token)match(input,NEGATIVE_INTEGER_LITERAL,FOLLOW_NEGATIVE_INTEGER_LITERAL_in_simple_name1836);  
 					stream_NEGATIVE_INTEGER_LITERAL.add(NEGATIVE_INTEGER_LITERAL48);
@@ -2767,7 +2767,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:547:5: FLOAT_LITERAL_OR_ID
+					// smaliParser.g:547:5: FLOAT_LITERAL_OR_ID
 					{
 					FLOAT_LITERAL_OR_ID49=(Token)match(input,FLOAT_LITERAL_OR_ID,FOLLOW_FLOAT_LITERAL_OR_ID_in_simple_name1847);  
 					stream_FLOAT_LITERAL_OR_ID.add(FLOAT_LITERAL_OR_ID49);
@@ -2794,7 +2794,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:548:5: DOUBLE_LITERAL_OR_ID
+					// smaliParser.g:548:5: DOUBLE_LITERAL_OR_ID
 					{
 					DOUBLE_LITERAL_OR_ID50=(Token)match(input,DOUBLE_LITERAL_OR_ID,FOLLOW_DOUBLE_LITERAL_OR_ID_in_simple_name1858);  
 					stream_DOUBLE_LITERAL_OR_ID.add(DOUBLE_LITERAL_OR_ID50);
@@ -2821,7 +2821,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 8 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:549:5: BOOL_LITERAL
+					// smaliParser.g:549:5: BOOL_LITERAL
 					{
 					BOOL_LITERAL51=(Token)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_simple_name1869);  
 					stream_BOOL_LITERAL.add(BOOL_LITERAL51);
@@ -2848,7 +2848,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 9 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:550:5: NULL_LITERAL
+					// smaliParser.g:550:5: NULL_LITERAL
 					{
 					NULL_LITERAL52=(Token)match(input,NULL_LITERAL,FOLLOW_NULL_LITERAL_in_simple_name1880);  
 					stream_NULL_LITERAL.add(NULL_LITERAL52);
@@ -2875,7 +2875,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 10 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:551:5: REGISTER
+					// smaliParser.g:551:5: REGISTER
 					{
 					REGISTER53=(Token)match(input,REGISTER,FOLLOW_REGISTER_in_simple_name1891);  
 					stream_REGISTER.add(REGISTER53);
@@ -2902,7 +2902,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 11 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:552:5: param_list_or_id
+					// smaliParser.g:552:5: param_list_or_id
 					{
 					pushFollow(FOLLOW_param_list_or_id_in_simple_name1902);
 					param_list_or_id54=param_list_or_id();
@@ -2931,7 +2931,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 12 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:553:5: PRIMITIVE_TYPE
+					// smaliParser.g:553:5: PRIMITIVE_TYPE
 					{
 					PRIMITIVE_TYPE55=(Token)match(input,PRIMITIVE_TYPE,FOLLOW_PRIMITIVE_TYPE_in_simple_name1912);  
 					stream_PRIMITIVE_TYPE.add(PRIMITIVE_TYPE55);
@@ -2958,7 +2958,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 13 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:554:5: VOID_TYPE
+					// smaliParser.g:554:5: VOID_TYPE
 					{
 					VOID_TYPE56=(Token)match(input,VOID_TYPE,FOLLOW_VOID_TYPE_in_simple_name1923);  
 					stream_VOID_TYPE.add(VOID_TYPE56);
@@ -2985,7 +2985,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 14 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:555:5: ANNOTATION_VISIBILITY
+					// smaliParser.g:555:5: ANNOTATION_VISIBILITY
 					{
 					ANNOTATION_VISIBILITY57=(Token)match(input,ANNOTATION_VISIBILITY,FOLLOW_ANNOTATION_VISIBILITY_in_simple_name1934);  
 					stream_ANNOTATION_VISIBILITY.add(ANNOTATION_VISIBILITY57);
@@ -3012,7 +3012,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 15 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:556:5: INSTRUCTION_FORMAT10t
+					// smaliParser.g:556:5: INSTRUCTION_FORMAT10t
 					{
 					INSTRUCTION_FORMAT10t58=(Token)match(input,INSTRUCTION_FORMAT10t,FOLLOW_INSTRUCTION_FORMAT10t_in_simple_name1945);  
 					stream_INSTRUCTION_FORMAT10t.add(INSTRUCTION_FORMAT10t58);
@@ -3039,7 +3039,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 16 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:557:5: INSTRUCTION_FORMAT10x
+					// smaliParser.g:557:5: INSTRUCTION_FORMAT10x
 					{
 					INSTRUCTION_FORMAT10x59=(Token)match(input,INSTRUCTION_FORMAT10x,FOLLOW_INSTRUCTION_FORMAT10x_in_simple_name1956);  
 					stream_INSTRUCTION_FORMAT10x.add(INSTRUCTION_FORMAT10x59);
@@ -3066,7 +3066,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 17 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:558:5: INSTRUCTION_FORMAT10x_ODEX
+					// smaliParser.g:558:5: INSTRUCTION_FORMAT10x_ODEX
 					{
 					INSTRUCTION_FORMAT10x_ODEX60=(Token)match(input,INSTRUCTION_FORMAT10x_ODEX,FOLLOW_INSTRUCTION_FORMAT10x_ODEX_in_simple_name1967);  
 					stream_INSTRUCTION_FORMAT10x_ODEX.add(INSTRUCTION_FORMAT10x_ODEX60);
@@ -3093,7 +3093,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 18 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:559:5: INSTRUCTION_FORMAT11x
+					// smaliParser.g:559:5: INSTRUCTION_FORMAT11x
 					{
 					INSTRUCTION_FORMAT11x61=(Token)match(input,INSTRUCTION_FORMAT11x,FOLLOW_INSTRUCTION_FORMAT11x_in_simple_name1978);  
 					stream_INSTRUCTION_FORMAT11x.add(INSTRUCTION_FORMAT11x61);
@@ -3120,7 +3120,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 19 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:560:5: INSTRUCTION_FORMAT12x_OR_ID
+					// smaliParser.g:560:5: INSTRUCTION_FORMAT12x_OR_ID
 					{
 					INSTRUCTION_FORMAT12x_OR_ID62=(Token)match(input,INSTRUCTION_FORMAT12x_OR_ID,FOLLOW_INSTRUCTION_FORMAT12x_OR_ID_in_simple_name1989);  
 					stream_INSTRUCTION_FORMAT12x_OR_ID.add(INSTRUCTION_FORMAT12x_OR_ID62);
@@ -3147,7 +3147,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 20 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:561:5: INSTRUCTION_FORMAT21c_FIELD
+					// smaliParser.g:561:5: INSTRUCTION_FORMAT21c_FIELD
 					{
 					INSTRUCTION_FORMAT21c_FIELD63=(Token)match(input,INSTRUCTION_FORMAT21c_FIELD,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_simple_name2000);  
 					stream_INSTRUCTION_FORMAT21c_FIELD.add(INSTRUCTION_FORMAT21c_FIELD63);
@@ -3174,7 +3174,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 21 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:562:5: INSTRUCTION_FORMAT21c_FIELD_ODEX
+					// smaliParser.g:562:5: INSTRUCTION_FORMAT21c_FIELD_ODEX
 					{
 					INSTRUCTION_FORMAT21c_FIELD_ODEX64=(Token)match(input,INSTRUCTION_FORMAT21c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_simple_name2011);  
 					stream_INSTRUCTION_FORMAT21c_FIELD_ODEX.add(INSTRUCTION_FORMAT21c_FIELD_ODEX64);
@@ -3201,7 +3201,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 22 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:563:5: INSTRUCTION_FORMAT21c_STRING
+					// smaliParser.g:563:5: INSTRUCTION_FORMAT21c_STRING
 					{
 					INSTRUCTION_FORMAT21c_STRING65=(Token)match(input,INSTRUCTION_FORMAT21c_STRING,FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_simple_name2022);  
 					stream_INSTRUCTION_FORMAT21c_STRING.add(INSTRUCTION_FORMAT21c_STRING65);
@@ -3228,7 +3228,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 23 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:564:5: INSTRUCTION_FORMAT21c_TYPE
+					// smaliParser.g:564:5: INSTRUCTION_FORMAT21c_TYPE
 					{
 					INSTRUCTION_FORMAT21c_TYPE66=(Token)match(input,INSTRUCTION_FORMAT21c_TYPE,FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_simple_name2033);  
 					stream_INSTRUCTION_FORMAT21c_TYPE.add(INSTRUCTION_FORMAT21c_TYPE66);
@@ -3255,7 +3255,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 24 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:565:5: INSTRUCTION_FORMAT21c_LAMBDA
+					// smaliParser.g:565:5: INSTRUCTION_FORMAT21c_LAMBDA
 					{
 					INSTRUCTION_FORMAT21c_LAMBDA67=(Token)match(input,INSTRUCTION_FORMAT21c_LAMBDA,FOLLOW_INSTRUCTION_FORMAT21c_LAMBDA_in_simple_name2044);  
 					stream_INSTRUCTION_FORMAT21c_LAMBDA.add(INSTRUCTION_FORMAT21c_LAMBDA67);
@@ -3282,7 +3282,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 25 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:566:5: INSTRUCTION_FORMAT21c_METHOD
+					// smaliParser.g:566:5: INSTRUCTION_FORMAT21c_METHOD
 					{
 					INSTRUCTION_FORMAT21c_METHOD68=(Token)match(input,INSTRUCTION_FORMAT21c_METHOD,FOLLOW_INSTRUCTION_FORMAT21c_METHOD_in_simple_name2055);  
 					stream_INSTRUCTION_FORMAT21c_METHOD.add(INSTRUCTION_FORMAT21c_METHOD68);
@@ -3309,7 +3309,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 26 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:567:5: INSTRUCTION_FORMAT21t
+					// smaliParser.g:567:5: INSTRUCTION_FORMAT21t
 					{
 					INSTRUCTION_FORMAT21t69=(Token)match(input,INSTRUCTION_FORMAT21t,FOLLOW_INSTRUCTION_FORMAT21t_in_simple_name2066);  
 					stream_INSTRUCTION_FORMAT21t.add(INSTRUCTION_FORMAT21t69);
@@ -3336,7 +3336,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 27 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:568:5: INSTRUCTION_FORMAT22c_FIELD
+					// smaliParser.g:568:5: INSTRUCTION_FORMAT22c_FIELD
 					{
 					INSTRUCTION_FORMAT22c_FIELD70=(Token)match(input,INSTRUCTION_FORMAT22c_FIELD,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_simple_name2077);  
 					stream_INSTRUCTION_FORMAT22c_FIELD.add(INSTRUCTION_FORMAT22c_FIELD70);
@@ -3363,7 +3363,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 28 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:569:5: INSTRUCTION_FORMAT22c_FIELD_ODEX
+					// smaliParser.g:569:5: INSTRUCTION_FORMAT22c_FIELD_ODEX
 					{
 					INSTRUCTION_FORMAT22c_FIELD_ODEX71=(Token)match(input,INSTRUCTION_FORMAT22c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_simple_name2088);  
 					stream_INSTRUCTION_FORMAT22c_FIELD_ODEX.add(INSTRUCTION_FORMAT22c_FIELD_ODEX71);
@@ -3390,7 +3390,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 29 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:570:5: INSTRUCTION_FORMAT22c_TYPE
+					// smaliParser.g:570:5: INSTRUCTION_FORMAT22c_TYPE
 					{
 					INSTRUCTION_FORMAT22c_TYPE72=(Token)match(input,INSTRUCTION_FORMAT22c_TYPE,FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_simple_name2099);  
 					stream_INSTRUCTION_FORMAT22c_TYPE.add(INSTRUCTION_FORMAT22c_TYPE72);
@@ -3417,7 +3417,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 30 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:571:5: INSTRUCTION_FORMAT22c_STRING
+					// smaliParser.g:571:5: INSTRUCTION_FORMAT22c_STRING
 					{
 					INSTRUCTION_FORMAT22c_STRING73=(Token)match(input,INSTRUCTION_FORMAT22c_STRING,FOLLOW_INSTRUCTION_FORMAT22c_STRING_in_simple_name2110);  
 					stream_INSTRUCTION_FORMAT22c_STRING.add(INSTRUCTION_FORMAT22c_STRING73);
@@ -3444,7 +3444,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 31 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:572:5: INSTRUCTION_FORMAT22cs_FIELD
+					// smaliParser.g:572:5: INSTRUCTION_FORMAT22cs_FIELD
 					{
 					INSTRUCTION_FORMAT22cs_FIELD74=(Token)match(input,INSTRUCTION_FORMAT22cs_FIELD,FOLLOW_INSTRUCTION_FORMAT22cs_FIELD_in_simple_name2121);  
 					stream_INSTRUCTION_FORMAT22cs_FIELD.add(INSTRUCTION_FORMAT22cs_FIELD74);
@@ -3471,7 +3471,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 32 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:573:5: INSTRUCTION_FORMAT22s_OR_ID
+					// smaliParser.g:573:5: INSTRUCTION_FORMAT22s_OR_ID
 					{
 					INSTRUCTION_FORMAT22s_OR_ID75=(Token)match(input,INSTRUCTION_FORMAT22s_OR_ID,FOLLOW_INSTRUCTION_FORMAT22s_OR_ID_in_simple_name2132);  
 					stream_INSTRUCTION_FORMAT22s_OR_ID.add(INSTRUCTION_FORMAT22s_OR_ID75);
@@ -3498,7 +3498,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 33 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:574:5: INSTRUCTION_FORMAT22t
+					// smaliParser.g:574:5: INSTRUCTION_FORMAT22t
 					{
 					INSTRUCTION_FORMAT22t76=(Token)match(input,INSTRUCTION_FORMAT22t,FOLLOW_INSTRUCTION_FORMAT22t_in_simple_name2143);  
 					stream_INSTRUCTION_FORMAT22t.add(INSTRUCTION_FORMAT22t76);
@@ -3525,7 +3525,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 34 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:575:5: INSTRUCTION_FORMAT23x
+					// smaliParser.g:575:5: INSTRUCTION_FORMAT23x
 					{
 					INSTRUCTION_FORMAT23x77=(Token)match(input,INSTRUCTION_FORMAT23x,FOLLOW_INSTRUCTION_FORMAT23x_in_simple_name2154);  
 					stream_INSTRUCTION_FORMAT23x.add(INSTRUCTION_FORMAT23x77);
@@ -3552,7 +3552,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 35 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:576:5: INSTRUCTION_FORMAT25x
+					// smaliParser.g:576:5: INSTRUCTION_FORMAT25x
 					{
 					INSTRUCTION_FORMAT25x78=(Token)match(input,INSTRUCTION_FORMAT25x,FOLLOW_INSTRUCTION_FORMAT25x_in_simple_name2165);  
 					stream_INSTRUCTION_FORMAT25x.add(INSTRUCTION_FORMAT25x78);
@@ -3579,7 +3579,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 36 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:577:5: INSTRUCTION_FORMAT31i_OR_ID
+					// smaliParser.g:577:5: INSTRUCTION_FORMAT31i_OR_ID
 					{
 					INSTRUCTION_FORMAT31i_OR_ID79=(Token)match(input,INSTRUCTION_FORMAT31i_OR_ID,FOLLOW_INSTRUCTION_FORMAT31i_OR_ID_in_simple_name2176);  
 					stream_INSTRUCTION_FORMAT31i_OR_ID.add(INSTRUCTION_FORMAT31i_OR_ID79);
@@ -3606,7 +3606,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 37 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:578:5: INSTRUCTION_FORMAT31t
+					// smaliParser.g:578:5: INSTRUCTION_FORMAT31t
 					{
 					INSTRUCTION_FORMAT31t80=(Token)match(input,INSTRUCTION_FORMAT31t,FOLLOW_INSTRUCTION_FORMAT31t_in_simple_name2187);  
 					stream_INSTRUCTION_FORMAT31t.add(INSTRUCTION_FORMAT31t80);
@@ -3633,7 +3633,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 38 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:579:5: INSTRUCTION_FORMAT35c_METHOD
+					// smaliParser.g:579:5: INSTRUCTION_FORMAT35c_METHOD
 					{
 					INSTRUCTION_FORMAT35c_METHOD81=(Token)match(input,INSTRUCTION_FORMAT35c_METHOD,FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_simple_name2198);  
 					stream_INSTRUCTION_FORMAT35c_METHOD.add(INSTRUCTION_FORMAT35c_METHOD81);
@@ -3660,7 +3660,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 39 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:580:5: INSTRUCTION_FORMAT35c_METHOD_ODEX
+					// smaliParser.g:580:5: INSTRUCTION_FORMAT35c_METHOD_ODEX
 					{
 					INSTRUCTION_FORMAT35c_METHOD_ODEX82=(Token)match(input,INSTRUCTION_FORMAT35c_METHOD_ODEX,FOLLOW_INSTRUCTION_FORMAT35c_METHOD_ODEX_in_simple_name2209);  
 					stream_INSTRUCTION_FORMAT35c_METHOD_ODEX.add(INSTRUCTION_FORMAT35c_METHOD_ODEX82);
@@ -3687,7 +3687,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 40 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:581:5: INSTRUCTION_FORMAT35c_TYPE
+					// smaliParser.g:581:5: INSTRUCTION_FORMAT35c_TYPE
 					{
 					INSTRUCTION_FORMAT35c_TYPE83=(Token)match(input,INSTRUCTION_FORMAT35c_TYPE,FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_simple_name2220);  
 					stream_INSTRUCTION_FORMAT35c_TYPE.add(INSTRUCTION_FORMAT35c_TYPE83);
@@ -3714,7 +3714,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 41 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:582:5: INSTRUCTION_FORMAT35mi_METHOD
+					// smaliParser.g:582:5: INSTRUCTION_FORMAT35mi_METHOD
 					{
 					INSTRUCTION_FORMAT35mi_METHOD84=(Token)match(input,INSTRUCTION_FORMAT35mi_METHOD,FOLLOW_INSTRUCTION_FORMAT35mi_METHOD_in_simple_name2231);  
 					stream_INSTRUCTION_FORMAT35mi_METHOD.add(INSTRUCTION_FORMAT35mi_METHOD84);
@@ -3741,7 +3741,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 42 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:583:5: INSTRUCTION_FORMAT35ms_METHOD
+					// smaliParser.g:583:5: INSTRUCTION_FORMAT35ms_METHOD
 					{
 					INSTRUCTION_FORMAT35ms_METHOD85=(Token)match(input,INSTRUCTION_FORMAT35ms_METHOD,FOLLOW_INSTRUCTION_FORMAT35ms_METHOD_in_simple_name2242);  
 					stream_INSTRUCTION_FORMAT35ms_METHOD.add(INSTRUCTION_FORMAT35ms_METHOD85);
@@ -3768,7 +3768,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 43 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:584:5: INSTRUCTION_FORMAT51l
+					// smaliParser.g:584:5: INSTRUCTION_FORMAT51l
 					{
 					INSTRUCTION_FORMAT51l86=(Token)match(input,INSTRUCTION_FORMAT51l,FOLLOW_INSTRUCTION_FORMAT51l_in_simple_name2253);  
 					stream_INSTRUCTION_FORMAT51l.add(INSTRUCTION_FORMAT51l86);
@@ -3823,7 +3823,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "member_name"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:586:1: member_name : ( simple_name | MEMBER_NAME -> SIMPLE_NAME[$MEMBER_NAME] );
+	// smaliParser.g:586:1: member_name : ( simple_name | MEMBER_NAME -> SIMPLE_NAME[$MEMBER_NAME] );
 	public final smaliParser.member_name_return member_name() throws RecognitionException {
 		smaliParser.member_name_return retval = new smaliParser.member_name_return();
 		retval.start = input.LT(1);
@@ -3837,7 +3837,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_MEMBER_NAME=new RewriteRuleTokenStream(adaptor,"token MEMBER_NAME");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:587:3: ( simple_name | MEMBER_NAME -> SIMPLE_NAME[$MEMBER_NAME] )
+			// smaliParser.g:587:3: ( simple_name | MEMBER_NAME -> SIMPLE_NAME[$MEMBER_NAME] )
 			int alt11=2;
 			int LA11_0 = input.LA(1);
 			if ( (LA11_0==ACCESS_SPEC||LA11_0==ANNOTATION_VISIBILITY||LA11_0==BOOL_LITERAL||LA11_0==DOUBLE_LITERAL_OR_ID||LA11_0==FLOAT_LITERAL_OR_ID||(LA11_0 >= INSTRUCTION_FORMAT10t && LA11_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA11_0==INSTRUCTION_FORMAT11x||LA11_0==INSTRUCTION_FORMAT12x_OR_ID||(LA11_0 >= INSTRUCTION_FORMAT21c_FIELD && LA11_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA11_0==INSTRUCTION_FORMAT21t||(LA11_0 >= INSTRUCTION_FORMAT22c_FIELD && LA11_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA11_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA11_0 <= INSTRUCTION_FORMAT22t)||(LA11_0 >= INSTRUCTION_FORMAT23x && LA11_0 <= INSTRUCTION_FORMAT25x)||(LA11_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA11_0 <= INSTRUCTION_FORMAT31t)||(LA11_0 >= INSTRUCTION_FORMAT35c_METHOD && LA11_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA11_0==INSTRUCTION_FORMAT51l||(LA11_0 >= NEGATIVE_INTEGER_LITERAL && LA11_0 <= NULL_LITERAL)||(LA11_0 >= PARAM_LIST_OR_ID_PRIMITIVE_TYPE && LA11_0 <= PRIMITIVE_TYPE)||LA11_0==REGISTER||LA11_0==SIMPLE_NAME||(LA11_0 >= VERIFICATION_ERROR_TYPE && LA11_0 <= VOID_TYPE)) ) {
@@ -3855,7 +3855,7 @@ public class smaliParser extends Parser {
 
 			switch (alt11) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:587:5: simple_name
+					// smaliParser.g:587:5: simple_name
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -3869,7 +3869,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:588:5: MEMBER_NAME
+					// smaliParser.g:588:5: MEMBER_NAME
 					{
 					MEMBER_NAME88=(Token)match(input,MEMBER_NAME,FOLLOW_MEMBER_NAME_in_member_name2274);  
 					stream_MEMBER_NAME.add(MEMBER_NAME88);
@@ -3924,7 +3924,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "method_prototype"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:590:1: method_prototype : OPEN_PAREN param_list CLOSE_PAREN type_descriptor -> ^( I_METHOD_PROTOTYPE[$start, \"I_METHOD_PROTOTYPE\"] ^( I_METHOD_RETURN_TYPE type_descriptor ) ( param_list )? ) ;
+	// smaliParser.g:590:1: method_prototype : OPEN_PAREN param_list CLOSE_PAREN type_descriptor -> ^( I_METHOD_PROTOTYPE[$start, \"I_METHOD_PROTOTYPE\"] ^( I_METHOD_RETURN_TYPE type_descriptor ) ( param_list )? ) ;
 	public final smaliParser.method_prototype_return method_prototype() throws RecognitionException {
 		smaliParser.method_prototype_return retval = new smaliParser.method_prototype_return();
 		retval.start = input.LT(1);
@@ -3944,8 +3944,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_param_list=new RewriteRuleSubtreeStream(adaptor,"rule param_list");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:591:3: ( OPEN_PAREN param_list CLOSE_PAREN type_descriptor -> ^( I_METHOD_PROTOTYPE[$start, \"I_METHOD_PROTOTYPE\"] ^( I_METHOD_RETURN_TYPE type_descriptor ) ( param_list )? ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:591:5: OPEN_PAREN param_list CLOSE_PAREN type_descriptor
+			// smaliParser.g:591:3: ( OPEN_PAREN param_list CLOSE_PAREN type_descriptor -> ^( I_METHOD_PROTOTYPE[$start, \"I_METHOD_PROTOTYPE\"] ^( I_METHOD_RETURN_TYPE type_descriptor ) ( param_list )? ) )
+			// smaliParser.g:591:5: OPEN_PAREN param_list CLOSE_PAREN type_descriptor
 			{
 			OPEN_PAREN89=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_method_prototype2289);  
 			stream_OPEN_PAREN.add(OPEN_PAREN89);
@@ -3976,11 +3976,11 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 592:5: -> ^( I_METHOD_PROTOTYPE[$start, \"I_METHOD_PROTOTYPE\"] ^( I_METHOD_RETURN_TYPE type_descriptor ) ( param_list )? )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:592:8: ^( I_METHOD_PROTOTYPE[$start, \"I_METHOD_PROTOTYPE\"] ^( I_METHOD_RETURN_TYPE type_descriptor ) ( param_list )? )
+				// smaliParser.g:592:8: ^( I_METHOD_PROTOTYPE[$start, \"I_METHOD_PROTOTYPE\"] ^( I_METHOD_RETURN_TYPE type_descriptor ) ( param_list )? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_METHOD_PROTOTYPE, (retval.start), "I_METHOD_PROTOTYPE"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:592:59: ^( I_METHOD_RETURN_TYPE type_descriptor )
+				// smaliParser.g:592:59: ^( I_METHOD_RETURN_TYPE type_descriptor )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_METHOD_RETURN_TYPE, "I_METHOD_RETURN_TYPE"), root_2);
@@ -3988,7 +3988,7 @@ public class smaliParser extends Parser {
 				adaptor.addChild(root_1, root_2);
 				}
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:592:99: ( param_list )?
+				// smaliParser.g:592:99: ( param_list )?
 				if ( stream_param_list.hasNext() ) {
 					adaptor.addChild(root_1, stream_param_list.nextTree());
 				}
@@ -4031,7 +4031,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "param_list_or_id_primitive_type"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:594:1: param_list_or_id_primitive_type : PARAM_LIST_OR_ID_PRIMITIVE_TYPE -> PRIMITIVE_TYPE[$PARAM_LIST_OR_ID_PRIMITIVE_TYPE] ;
+	// smaliParser.g:594:1: param_list_or_id_primitive_type : PARAM_LIST_OR_ID_PRIMITIVE_TYPE -> PRIMITIVE_TYPE[$PARAM_LIST_OR_ID_PRIMITIVE_TYPE] ;
 	public final smaliParser.param_list_or_id_primitive_type_return param_list_or_id_primitive_type() throws RecognitionException {
 		smaliParser.param_list_or_id_primitive_type_return retval = new smaliParser.param_list_or_id_primitive_type_return();
 		retval.start = input.LT(1);
@@ -4044,8 +4044,8 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_PARAM_LIST_OR_ID_PRIMITIVE_TYPE=new RewriteRuleTokenStream(adaptor,"token PARAM_LIST_OR_ID_PRIMITIVE_TYPE");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:595:3: ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE -> PRIMITIVE_TYPE[$PARAM_LIST_OR_ID_PRIMITIVE_TYPE] )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:595:5: PARAM_LIST_OR_ID_PRIMITIVE_TYPE
+			// smaliParser.g:595:3: ( PARAM_LIST_OR_ID_PRIMITIVE_TYPE -> PRIMITIVE_TYPE[$PARAM_LIST_OR_ID_PRIMITIVE_TYPE] )
+			// smaliParser.g:595:5: PARAM_LIST_OR_ID_PRIMITIVE_TYPE
 			{
 			PARAM_LIST_OR_ID_PRIMITIVE_TYPE93=(Token)match(input,PARAM_LIST_OR_ID_PRIMITIVE_TYPE,FOLLOW_PARAM_LIST_OR_ID_PRIMITIVE_TYPE_in_param_list_or_id_primitive_type2325);  
 			stream_PARAM_LIST_OR_ID_PRIMITIVE_TYPE.add(PARAM_LIST_OR_ID_PRIMITIVE_TYPE93);
@@ -4098,7 +4098,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "param_list"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:597:1: param_list : ( ( param_list_or_id_primitive_type )+ | ( nonvoid_type_descriptor )* );
+	// smaliParser.g:597:1: param_list : ( ( param_list_or_id_primitive_type )+ | ( nonvoid_type_descriptor )* );
 	public final smaliParser.param_list_return param_list() throws RecognitionException {
 		smaliParser.param_list_return retval = new smaliParser.param_list_return();
 		retval.start = input.LT(1);
@@ -4110,7 +4110,7 @@ public class smaliParser extends Parser {
 
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:598:3: ( ( param_list_or_id_primitive_type )+ | ( nonvoid_type_descriptor )* )
+			// smaliParser.g:598:3: ( ( param_list_or_id_primitive_type )+ | ( nonvoid_type_descriptor )* )
 			int alt14=2;
 			int LA14_0 = input.LA(1);
 			if ( (LA14_0==PARAM_LIST_OR_ID_PRIMITIVE_TYPE) ) {
@@ -4128,12 +4128,12 @@ public class smaliParser extends Parser {
 
 			switch (alt14) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:598:5: ( param_list_or_id_primitive_type )+
+					// smaliParser.g:598:5: ( param_list_or_id_primitive_type )+
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:598:5: ( param_list_or_id_primitive_type )+
+					// smaliParser.g:598:5: ( param_list_or_id_primitive_type )+
 					int cnt12=0;
 					loop12:
 					while (true) {
@@ -4145,7 +4145,7 @@ public class smaliParser extends Parser {
 
 						switch (alt12) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:598:5: param_list_or_id_primitive_type
+							// smaliParser.g:598:5: param_list_or_id_primitive_type
 							{
 							pushFollow(FOLLOW_param_list_or_id_primitive_type_in_param_list2340);
 							param_list_or_id_primitive_type94=param_list_or_id_primitive_type();
@@ -4167,12 +4167,12 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:599:5: ( nonvoid_type_descriptor )*
+					// smaliParser.g:599:5: ( nonvoid_type_descriptor )*
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:599:5: ( nonvoid_type_descriptor )*
+					// smaliParser.g:599:5: ( nonvoid_type_descriptor )*
 					loop13:
 					while (true) {
 						int alt13=2;
@@ -4183,7 +4183,7 @@ public class smaliParser extends Parser {
 
 						switch (alt13) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:599:5: nonvoid_type_descriptor
+							// smaliParser.g:599:5: nonvoid_type_descriptor
 							{
 							pushFollow(FOLLOW_nonvoid_type_descriptor_in_param_list2347);
 							nonvoid_type_descriptor95=nonvoid_type_descriptor();
@@ -4230,7 +4230,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "array_descriptor"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:601:1: array_descriptor : ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR ) ;
+	// smaliParser.g:601:1: array_descriptor : ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR ) ;
 	public final smaliParser.array_descriptor_return array_descriptor() throws RecognitionException {
 		smaliParser.array_descriptor_return retval = new smaliParser.array_descriptor_return();
 		retval.start = input.LT(1);
@@ -4244,8 +4244,8 @@ public class smaliParser extends Parser {
 		CommonTree set97_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:602:3: ( ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:602:5: ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR )
+			// smaliParser.g:602:3: ( ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR ) )
+			// smaliParser.g:602:5: ARRAY_TYPE_PREFIX ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR )
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -4293,7 +4293,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "type_descriptor"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:604:1: type_descriptor : ( VOID_TYPE | PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor );
+	// smaliParser.g:604:1: type_descriptor : ( VOID_TYPE | PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor );
 	public final smaliParser.type_descriptor_return type_descriptor() throws RecognitionException {
 		smaliParser.type_descriptor_return retval = new smaliParser.type_descriptor_return();
 		retval.start = input.LT(1);
@@ -4310,7 +4310,7 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR100_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:605:3: ( VOID_TYPE | PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor )
+			// smaliParser.g:605:3: ( VOID_TYPE | PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor )
 			int alt15=4;
 			switch ( input.LA(1) ) {
 			case VOID_TYPE:
@@ -4340,7 +4340,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt15) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:605:5: VOID_TYPE
+					// smaliParser.g:605:5: VOID_TYPE
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4352,7 +4352,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:606:5: PRIMITIVE_TYPE
+					// smaliParser.g:606:5: PRIMITIVE_TYPE
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4364,7 +4364,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:607:5: CLASS_DESCRIPTOR
+					// smaliParser.g:607:5: CLASS_DESCRIPTOR
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4376,7 +4376,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:608:5: array_descriptor
+					// smaliParser.g:608:5: array_descriptor
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4418,7 +4418,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "nonvoid_type_descriptor"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:610:1: nonvoid_type_descriptor : ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor );
+	// smaliParser.g:610:1: nonvoid_type_descriptor : ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor );
 	public final smaliParser.nonvoid_type_descriptor_return nonvoid_type_descriptor() throws RecognitionException {
 		smaliParser.nonvoid_type_descriptor_return retval = new smaliParser.nonvoid_type_descriptor_return();
 		retval.start = input.LT(1);
@@ -4433,7 +4433,7 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR103_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:611:3: ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor )
+			// smaliParser.g:611:3: ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | array_descriptor )
 			int alt16=3;
 			switch ( input.LA(1) ) {
 			case PRIMITIVE_TYPE:
@@ -4458,7 +4458,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt16) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:611:5: PRIMITIVE_TYPE
+					// smaliParser.g:611:5: PRIMITIVE_TYPE
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4470,7 +4470,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:612:5: CLASS_DESCRIPTOR
+					// smaliParser.g:612:5: CLASS_DESCRIPTOR
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4482,7 +4482,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:613:5: array_descriptor
+					// smaliParser.g:613:5: array_descriptor
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4524,7 +4524,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "reference_type_descriptor"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:615:1: reference_type_descriptor : ( CLASS_DESCRIPTOR | array_descriptor );
+	// smaliParser.g:615:1: reference_type_descriptor : ( CLASS_DESCRIPTOR | array_descriptor );
 	public final smaliParser.reference_type_descriptor_return reference_type_descriptor() throws RecognitionException {
 		smaliParser.reference_type_descriptor_return retval = new smaliParser.reference_type_descriptor_return();
 		retval.start = input.LT(1);
@@ -4537,7 +4537,7 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR105_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:616:3: ( CLASS_DESCRIPTOR | array_descriptor )
+			// smaliParser.g:616:3: ( CLASS_DESCRIPTOR | array_descriptor )
 			int alt17=2;
 			int LA17_0 = input.LA(1);
 			if ( (LA17_0==CLASS_DESCRIPTOR) ) {
@@ -4555,7 +4555,7 @@ public class smaliParser extends Parser {
 
 			switch (alt17) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:616:5: CLASS_DESCRIPTOR
+					// smaliParser.g:616:5: CLASS_DESCRIPTOR
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4567,7 +4567,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:617:5: array_descriptor
+					// smaliParser.g:617:5: array_descriptor
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4609,7 +4609,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "integer_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:619:1: integer_literal : ( POSITIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$NEGATIVE_INTEGER_LITERAL] );
+	// smaliParser.g:619:1: integer_literal : ( POSITIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$NEGATIVE_INTEGER_LITERAL] );
 	public final smaliParser.integer_literal_return integer_literal() throws RecognitionException {
 		smaliParser.integer_literal_return retval = new smaliParser.integer_literal_return();
 		retval.start = input.LT(1);
@@ -4625,7 +4625,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_POSITIVE_INTEGER_LITERAL=new RewriteRuleTokenStream(adaptor,"token POSITIVE_INTEGER_LITERAL");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:620:3: ( POSITIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$NEGATIVE_INTEGER_LITERAL] )
+			// smaliParser.g:620:3: ( POSITIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$POSITIVE_INTEGER_LITERAL] | NEGATIVE_INTEGER_LITERAL -> INTEGER_LITERAL[$NEGATIVE_INTEGER_LITERAL] )
 			int alt18=2;
 			int LA18_0 = input.LA(1);
 			if ( (LA18_0==POSITIVE_INTEGER_LITERAL) ) {
@@ -4643,7 +4643,7 @@ public class smaliParser extends Parser {
 
 			switch (alt18) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:620:5: POSITIVE_INTEGER_LITERAL
+					// smaliParser.g:620:5: POSITIVE_INTEGER_LITERAL
 					{
 					POSITIVE_INTEGER_LITERAL107=(Token)match(input,POSITIVE_INTEGER_LITERAL,FOLLOW_POSITIVE_INTEGER_LITERAL_in_integer_literal2442);  
 					stream_POSITIVE_INTEGER_LITERAL.add(POSITIVE_INTEGER_LITERAL107);
@@ -4670,7 +4670,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:621:5: NEGATIVE_INTEGER_LITERAL
+					// smaliParser.g:621:5: NEGATIVE_INTEGER_LITERAL
 					{
 					NEGATIVE_INTEGER_LITERAL108=(Token)match(input,NEGATIVE_INTEGER_LITERAL,FOLLOW_NEGATIVE_INTEGER_LITERAL_in_integer_literal2453);  
 					stream_NEGATIVE_INTEGER_LITERAL.add(NEGATIVE_INTEGER_LITERAL108);
@@ -4725,7 +4725,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "float_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:623:1: float_literal : ( FLOAT_LITERAL_OR_ID -> FLOAT_LITERAL[$FLOAT_LITERAL_OR_ID] | FLOAT_LITERAL );
+	// smaliParser.g:623:1: float_literal : ( FLOAT_LITERAL_OR_ID -> FLOAT_LITERAL[$FLOAT_LITERAL_OR_ID] | FLOAT_LITERAL );
 	public final smaliParser.float_literal_return float_literal() throws RecognitionException {
 		smaliParser.float_literal_return retval = new smaliParser.float_literal_return();
 		retval.start = input.LT(1);
@@ -4740,7 +4740,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_FLOAT_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token FLOAT_LITERAL_OR_ID");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:624:3: ( FLOAT_LITERAL_OR_ID -> FLOAT_LITERAL[$FLOAT_LITERAL_OR_ID] | FLOAT_LITERAL )
+			// smaliParser.g:624:3: ( FLOAT_LITERAL_OR_ID -> FLOAT_LITERAL[$FLOAT_LITERAL_OR_ID] | FLOAT_LITERAL )
 			int alt19=2;
 			int LA19_0 = input.LA(1);
 			if ( (LA19_0==FLOAT_LITERAL_OR_ID) ) {
@@ -4758,7 +4758,7 @@ public class smaliParser extends Parser {
 
 			switch (alt19) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:624:5: FLOAT_LITERAL_OR_ID
+					// smaliParser.g:624:5: FLOAT_LITERAL_OR_ID
 					{
 					FLOAT_LITERAL_OR_ID109=(Token)match(input,FLOAT_LITERAL_OR_ID,FOLLOW_FLOAT_LITERAL_OR_ID_in_float_literal2468);  
 					stream_FLOAT_LITERAL_OR_ID.add(FLOAT_LITERAL_OR_ID109);
@@ -4785,7 +4785,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:625:5: FLOAT_LITERAL
+					// smaliParser.g:625:5: FLOAT_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4825,7 +4825,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "double_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:627:1: double_literal : ( DOUBLE_LITERAL_OR_ID -> DOUBLE_LITERAL[$DOUBLE_LITERAL_OR_ID] | DOUBLE_LITERAL );
+	// smaliParser.g:627:1: double_literal : ( DOUBLE_LITERAL_OR_ID -> DOUBLE_LITERAL[$DOUBLE_LITERAL_OR_ID] | DOUBLE_LITERAL );
 	public final smaliParser.double_literal_return double_literal() throws RecognitionException {
 		smaliParser.double_literal_return retval = new smaliParser.double_literal_return();
 		retval.start = input.LT(1);
@@ -4840,7 +4840,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_DOUBLE_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token DOUBLE_LITERAL_OR_ID");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:628:3: ( DOUBLE_LITERAL_OR_ID -> DOUBLE_LITERAL[$DOUBLE_LITERAL_OR_ID] | DOUBLE_LITERAL )
+			// smaliParser.g:628:3: ( DOUBLE_LITERAL_OR_ID -> DOUBLE_LITERAL[$DOUBLE_LITERAL_OR_ID] | DOUBLE_LITERAL )
 			int alt20=2;
 			int LA20_0 = input.LA(1);
 			if ( (LA20_0==DOUBLE_LITERAL_OR_ID) ) {
@@ -4858,7 +4858,7 @@ public class smaliParser extends Parser {
 
 			switch (alt20) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:628:5: DOUBLE_LITERAL_OR_ID
+					// smaliParser.g:628:5: DOUBLE_LITERAL_OR_ID
 					{
 					DOUBLE_LITERAL_OR_ID111=(Token)match(input,DOUBLE_LITERAL_OR_ID,FOLLOW_DOUBLE_LITERAL_OR_ID_in_double_literal2489);  
 					stream_DOUBLE_LITERAL_OR_ID.add(DOUBLE_LITERAL_OR_ID111);
@@ -4885,7 +4885,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:629:5: DOUBLE_LITERAL
+					// smaliParser.g:629:5: DOUBLE_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -4925,7 +4925,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:631:1: literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal );
+	// smaliParser.g:631:1: literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal );
 	public final smaliParser.literal_return literal() throws RecognitionException {
 		smaliParser.literal_return retval = new smaliParser.literal_return();
 		retval.start = input.LT(1);
@@ -4956,7 +4956,7 @@ public class smaliParser extends Parser {
 		CommonTree NULL_LITERAL122_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:632:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal )
+			// smaliParser.g:632:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal )
 			int alt21=14;
 			switch ( input.LA(1) ) {
 			case LONG_LITERAL:
@@ -5204,7 +5204,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt21) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:632:5: LONG_LITERAL
+					// smaliParser.g:632:5: LONG_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5216,7 +5216,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:633:5: integer_literal
+					// smaliParser.g:633:5: integer_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5230,7 +5230,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:634:5: SHORT_LITERAL
+					// smaliParser.g:634:5: SHORT_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5242,7 +5242,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:635:5: BYTE_LITERAL
+					// smaliParser.g:635:5: BYTE_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5254,7 +5254,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:636:5: float_literal
+					// smaliParser.g:636:5: float_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5268,7 +5268,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:637:5: double_literal
+					// smaliParser.g:637:5: double_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5282,7 +5282,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:638:5: CHAR_LITERAL
+					// smaliParser.g:638:5: CHAR_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5294,7 +5294,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 8 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:639:5: STRING_LITERAL
+					// smaliParser.g:639:5: STRING_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5306,7 +5306,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 9 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:640:5: BOOL_LITERAL
+					// smaliParser.g:640:5: BOOL_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5318,7 +5318,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 10 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:641:5: NULL_LITERAL
+					// smaliParser.g:641:5: NULL_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5330,7 +5330,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 11 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:642:5: array_literal
+					// smaliParser.g:642:5: array_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5344,7 +5344,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 12 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:643:5: subannotation
+					// smaliParser.g:643:5: subannotation
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5358,7 +5358,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 13 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:644:5: type_field_method_literal
+					// smaliParser.g:644:5: type_field_method_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5372,7 +5372,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 14 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:645:5: enum_literal
+					// smaliParser.g:645:5: enum_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5415,7 +5415,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "parsed_integer_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:647:1: parsed_integer_literal returns [int value] : integer_literal ;
+	// smaliParser.g:647:1: parsed_integer_literal returns [int value] : integer_literal ;
 	public final smaliParser.parsed_integer_literal_return parsed_integer_literal() throws RecognitionException {
 		smaliParser.parsed_integer_literal_return retval = new smaliParser.parsed_integer_literal_return();
 		retval.start = input.LT(1);
@@ -5426,8 +5426,8 @@ public class smaliParser extends Parser {
 
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:648:3: ( integer_literal )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:648:5: integer_literal
+			// smaliParser.g:648:3: ( integer_literal )
+			// smaliParser.g:648:5: integer_literal
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -5468,7 +5468,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "integral_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:650:1: integral_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL );
+	// smaliParser.g:650:1: integral_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL );
 	public final smaliParser.integral_literal_return integral_literal() throws RecognitionException {
 		smaliParser.integral_literal_return retval = new smaliParser.integral_literal_return();
 		retval.start = input.LT(1);
@@ -5487,7 +5487,7 @@ public class smaliParser extends Parser {
 		CommonTree BYTE_LITERAL132_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:651:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL )
+			// smaliParser.g:651:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL )
 			int alt22=5;
 			switch ( input.LA(1) ) {
 			case LONG_LITERAL:
@@ -5523,7 +5523,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt22) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:651:5: LONG_LITERAL
+					// smaliParser.g:651:5: LONG_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5535,7 +5535,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:652:5: integer_literal
+					// smaliParser.g:652:5: integer_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5549,7 +5549,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:653:5: SHORT_LITERAL
+					// smaliParser.g:653:5: SHORT_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5561,7 +5561,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:654:5: CHAR_LITERAL
+					// smaliParser.g:654:5: CHAR_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5573,7 +5573,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:655:5: BYTE_LITERAL
+					// smaliParser.g:655:5: BYTE_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5613,7 +5613,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "fixed_32bit_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:657:1: fixed_32bit_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL );
+	// smaliParser.g:657:1: fixed_32bit_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL );
 	public final smaliParser.fixed_32bit_literal_return fixed_32bit_literal() throws RecognitionException {
 		smaliParser.fixed_32bit_literal_return retval = new smaliParser.fixed_32bit_literal_return();
 		retval.start = input.LT(1);
@@ -5635,7 +5635,7 @@ public class smaliParser extends Parser {
 		CommonTree BOOL_LITERAL139_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:658:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL )
+			// smaliParser.g:658:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL )
 			int alt23=7;
 			switch ( input.LA(1) ) {
 			case LONG_LITERAL:
@@ -5682,7 +5682,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt23) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:658:5: LONG_LITERAL
+					// smaliParser.g:658:5: LONG_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5694,7 +5694,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:659:5: integer_literal
+					// smaliParser.g:659:5: integer_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5708,7 +5708,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:660:5: SHORT_LITERAL
+					// smaliParser.g:660:5: SHORT_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5720,7 +5720,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:661:5: BYTE_LITERAL
+					// smaliParser.g:661:5: BYTE_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5732,7 +5732,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:662:5: float_literal
+					// smaliParser.g:662:5: float_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5746,7 +5746,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:663:5: CHAR_LITERAL
+					// smaliParser.g:663:5: CHAR_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5758,7 +5758,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:664:5: BOOL_LITERAL
+					// smaliParser.g:664:5: BOOL_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5798,7 +5798,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "fixed_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:666:1: fixed_literal : ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL );
+	// smaliParser.g:666:1: fixed_literal : ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL );
 	public final smaliParser.fixed_literal_return fixed_literal() throws RecognitionException {
 		smaliParser.fixed_literal_return retval = new smaliParser.fixed_literal_return();
 		retval.start = input.LT(1);
@@ -5821,7 +5821,7 @@ public class smaliParser extends Parser {
 		CommonTree BOOL_LITERAL147_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:667:3: ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL )
+			// smaliParser.g:667:3: ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL )
 			int alt24=8;
 			switch ( input.LA(1) ) {
 			case NEGATIVE_INTEGER_LITERAL:
@@ -5874,7 +5874,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt24) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:667:5: integer_literal
+					// smaliParser.g:667:5: integer_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5888,7 +5888,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:668:5: LONG_LITERAL
+					// smaliParser.g:668:5: LONG_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5900,7 +5900,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:669:5: SHORT_LITERAL
+					// smaliParser.g:669:5: SHORT_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5912,7 +5912,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:670:5: BYTE_LITERAL
+					// smaliParser.g:670:5: BYTE_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5924,7 +5924,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:671:5: float_literal
+					// smaliParser.g:671:5: float_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5938,7 +5938,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:672:5: double_literal
+					// smaliParser.g:672:5: double_literal
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5952,7 +5952,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:673:5: CHAR_LITERAL
+					// smaliParser.g:673:5: CHAR_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -5964,7 +5964,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 8 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:674:5: BOOL_LITERAL
+					// smaliParser.g:674:5: BOOL_LITERAL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -6004,7 +6004,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "array_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:676:1: array_literal : OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE -> ^( I_ENCODED_ARRAY[$start, \"I_ENCODED_ARRAY\"] ( literal )* ) ;
+	// smaliParser.g:676:1: array_literal : OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE -> ^( I_ENCODED_ARRAY[$start, \"I_ENCODED_ARRAY\"] ( literal )* ) ;
 	public final smaliParser.array_literal_return array_literal() throws RecognitionException {
 		smaliParser.array_literal_return retval = new smaliParser.array_literal_return();
 		retval.start = input.LT(1);
@@ -6020,19 +6020,19 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE148_tree=null;
 		CommonTree COMMA150_tree=null;
 		CommonTree CLOSE_BRACE152_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_literal=new RewriteRuleSubtreeStream(adaptor,"rule literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:677:3: ( OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE -> ^( I_ENCODED_ARRAY[$start, \"I_ENCODED_ARRAY\"] ( literal )* ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:677:5: OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE
+			// smaliParser.g:677:3: ( OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE -> ^( I_ENCODED_ARRAY[$start, \"I_ENCODED_ARRAY\"] ( literal )* ) )
+			// smaliParser.g:677:5: OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE
 			{
 			OPEN_BRACE148=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_array_literal2745);  
 			stream_OPEN_BRACE.add(OPEN_BRACE148);
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:677:16: ( literal ( COMMA literal )* |)
+			// smaliParser.g:677:16: ( literal ( COMMA literal )* |)
 			int alt26=2;
 			int LA26_0 = input.LA(1);
 			if ( (LA26_0==ACCESS_SPEC||LA26_0==ANNOTATION_VISIBILITY||LA26_0==ARRAY_TYPE_PREFIX||(LA26_0 >= BOOL_LITERAL && LA26_0 <= BYTE_LITERAL)||(LA26_0 >= CHAR_LITERAL && LA26_0 <= CLASS_DESCRIPTOR)||(LA26_0 >= DOUBLE_LITERAL && LA26_0 <= DOUBLE_LITERAL_OR_ID)||LA26_0==ENUM_DIRECTIVE||(LA26_0 >= FLOAT_LITERAL && LA26_0 <= FLOAT_LITERAL_OR_ID)||(LA26_0 >= INSTRUCTION_FORMAT10t && LA26_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA26_0==INSTRUCTION_FORMAT11x||LA26_0==INSTRUCTION_FORMAT12x_OR_ID||(LA26_0 >= INSTRUCTION_FORMAT21c_FIELD && LA26_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA26_0==INSTRUCTION_FORMAT21t||(LA26_0 >= INSTRUCTION_FORMAT22c_FIELD && LA26_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA26_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA26_0 <= INSTRUCTION_FORMAT22t)||(LA26_0 >= INSTRUCTION_FORMAT23x && LA26_0 <= INSTRUCTION_FORMAT25x)||(LA26_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA26_0 <= INSTRUCTION_FORMAT31t)||(LA26_0 >= INSTRUCTION_FORMAT35c_METHOD && LA26_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA26_0==INSTRUCTION_FORMAT51l||(LA26_0 >= LONG_LITERAL && LA26_0 <= MEMBER_NAME)||(LA26_0 >= NEGATIVE_INTEGER_LITERAL && LA26_0 <= OPEN_BRACE)||(LA26_0 >= PARAM_LIST_OR_ID_PRIMITIVE_TYPE && LA26_0 <= PRIMITIVE_TYPE)||LA26_0==REGISTER||(LA26_0 >= SHORT_LITERAL && LA26_0 <= SIMPLE_NAME)||(LA26_0 >= STRING_LITERAL && LA26_0 <= SUBANNOTATION_DIRECTIVE)||(LA26_0 >= VERIFICATION_ERROR_TYPE && LA26_0 <= VOID_TYPE)) ) {
@@ -6050,14 +6050,14 @@ public class smaliParser extends Parser {
 
 			switch (alt26) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:677:17: literal ( COMMA literal )*
+					// smaliParser.g:677:17: literal ( COMMA literal )*
 					{
 					pushFollow(FOLLOW_literal_in_array_literal2748);
 					literal149=literal();
 					state._fsp--;
 
 					stream_literal.add(literal149.getTree());
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:677:25: ( COMMA literal )*
+					// smaliParser.g:677:25: ( COMMA literal )*
 					loop25:
 					while (true) {
 						int alt25=2;
@@ -6068,7 +6068,7 @@ public class smaliParser extends Parser {
 
 						switch (alt25) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:677:26: COMMA literal
+							// smaliParser.g:677:26: COMMA literal
 							{
 							COMMA150=(Token)match(input,COMMA,FOLLOW_COMMA_in_array_literal2751);  
 							stream_COMMA.add(COMMA150);
@@ -6089,7 +6089,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:677:44: 
+					// smaliParser.g:677:44: 
 					{
 					}
 					break;
@@ -6112,11 +6112,11 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 678:5: -> ^( I_ENCODED_ARRAY[$start, \"I_ENCODED_ARRAY\"] ( literal )* )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:678:8: ^( I_ENCODED_ARRAY[$start, \"I_ENCODED_ARRAY\"] ( literal )* )
+				// smaliParser.g:678:8: ^( I_ENCODED_ARRAY[$start, \"I_ENCODED_ARRAY\"] ( literal )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ENCODED_ARRAY, (retval.start), "I_ENCODED_ARRAY"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:678:53: ( literal )*
+				// smaliParser.g:678:53: ( literal )*
 				while ( stream_literal.hasNext() ) {
 					adaptor.addChild(root_1, stream_literal.nextTree());
 				}
@@ -6159,7 +6159,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "annotation_element"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:680:1: annotation_element : simple_name EQUAL literal -> ^( I_ANNOTATION_ELEMENT[$start, \"I_ANNOTATION_ELEMENT\"] simple_name literal ) ;
+	// smaliParser.g:680:1: annotation_element : simple_name EQUAL literal -> ^( I_ANNOTATION_ELEMENT[$start, \"I_ANNOTATION_ELEMENT\"] simple_name literal ) ;
 	public final smaliParser.annotation_element_return annotation_element() throws RecognitionException {
 		smaliParser.annotation_element_return retval = new smaliParser.annotation_element_return();
 		retval.start = input.LT(1);
@@ -6176,8 +6176,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_literal=new RewriteRuleSubtreeStream(adaptor,"rule literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:681:3: ( simple_name EQUAL literal -> ^( I_ANNOTATION_ELEMENT[$start, \"I_ANNOTATION_ELEMENT\"] simple_name literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:681:5: simple_name EQUAL literal
+			// smaliParser.g:681:3: ( simple_name EQUAL literal -> ^( I_ANNOTATION_ELEMENT[$start, \"I_ANNOTATION_ELEMENT\"] simple_name literal ) )
+			// smaliParser.g:681:5: simple_name EQUAL literal
 			{
 			pushFollow(FOLLOW_simple_name_in_annotation_element2785);
 			simple_name153=simple_name();
@@ -6205,7 +6205,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 682:5: -> ^( I_ANNOTATION_ELEMENT[$start, \"I_ANNOTATION_ELEMENT\"] simple_name literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:682:8: ^( I_ANNOTATION_ELEMENT[$start, \"I_ANNOTATION_ELEMENT\"] simple_name literal )
+				// smaliParser.g:682:8: ^( I_ANNOTATION_ELEMENT[$start, \"I_ANNOTATION_ELEMENT\"] simple_name literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ANNOTATION_ELEMENT, (retval.start), "I_ANNOTATION_ELEMENT"), root_1);
@@ -6248,7 +6248,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "annotation"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:684:1: annotation : ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE -> ^( I_ANNOTATION[$start, \"I_ANNOTATION\"] ANNOTATION_VISIBILITY ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) ) ;
+	// smaliParser.g:684:1: annotation : ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE -> ^( I_ANNOTATION[$start, \"I_ANNOTATION\"] ANNOTATION_VISIBILITY ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) ) ;
 	public final smaliParser.annotation_return annotation() throws RecognitionException {
 		smaliParser.annotation_return retval = new smaliParser.annotation_return();
 		retval.start = input.LT(1);
@@ -6266,14 +6266,14 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR158_tree=null;
 		CommonTree END_ANNOTATION_DIRECTIVE160_tree=null;
 		RewriteRuleTokenStream stream_ANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token ANNOTATION_DIRECTIVE");
-		RewriteRuleTokenStream stream_END_ANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_ANNOTATION_DIRECTIVE");
 		RewriteRuleTokenStream stream_ANNOTATION_VISIBILITY=new RewriteRuleTokenStream(adaptor,"token ANNOTATION_VISIBILITY");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_END_ANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_ANNOTATION_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_annotation_element=new RewriteRuleSubtreeStream(adaptor,"rule annotation_element");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:685:3: ( ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE -> ^( I_ANNOTATION[$start, \"I_ANNOTATION\"] ANNOTATION_VISIBILITY ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:685:5: ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE
+			// smaliParser.g:685:3: ( ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE -> ^( I_ANNOTATION[$start, \"I_ANNOTATION\"] ANNOTATION_VISIBILITY ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) ) )
+			// smaliParser.g:685:5: ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE
 			{
 			ANNOTATION_DIRECTIVE156=(Token)match(input,ANNOTATION_DIRECTIVE,FOLLOW_ANNOTATION_DIRECTIVE_in_annotation2814);  
 			stream_ANNOTATION_DIRECTIVE.add(ANNOTATION_DIRECTIVE156);
@@ -6284,7 +6284,7 @@ public class smaliParser extends Parser {
 			CLASS_DESCRIPTOR158=(Token)match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_annotation2818);  
 			stream_CLASS_DESCRIPTOR.add(CLASS_DESCRIPTOR158);
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:686:5: ( annotation_element )*
+			// smaliParser.g:686:5: ( annotation_element )*
 			loop27:
 			while (true) {
 				int alt27=2;
@@ -6295,7 +6295,7 @@ public class smaliParser extends Parser {
 
 				switch (alt27) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:686:5: annotation_element
+					// smaliParser.g:686:5: annotation_element
 					{
 					pushFollow(FOLLOW_annotation_element_in_annotation2824);
 					annotation_element159=annotation_element();
@@ -6314,7 +6314,7 @@ public class smaliParser extends Parser {
 			stream_END_ANNOTATION_DIRECTIVE.add(END_ANNOTATION_DIRECTIVE160);
 
 			// AST REWRITE
-			// elements: CLASS_DESCRIPTOR, ANNOTATION_VISIBILITY, annotation_element
+			// elements: CLASS_DESCRIPTOR, annotation_element, ANNOTATION_VISIBILITY
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -6326,17 +6326,17 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 687:5: -> ^( I_ANNOTATION[$start, \"I_ANNOTATION\"] ANNOTATION_VISIBILITY ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:687:8: ^( I_ANNOTATION[$start, \"I_ANNOTATION\"] ANNOTATION_VISIBILITY ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) )
+				// smaliParser.g:687:8: ^( I_ANNOTATION[$start, \"I_ANNOTATION\"] ANNOTATION_VISIBILITY ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ANNOTATION, (retval.start), "I_ANNOTATION"), root_1);
 				adaptor.addChild(root_1, stream_ANNOTATION_VISIBILITY.nextNode());
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:687:69: ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* )
+				// smaliParser.g:687:69: ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_SUBANNOTATION, (retval.start), "I_SUBANNOTATION"), root_2);
 				adaptor.addChild(root_2, stream_CLASS_DESCRIPTOR.nextNode());
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:687:131: ( annotation_element )*
+				// smaliParser.g:687:131: ( annotation_element )*
 				while ( stream_annotation_element.hasNext() ) {
 					adaptor.addChild(root_2, stream_annotation_element.nextTree());
 				}
@@ -6382,7 +6382,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "subannotation"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:689:1: subannotation : SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE -> ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) ;
+	// smaliParser.g:689:1: subannotation : SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE -> ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) ;
 	public final smaliParser.subannotation_return subannotation() throws RecognitionException {
 		smaliParser.subannotation_return retval = new smaliParser.subannotation_return();
 		retval.start = input.LT(1);
@@ -6398,13 +6398,13 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR162_tree=null;
 		CommonTree END_SUBANNOTATION_DIRECTIVE164_tree=null;
 		RewriteRuleTokenStream stream_SUBANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SUBANNOTATION_DIRECTIVE");
-		RewriteRuleTokenStream stream_END_SUBANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_SUBANNOTATION_DIRECTIVE");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_END_SUBANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_SUBANNOTATION_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_annotation_element=new RewriteRuleSubtreeStream(adaptor,"rule annotation_element");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:690:3: ( SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE -> ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:690:5: SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE
+			// smaliParser.g:690:3: ( SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE -> ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* ) )
+			// smaliParser.g:690:5: SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE
 			{
 			SUBANNOTATION_DIRECTIVE161=(Token)match(input,SUBANNOTATION_DIRECTIVE,FOLLOW_SUBANNOTATION_DIRECTIVE_in_subannotation2860);  
 			stream_SUBANNOTATION_DIRECTIVE.add(SUBANNOTATION_DIRECTIVE161);
@@ -6412,7 +6412,7 @@ public class smaliParser extends Parser {
 			CLASS_DESCRIPTOR162=(Token)match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_subannotation2862);  
 			stream_CLASS_DESCRIPTOR.add(CLASS_DESCRIPTOR162);
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:690:46: ( annotation_element )*
+			// smaliParser.g:690:46: ( annotation_element )*
 			loop28:
 			while (true) {
 				int alt28=2;
@@ -6423,7 +6423,7 @@ public class smaliParser extends Parser {
 
 				switch (alt28) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:690:46: annotation_element
+					// smaliParser.g:690:46: annotation_element
 					{
 					pushFollow(FOLLOW_annotation_element_in_subannotation2864);
 					annotation_element163=annotation_element();
@@ -6442,7 +6442,7 @@ public class smaliParser extends Parser {
 			stream_END_SUBANNOTATION_DIRECTIVE.add(END_SUBANNOTATION_DIRECTIVE164);
 
 			// AST REWRITE
-			// elements: CLASS_DESCRIPTOR, annotation_element
+			// elements: annotation_element, CLASS_DESCRIPTOR
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -6454,12 +6454,12 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 691:5: -> ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:691:8: ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* )
+				// smaliParser.g:691:8: ^( I_SUBANNOTATION[$start, \"I_SUBANNOTATION\"] CLASS_DESCRIPTOR ( annotation_element )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_SUBANNOTATION, (retval.start), "I_SUBANNOTATION"), root_1);
 				adaptor.addChild(root_1, stream_CLASS_DESCRIPTOR.nextNode());
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:691:70: ( annotation_element )*
+				// smaliParser.g:691:70: ( annotation_element )*
 				while ( stream_annotation_element.hasNext() ) {
 					adaptor.addChild(root_1, stream_annotation_element.nextTree());
 				}
@@ -6502,7 +6502,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "enum_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:694:1: enum_literal : ENUM_DIRECTIVE field_reference -> ^( I_ENCODED_ENUM field_reference ) ;
+	// smaliParser.g:694:1: enum_literal : ENUM_DIRECTIVE field_reference -> ^( I_ENCODED_ENUM field_reference ) ;
 	public final smaliParser.enum_literal_return enum_literal() throws RecognitionException {
 		smaliParser.enum_literal_return retval = new smaliParser.enum_literal_return();
 		retval.start = input.LT(1);
@@ -6517,8 +6517,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_field_reference=new RewriteRuleSubtreeStream(adaptor,"rule field_reference");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:695:3: ( ENUM_DIRECTIVE field_reference -> ^( I_ENCODED_ENUM field_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:695:5: ENUM_DIRECTIVE field_reference
+			// smaliParser.g:695:3: ( ENUM_DIRECTIVE field_reference -> ^( I_ENCODED_ENUM field_reference ) )
+			// smaliParser.g:695:5: ENUM_DIRECTIVE field_reference
 			{
 			ENUM_DIRECTIVE165=(Token)match(input,ENUM_DIRECTIVE,FOLLOW_ENUM_DIRECTIVE_in_enum_literal2894);  
 			stream_ENUM_DIRECTIVE.add(ENUM_DIRECTIVE165);
@@ -6541,7 +6541,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 696:3: -> ^( I_ENCODED_ENUM field_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:696:6: ^( I_ENCODED_ENUM field_reference )
+				// smaliParser.g:696:6: ^( I_ENCODED_ENUM field_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ENCODED_ENUM, "I_ENCODED_ENUM"), root_1);
@@ -6583,7 +6583,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "type_field_method_literal"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:698:1: type_field_method_literal : ( reference_type_descriptor | ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) ) | PRIMITIVE_TYPE | VOID_TYPE );
+	// smaliParser.g:698:1: type_field_method_literal : ( reference_type_descriptor | ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) ) | PRIMITIVE_TYPE | VOID_TYPE );
 	public final smaliParser.type_field_method_literal_return type_field_method_literal() throws RecognitionException {
 		smaliParser.type_field_method_literal_return retval = new smaliParser.type_field_method_literal_return();
 		retval.start = input.LT(1);
@@ -6605,15 +6605,15 @@ public class smaliParser extends Parser {
 		CommonTree COLON171_tree=null;
 		CommonTree PRIMITIVE_TYPE175_tree=null;
 		CommonTree VOID_TYPE176_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
-		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:699:3: ( reference_type_descriptor | ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) ) | PRIMITIVE_TYPE | VOID_TYPE )
+			// smaliParser.g:699:3: ( reference_type_descriptor | ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) ) | PRIMITIVE_TYPE | VOID_TYPE )
 			int alt31=4;
 			switch ( input.LA(1) ) {
 			case CLASS_DESCRIPTOR:
@@ -6783,7 +6783,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt31) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:699:5: reference_type_descriptor
+					// smaliParser.g:699:5: reference_type_descriptor
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -6797,12 +6797,12 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:700:5: ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) )
+					// smaliParser.g:700:5: ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) )
 					{
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:700:5: ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) )
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:700:7: ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) )
+					// smaliParser.g:700:5: ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) )
+					// smaliParser.g:700:7: ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) )
 					{
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:700:7: ( reference_type_descriptor ARROW )?
+					// smaliParser.g:700:7: ( reference_type_descriptor ARROW )?
 					int alt29=2;
 					int LA29_0 = input.LA(1);
 					if ( (LA29_0==ARRAY_TYPE_PREFIX||LA29_0==CLASS_DESCRIPTOR) ) {
@@ -6810,7 +6810,7 @@ public class smaliParser extends Parser {
 					}
 					switch (alt29) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:700:8: reference_type_descriptor ARROW
+							// smaliParser.g:700:8: reference_type_descriptor ARROW
 							{
 							pushFollow(FOLLOW_reference_type_descriptor_in_type_field_method_literal2925);
 							reference_type_descriptor168=reference_type_descriptor();
@@ -6825,12 +6825,12 @@ public class smaliParser extends Parser {
 
 					}
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:701:7: ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) )
+					// smaliParser.g:701:7: ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) )
 					int alt30=2;
 					alt30 = dfa30.predict(input);
 					switch (alt30) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:701:9: member_name COLON nonvoid_type_descriptor
+							// smaliParser.g:701:9: member_name COLON nonvoid_type_descriptor
 							{
 							pushFollow(FOLLOW_member_name_in_type_field_method_literal2939);
 							member_name170=member_name();
@@ -6846,7 +6846,7 @@ public class smaliParser extends Parser {
 
 							stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor172.getTree());
 							// AST REWRITE
-							// elements: reference_type_descriptor, nonvoid_type_descriptor, member_name
+							// elements: nonvoid_type_descriptor, reference_type_descriptor, member_name
 							// token labels: 
 							// rule labels: retval
 							// token list labels: 
@@ -6858,11 +6858,11 @@ public class smaliParser extends Parser {
 							root_0 = (CommonTree)adaptor.nil();
 							// 701:51: -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor )
 							{
-								// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:701:54: ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor )
+								// smaliParser.g:701:54: ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor )
 								{
 								CommonTree root_1 = (CommonTree)adaptor.nil();
 								root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ENCODED_FIELD, "I_ENCODED_FIELD"), root_1);
-								// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:701:72: ( reference_type_descriptor )?
+								// smaliParser.g:701:72: ( reference_type_descriptor )?
 								if ( stream_reference_type_descriptor.hasNext() ) {
 									adaptor.addChild(root_1, stream_reference_type_descriptor.nextTree());
 								}
@@ -6881,7 +6881,7 @@ public class smaliParser extends Parser {
 							}
 							break;
 						case 2 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:702:9: member_name method_prototype
+							// smaliParser.g:702:9: member_name method_prototype
 							{
 							pushFollow(FOLLOW_member_name_in_type_field_method_literal2966);
 							member_name173=member_name();
@@ -6894,7 +6894,7 @@ public class smaliParser extends Parser {
 
 							stream_method_prototype.add(method_prototype174.getTree());
 							// AST REWRITE
-							// elements: member_name, method_prototype, reference_type_descriptor
+							// elements: reference_type_descriptor, method_prototype, member_name
 							// token labels: 
 							// rule labels: retval
 							// token list labels: 
@@ -6906,11 +6906,11 @@ public class smaliParser extends Parser {
 							root_0 = (CommonTree)adaptor.nil();
 							// 702:38: -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype )
 							{
-								// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:702:41: ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype )
+								// smaliParser.g:702:41: ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype )
 								{
 								CommonTree root_1 = (CommonTree)adaptor.nil();
 								root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ENCODED_METHOD, "I_ENCODED_METHOD"), root_1);
-								// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:702:60: ( reference_type_descriptor )?
+								// smaliParser.g:702:60: ( reference_type_descriptor )?
 								if ( stream_reference_type_descriptor.hasNext() ) {
 									adaptor.addChild(root_1, stream_reference_type_descriptor.nextTree());
 								}
@@ -6936,7 +6936,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:705:5: PRIMITIVE_TYPE
+					// smaliParser.g:705:5: PRIMITIVE_TYPE
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -6948,7 +6948,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:706:5: VOID_TYPE
+					// smaliParser.g:706:5: VOID_TYPE
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -6988,7 +6988,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "method_reference"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:708:1: method_reference : ( reference_type_descriptor ARROW )? member_name method_prototype -> ( reference_type_descriptor )? member_name method_prototype ;
+	// smaliParser.g:708:1: method_reference : ( reference_type_descriptor ARROW )? member_name method_prototype -> ( reference_type_descriptor )? member_name method_prototype ;
 	public final smaliParser.method_reference_return method_reference() throws RecognitionException {
 		smaliParser.method_reference_return retval = new smaliParser.method_reference_return();
 		retval.start = input.LT(1);
@@ -7003,14 +7003,14 @@ public class smaliParser extends Parser {
 		CommonTree ARROW178_tree=null;
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
 		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
-		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:709:3: ( ( reference_type_descriptor ARROW )? member_name method_prototype -> ( reference_type_descriptor )? member_name method_prototype )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:709:5: ( reference_type_descriptor ARROW )? member_name method_prototype
+			// smaliParser.g:709:3: ( ( reference_type_descriptor ARROW )? member_name method_prototype -> ( reference_type_descriptor )? member_name method_prototype )
+			// smaliParser.g:709:5: ( reference_type_descriptor ARROW )? member_name method_prototype
 			{
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:709:5: ( reference_type_descriptor ARROW )?
+			// smaliParser.g:709:5: ( reference_type_descriptor ARROW )?
 			int alt32=2;
 			int LA32_0 = input.LA(1);
 			if ( (LA32_0==ARRAY_TYPE_PREFIX||LA32_0==CLASS_DESCRIPTOR) ) {
@@ -7018,7 +7018,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt32) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:709:6: reference_type_descriptor ARROW
+					// smaliParser.g:709:6: reference_type_descriptor ARROW
 					{
 					pushFollow(FOLLOW_reference_type_descriptor_in_method_reference3018);
 					reference_type_descriptor177=reference_type_descriptor();
@@ -7044,7 +7044,7 @@ public class smaliParser extends Parser {
 
 			stream_method_prototype.add(method_prototype180.getTree());
 			// AST REWRITE
-			// elements: method_prototype, reference_type_descriptor, member_name
+			// elements: reference_type_descriptor, method_prototype, member_name
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -7056,7 +7056,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 710:3: -> ( reference_type_descriptor )? member_name method_prototype
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:710:6: ( reference_type_descriptor )?
+				// smaliParser.g:710:6: ( reference_type_descriptor )?
 				if ( stream_reference_type_descriptor.hasNext() ) {
 					adaptor.addChild(root_0, stream_reference_type_descriptor.nextTree());
 				}
@@ -7098,7 +7098,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "field_reference"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:712:1: field_reference : ( reference_type_descriptor ARROW )? member_name COLON nonvoid_type_descriptor -> ( reference_type_descriptor )? member_name nonvoid_type_descriptor ;
+	// smaliParser.g:712:1: field_reference : ( reference_type_descriptor ARROW )? member_name COLON nonvoid_type_descriptor -> ( reference_type_descriptor )? member_name nonvoid_type_descriptor ;
 	public final smaliParser.field_reference_return field_reference() throws RecognitionException {
 		smaliParser.field_reference_return retval = new smaliParser.field_reference_return();
 		retval.start = input.LT(1);
@@ -7113,17 +7113,17 @@ public class smaliParser extends Parser {
 
 		CommonTree ARROW182_tree=null;
 		CommonTree COLON184_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
-		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:713:3: ( ( reference_type_descriptor ARROW )? member_name COLON nonvoid_type_descriptor -> ( reference_type_descriptor )? member_name nonvoid_type_descriptor )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:713:5: ( reference_type_descriptor ARROW )? member_name COLON nonvoid_type_descriptor
+			// smaliParser.g:713:3: ( ( reference_type_descriptor ARROW )? member_name COLON nonvoid_type_descriptor -> ( reference_type_descriptor )? member_name nonvoid_type_descriptor )
+			// smaliParser.g:713:5: ( reference_type_descriptor ARROW )? member_name COLON nonvoid_type_descriptor
 			{
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:713:5: ( reference_type_descriptor ARROW )?
+			// smaliParser.g:713:5: ( reference_type_descriptor ARROW )?
 			int alt33=2;
 			int LA33_0 = input.LA(1);
 			if ( (LA33_0==ARRAY_TYPE_PREFIX||LA33_0==CLASS_DESCRIPTOR) ) {
@@ -7131,7 +7131,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt33) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:713:6: reference_type_descriptor ARROW
+					// smaliParser.g:713:6: reference_type_descriptor ARROW
 					{
 					pushFollow(FOLLOW_reference_type_descriptor_in_field_reference3048);
 					reference_type_descriptor181=reference_type_descriptor();
@@ -7160,7 +7160,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor185.getTree());
 			// AST REWRITE
-			// elements: reference_type_descriptor, member_name, nonvoid_type_descriptor
+			// elements: member_name, reference_type_descriptor, nonvoid_type_descriptor
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -7172,7 +7172,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 714:3: -> ( reference_type_descriptor )? member_name nonvoid_type_descriptor
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:714:6: ( reference_type_descriptor )?
+				// smaliParser.g:714:6: ( reference_type_descriptor )?
 				if ( stream_reference_type_descriptor.hasNext() ) {
 					adaptor.addChild(root_0, stream_reference_type_descriptor.nextTree());
 				}
@@ -7214,7 +7214,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "label"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:716:1: label : COLON simple_name -> ^( I_LABEL[$COLON, \"I_LABEL\"] simple_name ) ;
+	// smaliParser.g:716:1: label : COLON simple_name -> ^( I_LABEL[$COLON, \"I_LABEL\"] simple_name ) ;
 	public final smaliParser.label_return label() throws RecognitionException {
 		smaliParser.label_return retval = new smaliParser.label_return();
 		retval.start = input.LT(1);
@@ -7229,8 +7229,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_simple_name=new RewriteRuleSubtreeStream(adaptor,"rule simple_name");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:717:3: ( COLON simple_name -> ^( I_LABEL[$COLON, \"I_LABEL\"] simple_name ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:717:5: COLON simple_name
+			// smaliParser.g:717:3: ( COLON simple_name -> ^( I_LABEL[$COLON, \"I_LABEL\"] simple_name ) )
+			// smaliParser.g:717:5: COLON simple_name
 			{
 			COLON186=(Token)match(input,COLON,FOLLOW_COLON_in_label3079);  
 			stream_COLON.add(COLON186);
@@ -7253,7 +7253,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 717:23: -> ^( I_LABEL[$COLON, \"I_LABEL\"] simple_name )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:717:26: ^( I_LABEL[$COLON, \"I_LABEL\"] simple_name )
+				// smaliParser.g:717:26: ^( I_LABEL[$COLON, \"I_LABEL\"] simple_name )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_LABEL, COLON186, "I_LABEL"), root_1);
@@ -7295,7 +7295,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "label_ref"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:719:1: label_ref : COLON simple_name -> simple_name ;
+	// smaliParser.g:719:1: label_ref : COLON simple_name -> simple_name ;
 	public final smaliParser.label_ref_return label_ref() throws RecognitionException {
 		smaliParser.label_ref_return retval = new smaliParser.label_ref_return();
 		retval.start = input.LT(1);
@@ -7310,8 +7310,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_simple_name=new RewriteRuleSubtreeStream(adaptor,"rule simple_name");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:720:3: ( COLON simple_name -> simple_name )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:720:5: COLON simple_name
+			// smaliParser.g:720:3: ( COLON simple_name -> simple_name )
+			// smaliParser.g:720:5: COLON simple_name
 			{
 			COLON188=(Token)match(input,COLON,FOLLOW_COLON_in_label_ref3100);  
 			stream_COLON.add(COLON188);
@@ -7369,7 +7369,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "register_list"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:722:1: register_list : ( REGISTER ( COMMA REGISTER )* -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ( REGISTER )* ) | -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ) );
+	// smaliParser.g:722:1: register_list : ( REGISTER ( COMMA REGISTER )* -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ( REGISTER )* ) | -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ) );
 	public final smaliParser.register_list_return register_list() throws RecognitionException {
 		smaliParser.register_list_return retval = new smaliParser.register_list_return();
 		retval.start = input.LT(1);
@@ -7387,7 +7387,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:723:3: ( REGISTER ( COMMA REGISTER )* -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ( REGISTER )* ) | -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ) )
+			// smaliParser.g:723:3: ( REGISTER ( COMMA REGISTER )* -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ( REGISTER )* ) | -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ) )
 			int alt35=2;
 			int LA35_0 = input.LA(1);
 			if ( (LA35_0==REGISTER) ) {
@@ -7405,12 +7405,12 @@ public class smaliParser extends Parser {
 
 			switch (alt35) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:723:5: REGISTER ( COMMA REGISTER )*
+					// smaliParser.g:723:5: REGISTER ( COMMA REGISTER )*
 					{
 					REGISTER190=(Token)match(input,REGISTER,FOLLOW_REGISTER_in_register_list3116);  
 					stream_REGISTER.add(REGISTER190);
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:723:14: ( COMMA REGISTER )*
+					// smaliParser.g:723:14: ( COMMA REGISTER )*
 					loop34:
 					while (true) {
 						int alt34=2;
@@ -7421,7 +7421,7 @@ public class smaliParser extends Parser {
 
 						switch (alt34) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:723:15: COMMA REGISTER
+							// smaliParser.g:723:15: COMMA REGISTER
 							{
 							COMMA191=(Token)match(input,COMMA,FOLLOW_COMMA_in_register_list3119);  
 							stream_COMMA.add(COMMA191);
@@ -7450,11 +7450,11 @@ public class smaliParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 					// 723:32: -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ( REGISTER )* )
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:723:35: ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ( REGISTER )* )
+						// smaliParser.g:723:35: ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] ( REGISTER )* )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_REGISTER_LIST, (retval.start), "I_REGISTER_LIST"), root_1);
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:723:80: ( REGISTER )*
+						// smaliParser.g:723:80: ( REGISTER )*
 						while ( stream_REGISTER.hasNext() ) {
 							adaptor.addChild(root_1, stream_REGISTER.nextNode());
 						}
@@ -7471,7 +7471,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:724:5: 
+					// smaliParser.g:724:5: 
 					{
 					// AST REWRITE
 					// elements: 
@@ -7486,7 +7486,7 @@ public class smaliParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 					// 724:5: -> ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] )
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:724:7: ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] )
+						// smaliParser.g:724:7: ^( I_REGISTER_LIST[$start, \"I_REGISTER_LIST\"] )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_REGISTER_LIST, (retval.start), "I_REGISTER_LIST"), root_1);
@@ -7529,7 +7529,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "register_range"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:726:1: register_range : (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )? -> ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? ) ;
+	// smaliParser.g:726:1: register_range : (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )? -> ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? ) ;
 	public final smaliParser.register_range_return register_range() throws RecognitionException {
 		smaliParser.register_range_return retval = new smaliParser.register_range_return();
 		retval.start = input.LT(1);
@@ -7543,14 +7543,14 @@ public class smaliParser extends Parser {
 		CommonTree startreg_tree=null;
 		CommonTree endreg_tree=null;
 		CommonTree DOTDOT193_tree=null;
-		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:3: ( (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )? -> ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:5: (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )?
+			// smaliParser.g:727:3: ( (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )? -> ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? ) )
+			// smaliParser.g:727:5: (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )?
 			{
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:5: (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )?
+			// smaliParser.g:727:5: (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )?
 			int alt37=2;
 			int LA37_0 = input.LA(1);
 			if ( (LA37_0==REGISTER) ) {
@@ -7558,12 +7558,12 @@ public class smaliParser extends Parser {
 			}
 			switch (alt37) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:6: startreg= REGISTER ( DOTDOT endreg= REGISTER )?
+					// smaliParser.g:727:6: startreg= REGISTER ( DOTDOT endreg= REGISTER )?
 					{
 					startreg=(Token)match(input,REGISTER,FOLLOW_REGISTER_in_register_range3156);  
 					stream_REGISTER.add(startreg);
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:24: ( DOTDOT endreg= REGISTER )?
+					// smaliParser.g:727:24: ( DOTDOT endreg= REGISTER )?
 					int alt36=2;
 					int LA36_0 = input.LA(1);
 					if ( (LA36_0==DOTDOT) ) {
@@ -7571,7 +7571,7 @@ public class smaliParser extends Parser {
 					}
 					switch (alt36) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:25: DOTDOT endreg= REGISTER
+							// smaliParser.g:727:25: DOTDOT endreg= REGISTER
 							{
 							DOTDOT193=(Token)match(input,DOTDOT,FOLLOW_DOTDOT_in_register_range3159);  
 							stream_DOTDOT.add(DOTDOT193);
@@ -7590,31 +7590,31 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: endreg, startreg
-			// token labels: endreg, startreg
+			// elements: startreg, endreg
+			// token labels: startreg, endreg
 			// rule labels: retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleTokenStream stream_endreg=new RewriteRuleTokenStream(adaptor,"token endreg",endreg);
 			RewriteRuleTokenStream stream_startreg=new RewriteRuleTokenStream(adaptor,"token startreg",startreg);
+			RewriteRuleTokenStream stream_endreg=new RewriteRuleTokenStream(adaptor,"token endreg",endreg);
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
 			// 727:52: -> ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:55: ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? )
+				// smaliParser.g:727:55: ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_REGISTER_RANGE, (retval.start), "I_REGISTER_RANGE"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:103: ( $startreg)?
+				// smaliParser.g:727:103: ( $startreg)?
 				if ( stream_startreg.hasNext() ) {
 					adaptor.addChild(root_1, stream_startreg.nextNode());
 				}
 				stream_startreg.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:727:114: ( $endreg)?
+				// smaliParser.g:727:114: ( $endreg)?
 				if ( stream_endreg.hasNext() ) {
 					adaptor.addChild(root_1, stream_endreg.nextNode());
 				}
@@ -7657,7 +7657,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "verification_error_reference"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:729:1: verification_error_reference : ( CLASS_DESCRIPTOR | field_reference | method_reference );
+	// smaliParser.g:729:1: verification_error_reference : ( CLASS_DESCRIPTOR | field_reference | method_reference );
 	public final smaliParser.verification_error_reference_return verification_error_reference() throws RecognitionException {
 		smaliParser.verification_error_reference_return retval = new smaliParser.verification_error_reference_return();
 		retval.start = input.LT(1);
@@ -7671,12 +7671,12 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR194_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:730:3: ( CLASS_DESCRIPTOR | field_reference | method_reference )
+			// smaliParser.g:730:3: ( CLASS_DESCRIPTOR | field_reference | method_reference )
 			int alt38=3;
 			alt38 = dfa38.predict(input);
 			switch (alt38) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:730:5: CLASS_DESCRIPTOR
+					// smaliParser.g:730:5: CLASS_DESCRIPTOR
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -7688,7 +7688,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:730:24: field_reference
+					// smaliParser.g:730:24: field_reference
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -7702,7 +7702,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:730:42: method_reference
+					// smaliParser.g:730:42: method_reference
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -7744,7 +7744,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "catch_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:732:1: catch_directive : CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using) ;
+	// smaliParser.g:732:1: catch_directive : CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using) ;
 	public final smaliParser.catch_directive_return catch_directive() throws RecognitionException {
 		smaliParser.catch_directive_return retval = new smaliParser.catch_directive_return();
 		retval.start = input.LT(1);
@@ -7764,16 +7764,16 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE199_tree=null;
 		CommonTree DOTDOT200_tree=null;
 		CommonTree CLOSE_BRACE201_tree=null;
-		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 		RewriteRuleTokenStream stream_CATCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CATCH_DIRECTIVE");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:733:3: ( CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:733:5: CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref
+			// smaliParser.g:733:3: ( CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using) )
+			// smaliParser.g:733:5: CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref
 			{
 			CATCH_DIRECTIVE197=(Token)match(input,CATCH_DIRECTIVE,FOLLOW_CATCH_DIRECTIVE_in_catch_directive3210);  
 			stream_CATCH_DIRECTIVE.add(CATCH_DIRECTIVE197);
@@ -7808,22 +7808,22 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(using.getTree());
 			// AST REWRITE
-			// elements: nonvoid_type_descriptor, from, to, using
+			// elements: using, to, from, nonvoid_type_descriptor
 			// token labels: 
-			// rule labels: to, retval, using, from
+			// rule labels: using, from, to, retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
-			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 			RewriteRuleSubtreeStream stream_using=new RewriteRuleSubtreeStream(adaptor,"rule using",using!=null?using.getTree():null);
 			RewriteRuleSubtreeStream stream_from=new RewriteRuleSubtreeStream(adaptor,"rule from",from!=null?from.getTree():null);
+			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
+			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
 			// 734:5: -> ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using)
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:734:8: ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using)
+				// smaliParser.g:734:8: ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using)
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_CATCH, (retval.start), "I_CATCH"), root_1);
@@ -7868,7 +7868,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "catchall_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:736:1: catchall_directive : CATCHALL_DIRECTIVE OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using) ;
+	// smaliParser.g:736:1: catchall_directive : CATCHALL_DIRECTIVE OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using) ;
 	public final smaliParser.catchall_directive_return catchall_directive() throws RecognitionException {
 		smaliParser.catchall_directive_return retval = new smaliParser.catchall_directive_return();
 		retval.start = input.LT(1);
@@ -7887,15 +7887,15 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE203_tree=null;
 		CommonTree DOTDOT204_tree=null;
 		CommonTree CLOSE_BRACE205_tree=null;
-		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 		RewriteRuleTokenStream stream_CATCHALL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CATCHALL_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:737:3: ( CATCHALL_DIRECTIVE OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:737:5: CATCHALL_DIRECTIVE OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref
+			// smaliParser.g:737:3: ( CATCHALL_DIRECTIVE OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using) )
+			// smaliParser.g:737:5: CATCHALL_DIRECTIVE OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref
 			{
 			CATCHALL_DIRECTIVE202=(Token)match(input,CATCHALL_DIRECTIVE,FOLLOW_CATCHALL_DIRECTIVE_in_catchall_directive3262);  
 			stream_CATCHALL_DIRECTIVE.add(CATCHALL_DIRECTIVE202);
@@ -7925,22 +7925,22 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(using.getTree());
 			// AST REWRITE
-			// elements: to, using, from
+			// elements: from, to, using
 			// token labels: 
-			// rule labels: to, retval, using, from
+			// rule labels: using, from, to, retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
-			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 			RewriteRuleSubtreeStream stream_using=new RewriteRuleSubtreeStream(adaptor,"rule using",using!=null?using.getTree():null);
 			RewriteRuleSubtreeStream stream_from=new RewriteRuleSubtreeStream(adaptor,"rule from",from!=null?from.getTree():null);
+			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
+			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
 			// 738:5: -> ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using)
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:738:8: ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using)
+				// smaliParser.g:738:8: ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using)
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_CATCHALL, (retval.start), "I_CATCHALL"), root_1);
@@ -7984,7 +7984,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "parameter_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:744:1: parameter_directive : PARAMETER_DIRECTIVE REGISTER ( COMMA STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) ) ;
+	// smaliParser.g:744:1: parameter_directive : PARAMETER_DIRECTIVE REGISTER ( COMMA STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) ) ;
 	public final smaliParser.parameter_directive_return parameter_directive() throws RecognitionException {
 		smaliParser.parameter_directive_return retval = new smaliParser.parameter_directive_return();
 		retval.start = input.LT(1);
@@ -8003,17 +8003,17 @@ public class smaliParser extends Parser {
 		CommonTree COMMA208_tree=null;
 		CommonTree STRING_LITERAL209_tree=null;
 		CommonTree END_PARAMETER_DIRECTIVE211_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
-		RewriteRuleTokenStream stream_END_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_PARAMETER_DIRECTIVE");
-		RewriteRuleTokenStream stream_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PARAMETER_DIRECTIVE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PARAMETER_DIRECTIVE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
+		RewriteRuleTokenStream stream_END_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_PARAMETER_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
 
 		List<CommonTree> annotations = new ArrayList<CommonTree>();
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:746:3: ( PARAMETER_DIRECTIVE REGISTER ( COMMA STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:746:5: PARAMETER_DIRECTIVE REGISTER ( COMMA STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) )
+			// smaliParser.g:746:3: ( PARAMETER_DIRECTIVE REGISTER ( COMMA STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) ) )
+			// smaliParser.g:746:5: PARAMETER_DIRECTIVE REGISTER ( COMMA STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) )
 			{
 			PARAMETER_DIRECTIVE206=(Token)match(input,PARAMETER_DIRECTIVE,FOLLOW_PARAMETER_DIRECTIVE_in_parameter_directive3319);  
 			stream_PARAMETER_DIRECTIVE.add(PARAMETER_DIRECTIVE206);
@@ -8021,7 +8021,7 @@ public class smaliParser extends Parser {
 			REGISTER207=(Token)match(input,REGISTER,FOLLOW_REGISTER_in_parameter_directive3321);  
 			stream_REGISTER.add(REGISTER207);
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:746:34: ( COMMA STRING_LITERAL )?
+			// smaliParser.g:746:34: ( COMMA STRING_LITERAL )?
 			int alt39=2;
 			int LA39_0 = input.LA(1);
 			if ( (LA39_0==COMMA) ) {
@@ -8029,7 +8029,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt39) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:746:35: COMMA STRING_LITERAL
+					// smaliParser.g:746:35: COMMA STRING_LITERAL
 					{
 					COMMA208=(Token)match(input,COMMA,FOLLOW_COMMA_in_parameter_directive3324);  
 					stream_COMMA.add(COMMA208);
@@ -8042,14 +8042,14 @@ public class smaliParser extends Parser {
 
 			}
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:747:5: ({...}? annotation )*
+			// smaliParser.g:747:5: ({...}? annotation )*
 			loop40:
 			while (true) {
 				int alt40=2;
 				alt40 = dfa40.predict(input);
 				switch (alt40) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:747:6: {...}? annotation
+					// smaliParser.g:747:6: {...}? annotation
 					{
 					if ( !((input.LA(1) == ANNOTATION_DIRECTIVE)) ) {
 						throw new FailedPredicateException(input, "parameter_directive", "input.LA(1) == ANNOTATION_DIRECTIVE");
@@ -8068,7 +8068,7 @@ public class smaliParser extends Parser {
 				}
 			}
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:749:5: ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) )
+			// smaliParser.g:749:5: ( END_PARAMETER_DIRECTIVE -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) ) | -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) ) )
 			int alt41=2;
 			int LA41_0 = input.LA(1);
 			if ( (LA41_0==END_PARAMETER_DIRECTIVE) ) {
@@ -8086,7 +8086,7 @@ public class smaliParser extends Parser {
 
 			switch (alt41) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:749:7: END_PARAMETER_DIRECTIVE
+					// smaliParser.g:749:7: END_PARAMETER_DIRECTIVE
 					{
 					END_PARAMETER_DIRECTIVE211=(Token)match(input,END_PARAMETER_DIRECTIVE,FOLLOW_END_PARAMETER_DIRECTIVE_in_parameter_directive3350);  
 					stream_END_PARAMETER_DIRECTIVE.add(END_PARAMETER_DIRECTIVE211);
@@ -8104,22 +8104,22 @@ public class smaliParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 					// 750:7: -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) )
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:750:10: ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) )
+						// smaliParser.g:750:10: ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ( annotation )* ) )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_PARAMETER, (retval.start), "I_PARAMETER"), root_1);
 						adaptor.addChild(root_1, stream_REGISTER.nextNode());
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:750:56: ( STRING_LITERAL )?
+						// smaliParser.g:750:56: ( STRING_LITERAL )?
 						if ( stream_STRING_LITERAL.hasNext() ) {
 							adaptor.addChild(root_1, stream_STRING_LITERAL.nextNode());
 						}
 						stream_STRING_LITERAL.reset();
 
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:750:72: ^( I_ANNOTATIONS ( annotation )* )
+						// smaliParser.g:750:72: ^( I_ANNOTATIONS ( annotation )* )
 						{
 						CommonTree root_2 = (CommonTree)adaptor.nil();
 						root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ANNOTATIONS, "I_ANNOTATIONS"), root_2);
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:750:88: ( annotation )*
+						// smaliParser.g:750:88: ( annotation )*
 						while ( stream_annotation.hasNext() ) {
 							adaptor.addChild(root_2, stream_annotation.nextTree());
 						}
@@ -8139,7 +8139,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:751:19: 
+					// smaliParser.g:751:19: 
 					{
 					statements_and_directives_stack.peek().methodAnnotations.addAll(annotations);
 					// AST REWRITE
@@ -8155,18 +8155,18 @@ public class smaliParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 					// 752:7: -> ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) )
 					{
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:752:10: ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) )
+						// smaliParser.g:752:10: ^( I_PARAMETER[$start, \"I_PARAMETER\"] REGISTER ( STRING_LITERAL )? ^( I_ANNOTATIONS ) )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_PARAMETER, (retval.start), "I_PARAMETER"), root_1);
 						adaptor.addChild(root_1, stream_REGISTER.nextNode());
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:752:56: ( STRING_LITERAL )?
+						// smaliParser.g:752:56: ( STRING_LITERAL )?
 						if ( stream_STRING_LITERAL.hasNext() ) {
 							adaptor.addChild(root_1, stream_STRING_LITERAL.nextNode());
 						}
 						stream_STRING_LITERAL.reset();
 
-						// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:752:72: ^( I_ANNOTATIONS )
+						// smaliParser.g:752:72: ^( I_ANNOTATIONS )
 						{
 						CommonTree root_2 = (CommonTree)adaptor.nil();
 						root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ANNOTATIONS, "I_ANNOTATIONS"), root_2);
@@ -8215,7 +8215,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "debug_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:755:1: debug_directive : ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive );
+	// smaliParser.g:755:1: debug_directive : ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive );
 	public final smaliParser.debug_directive_return debug_directive() throws RecognitionException {
 		smaliParser.debug_directive_return retval = new smaliParser.debug_directive_return();
 		retval.start = input.LT(1);
@@ -8232,7 +8232,7 @@ public class smaliParser extends Parser {
 
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:756:3: ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive )
+			// smaliParser.g:756:3: ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive )
 			int alt42=7;
 			switch ( input.LA(1) ) {
 			case LINE_DIRECTIVE:
@@ -8277,7 +8277,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt42) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:756:5: line_directive
+					// smaliParser.g:756:5: line_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -8291,7 +8291,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:757:5: local_directive
+					// smaliParser.g:757:5: local_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -8305,7 +8305,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:758:5: end_local_directive
+					// smaliParser.g:758:5: end_local_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -8319,7 +8319,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:759:5: restart_local_directive
+					// smaliParser.g:759:5: restart_local_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -8333,7 +8333,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:760:5: prologue_directive
+					// smaliParser.g:760:5: prologue_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -8347,7 +8347,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:761:5: epilogue_directive
+					// smaliParser.g:761:5: epilogue_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -8361,7 +8361,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:762:5: source_directive
+					// smaliParser.g:762:5: source_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -8403,7 +8403,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "line_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:764:1: line_directive : LINE_DIRECTIVE integral_literal -> ^( I_LINE[$start, \"I_LINE\"] integral_literal ) ;
+	// smaliParser.g:764:1: line_directive : LINE_DIRECTIVE integral_literal -> ^( I_LINE[$start, \"I_LINE\"] integral_literal ) ;
 	public final smaliParser.line_directive_return line_directive() throws RecognitionException {
 		smaliParser.line_directive_return retval = new smaliParser.line_directive_return();
 		retval.start = input.LT(1);
@@ -8418,8 +8418,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:765:3: ( LINE_DIRECTIVE integral_literal -> ^( I_LINE[$start, \"I_LINE\"] integral_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:765:5: LINE_DIRECTIVE integral_literal
+			// smaliParser.g:765:3: ( LINE_DIRECTIVE integral_literal -> ^( I_LINE[$start, \"I_LINE\"] integral_literal ) )
+			// smaliParser.g:765:5: LINE_DIRECTIVE integral_literal
 			{
 			LINE_DIRECTIVE219=(Token)match(input,LINE_DIRECTIVE,FOLLOW_LINE_DIRECTIVE_in_line_directive3469);  
 			stream_LINE_DIRECTIVE.add(LINE_DIRECTIVE219);
@@ -8442,7 +8442,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 766:5: -> ^( I_LINE[$start, \"I_LINE\"] integral_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:766:8: ^( I_LINE[$start, \"I_LINE\"] integral_literal )
+				// smaliParser.g:766:8: ^( I_LINE[$start, \"I_LINE\"] integral_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_LINE, (retval.start), "I_LINE"), root_1);
@@ -8484,7 +8484,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "local_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:768:1: local_directive : LOCAL_DIRECTIVE REGISTER ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )? -> ^( I_LOCAL[$start, \"I_LOCAL\"] REGISTER ( NULL_LITERAL )? ( $name)? ( nonvoid_type_descriptor )? ( $signature)? ) ;
+	// smaliParser.g:768:1: local_directive : LOCAL_DIRECTIVE REGISTER ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )? -> ^( I_LOCAL[$start, \"I_LOCAL\"] REGISTER ( NULL_LITERAL )? ( $name)? ( nonvoid_type_descriptor )? ( $signature)? ) ;
 	public final smaliParser.local_directive_return local_directive() throws RecognitionException {
 		smaliParser.local_directive_return retval = new smaliParser.local_directive_return();
 		retval.start = input.LT(1);
@@ -8511,18 +8511,18 @@ public class smaliParser extends Parser {
 		CommonTree COLON225_tree=null;
 		CommonTree VOID_TYPE226_tree=null;
 		CommonTree COMMA228_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
-		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
-		RewriteRuleTokenStream stream_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_VOID_TYPE=new RewriteRuleTokenStream(adaptor,"token VOID_TYPE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
+		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:3: ( LOCAL_DIRECTIVE REGISTER ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )? -> ^( I_LOCAL[$start, \"I_LOCAL\"] REGISTER ( NULL_LITERAL )? ( $name)? ( nonvoid_type_descriptor )? ( $signature)? ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:5: LOCAL_DIRECTIVE REGISTER ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )?
+			// smaliParser.g:769:3: ( LOCAL_DIRECTIVE REGISTER ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )? -> ^( I_LOCAL[$start, \"I_LOCAL\"] REGISTER ( NULL_LITERAL )? ( $name)? ( nonvoid_type_descriptor )? ( $signature)? ) )
+			// smaliParser.g:769:5: LOCAL_DIRECTIVE REGISTER ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )?
 			{
 			LOCAL_DIRECTIVE221=(Token)match(input,LOCAL_DIRECTIVE,FOLLOW_LOCAL_DIRECTIVE_in_local_directive3494);  
 			stream_LOCAL_DIRECTIVE.add(LOCAL_DIRECTIVE221);
@@ -8530,7 +8530,7 @@ public class smaliParser extends Parser {
 			REGISTER222=(Token)match(input,REGISTER,FOLLOW_REGISTER_in_local_directive3496);  
 			stream_REGISTER.add(REGISTER222);
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:30: ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )?
+			// smaliParser.g:769:30: ( COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )? )?
 			int alt46=2;
 			int LA46_0 = input.LA(1);
 			if ( (LA46_0==COMMA) ) {
@@ -8538,12 +8538,12 @@ public class smaliParser extends Parser {
 			}
 			switch (alt46) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:31: COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )?
+					// smaliParser.g:769:31: COMMA ( NULL_LITERAL |name= STRING_LITERAL ) COLON ( VOID_TYPE | nonvoid_type_descriptor ) ( COMMA signature= STRING_LITERAL )?
 					{
 					COMMA223=(Token)match(input,COMMA,FOLLOW_COMMA_in_local_directive3499);  
 					stream_COMMA.add(COMMA223);
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:37: ( NULL_LITERAL |name= STRING_LITERAL )
+					// smaliParser.g:769:37: ( NULL_LITERAL |name= STRING_LITERAL )
 					int alt43=2;
 					int LA43_0 = input.LA(1);
 					if ( (LA43_0==NULL_LITERAL) ) {
@@ -8561,7 +8561,7 @@ public class smaliParser extends Parser {
 
 					switch (alt43) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:38: NULL_LITERAL
+							// smaliParser.g:769:38: NULL_LITERAL
 							{
 							NULL_LITERAL224=(Token)match(input,NULL_LITERAL,FOLLOW_NULL_LITERAL_in_local_directive3502);  
 							stream_NULL_LITERAL.add(NULL_LITERAL224);
@@ -8569,7 +8569,7 @@ public class smaliParser extends Parser {
 							}
 							break;
 						case 2 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:53: name= STRING_LITERAL
+							// smaliParser.g:769:53: name= STRING_LITERAL
 							{
 							name=(Token)match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_local_directive3508);  
 							stream_STRING_LITERAL.add(name);
@@ -8582,7 +8582,7 @@ public class smaliParser extends Parser {
 					COLON225=(Token)match(input,COLON,FOLLOW_COLON_in_local_directive3511);  
 					stream_COLON.add(COLON225);
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:80: ( VOID_TYPE | nonvoid_type_descriptor )
+					// smaliParser.g:769:80: ( VOID_TYPE | nonvoid_type_descriptor )
 					int alt44=2;
 					int LA44_0 = input.LA(1);
 					if ( (LA44_0==VOID_TYPE) ) {
@@ -8600,7 +8600,7 @@ public class smaliParser extends Parser {
 
 					switch (alt44) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:81: VOID_TYPE
+							// smaliParser.g:769:81: VOID_TYPE
 							{
 							VOID_TYPE226=(Token)match(input,VOID_TYPE,FOLLOW_VOID_TYPE_in_local_directive3514);  
 							stream_VOID_TYPE.add(VOID_TYPE226);
@@ -8608,7 +8608,7 @@ public class smaliParser extends Parser {
 							}
 							break;
 						case 2 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:769:93: nonvoid_type_descriptor
+							// smaliParser.g:769:93: nonvoid_type_descriptor
 							{
 							pushFollow(FOLLOW_nonvoid_type_descriptor_in_local_directive3518);
 							nonvoid_type_descriptor227=nonvoid_type_descriptor();
@@ -8620,7 +8620,7 @@ public class smaliParser extends Parser {
 
 					}
 
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:770:31: ( COMMA signature= STRING_LITERAL )?
+					// smaliParser.g:770:31: ( COMMA signature= STRING_LITERAL )?
 					int alt45=2;
 					int LA45_0 = input.LA(1);
 					if ( (LA45_0==COMMA) ) {
@@ -8628,7 +8628,7 @@ public class smaliParser extends Parser {
 					}
 					switch (alt45) {
 						case 1 :
-							// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:770:32: COMMA signature= STRING_LITERAL
+							// smaliParser.g:770:32: COMMA signature= STRING_LITERAL
 							{
 							COMMA228=(Token)match(input,COMMA,FOLLOW_COMMA_in_local_directive3552);  
 							stream_COMMA.add(COMMA228);
@@ -8647,44 +8647,44 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: name, signature, NULL_LITERAL, REGISTER, nonvoid_type_descriptor
-			// token labels: name, signature
+			// elements: signature, NULL_LITERAL, nonvoid_type_descriptor, name, REGISTER
+			// token labels: signature, name
 			// rule labels: retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleTokenStream stream_name=new RewriteRuleTokenStream(adaptor,"token name",name);
 			RewriteRuleTokenStream stream_signature=new RewriteRuleTokenStream(adaptor,"token signature",signature);
+			RewriteRuleTokenStream stream_name=new RewriteRuleTokenStream(adaptor,"token name",name);
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
 			// 771:5: -> ^( I_LOCAL[$start, \"I_LOCAL\"] REGISTER ( NULL_LITERAL )? ( $name)? ( nonvoid_type_descriptor )? ( $signature)? )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:771:8: ^( I_LOCAL[$start, \"I_LOCAL\"] REGISTER ( NULL_LITERAL )? ( $name)? ( nonvoid_type_descriptor )? ( $signature)? )
+				// smaliParser.g:771:8: ^( I_LOCAL[$start, \"I_LOCAL\"] REGISTER ( NULL_LITERAL )? ( $name)? ( nonvoid_type_descriptor )? ( $signature)? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_LOCAL, (retval.start), "I_LOCAL"), root_1);
 				adaptor.addChild(root_1, stream_REGISTER.nextNode());
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:771:46: ( NULL_LITERAL )?
+				// smaliParser.g:771:46: ( NULL_LITERAL )?
 				if ( stream_NULL_LITERAL.hasNext() ) {
 					adaptor.addChild(root_1, stream_NULL_LITERAL.nextNode());
 				}
 				stream_NULL_LITERAL.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:771:61: ( $name)?
+				// smaliParser.g:771:61: ( $name)?
 				if ( stream_name.hasNext() ) {
 					adaptor.addChild(root_1, stream_name.nextNode());
 				}
 				stream_name.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:771:67: ( nonvoid_type_descriptor )?
+				// smaliParser.g:771:67: ( nonvoid_type_descriptor )?
 				if ( stream_nonvoid_type_descriptor.hasNext() ) {
 					adaptor.addChild(root_1, stream_nonvoid_type_descriptor.nextTree());
 				}
 				stream_nonvoid_type_descriptor.reset();
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:771:93: ( $signature)?
+				// smaliParser.g:771:93: ( $signature)?
 				if ( stream_signature.hasNext() ) {
 					adaptor.addChild(root_1, stream_signature.nextNode());
 				}
@@ -8727,7 +8727,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "end_local_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:773:1: end_local_directive : END_LOCAL_DIRECTIVE REGISTER -> ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER ) ;
+	// smaliParser.g:773:1: end_local_directive : END_LOCAL_DIRECTIVE REGISTER -> ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER ) ;
 	public final smaliParser.end_local_directive_return end_local_directive() throws RecognitionException {
 		smaliParser.end_local_directive_return retval = new smaliParser.end_local_directive_return();
 		retval.start = input.LT(1);
@@ -8739,12 +8739,12 @@ public class smaliParser extends Parser {
 
 		CommonTree END_LOCAL_DIRECTIVE229_tree=null;
 		CommonTree REGISTER230_tree=null;
-		RewriteRuleTokenStream stream_END_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_END_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_LOCAL_DIRECTIVE");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:774:3: ( END_LOCAL_DIRECTIVE REGISTER -> ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:774:5: END_LOCAL_DIRECTIVE REGISTER
+			// smaliParser.g:774:3: ( END_LOCAL_DIRECTIVE REGISTER -> ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER ) )
+			// smaliParser.g:774:5: END_LOCAL_DIRECTIVE REGISTER
 			{
 			END_LOCAL_DIRECTIVE229=(Token)match(input,END_LOCAL_DIRECTIVE,FOLLOW_END_LOCAL_DIRECTIVE_in_end_local_directive3598);  
 			stream_END_LOCAL_DIRECTIVE.add(END_LOCAL_DIRECTIVE229);
@@ -8765,7 +8765,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 775:5: -> ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:775:8: ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER )
+				// smaliParser.g:775:8: ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_END_LOCAL, (retval.start), "I_END_LOCAL"), root_1);
@@ -8807,7 +8807,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "restart_local_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:777:1: restart_local_directive : RESTART_LOCAL_DIRECTIVE REGISTER -> ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER ) ;
+	// smaliParser.g:777:1: restart_local_directive : RESTART_LOCAL_DIRECTIVE REGISTER -> ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER ) ;
 	public final smaliParser.restart_local_directive_return restart_local_directive() throws RecognitionException {
 		smaliParser.restart_local_directive_return retval = new smaliParser.restart_local_directive_return();
 		retval.start = input.LT(1);
@@ -8819,12 +8819,12 @@ public class smaliParser extends Parser {
 
 		CommonTree RESTART_LOCAL_DIRECTIVE231_tree=null;
 		CommonTree REGISTER232_tree=null;
-		RewriteRuleTokenStream stream_RESTART_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token RESTART_LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_RESTART_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token RESTART_LOCAL_DIRECTIVE");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:778:3: ( RESTART_LOCAL_DIRECTIVE REGISTER -> ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:778:5: RESTART_LOCAL_DIRECTIVE REGISTER
+			// smaliParser.g:778:3: ( RESTART_LOCAL_DIRECTIVE REGISTER -> ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER ) )
+			// smaliParser.g:778:5: RESTART_LOCAL_DIRECTIVE REGISTER
 			{
 			RESTART_LOCAL_DIRECTIVE231=(Token)match(input,RESTART_LOCAL_DIRECTIVE,FOLLOW_RESTART_LOCAL_DIRECTIVE_in_restart_local_directive3623);  
 			stream_RESTART_LOCAL_DIRECTIVE.add(RESTART_LOCAL_DIRECTIVE231);
@@ -8845,7 +8845,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 779:5: -> ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:779:8: ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER )
+				// smaliParser.g:779:8: ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_RESTART_LOCAL, (retval.start), "I_RESTART_LOCAL"), root_1);
@@ -8887,7 +8887,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "prologue_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:781:1: prologue_directive : PROLOGUE_DIRECTIVE -> ^( I_PROLOGUE[$start, \"I_PROLOGUE\"] ) ;
+	// smaliParser.g:781:1: prologue_directive : PROLOGUE_DIRECTIVE -> ^( I_PROLOGUE[$start, \"I_PROLOGUE\"] ) ;
 	public final smaliParser.prologue_directive_return prologue_directive() throws RecognitionException {
 		smaliParser.prologue_directive_return retval = new smaliParser.prologue_directive_return();
 		retval.start = input.LT(1);
@@ -8900,8 +8900,8 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_PROLOGUE_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PROLOGUE_DIRECTIVE");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:782:3: ( PROLOGUE_DIRECTIVE -> ^( I_PROLOGUE[$start, \"I_PROLOGUE\"] ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:782:5: PROLOGUE_DIRECTIVE
+			// smaliParser.g:782:3: ( PROLOGUE_DIRECTIVE -> ^( I_PROLOGUE[$start, \"I_PROLOGUE\"] ) )
+			// smaliParser.g:782:5: PROLOGUE_DIRECTIVE
 			{
 			PROLOGUE_DIRECTIVE233=(Token)match(input,PROLOGUE_DIRECTIVE,FOLLOW_PROLOGUE_DIRECTIVE_in_prologue_directive3648);  
 			stream_PROLOGUE_DIRECTIVE.add(PROLOGUE_DIRECTIVE233);
@@ -8919,7 +8919,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 783:5: -> ^( I_PROLOGUE[$start, \"I_PROLOGUE\"] )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:783:8: ^( I_PROLOGUE[$start, \"I_PROLOGUE\"] )
+				// smaliParser.g:783:8: ^( I_PROLOGUE[$start, \"I_PROLOGUE\"] )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_PROLOGUE, (retval.start), "I_PROLOGUE"), root_1);
@@ -8960,7 +8960,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "epilogue_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:785:1: epilogue_directive : EPILOGUE_DIRECTIVE -> ^( I_EPILOGUE[$start, \"I_EPILOGUE\"] ) ;
+	// smaliParser.g:785:1: epilogue_directive : EPILOGUE_DIRECTIVE -> ^( I_EPILOGUE[$start, \"I_EPILOGUE\"] ) ;
 	public final smaliParser.epilogue_directive_return epilogue_directive() throws RecognitionException {
 		smaliParser.epilogue_directive_return retval = new smaliParser.epilogue_directive_return();
 		retval.start = input.LT(1);
@@ -8973,8 +8973,8 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_EPILOGUE_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token EPILOGUE_DIRECTIVE");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:786:3: ( EPILOGUE_DIRECTIVE -> ^( I_EPILOGUE[$start, \"I_EPILOGUE\"] ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:786:5: EPILOGUE_DIRECTIVE
+			// smaliParser.g:786:3: ( EPILOGUE_DIRECTIVE -> ^( I_EPILOGUE[$start, \"I_EPILOGUE\"] ) )
+			// smaliParser.g:786:5: EPILOGUE_DIRECTIVE
 			{
 			EPILOGUE_DIRECTIVE234=(Token)match(input,EPILOGUE_DIRECTIVE,FOLLOW_EPILOGUE_DIRECTIVE_in_epilogue_directive3669);  
 			stream_EPILOGUE_DIRECTIVE.add(EPILOGUE_DIRECTIVE234);
@@ -8992,7 +8992,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 787:5: -> ^( I_EPILOGUE[$start, \"I_EPILOGUE\"] )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:787:8: ^( I_EPILOGUE[$start, \"I_EPILOGUE\"] )
+				// smaliParser.g:787:8: ^( I_EPILOGUE[$start, \"I_EPILOGUE\"] )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_EPILOGUE, (retval.start), "I_EPILOGUE"), root_1);
@@ -9033,7 +9033,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "source_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:789:1: source_directive : SOURCE_DIRECTIVE ( STRING_LITERAL )? -> ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? ) ;
+	// smaliParser.g:789:1: source_directive : SOURCE_DIRECTIVE ( STRING_LITERAL )? -> ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? ) ;
 	public final smaliParser.source_directive_return source_directive() throws RecognitionException {
 		smaliParser.source_directive_return retval = new smaliParser.source_directive_return();
 		retval.start = input.LT(1);
@@ -9045,17 +9045,17 @@ public class smaliParser extends Parser {
 
 		CommonTree SOURCE_DIRECTIVE235_tree=null;
 		CommonTree STRING_LITERAL236_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_SOURCE_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SOURCE_DIRECTIVE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:790:3: ( SOURCE_DIRECTIVE ( STRING_LITERAL )? -> ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:790:5: SOURCE_DIRECTIVE ( STRING_LITERAL )?
+			// smaliParser.g:790:3: ( SOURCE_DIRECTIVE ( STRING_LITERAL )? -> ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? ) )
+			// smaliParser.g:790:5: SOURCE_DIRECTIVE ( STRING_LITERAL )?
 			{
 			SOURCE_DIRECTIVE235=(Token)match(input,SOURCE_DIRECTIVE,FOLLOW_SOURCE_DIRECTIVE_in_source_directive3690);  
 			stream_SOURCE_DIRECTIVE.add(SOURCE_DIRECTIVE235);
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:790:22: ( STRING_LITERAL )?
+			// smaliParser.g:790:22: ( STRING_LITERAL )?
 			int alt47=2;
 			int LA47_0 = input.LA(1);
 			if ( (LA47_0==STRING_LITERAL) ) {
@@ -9063,7 +9063,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt47) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:790:22: STRING_LITERAL
+					// smaliParser.g:790:22: STRING_LITERAL
 					{
 					STRING_LITERAL236=(Token)match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_source_directive3692);  
 					stream_STRING_LITERAL.add(STRING_LITERAL236);
@@ -9086,11 +9086,11 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 791:5: -> ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:791:8: ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? )
+				// smaliParser.g:791:8: ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_SOURCE, (retval.start), "I_SOURCE"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:791:39: ( STRING_LITERAL )?
+				// smaliParser.g:791:39: ( STRING_LITERAL )?
 				if ( stream_STRING_LITERAL.hasNext() ) {
 					adaptor.addChild(root_1, stream_STRING_LITERAL.nextNode());
 				}
@@ -9133,7 +9133,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "instruction_format12x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:793:1: instruction_format12x : ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID -> INSTRUCTION_FORMAT12x[$INSTRUCTION_FORMAT12x_OR_ID] );
+	// smaliParser.g:793:1: instruction_format12x : ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID -> INSTRUCTION_FORMAT12x[$INSTRUCTION_FORMAT12x_OR_ID] );
 	public final smaliParser.instruction_format12x_return instruction_format12x() throws RecognitionException {
 		smaliParser.instruction_format12x_return retval = new smaliParser.instruction_format12x_return();
 		retval.start = input.LT(1);
@@ -9148,7 +9148,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT12x_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT12x_OR_ID");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:794:3: ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID -> INSTRUCTION_FORMAT12x[$INSTRUCTION_FORMAT12x_OR_ID] )
+			// smaliParser.g:794:3: ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID -> INSTRUCTION_FORMAT12x[$INSTRUCTION_FORMAT12x_OR_ID] )
 			int alt48=2;
 			int LA48_0 = input.LA(1);
 			if ( (LA48_0==INSTRUCTION_FORMAT12x) ) {
@@ -9166,7 +9166,7 @@ public class smaliParser extends Parser {
 
 			switch (alt48) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:794:5: INSTRUCTION_FORMAT12x
+					// smaliParser.g:794:5: INSTRUCTION_FORMAT12x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9178,7 +9178,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:795:5: INSTRUCTION_FORMAT12x_OR_ID
+					// smaliParser.g:795:5: INSTRUCTION_FORMAT12x_OR_ID
 					{
 					INSTRUCTION_FORMAT12x_OR_ID238=(Token)match(input,INSTRUCTION_FORMAT12x_OR_ID,FOLLOW_INSTRUCTION_FORMAT12x_OR_ID_in_instruction_format12x3723);  
 					stream_INSTRUCTION_FORMAT12x_OR_ID.add(INSTRUCTION_FORMAT12x_OR_ID238);
@@ -9233,7 +9233,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "instruction_format22s"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:797:1: instruction_format22s : ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID -> INSTRUCTION_FORMAT22s[$INSTRUCTION_FORMAT22s_OR_ID] );
+	// smaliParser.g:797:1: instruction_format22s : ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID -> INSTRUCTION_FORMAT22s[$INSTRUCTION_FORMAT22s_OR_ID] );
 	public final smaliParser.instruction_format22s_return instruction_format22s() throws RecognitionException {
 		smaliParser.instruction_format22s_return retval = new smaliParser.instruction_format22s_return();
 		retval.start = input.LT(1);
@@ -9248,7 +9248,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22s_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22s_OR_ID");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:798:3: ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID -> INSTRUCTION_FORMAT22s[$INSTRUCTION_FORMAT22s_OR_ID] )
+			// smaliParser.g:798:3: ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID -> INSTRUCTION_FORMAT22s[$INSTRUCTION_FORMAT22s_OR_ID] )
 			int alt49=2;
 			int LA49_0 = input.LA(1);
 			if ( (LA49_0==INSTRUCTION_FORMAT22s) ) {
@@ -9266,7 +9266,7 @@ public class smaliParser extends Parser {
 
 			switch (alt49) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:798:5: INSTRUCTION_FORMAT22s
+					// smaliParser.g:798:5: INSTRUCTION_FORMAT22s
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9278,7 +9278,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:799:5: INSTRUCTION_FORMAT22s_OR_ID
+					// smaliParser.g:799:5: INSTRUCTION_FORMAT22s_OR_ID
 					{
 					INSTRUCTION_FORMAT22s_OR_ID240=(Token)match(input,INSTRUCTION_FORMAT22s_OR_ID,FOLLOW_INSTRUCTION_FORMAT22s_OR_ID_in_instruction_format22s3744);  
 					stream_INSTRUCTION_FORMAT22s_OR_ID.add(INSTRUCTION_FORMAT22s_OR_ID240);
@@ -9333,7 +9333,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "instruction_format31i"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:801:1: instruction_format31i : ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID -> INSTRUCTION_FORMAT31i[$INSTRUCTION_FORMAT31i_OR_ID] );
+	// smaliParser.g:801:1: instruction_format31i : ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID -> INSTRUCTION_FORMAT31i[$INSTRUCTION_FORMAT31i_OR_ID] );
 	public final smaliParser.instruction_format31i_return instruction_format31i() throws RecognitionException {
 		smaliParser.instruction_format31i_return retval = new smaliParser.instruction_format31i_return();
 		retval.start = input.LT(1);
@@ -9348,7 +9348,7 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31i_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31i_OR_ID");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:802:3: ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID -> INSTRUCTION_FORMAT31i[$INSTRUCTION_FORMAT31i_OR_ID] )
+			// smaliParser.g:802:3: ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID -> INSTRUCTION_FORMAT31i[$INSTRUCTION_FORMAT31i_OR_ID] )
 			int alt50=2;
 			int LA50_0 = input.LA(1);
 			if ( (LA50_0==INSTRUCTION_FORMAT31i) ) {
@@ -9366,7 +9366,7 @@ public class smaliParser extends Parser {
 
 			switch (alt50) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:802:5: INSTRUCTION_FORMAT31i
+					// smaliParser.g:802:5: INSTRUCTION_FORMAT31i
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9378,7 +9378,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:803:5: INSTRUCTION_FORMAT31i_OR_ID
+					// smaliParser.g:803:5: INSTRUCTION_FORMAT31i_OR_ID
 					{
 					INSTRUCTION_FORMAT31i_OR_ID242=(Token)match(input,INSTRUCTION_FORMAT31i_OR_ID,FOLLOW_INSTRUCTION_FORMAT31i_OR_ID_in_instruction_format31i3765);  
 					stream_INSTRUCTION_FORMAT31i_OR_ID.add(INSTRUCTION_FORMAT31i_OR_ID242);
@@ -9433,7 +9433,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "instruction"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:807:1: instruction : ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21c_lambda | insn_format21c_method | insn_format21ih | insn_format21lh | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22c_string | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format25x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive );
+	// smaliParser.g:807:1: instruction : ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21c_lambda | insn_format21c_method | insn_format21ih | insn_format21lh | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22c_string | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format25x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive );
 	public final smaliParser.instruction_return instruction() throws RecognitionException {
 		smaliParser.instruction_return retval = new smaliParser.instruction_return();
 		retval.start = input.LT(1);
@@ -9491,7 +9491,7 @@ public class smaliParser extends Parser {
 
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:808:3: ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21c_lambda | insn_format21c_method | insn_format21ih | insn_format21lh | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22c_string | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format25x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive )
+			// smaliParser.g:808:3: ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21c_lambda | insn_format21c_method | insn_format21ih | insn_format21lh | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22c_string | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format25x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive )
 			int alt51=48;
 			switch ( input.LA(1) ) {
 			case INSTRUCTION_FORMAT10t:
@@ -9744,7 +9744,7 @@ public class smaliParser extends Parser {
 			}
 			switch (alt51) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:808:5: insn_format10t
+					// smaliParser.g:808:5: insn_format10t
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9758,7 +9758,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:809:5: insn_format10x
+					// smaliParser.g:809:5: insn_format10x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9772,7 +9772,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:810:5: insn_format10x_odex
+					// smaliParser.g:810:5: insn_format10x_odex
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9786,7 +9786,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:811:5: insn_format11n
+					// smaliParser.g:811:5: insn_format11n
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9800,7 +9800,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:812:5: insn_format11x
+					// smaliParser.g:812:5: insn_format11x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9814,7 +9814,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:813:5: insn_format12x
+					// smaliParser.g:813:5: insn_format12x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9828,7 +9828,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:814:5: insn_format20bc
+					// smaliParser.g:814:5: insn_format20bc
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9842,7 +9842,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 8 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:815:5: insn_format20t
+					// smaliParser.g:815:5: insn_format20t
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9856,7 +9856,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 9 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:816:5: insn_format21c_field
+					// smaliParser.g:816:5: insn_format21c_field
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9870,7 +9870,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 10 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:817:5: insn_format21c_field_odex
+					// smaliParser.g:817:5: insn_format21c_field_odex
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9884,7 +9884,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 11 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:818:5: insn_format21c_string
+					// smaliParser.g:818:5: insn_format21c_string
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9898,7 +9898,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 12 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:819:5: insn_format21c_type
+					// smaliParser.g:819:5: insn_format21c_type
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9912,7 +9912,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 13 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:820:5: insn_format21c_lambda
+					// smaliParser.g:820:5: insn_format21c_lambda
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9926,7 +9926,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 14 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:821:5: insn_format21c_method
+					// smaliParser.g:821:5: insn_format21c_method
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9940,7 +9940,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 15 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:822:5: insn_format21ih
+					// smaliParser.g:822:5: insn_format21ih
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9954,7 +9954,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 16 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:823:5: insn_format21lh
+					// smaliParser.g:823:5: insn_format21lh
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9968,7 +9968,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 17 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:824:5: insn_format21s
+					// smaliParser.g:824:5: insn_format21s
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9982,7 +9982,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 18 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:825:5: insn_format21t
+					// smaliParser.g:825:5: insn_format21t
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -9996,7 +9996,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 19 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:826:5: insn_format22b
+					// smaliParser.g:826:5: insn_format22b
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10010,7 +10010,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 20 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:827:5: insn_format22c_field
+					// smaliParser.g:827:5: insn_format22c_field
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10024,7 +10024,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 21 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:828:5: insn_format22c_field_odex
+					// smaliParser.g:828:5: insn_format22c_field_odex
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10038,7 +10038,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 22 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:829:5: insn_format22c_type
+					// smaliParser.g:829:5: insn_format22c_type
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10052,7 +10052,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 23 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:830:5: insn_format22c_string
+					// smaliParser.g:830:5: insn_format22c_string
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10066,7 +10066,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 24 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:831:5: insn_format22cs_field
+					// smaliParser.g:831:5: insn_format22cs_field
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10080,7 +10080,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 25 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:832:5: insn_format22s
+					// smaliParser.g:832:5: insn_format22s
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10094,7 +10094,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 26 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:833:5: insn_format22t
+					// smaliParser.g:833:5: insn_format22t
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10108,7 +10108,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 27 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:834:5: insn_format22x
+					// smaliParser.g:834:5: insn_format22x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10122,7 +10122,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 28 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:835:5: insn_format23x
+					// smaliParser.g:835:5: insn_format23x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10136,7 +10136,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 29 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:836:5: insn_format25x
+					// smaliParser.g:836:5: insn_format25x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10150,7 +10150,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 30 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:837:5: insn_format30t
+					// smaliParser.g:837:5: insn_format30t
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10164,7 +10164,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 31 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:838:5: insn_format31c
+					// smaliParser.g:838:5: insn_format31c
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10178,7 +10178,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 32 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:839:5: insn_format31i
+					// smaliParser.g:839:5: insn_format31i
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10192,7 +10192,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 33 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:840:5: insn_format31t
+					// smaliParser.g:840:5: insn_format31t
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10206,7 +10206,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 34 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:841:5: insn_format32x
+					// smaliParser.g:841:5: insn_format32x
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10220,7 +10220,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 35 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:842:5: insn_format35c_method
+					// smaliParser.g:842:5: insn_format35c_method
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10234,7 +10234,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 36 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:843:5: insn_format35c_type
+					// smaliParser.g:843:5: insn_format35c_type
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10248,7 +10248,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 37 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:844:5: insn_format35c_method_odex
+					// smaliParser.g:844:5: insn_format35c_method_odex
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10262,7 +10262,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 38 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:845:5: insn_format35mi_method
+					// smaliParser.g:845:5: insn_format35mi_method
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10276,7 +10276,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 39 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:846:5: insn_format35ms_method
+					// smaliParser.g:846:5: insn_format35ms_method
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10290,7 +10290,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 40 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:847:5: insn_format3rc_method
+					// smaliParser.g:847:5: insn_format3rc_method
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10304,7 +10304,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 41 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:848:5: insn_format3rc_method_odex
+					// smaliParser.g:848:5: insn_format3rc_method_odex
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10318,7 +10318,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 42 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:849:5: insn_format3rc_type
+					// smaliParser.g:849:5: insn_format3rc_type
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10332,7 +10332,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 43 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:850:5: insn_format3rmi_method
+					// smaliParser.g:850:5: insn_format3rmi_method
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10346,7 +10346,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 44 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:851:5: insn_format3rms_method
+					// smaliParser.g:851:5: insn_format3rms_method
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10360,7 +10360,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 45 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:852:5: insn_format51l
+					// smaliParser.g:852:5: insn_format51l
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10374,7 +10374,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 46 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:853:5: insn_array_data_directive
+					// smaliParser.g:853:5: insn_array_data_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10388,7 +10388,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 47 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:854:5: insn_packed_switch_directive
+					// smaliParser.g:854:5: insn_packed_switch_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10402,7 +10402,7 @@ public class smaliParser extends Parser {
 					}
 					break;
 				case 48 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:855:5: insn_sparse_switch_directive
+					// smaliParser.g:855:5: insn_sparse_switch_directive
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -10444,7 +10444,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format10t"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:857:1: insn_format10t : INSTRUCTION_FORMAT10t label_ref -> ^( I_STATEMENT_FORMAT10t[$start, \"I_STATEMENT_FORMAT10t\"] INSTRUCTION_FORMAT10t label_ref ) ;
+	// smaliParser.g:857:1: insn_format10t : INSTRUCTION_FORMAT10t label_ref -> ^( I_STATEMENT_FORMAT10t[$start, \"I_STATEMENT_FORMAT10t\"] INSTRUCTION_FORMAT10t label_ref ) ;
 	public final smaliParser.insn_format10t_return insn_format10t() throws RecognitionException {
 		smaliParser.insn_format10t_return retval = new smaliParser.insn_format10t_return();
 		retval.start = input.LT(1);
@@ -10459,8 +10459,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:858:3: ( INSTRUCTION_FORMAT10t label_ref -> ^( I_STATEMENT_FORMAT10t[$start, \"I_STATEMENT_FORMAT10t\"] INSTRUCTION_FORMAT10t label_ref ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:860:5: INSTRUCTION_FORMAT10t label_ref
+			// smaliParser.g:858:3: ( INSTRUCTION_FORMAT10t label_ref -> ^( I_STATEMENT_FORMAT10t[$start, \"I_STATEMENT_FORMAT10t\"] INSTRUCTION_FORMAT10t label_ref ) )
+			// smaliParser.g:860:5: INSTRUCTION_FORMAT10t label_ref
 			{
 			INSTRUCTION_FORMAT10t291=(Token)match(input,INSTRUCTION_FORMAT10t,FOLLOW_INSTRUCTION_FORMAT10t_in_insn_format10t4084);  
 			stream_INSTRUCTION_FORMAT10t.add(INSTRUCTION_FORMAT10t291);
@@ -10471,7 +10471,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref292.getTree());
 			// AST REWRITE
-			// elements: label_ref, INSTRUCTION_FORMAT10t
+			// elements: INSTRUCTION_FORMAT10t, label_ref
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10483,7 +10483,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 861:5: -> ^( I_STATEMENT_FORMAT10t[$start, \"I_STATEMENT_FORMAT10t\"] INSTRUCTION_FORMAT10t label_ref )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:861:8: ^( I_STATEMENT_FORMAT10t[$start, \"I_STATEMENT_FORMAT10t\"] INSTRUCTION_FORMAT10t label_ref )
+				// smaliParser.g:861:8: ^( I_STATEMENT_FORMAT10t[$start, \"I_STATEMENT_FORMAT10t\"] INSTRUCTION_FORMAT10t label_ref )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT10t, (retval.start), "I_STATEMENT_FORMAT10t"), root_1);
@@ -10526,7 +10526,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format10x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:863:1: insn_format10x : INSTRUCTION_FORMAT10x -> ^( I_STATEMENT_FORMAT10x[$start, \"I_STATEMENT_FORMAT10x\"] INSTRUCTION_FORMAT10x ) ;
+	// smaliParser.g:863:1: insn_format10x : INSTRUCTION_FORMAT10x -> ^( I_STATEMENT_FORMAT10x[$start, \"I_STATEMENT_FORMAT10x\"] INSTRUCTION_FORMAT10x ) ;
 	public final smaliParser.insn_format10x_return insn_format10x() throws RecognitionException {
 		smaliParser.insn_format10x_return retval = new smaliParser.insn_format10x_return();
 		retval.start = input.LT(1);
@@ -10539,8 +10539,8 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10x");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:864:3: ( INSTRUCTION_FORMAT10x -> ^( I_STATEMENT_FORMAT10x[$start, \"I_STATEMENT_FORMAT10x\"] INSTRUCTION_FORMAT10x ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:865:5: INSTRUCTION_FORMAT10x
+			// smaliParser.g:864:3: ( INSTRUCTION_FORMAT10x -> ^( I_STATEMENT_FORMAT10x[$start, \"I_STATEMENT_FORMAT10x\"] INSTRUCTION_FORMAT10x ) )
+			// smaliParser.g:865:5: INSTRUCTION_FORMAT10x
 			{
 			INSTRUCTION_FORMAT10x293=(Token)match(input,INSTRUCTION_FORMAT10x,FOLLOW_INSTRUCTION_FORMAT10x_in_insn_format10x4116);  
 			stream_INSTRUCTION_FORMAT10x.add(INSTRUCTION_FORMAT10x293);
@@ -10558,7 +10558,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 866:5: -> ^( I_STATEMENT_FORMAT10x[$start, \"I_STATEMENT_FORMAT10x\"] INSTRUCTION_FORMAT10x )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:866:8: ^( I_STATEMENT_FORMAT10x[$start, \"I_STATEMENT_FORMAT10x\"] INSTRUCTION_FORMAT10x )
+				// smaliParser.g:866:8: ^( I_STATEMENT_FORMAT10x[$start, \"I_STATEMENT_FORMAT10x\"] INSTRUCTION_FORMAT10x )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT10x, (retval.start), "I_STATEMENT_FORMAT10x"), root_1);
@@ -10600,7 +10600,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format10x_odex"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:868:1: insn_format10x_odex : INSTRUCTION_FORMAT10x_ODEX ;
+	// smaliParser.g:868:1: insn_format10x_odex : INSTRUCTION_FORMAT10x_ODEX ;
 	public final smaliParser.insn_format10x_odex_return insn_format10x_odex() throws RecognitionException {
 		smaliParser.insn_format10x_odex_return retval = new smaliParser.insn_format10x_odex_return();
 		retval.start = input.LT(1);
@@ -10612,8 +10612,8 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT10x_ODEX294_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:869:3: ( INSTRUCTION_FORMAT10x_ODEX )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:870:5: INSTRUCTION_FORMAT10x_ODEX
+			// smaliParser.g:869:3: ( INSTRUCTION_FORMAT10x_ODEX )
+			// smaliParser.g:870:5: INSTRUCTION_FORMAT10x_ODEX
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -10654,7 +10654,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format11n"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:875:1: insn_format11n : INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT11n[$start, \"I_STATEMENT_FORMAT11n\"] INSTRUCTION_FORMAT11n REGISTER integral_literal ) ;
+	// smaliParser.g:875:1: insn_format11n : INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT11n[$start, \"I_STATEMENT_FORMAT11n\"] INSTRUCTION_FORMAT11n REGISTER integral_literal ) ;
 	public final smaliParser.insn_format11n_return insn_format11n() throws RecognitionException {
 		smaliParser.insn_format11n_return retval = new smaliParser.insn_format11n_return();
 		retval.start = input.LT(1);
@@ -10675,8 +10675,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:876:3: ( INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT11n[$start, \"I_STATEMENT_FORMAT11n\"] INSTRUCTION_FORMAT11n REGISTER integral_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:877:5: INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal
+			// smaliParser.g:876:3: ( INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT11n[$start, \"I_STATEMENT_FORMAT11n\"] INSTRUCTION_FORMAT11n REGISTER integral_literal ) )
+			// smaliParser.g:877:5: INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal
 			{
 			INSTRUCTION_FORMAT11n295=(Token)match(input,INSTRUCTION_FORMAT11n,FOLLOW_INSTRUCTION_FORMAT11n_in_insn_format11n4165);  
 			stream_INSTRUCTION_FORMAT11n.add(INSTRUCTION_FORMAT11n295);
@@ -10693,7 +10693,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal298.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT11n, REGISTER, integral_literal
+			// elements: integral_literal, REGISTER, INSTRUCTION_FORMAT11n
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10705,7 +10705,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 878:5: -> ^( I_STATEMENT_FORMAT11n[$start, \"I_STATEMENT_FORMAT11n\"] INSTRUCTION_FORMAT11n REGISTER integral_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:878:8: ^( I_STATEMENT_FORMAT11n[$start, \"I_STATEMENT_FORMAT11n\"] INSTRUCTION_FORMAT11n REGISTER integral_literal )
+				// smaliParser.g:878:8: ^( I_STATEMENT_FORMAT11n[$start, \"I_STATEMENT_FORMAT11n\"] INSTRUCTION_FORMAT11n REGISTER integral_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT11n, (retval.start), "I_STATEMENT_FORMAT11n"), root_1);
@@ -10749,7 +10749,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format11x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:880:1: insn_format11x : INSTRUCTION_FORMAT11x REGISTER -> ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER ) ;
+	// smaliParser.g:880:1: insn_format11x : INSTRUCTION_FORMAT11x REGISTER -> ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER ) ;
 	public final smaliParser.insn_format11x_return insn_format11x() throws RecognitionException {
 		smaliParser.insn_format11x_return retval = new smaliParser.insn_format11x_return();
 		retval.start = input.LT(1);
@@ -10761,12 +10761,12 @@ public class smaliParser extends Parser {
 
 		CommonTree INSTRUCTION_FORMAT11x299_tree=null;
 		CommonTree REGISTER300_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:881:3: ( INSTRUCTION_FORMAT11x REGISTER -> ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:882:5: INSTRUCTION_FORMAT11x REGISTER
+			// smaliParser.g:881:3: ( INSTRUCTION_FORMAT11x REGISTER -> ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER ) )
+			// smaliParser.g:882:5: INSTRUCTION_FORMAT11x REGISTER
 			{
 			INSTRUCTION_FORMAT11x299=(Token)match(input,INSTRUCTION_FORMAT11x,FOLLOW_INSTRUCTION_FORMAT11x_in_insn_format11x4203);  
 			stream_INSTRUCTION_FORMAT11x.add(INSTRUCTION_FORMAT11x299);
@@ -10775,7 +10775,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER300);
 
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT11x
+			// elements: INSTRUCTION_FORMAT11x, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10787,7 +10787,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 883:5: -> ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:883:8: ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER )
+				// smaliParser.g:883:8: ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT11x, (retval.start), "I_STATEMENT_FORMAT11x"), root_1);
@@ -10830,7 +10830,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format12x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:885:1: insn_format12x : instruction_format12x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT12x[$start, \"I_STATEMENT_FORMAT12x\"] instruction_format12x REGISTER REGISTER ) ;
+	// smaliParser.g:885:1: insn_format12x : instruction_format12x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT12x[$start, \"I_STATEMENT_FORMAT12x\"] instruction_format12x REGISTER REGISTER ) ;
 	public final smaliParser.insn_format12x_return insn_format12x() throws RecognitionException {
 		smaliParser.insn_format12x_return retval = new smaliParser.insn_format12x_return();
 		retval.start = input.LT(1);
@@ -10850,8 +10850,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_instruction_format12x=new RewriteRuleSubtreeStream(adaptor,"rule instruction_format12x");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:886:3: ( instruction_format12x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT12x[$start, \"I_STATEMENT_FORMAT12x\"] instruction_format12x REGISTER REGISTER ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:887:5: instruction_format12x REGISTER COMMA REGISTER
+			// smaliParser.g:886:3: ( instruction_format12x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT12x[$start, \"I_STATEMENT_FORMAT12x\"] instruction_format12x REGISTER REGISTER ) )
+			// smaliParser.g:887:5: instruction_format12x REGISTER COMMA REGISTER
 			{
 			pushFollow(FOLLOW_instruction_format12x_in_insn_format12x4235);
 			instruction_format12x301=instruction_format12x();
@@ -10868,7 +10868,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER304);
 
 			// AST REWRITE
-			// elements: instruction_format12x, REGISTER, REGISTER
+			// elements: REGISTER, instruction_format12x, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10880,7 +10880,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 888:5: -> ^( I_STATEMENT_FORMAT12x[$start, \"I_STATEMENT_FORMAT12x\"] instruction_format12x REGISTER REGISTER )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:888:8: ^( I_STATEMENT_FORMAT12x[$start, \"I_STATEMENT_FORMAT12x\"] instruction_format12x REGISTER REGISTER )
+				// smaliParser.g:888:8: ^( I_STATEMENT_FORMAT12x[$start, \"I_STATEMENT_FORMAT12x\"] instruction_format12x REGISTER REGISTER )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT12x, (retval.start), "I_STATEMENT_FORMAT12x"), root_1);
@@ -10924,7 +10924,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format20bc"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:890:1: insn_format20bc : INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference -> ^( I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference ) ;
+	// smaliParser.g:890:1: insn_format20bc : INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference -> ^( I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference ) ;
 	public final smaliParser.insn_format20bc_return insn_format20bc() throws RecognitionException {
 		smaliParser.insn_format20bc_return retval = new smaliParser.insn_format20bc_return();
 		retval.start = input.LT(1);
@@ -10939,14 +10939,14 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT20bc305_tree=null;
 		CommonTree VERIFICATION_ERROR_TYPE306_tree=null;
 		CommonTree COMMA307_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT20bc=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT20bc");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_VERIFICATION_ERROR_TYPE=new RewriteRuleTokenStream(adaptor,"token VERIFICATION_ERROR_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT20bc=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT20bc");
 		RewriteRuleSubtreeStream stream_verification_error_reference=new RewriteRuleSubtreeStream(adaptor,"rule verification_error_reference");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:891:3: ( INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference -> ^( I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:892:5: INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference
+			// smaliParser.g:891:3: ( INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference -> ^( I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference ) )
+			// smaliParser.g:892:5: INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference
 			{
 			INSTRUCTION_FORMAT20bc305=(Token)match(input,INSTRUCTION_FORMAT20bc,FOLLOW_INSTRUCTION_FORMAT20bc_in_insn_format20bc4273);  
 			stream_INSTRUCTION_FORMAT20bc.add(INSTRUCTION_FORMAT20bc305);
@@ -10968,7 +10968,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: VERIFICATION_ERROR_TYPE, INSTRUCTION_FORMAT20bc, verification_error_reference
+			// elements: verification_error_reference, VERIFICATION_ERROR_TYPE, INSTRUCTION_FORMAT20bc
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10980,7 +10980,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 898:5: -> ^( I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:898:8: ^( I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference )
+				// smaliParser.g:898:8: ^( I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT20bc, "I_STATEMENT_FORMAT20bc"), root_1);
@@ -11024,7 +11024,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format20t"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:900:1: insn_format20t : INSTRUCTION_FORMAT20t label_ref -> ^( I_STATEMENT_FORMAT20t[$start, \"I_STATEMENT_FORMAT20t\"] INSTRUCTION_FORMAT20t label_ref ) ;
+	// smaliParser.g:900:1: insn_format20t : INSTRUCTION_FORMAT20t label_ref -> ^( I_STATEMENT_FORMAT20t[$start, \"I_STATEMENT_FORMAT20t\"] INSTRUCTION_FORMAT20t label_ref ) ;
 	public final smaliParser.insn_format20t_return insn_format20t() throws RecognitionException {
 		smaliParser.insn_format20t_return retval = new smaliParser.insn_format20t_return();
 		retval.start = input.LT(1);
@@ -11039,8 +11039,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:901:3: ( INSTRUCTION_FORMAT20t label_ref -> ^( I_STATEMENT_FORMAT20t[$start, \"I_STATEMENT_FORMAT20t\"] INSTRUCTION_FORMAT20t label_ref ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:902:5: INSTRUCTION_FORMAT20t label_ref
+			// smaliParser.g:901:3: ( INSTRUCTION_FORMAT20t label_ref -> ^( I_STATEMENT_FORMAT20t[$start, \"I_STATEMENT_FORMAT20t\"] INSTRUCTION_FORMAT20t label_ref ) )
+			// smaliParser.g:902:5: INSTRUCTION_FORMAT20t label_ref
 			{
 			INSTRUCTION_FORMAT20t309=(Token)match(input,INSTRUCTION_FORMAT20t,FOLLOW_INSTRUCTION_FORMAT20t_in_insn_format20t4316);  
 			stream_INSTRUCTION_FORMAT20t.add(INSTRUCTION_FORMAT20t309);
@@ -11063,7 +11063,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 903:5: -> ^( I_STATEMENT_FORMAT20t[$start, \"I_STATEMENT_FORMAT20t\"] INSTRUCTION_FORMAT20t label_ref )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:903:8: ^( I_STATEMENT_FORMAT20t[$start, \"I_STATEMENT_FORMAT20t\"] INSTRUCTION_FORMAT20t label_ref )
+				// smaliParser.g:903:8: ^( I_STATEMENT_FORMAT20t[$start, \"I_STATEMENT_FORMAT20t\"] INSTRUCTION_FORMAT20t label_ref )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT20t, (retval.start), "I_STATEMENT_FORMAT20t"), root_1);
@@ -11106,7 +11106,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21c_field"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:905:1: insn_format21c_field : INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD REGISTER field_reference ) ;
+	// smaliParser.g:905:1: insn_format21c_field : INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD REGISTER field_reference ) ;
 	public final smaliParser.insn_format21c_field_return insn_format21c_field() throws RecognitionException {
 		smaliParser.insn_format21c_field_return retval = new smaliParser.insn_format21c_field_return();
 		retval.start = input.LT(1);
@@ -11127,8 +11127,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_field_reference=new RewriteRuleSubtreeStream(adaptor,"rule field_reference");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:906:3: ( INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD REGISTER field_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:907:5: INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA field_reference
+			// smaliParser.g:906:3: ( INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD REGISTER field_reference ) )
+			// smaliParser.g:907:5: INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA field_reference
 			{
 			INSTRUCTION_FORMAT21c_FIELD311=(Token)match(input,INSTRUCTION_FORMAT21c_FIELD,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_insn_format21c_field4348);  
 			stream_INSTRUCTION_FORMAT21c_FIELD.add(INSTRUCTION_FORMAT21c_FIELD311);
@@ -11157,7 +11157,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 908:5: -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD REGISTER field_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:908:8: ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD REGISTER field_reference )
+				// smaliParser.g:908:8: ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD REGISTER field_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21c_FIELD, (retval.start), "I_STATEMENT_FORMAT21c_FIELD"), root_1);
@@ -11201,7 +11201,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21c_field_odex"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:910:1: insn_format21c_field_odex : INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER field_reference ) ;
+	// smaliParser.g:910:1: insn_format21c_field_odex : INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER field_reference ) ;
 	public final smaliParser.insn_format21c_field_odex_return insn_format21c_field_odex() throws RecognitionException {
 		smaliParser.insn_format21c_field_odex_return retval = new smaliParser.insn_format21c_field_odex_return();
 		retval.start = input.LT(1);
@@ -11222,8 +11222,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_field_reference=new RewriteRuleSubtreeStream(adaptor,"rule field_reference");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:911:3: ( INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER field_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:912:5: INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA field_reference
+			// smaliParser.g:911:3: ( INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER field_reference ) )
+			// smaliParser.g:912:5: INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA field_reference
 			{
 			INSTRUCTION_FORMAT21c_FIELD_ODEX315=(Token)match(input,INSTRUCTION_FORMAT21c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_insn_format21c_field_odex4386);  
 			stream_INSTRUCTION_FORMAT21c_FIELD_ODEX.add(INSTRUCTION_FORMAT21c_FIELD_ODEX315);
@@ -11245,7 +11245,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT21c_FIELD_ODEX, field_reference, REGISTER
+			// elements: INSTRUCTION_FORMAT21c_FIELD_ODEX, REGISTER, field_reference
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11257,7 +11257,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 918:5: -> ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER field_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:918:8: ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER field_reference )
+				// smaliParser.g:918:8: ^( I_STATEMENT_FORMAT21c_FIELD[$start, \"I_STATEMENT_FORMAT21c_FIELD\"] INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER field_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21c_FIELD, (retval.start), "I_STATEMENT_FORMAT21c_FIELD"), root_1);
@@ -11301,7 +11301,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21c_string"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:920:1: insn_format21c_string : INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL ) ;
+	// smaliParser.g:920:1: insn_format21c_string : INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL ) ;
 	public final smaliParser.insn_format21c_string_return insn_format21c_string() throws RecognitionException {
 		smaliParser.insn_format21c_string_return retval = new smaliParser.insn_format21c_string_return();
 		retval.start = input.LT(1);
@@ -11317,14 +11317,14 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER320_tree=null;
 		CommonTree COMMA321_tree=null;
 		CommonTree STRING_LITERAL322_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:921:3: ( INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:922:5: INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL
+			// smaliParser.g:921:3: ( INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL ) )
+			// smaliParser.g:922:5: INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL
 			{
 			INSTRUCTION_FORMAT21c_STRING319=(Token)match(input,INSTRUCTION_FORMAT21c_STRING,FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_insn_format21c_string4430);  
 			stream_INSTRUCTION_FORMAT21c_STRING.add(INSTRUCTION_FORMAT21c_STRING319);
@@ -11339,7 +11339,7 @@ public class smaliParser extends Parser {
 			stream_STRING_LITERAL.add(STRING_LITERAL322);
 
 			// AST REWRITE
-			// elements: REGISTER, STRING_LITERAL, INSTRUCTION_FORMAT21c_STRING
+			// elements: INSTRUCTION_FORMAT21c_STRING, REGISTER, STRING_LITERAL
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11351,7 +11351,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 923:5: -> ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:923:8: ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL )
+				// smaliParser.g:923:8: ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21c_STRING, (retval.start), "I_STATEMENT_FORMAT21c_STRING"), root_1);
@@ -11395,7 +11395,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21c_type"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:925:1: insn_format21c_type : INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT21c_TYPE[$start, \"I_STATEMENT_FORMAT21c\"] INSTRUCTION_FORMAT21c_TYPE REGISTER nonvoid_type_descriptor ) ;
+	// smaliParser.g:925:1: insn_format21c_type : INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT21c_TYPE[$start, \"I_STATEMENT_FORMAT21c\"] INSTRUCTION_FORMAT21c_TYPE REGISTER nonvoid_type_descriptor ) ;
 	public final smaliParser.insn_format21c_type_return insn_format21c_type() throws RecognitionException {
 		smaliParser.insn_format21c_type_return retval = new smaliParser.insn_format21c_type_return();
 		retval.start = input.LT(1);
@@ -11411,13 +11411,13 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER324_tree=null;
 		CommonTree COMMA325_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:926:3: ( INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT21c_TYPE[$start, \"I_STATEMENT_FORMAT21c\"] INSTRUCTION_FORMAT21c_TYPE REGISTER nonvoid_type_descriptor ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:927:5: INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA nonvoid_type_descriptor
+			// smaliParser.g:926:3: ( INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT21c_TYPE[$start, \"I_STATEMENT_FORMAT21c\"] INSTRUCTION_FORMAT21c_TYPE REGISTER nonvoid_type_descriptor ) )
+			// smaliParser.g:927:5: INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA nonvoid_type_descriptor
 			{
 			INSTRUCTION_FORMAT21c_TYPE323=(Token)match(input,INSTRUCTION_FORMAT21c_TYPE,FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_insn_format21c_type4468);  
 			stream_INSTRUCTION_FORMAT21c_TYPE.add(INSTRUCTION_FORMAT21c_TYPE323);
@@ -11434,7 +11434,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor326.getTree());
 			// AST REWRITE
-			// elements: nonvoid_type_descriptor, REGISTER, INSTRUCTION_FORMAT21c_TYPE
+			// elements: nonvoid_type_descriptor, INSTRUCTION_FORMAT21c_TYPE, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11446,7 +11446,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 928:5: -> ^( I_STATEMENT_FORMAT21c_TYPE[$start, \"I_STATEMENT_FORMAT21c\"] INSTRUCTION_FORMAT21c_TYPE REGISTER nonvoid_type_descriptor )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:928:8: ^( I_STATEMENT_FORMAT21c_TYPE[$start, \"I_STATEMENT_FORMAT21c\"] INSTRUCTION_FORMAT21c_TYPE REGISTER nonvoid_type_descriptor )
+				// smaliParser.g:928:8: ^( I_STATEMENT_FORMAT21c_TYPE[$start, \"I_STATEMENT_FORMAT21c\"] INSTRUCTION_FORMAT21c_TYPE REGISTER nonvoid_type_descriptor )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21c_TYPE, (retval.start), "I_STATEMENT_FORMAT21c"), root_1);
@@ -11490,7 +11490,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21c_lambda"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:930:1: insn_format21c_lambda : INSTRUCTION_FORMAT21c_LAMBDA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_LAMBDA[$start, \"I_STATEMENT_FORMAT21c_LAMBDA\"] INSTRUCTION_FORMAT21c_LAMBDA REGISTER STRING_LITERAL ) ;
+	// smaliParser.g:930:1: insn_format21c_lambda : INSTRUCTION_FORMAT21c_LAMBDA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_LAMBDA[$start, \"I_STATEMENT_FORMAT21c_LAMBDA\"] INSTRUCTION_FORMAT21c_LAMBDA REGISTER STRING_LITERAL ) ;
 	public final smaliParser.insn_format21c_lambda_return insn_format21c_lambda() throws RecognitionException {
 		smaliParser.insn_format21c_lambda_return retval = new smaliParser.insn_format21c_lambda_return();
 		retval.start = input.LT(1);
@@ -11506,14 +11506,14 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER328_tree=null;
 		CommonTree COMMA329_tree=null;
 		CommonTree STRING_LITERAL330_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_LAMBDA=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_LAMBDA");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_LAMBDA=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_LAMBDA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:931:3: ( INSTRUCTION_FORMAT21c_LAMBDA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_LAMBDA[$start, \"I_STATEMENT_FORMAT21c_LAMBDA\"] INSTRUCTION_FORMAT21c_LAMBDA REGISTER STRING_LITERAL ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:932:5: INSTRUCTION_FORMAT21c_LAMBDA REGISTER COMMA STRING_LITERAL
+			// smaliParser.g:931:3: ( INSTRUCTION_FORMAT21c_LAMBDA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_LAMBDA[$start, \"I_STATEMENT_FORMAT21c_LAMBDA\"] INSTRUCTION_FORMAT21c_LAMBDA REGISTER STRING_LITERAL ) )
+			// smaliParser.g:932:5: INSTRUCTION_FORMAT21c_LAMBDA REGISTER COMMA STRING_LITERAL
 			{
 			INSTRUCTION_FORMAT21c_LAMBDA327=(Token)match(input,INSTRUCTION_FORMAT21c_LAMBDA,FOLLOW_INSTRUCTION_FORMAT21c_LAMBDA_in_insn_format21c_lambda4506);  
 			stream_INSTRUCTION_FORMAT21c_LAMBDA.add(INSTRUCTION_FORMAT21c_LAMBDA327);
@@ -11540,7 +11540,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 933:5: -> ^( I_STATEMENT_FORMAT21c_LAMBDA[$start, \"I_STATEMENT_FORMAT21c_LAMBDA\"] INSTRUCTION_FORMAT21c_LAMBDA REGISTER STRING_LITERAL )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:933:8: ^( I_STATEMENT_FORMAT21c_LAMBDA[$start, \"I_STATEMENT_FORMAT21c_LAMBDA\"] INSTRUCTION_FORMAT21c_LAMBDA REGISTER STRING_LITERAL )
+				// smaliParser.g:933:8: ^( I_STATEMENT_FORMAT21c_LAMBDA[$start, \"I_STATEMENT_FORMAT21c_LAMBDA\"] INSTRUCTION_FORMAT21c_LAMBDA REGISTER STRING_LITERAL )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21c_LAMBDA, (retval.start), "I_STATEMENT_FORMAT21c_LAMBDA"), root_1);
@@ -11584,7 +11584,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21c_method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:935:1: insn_format21c_method : INSTRUCTION_FORMAT21c_METHOD REGISTER COMMA method_reference -> ^( I_STATEMENT_FORMAT21c_METHOD[$start, \"I_STATEMENT_FORMAT21c_METHOD\"] INSTRUCTION_FORMAT21c_METHOD REGISTER method_reference ) ;
+	// smaliParser.g:935:1: insn_format21c_method : INSTRUCTION_FORMAT21c_METHOD REGISTER COMMA method_reference -> ^( I_STATEMENT_FORMAT21c_METHOD[$start, \"I_STATEMENT_FORMAT21c_METHOD\"] INSTRUCTION_FORMAT21c_METHOD REGISTER method_reference ) ;
 	public final smaliParser.insn_format21c_method_return insn_format21c_method() throws RecognitionException {
 		smaliParser.insn_format21c_method_return retval = new smaliParser.insn_format21c_method_return();
 		retval.start = input.LT(1);
@@ -11605,8 +11605,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:936:3: ( INSTRUCTION_FORMAT21c_METHOD REGISTER COMMA method_reference -> ^( I_STATEMENT_FORMAT21c_METHOD[$start, \"I_STATEMENT_FORMAT21c_METHOD\"] INSTRUCTION_FORMAT21c_METHOD REGISTER method_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:937:5: INSTRUCTION_FORMAT21c_METHOD REGISTER COMMA method_reference
+			// smaliParser.g:936:3: ( INSTRUCTION_FORMAT21c_METHOD REGISTER COMMA method_reference -> ^( I_STATEMENT_FORMAT21c_METHOD[$start, \"I_STATEMENT_FORMAT21c_METHOD\"] INSTRUCTION_FORMAT21c_METHOD REGISTER method_reference ) )
+			// smaliParser.g:937:5: INSTRUCTION_FORMAT21c_METHOD REGISTER COMMA method_reference
 			{
 			INSTRUCTION_FORMAT21c_METHOD331=(Token)match(input,INSTRUCTION_FORMAT21c_METHOD,FOLLOW_INSTRUCTION_FORMAT21c_METHOD_in_insn_format21c_method4544);  
 			stream_INSTRUCTION_FORMAT21c_METHOD.add(INSTRUCTION_FORMAT21c_METHOD331);
@@ -11635,7 +11635,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 938:5: -> ^( I_STATEMENT_FORMAT21c_METHOD[$start, \"I_STATEMENT_FORMAT21c_METHOD\"] INSTRUCTION_FORMAT21c_METHOD REGISTER method_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:938:8: ^( I_STATEMENT_FORMAT21c_METHOD[$start, \"I_STATEMENT_FORMAT21c_METHOD\"] INSTRUCTION_FORMAT21c_METHOD REGISTER method_reference )
+				// smaliParser.g:938:8: ^( I_STATEMENT_FORMAT21c_METHOD[$start, \"I_STATEMENT_FORMAT21c_METHOD\"] INSTRUCTION_FORMAT21c_METHOD REGISTER method_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21c_METHOD, (retval.start), "I_STATEMENT_FORMAT21c_METHOD"), root_1);
@@ -11679,7 +11679,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21ih"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:940:1: insn_format21ih : INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21ih[$start, \"I_STATEMENT_FORMAT21ih\"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal ) ;
+	// smaliParser.g:940:1: insn_format21ih : INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21ih[$start, \"I_STATEMENT_FORMAT21ih\"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal ) ;
 	public final smaliParser.insn_format21ih_return insn_format21ih() throws RecognitionException {
 		smaliParser.insn_format21ih_return retval = new smaliParser.insn_format21ih_return();
 		retval.start = input.LT(1);
@@ -11694,14 +11694,14 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21ih335_tree=null;
 		CommonTree REGISTER336_tree=null;
 		CommonTree COMMA337_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21ih=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21ih");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21ih=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21ih");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:941:3: ( INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21ih[$start, \"I_STATEMENT_FORMAT21ih\"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:942:5: INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal
+			// smaliParser.g:941:3: ( INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21ih[$start, \"I_STATEMENT_FORMAT21ih\"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal ) )
+			// smaliParser.g:942:5: INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal
 			{
 			INSTRUCTION_FORMAT21ih335=(Token)match(input,INSTRUCTION_FORMAT21ih,FOLLOW_INSTRUCTION_FORMAT21ih_in_insn_format21ih4582);  
 			stream_INSTRUCTION_FORMAT21ih.add(INSTRUCTION_FORMAT21ih335);
@@ -11718,7 +11718,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal338.getTree());
 			// AST REWRITE
-			// elements: REGISTER, fixed_32bit_literal, INSTRUCTION_FORMAT21ih
+			// elements: REGISTER, INSTRUCTION_FORMAT21ih, fixed_32bit_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11730,7 +11730,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 943:5: -> ^( I_STATEMENT_FORMAT21ih[$start, \"I_STATEMENT_FORMAT21ih\"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:943:8: ^( I_STATEMENT_FORMAT21ih[$start, \"I_STATEMENT_FORMAT21ih\"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal )
+				// smaliParser.g:943:8: ^( I_STATEMENT_FORMAT21ih[$start, \"I_STATEMENT_FORMAT21ih\"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21ih, (retval.start), "I_STATEMENT_FORMAT21ih"), root_1);
@@ -11774,7 +11774,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21lh"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:945:1: insn_format21lh : INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21lh[$start, \"I_STATEMENT_FORMAT21lh\"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal ) ;
+	// smaliParser.g:945:1: insn_format21lh : INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21lh[$start, \"I_STATEMENT_FORMAT21lh\"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal ) ;
 	public final smaliParser.insn_format21lh_return insn_format21lh() throws RecognitionException {
 		smaliParser.insn_format21lh_return retval = new smaliParser.insn_format21lh_return();
 		retval.start = input.LT(1);
@@ -11789,14 +11789,14 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21lh339_tree=null;
 		CommonTree REGISTER340_tree=null;
 		CommonTree COMMA341_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21lh=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21lh");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21lh=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21lh");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:946:3: ( INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21lh[$start, \"I_STATEMENT_FORMAT21lh\"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:947:5: INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal
+			// smaliParser.g:946:3: ( INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT21lh[$start, \"I_STATEMENT_FORMAT21lh\"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal ) )
+			// smaliParser.g:947:5: INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal
 			{
 			INSTRUCTION_FORMAT21lh339=(Token)match(input,INSTRUCTION_FORMAT21lh,FOLLOW_INSTRUCTION_FORMAT21lh_in_insn_format21lh4620);  
 			stream_INSTRUCTION_FORMAT21lh.add(INSTRUCTION_FORMAT21lh339);
@@ -11813,7 +11813,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal342.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT21lh, REGISTER, fixed_32bit_literal
+			// elements: fixed_32bit_literal, REGISTER, INSTRUCTION_FORMAT21lh
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11825,7 +11825,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 948:5: -> ^( I_STATEMENT_FORMAT21lh[$start, \"I_STATEMENT_FORMAT21lh\"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:948:8: ^( I_STATEMENT_FORMAT21lh[$start, \"I_STATEMENT_FORMAT21lh\"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal )
+				// smaliParser.g:948:8: ^( I_STATEMENT_FORMAT21lh[$start, \"I_STATEMENT_FORMAT21lh\"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21lh, (retval.start), "I_STATEMENT_FORMAT21lh"), root_1);
@@ -11869,7 +11869,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21s"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:950:1: insn_format21s : INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT21s[$start, \"I_STATEMENT_FORMAT21s\"] INSTRUCTION_FORMAT21s REGISTER integral_literal ) ;
+	// smaliParser.g:950:1: insn_format21s : INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT21s[$start, \"I_STATEMENT_FORMAT21s\"] INSTRUCTION_FORMAT21s REGISTER integral_literal ) ;
 	public final smaliParser.insn_format21s_return insn_format21s() throws RecognitionException {
 		smaliParser.insn_format21s_return retval = new smaliParser.insn_format21s_return();
 		retval.start = input.LT(1);
@@ -11884,14 +11884,14 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21s343_tree=null;
 		CommonTree REGISTER344_tree=null;
 		CommonTree COMMA345_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21s=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21s");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21s=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21s");
 		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:951:3: ( INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT21s[$start, \"I_STATEMENT_FORMAT21s\"] INSTRUCTION_FORMAT21s REGISTER integral_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:952:5: INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal
+			// smaliParser.g:951:3: ( INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT21s[$start, \"I_STATEMENT_FORMAT21s\"] INSTRUCTION_FORMAT21s REGISTER integral_literal ) )
+			// smaliParser.g:952:5: INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal
 			{
 			INSTRUCTION_FORMAT21s343=(Token)match(input,INSTRUCTION_FORMAT21s,FOLLOW_INSTRUCTION_FORMAT21s_in_insn_format21s4658);  
 			stream_INSTRUCTION_FORMAT21s.add(INSTRUCTION_FORMAT21s343);
@@ -11908,7 +11908,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal346.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT21s, REGISTER, integral_literal
+			// elements: INSTRUCTION_FORMAT21s, integral_literal, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11920,7 +11920,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 953:5: -> ^( I_STATEMENT_FORMAT21s[$start, \"I_STATEMENT_FORMAT21s\"] INSTRUCTION_FORMAT21s REGISTER integral_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:953:8: ^( I_STATEMENT_FORMAT21s[$start, \"I_STATEMENT_FORMAT21s\"] INSTRUCTION_FORMAT21s REGISTER integral_literal )
+				// smaliParser.g:953:8: ^( I_STATEMENT_FORMAT21s[$start, \"I_STATEMENT_FORMAT21s\"] INSTRUCTION_FORMAT21s REGISTER integral_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21s, (retval.start), "I_STATEMENT_FORMAT21s"), root_1);
@@ -11964,7 +11964,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format21t"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:955:1: insn_format21t : INSTRUCTION_FORMAT21t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT21t[$start, \"I_STATEMENT_FORMAT21t\"] INSTRUCTION_FORMAT21t REGISTER label_ref ) ;
+	// smaliParser.g:955:1: insn_format21t : INSTRUCTION_FORMAT21t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT21t[$start, \"I_STATEMENT_FORMAT21t\"] INSTRUCTION_FORMAT21t REGISTER label_ref ) ;
 	public final smaliParser.insn_format21t_return insn_format21t() throws RecognitionException {
 		smaliParser.insn_format21t_return retval = new smaliParser.insn_format21t_return();
 		retval.start = input.LT(1);
@@ -11979,14 +11979,14 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21t347_tree=null;
 		CommonTree REGISTER348_tree=null;
 		CommonTree COMMA349_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:956:3: ( INSTRUCTION_FORMAT21t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT21t[$start, \"I_STATEMENT_FORMAT21t\"] INSTRUCTION_FORMAT21t REGISTER label_ref ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:957:5: INSTRUCTION_FORMAT21t REGISTER COMMA label_ref
+			// smaliParser.g:956:3: ( INSTRUCTION_FORMAT21t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT21t[$start, \"I_STATEMENT_FORMAT21t\"] INSTRUCTION_FORMAT21t REGISTER label_ref ) )
+			// smaliParser.g:957:5: INSTRUCTION_FORMAT21t REGISTER COMMA label_ref
 			{
 			INSTRUCTION_FORMAT21t347=(Token)match(input,INSTRUCTION_FORMAT21t,FOLLOW_INSTRUCTION_FORMAT21t_in_insn_format21t4696);  
 			stream_INSTRUCTION_FORMAT21t.add(INSTRUCTION_FORMAT21t347);
@@ -12003,7 +12003,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref350.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT21t, label_ref, REGISTER
+			// elements: INSTRUCTION_FORMAT21t, REGISTER, label_ref
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12015,7 +12015,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 958:5: -> ^( I_STATEMENT_FORMAT21t[$start, \"I_STATEMENT_FORMAT21t\"] INSTRUCTION_FORMAT21t REGISTER label_ref )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:958:8: ^( I_STATEMENT_FORMAT21t[$start, \"I_STATEMENT_FORMAT21t\"] INSTRUCTION_FORMAT21t REGISTER label_ref )
+				// smaliParser.g:958:8: ^( I_STATEMENT_FORMAT21t[$start, \"I_STATEMENT_FORMAT21t\"] INSTRUCTION_FORMAT21t REGISTER label_ref )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT21t, (retval.start), "I_STATEMENT_FORMAT21t"), root_1);
@@ -12059,7 +12059,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22b"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:960:1: insn_format22b : INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22b[$start, \"I_STATEMENT_FORMAT22b\"] INSTRUCTION_FORMAT22b REGISTER REGISTER integral_literal ) ;
+	// smaliParser.g:960:1: insn_format22b : INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22b[$start, \"I_STATEMENT_FORMAT22b\"] INSTRUCTION_FORMAT22b REGISTER REGISTER integral_literal ) ;
 	public final smaliParser.insn_format22b_return insn_format22b() throws RecognitionException {
 		smaliParser.insn_format22b_return retval = new smaliParser.insn_format22b_return();
 		retval.start = input.LT(1);
@@ -12084,8 +12084,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:961:3: ( INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22b[$start, \"I_STATEMENT_FORMAT22b\"] INSTRUCTION_FORMAT22b REGISTER REGISTER integral_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:962:5: INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal
+			// smaliParser.g:961:3: ( INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22b[$start, \"I_STATEMENT_FORMAT22b\"] INSTRUCTION_FORMAT22b REGISTER REGISTER integral_literal ) )
+			// smaliParser.g:962:5: INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal
 			{
 			INSTRUCTION_FORMAT22b351=(Token)match(input,INSTRUCTION_FORMAT22b,FOLLOW_INSTRUCTION_FORMAT22b_in_insn_format22b4734);  
 			stream_INSTRUCTION_FORMAT22b.add(INSTRUCTION_FORMAT22b351);
@@ -12108,7 +12108,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal356.getTree());
 			// AST REWRITE
-			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT22b, integral_literal
+			// elements: INSTRUCTION_FORMAT22b, integral_literal, REGISTER, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12120,7 +12120,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 963:5: -> ^( I_STATEMENT_FORMAT22b[$start, \"I_STATEMENT_FORMAT22b\"] INSTRUCTION_FORMAT22b REGISTER REGISTER integral_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:963:8: ^( I_STATEMENT_FORMAT22b[$start, \"I_STATEMENT_FORMAT22b\"] INSTRUCTION_FORMAT22b REGISTER REGISTER integral_literal )
+				// smaliParser.g:963:8: ^( I_STATEMENT_FORMAT22b[$start, \"I_STATEMENT_FORMAT22b\"] INSTRUCTION_FORMAT22b REGISTER REGISTER integral_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22b, (retval.start), "I_STATEMENT_FORMAT22b"), root_1);
@@ -12165,7 +12165,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22c_field"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:965:1: insn_format22c_field : INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD REGISTER REGISTER field_reference ) ;
+	// smaliParser.g:965:1: insn_format22c_field : INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD REGISTER REGISTER field_reference ) ;
 	public final smaliParser.insn_format22c_field_return insn_format22c_field() throws RecognitionException {
 		smaliParser.insn_format22c_field_return retval = new smaliParser.insn_format22c_field_return();
 		retval.start = input.LT(1);
@@ -12185,13 +12185,13 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER360_tree=null;
 		CommonTree COMMA361_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
-		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD");
+		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
 		RewriteRuleSubtreeStream stream_field_reference=new RewriteRuleSubtreeStream(adaptor,"rule field_reference");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:966:3: ( INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD REGISTER REGISTER field_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:967:5: INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA field_reference
+			// smaliParser.g:966:3: ( INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD REGISTER REGISTER field_reference ) )
+			// smaliParser.g:967:5: INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA field_reference
 			{
 			INSTRUCTION_FORMAT22c_FIELD357=(Token)match(input,INSTRUCTION_FORMAT22c_FIELD,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_insn_format22c_field4778);  
 			stream_INSTRUCTION_FORMAT22c_FIELD.add(INSTRUCTION_FORMAT22c_FIELD357);
@@ -12214,7 +12214,7 @@ public class smaliParser extends Parser {
 
 			stream_field_reference.add(field_reference362.getTree());
 			// AST REWRITE
-			// elements: field_reference, REGISTER, REGISTER, INSTRUCTION_FORMAT22c_FIELD
+			// elements: REGISTER, INSTRUCTION_FORMAT22c_FIELD, REGISTER, field_reference
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12226,7 +12226,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 968:5: -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD REGISTER REGISTER field_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:968:8: ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD REGISTER REGISTER field_reference )
+				// smaliParser.g:968:8: ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD REGISTER REGISTER field_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22c_FIELD, (retval.start), "I_STATEMENT_FORMAT22c_FIELD"), root_1);
@@ -12271,7 +12271,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22c_field_odex"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:970:1: insn_format22c_field_odex : INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER REGISTER field_reference ) ;
+	// smaliParser.g:970:1: insn_format22c_field_odex : INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER REGISTER field_reference ) ;
 	public final smaliParser.insn_format22c_field_odex_return insn_format22c_field_odex() throws RecognitionException {
 		smaliParser.insn_format22c_field_odex_return retval = new smaliParser.insn_format22c_field_odex_return();
 		retval.start = input.LT(1);
@@ -12290,14 +12290,14 @@ public class smaliParser extends Parser {
 		CommonTree COMMA365_tree=null;
 		CommonTree REGISTER366_tree=null;
 		CommonTree COMMA367_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
 		RewriteRuleSubtreeStream stream_field_reference=new RewriteRuleSubtreeStream(adaptor,"rule field_reference");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:971:3: ( INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER REGISTER field_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:972:5: INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA field_reference
+			// smaliParser.g:971:3: ( INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA field_reference -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER REGISTER field_reference ) )
+			// smaliParser.g:972:5: INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA field_reference
 			{
 			INSTRUCTION_FORMAT22c_FIELD_ODEX363=(Token)match(input,INSTRUCTION_FORMAT22c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_insn_format22c_field_odex4822);  
 			stream_INSTRUCTION_FORMAT22c_FIELD_ODEX.add(INSTRUCTION_FORMAT22c_FIELD_ODEX363);
@@ -12325,7 +12325,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: REGISTER, REGISTER, field_reference, INSTRUCTION_FORMAT22c_FIELD_ODEX
+			// elements: field_reference, REGISTER, REGISTER, INSTRUCTION_FORMAT22c_FIELD_ODEX
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12337,7 +12337,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 978:5: -> ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER REGISTER field_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:978:8: ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER REGISTER field_reference )
+				// smaliParser.g:978:8: ^( I_STATEMENT_FORMAT22c_FIELD[$start, \"I_STATEMENT_FORMAT22c_FIELD\"] INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER REGISTER field_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22c_FIELD, (retval.start), "I_STATEMENT_FORMAT22c_FIELD"), root_1);
@@ -12382,7 +12382,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22c_type"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:980:1: insn_format22c_type : INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT22c_TYPE[$start, \"I_STATEMENT_FORMAT22c_TYPE\"] INSTRUCTION_FORMAT22c_TYPE REGISTER REGISTER nonvoid_type_descriptor ) ;
+	// smaliParser.g:980:1: insn_format22c_type : INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT22c_TYPE[$start, \"I_STATEMENT_FORMAT22c_TYPE\"] INSTRUCTION_FORMAT22c_TYPE REGISTER REGISTER nonvoid_type_descriptor ) ;
 	public final smaliParser.insn_format22c_type_return insn_format22c_type() throws RecognitionException {
 		smaliParser.insn_format22c_type_return retval = new smaliParser.insn_format22c_type_return();
 		retval.start = input.LT(1);
@@ -12401,14 +12401,14 @@ public class smaliParser extends Parser {
 		CommonTree COMMA371_tree=null;
 		CommonTree REGISTER372_tree=null;
 		CommonTree COMMA373_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:981:3: ( INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT22c_TYPE[$start, \"I_STATEMENT_FORMAT22c_TYPE\"] INSTRUCTION_FORMAT22c_TYPE REGISTER REGISTER nonvoid_type_descriptor ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:982:5: INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor
+			// smaliParser.g:981:3: ( INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT22c_TYPE[$start, \"I_STATEMENT_FORMAT22c_TYPE\"] INSTRUCTION_FORMAT22c_TYPE REGISTER REGISTER nonvoid_type_descriptor ) )
+			// smaliParser.g:982:5: INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor
 			{
 			INSTRUCTION_FORMAT22c_TYPE369=(Token)match(input,INSTRUCTION_FORMAT22c_TYPE,FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_insn_format22c_type4872);  
 			stream_INSTRUCTION_FORMAT22c_TYPE.add(INSTRUCTION_FORMAT22c_TYPE369);
@@ -12431,7 +12431,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor374.getTree());
 			// AST REWRITE
-			// elements: REGISTER, nonvoid_type_descriptor, REGISTER, INSTRUCTION_FORMAT22c_TYPE
+			// elements: REGISTER, INSTRUCTION_FORMAT22c_TYPE, REGISTER, nonvoid_type_descriptor
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12443,7 +12443,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 983:5: -> ^( I_STATEMENT_FORMAT22c_TYPE[$start, \"I_STATEMENT_FORMAT22c_TYPE\"] INSTRUCTION_FORMAT22c_TYPE REGISTER REGISTER nonvoid_type_descriptor )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:983:8: ^( I_STATEMENT_FORMAT22c_TYPE[$start, \"I_STATEMENT_FORMAT22c_TYPE\"] INSTRUCTION_FORMAT22c_TYPE REGISTER REGISTER nonvoid_type_descriptor )
+				// smaliParser.g:983:8: ^( I_STATEMENT_FORMAT22c_TYPE[$start, \"I_STATEMENT_FORMAT22c_TYPE\"] INSTRUCTION_FORMAT22c_TYPE REGISTER REGISTER nonvoid_type_descriptor )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22c_TYPE, (retval.start), "I_STATEMENT_FORMAT22c_TYPE"), root_1);
@@ -12488,7 +12488,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22c_string"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:985:1: insn_format22c_string : INSTRUCTION_FORMAT22c_STRING REGISTER COMMA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT22c_STRING[$start, \"I_STATEMENT_FORMAT22c_STRING\"] INSTRUCTION_FORMAT22c_STRING REGISTER REGISTER STRING_LITERAL ) ;
+	// smaliParser.g:985:1: insn_format22c_string : INSTRUCTION_FORMAT22c_STRING REGISTER COMMA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT22c_STRING[$start, \"I_STATEMENT_FORMAT22c_STRING\"] INSTRUCTION_FORMAT22c_STRING REGISTER REGISTER STRING_LITERAL ) ;
 	public final smaliParser.insn_format22c_string_return insn_format22c_string() throws RecognitionException {
 		smaliParser.insn_format22c_string_return retval = new smaliParser.insn_format22c_string_return();
 		retval.start = input.LT(1);
@@ -12508,14 +12508,14 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER378_tree=null;
 		CommonTree COMMA379_tree=null;
 		CommonTree STRING_LITERAL380_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_STRING");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_STRING");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:986:3: ( INSTRUCTION_FORMAT22c_STRING REGISTER COMMA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT22c_STRING[$start, \"I_STATEMENT_FORMAT22c_STRING\"] INSTRUCTION_FORMAT22c_STRING REGISTER REGISTER STRING_LITERAL ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:987:5: INSTRUCTION_FORMAT22c_STRING REGISTER COMMA REGISTER COMMA STRING_LITERAL
+			// smaliParser.g:986:3: ( INSTRUCTION_FORMAT22c_STRING REGISTER COMMA REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT22c_STRING[$start, \"I_STATEMENT_FORMAT22c_STRING\"] INSTRUCTION_FORMAT22c_STRING REGISTER REGISTER STRING_LITERAL ) )
+			// smaliParser.g:987:5: INSTRUCTION_FORMAT22c_STRING REGISTER COMMA REGISTER COMMA STRING_LITERAL
 			{
 			INSTRUCTION_FORMAT22c_STRING375=(Token)match(input,INSTRUCTION_FORMAT22c_STRING,FOLLOW_INSTRUCTION_FORMAT22c_STRING_in_insn_format22c_string4916);  
 			stream_INSTRUCTION_FORMAT22c_STRING.add(INSTRUCTION_FORMAT22c_STRING375);
@@ -12536,7 +12536,7 @@ public class smaliParser extends Parser {
 			stream_STRING_LITERAL.add(STRING_LITERAL380);
 
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT22c_STRING, REGISTER, STRING_LITERAL, REGISTER
+			// elements: STRING_LITERAL, INSTRUCTION_FORMAT22c_STRING, REGISTER, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12548,7 +12548,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 988:5: -> ^( I_STATEMENT_FORMAT22c_STRING[$start, \"I_STATEMENT_FORMAT22c_STRING\"] INSTRUCTION_FORMAT22c_STRING REGISTER REGISTER STRING_LITERAL )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:988:8: ^( I_STATEMENT_FORMAT22c_STRING[$start, \"I_STATEMENT_FORMAT22c_STRING\"] INSTRUCTION_FORMAT22c_STRING REGISTER REGISTER STRING_LITERAL )
+				// smaliParser.g:988:8: ^( I_STATEMENT_FORMAT22c_STRING[$start, \"I_STATEMENT_FORMAT22c_STRING\"] INSTRUCTION_FORMAT22c_STRING REGISTER REGISTER STRING_LITERAL )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22c_STRING, (retval.start), "I_STATEMENT_FORMAT22c_STRING"), root_1);
@@ -12593,7 +12593,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22cs_field"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:990:1: insn_format22cs_field : INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET ;
+	// smaliParser.g:990:1: insn_format22cs_field : INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET ;
 	public final smaliParser.insn_format22cs_field_return insn_format22cs_field() throws RecognitionException {
 		smaliParser.insn_format22cs_field_return retval = new smaliParser.insn_format22cs_field_return();
 		retval.start = input.LT(1);
@@ -12615,8 +12615,8 @@ public class smaliParser extends Parser {
 		CommonTree FIELD_OFFSET386_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:991:3: ( INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:992:5: INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET
+			// smaliParser.g:991:3: ( INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET )
+			// smaliParser.g:992:5: INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -12677,7 +12677,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22s"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:997:1: insn_format22s : instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal ) ;
+	// smaliParser.g:997:1: insn_format22s : instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal ) ;
 	public final smaliParser.insn_format22s_return insn_format22s() throws RecognitionException {
 		smaliParser.insn_format22s_return retval = new smaliParser.insn_format22s_return();
 		retval.start = input.LT(1);
@@ -12697,12 +12697,12 @@ public class smaliParser extends Parser {
 		CommonTree COMMA391_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
-		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 		RewriteRuleSubtreeStream stream_instruction_format22s=new RewriteRuleSubtreeStream(adaptor,"rule instruction_format22s");
+		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:998:3: ( instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:999:5: instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal
+			// smaliParser.g:998:3: ( instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal ) )
+			// smaliParser.g:999:5: instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal
 			{
 			pushFollow(FOLLOW_instruction_format22s_in_insn_format22s4991);
 			instruction_format22s387=instruction_format22s();
@@ -12727,7 +12727,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal392.getTree());
 			// AST REWRITE
-			// elements: integral_literal, REGISTER, REGISTER, instruction_format22s
+			// elements: REGISTER, integral_literal, REGISTER, instruction_format22s
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12739,7 +12739,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1000:5: -> ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1000:8: ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal )
+				// smaliParser.g:1000:8: ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22s, (retval.start), "I_STATEMENT_FORMAT22s"), root_1);
@@ -12784,7 +12784,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22t"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1002:1: insn_format22t : INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT22t[$start, \"I_STATEMENT_FFORMAT22t\"] INSTRUCTION_FORMAT22t REGISTER REGISTER label_ref ) ;
+	// smaliParser.g:1002:1: insn_format22t : INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT22t[$start, \"I_STATEMENT_FFORMAT22t\"] INSTRUCTION_FORMAT22t REGISTER REGISTER label_ref ) ;
 	public final smaliParser.insn_format22t_return insn_format22t() throws RecognitionException {
 		smaliParser.insn_format22t_return retval = new smaliParser.insn_format22t_return();
 		retval.start = input.LT(1);
@@ -12809,8 +12809,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1003:3: ( INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT22t[$start, \"I_STATEMENT_FFORMAT22t\"] INSTRUCTION_FORMAT22t REGISTER REGISTER label_ref ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1004:5: INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref
+			// smaliParser.g:1003:3: ( INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT22t[$start, \"I_STATEMENT_FFORMAT22t\"] INSTRUCTION_FORMAT22t REGISTER REGISTER label_ref ) )
+			// smaliParser.g:1004:5: INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref
 			{
 			INSTRUCTION_FORMAT22t393=(Token)match(input,INSTRUCTION_FORMAT22t,FOLLOW_INSTRUCTION_FORMAT22t_in_insn_format22t5035);  
 			stream_INSTRUCTION_FORMAT22t.add(INSTRUCTION_FORMAT22t393);
@@ -12833,7 +12833,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref398.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT22t, REGISTER, REGISTER, label_ref
+			// elements: INSTRUCTION_FORMAT22t, REGISTER, label_ref, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12845,7 +12845,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1005:5: -> ^( I_STATEMENT_FORMAT22t[$start, \"I_STATEMENT_FFORMAT22t\"] INSTRUCTION_FORMAT22t REGISTER REGISTER label_ref )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1005:8: ^( I_STATEMENT_FORMAT22t[$start, \"I_STATEMENT_FFORMAT22t\"] INSTRUCTION_FORMAT22t REGISTER REGISTER label_ref )
+				// smaliParser.g:1005:8: ^( I_STATEMENT_FORMAT22t[$start, \"I_STATEMENT_FFORMAT22t\"] INSTRUCTION_FORMAT22t REGISTER REGISTER label_ref )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22t, (retval.start), "I_STATEMENT_FFORMAT22t"), root_1);
@@ -12890,7 +12890,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format22x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1007:1: insn_format22x : INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER ) ;
+	// smaliParser.g:1007:1: insn_format22x : INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER ) ;
 	public final smaliParser.insn_format22x_return insn_format22x() throws RecognitionException {
 		smaliParser.insn_format22x_return retval = new smaliParser.insn_format22x_return();
 		retval.start = input.LT(1);
@@ -12906,13 +12906,13 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER400_tree=null;
 		CommonTree COMMA401_tree=null;
 		CommonTree REGISTER402_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22x");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22x");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1008:3: ( INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1009:5: INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER
+			// smaliParser.g:1008:3: ( INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER ) )
+			// smaliParser.g:1009:5: INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER
 			{
 			INSTRUCTION_FORMAT22x399=(Token)match(input,INSTRUCTION_FORMAT22x,FOLLOW_INSTRUCTION_FORMAT22x_in_insn_format22x5079);  
 			stream_INSTRUCTION_FORMAT22x.add(INSTRUCTION_FORMAT22x399);
@@ -12927,7 +12927,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER402);
 
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT22x, REGISTER
+			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT22x
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12939,7 +12939,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1010:5: -> ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1010:8: ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER )
+				// smaliParser.g:1010:8: ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT22x, (retval.start), "I_STATEMENT_FORMAT22x"), root_1);
@@ -12983,7 +12983,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format23x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1012:1: insn_format23x : INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT23x[$start, \"I_STATEMENT_FORMAT23x\"] INSTRUCTION_FORMAT23x REGISTER REGISTER REGISTER ) ;
+	// smaliParser.g:1012:1: insn_format23x : INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT23x[$start, \"I_STATEMENT_FORMAT23x\"] INSTRUCTION_FORMAT23x REGISTER REGISTER REGISTER ) ;
 	public final smaliParser.insn_format23x_return insn_format23x() throws RecognitionException {
 		smaliParser.insn_format23x_return retval = new smaliParser.insn_format23x_return();
 		retval.start = input.LT(1);
@@ -13008,8 +13008,8 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT23x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT23x");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1013:3: ( INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT23x[$start, \"I_STATEMENT_FORMAT23x\"] INSTRUCTION_FORMAT23x REGISTER REGISTER REGISTER ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1014:5: INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER
+			// smaliParser.g:1013:3: ( INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT23x[$start, \"I_STATEMENT_FORMAT23x\"] INSTRUCTION_FORMAT23x REGISTER REGISTER REGISTER ) )
+			// smaliParser.g:1014:5: INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER
 			{
 			INSTRUCTION_FORMAT23x403=(Token)match(input,INSTRUCTION_FORMAT23x,FOLLOW_INSTRUCTION_FORMAT23x_in_insn_format23x5117);  
 			stream_INSTRUCTION_FORMAT23x.add(INSTRUCTION_FORMAT23x403);
@@ -13030,7 +13030,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER408);
 
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT23x, REGISTER, REGISTER
+			// elements: REGISTER, REGISTER, REGISTER, INSTRUCTION_FORMAT23x
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13042,7 +13042,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1015:5: -> ^( I_STATEMENT_FORMAT23x[$start, \"I_STATEMENT_FORMAT23x\"] INSTRUCTION_FORMAT23x REGISTER REGISTER REGISTER )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1015:8: ^( I_STATEMENT_FORMAT23x[$start, \"I_STATEMENT_FORMAT23x\"] INSTRUCTION_FORMAT23x REGISTER REGISTER REGISTER )
+				// smaliParser.g:1015:8: ^( I_STATEMENT_FORMAT23x[$start, \"I_STATEMENT_FORMAT23x\"] INSTRUCTION_FORMAT23x REGISTER REGISTER REGISTER )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT23x, (retval.start), "I_STATEMENT_FORMAT23x"), root_1);
@@ -13087,7 +13087,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format25x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1017:1: insn_format25x : INSTRUCTION_FORMAT25x REGISTER COMMA OPEN_BRACE register_list CLOSE_BRACE -> ^( I_STATEMENT_FORMAT25x[$start, \"I_STATEMENT_FORMAT25x\"] INSTRUCTION_FORMAT25x REGISTER register_list ) ;
+	// smaliParser.g:1017:1: insn_format25x : INSTRUCTION_FORMAT25x REGISTER COMMA OPEN_BRACE register_list CLOSE_BRACE -> ^( I_STATEMENT_FORMAT25x[$start, \"I_STATEMENT_FORMAT25x\"] INSTRUCTION_FORMAT25x REGISTER register_list ) ;
 	public final smaliParser.insn_format25x_return insn_format25x() throws RecognitionException {
 		smaliParser.insn_format25x_return retval = new smaliParser.insn_format25x_return();
 		retval.start = input.LT(1);
@@ -13106,16 +13106,16 @@ public class smaliParser extends Parser {
 		CommonTree COMMA411_tree=null;
 		CommonTree OPEN_BRACE412_tree=null;
 		CommonTree CLOSE_BRACE414_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT25x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT25x");
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT25x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT25x");
 		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1018:3: ( INSTRUCTION_FORMAT25x REGISTER COMMA OPEN_BRACE register_list CLOSE_BRACE -> ^( I_STATEMENT_FORMAT25x[$start, \"I_STATEMENT_FORMAT25x\"] INSTRUCTION_FORMAT25x REGISTER register_list ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1019:5: INSTRUCTION_FORMAT25x REGISTER COMMA OPEN_BRACE register_list CLOSE_BRACE
+			// smaliParser.g:1018:3: ( INSTRUCTION_FORMAT25x REGISTER COMMA OPEN_BRACE register_list CLOSE_BRACE -> ^( I_STATEMENT_FORMAT25x[$start, \"I_STATEMENT_FORMAT25x\"] INSTRUCTION_FORMAT25x REGISTER register_list ) )
+			// smaliParser.g:1019:5: INSTRUCTION_FORMAT25x REGISTER COMMA OPEN_BRACE register_list CLOSE_BRACE
 			{
 			INSTRUCTION_FORMAT25x409=(Token)match(input,INSTRUCTION_FORMAT25x,FOLLOW_INSTRUCTION_FORMAT25x_in_insn_format25x5161);  
 			stream_INSTRUCTION_FORMAT25x.add(INSTRUCTION_FORMAT25x409);
@@ -13138,7 +13138,7 @@ public class smaliParser extends Parser {
 			stream_CLOSE_BRACE.add(CLOSE_BRACE414);
 
 			// AST REWRITE
-			// elements: register_list, REGISTER, INSTRUCTION_FORMAT25x
+			// elements: INSTRUCTION_FORMAT25x, REGISTER, register_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13150,7 +13150,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1020:5: -> ^( I_STATEMENT_FORMAT25x[$start, \"I_STATEMENT_FORMAT25x\"] INSTRUCTION_FORMAT25x REGISTER register_list )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1020:8: ^( I_STATEMENT_FORMAT25x[$start, \"I_STATEMENT_FORMAT25x\"] INSTRUCTION_FORMAT25x REGISTER register_list )
+				// smaliParser.g:1020:8: ^( I_STATEMENT_FORMAT25x[$start, \"I_STATEMENT_FORMAT25x\"] INSTRUCTION_FORMAT25x REGISTER register_list )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT25x, (retval.start), "I_STATEMENT_FORMAT25x"), root_1);
@@ -13194,7 +13194,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format30t"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1022:1: insn_format30t : INSTRUCTION_FORMAT30t label_ref -> ^( I_STATEMENT_FORMAT30t[$start, \"I_STATEMENT_FORMAT30t\"] INSTRUCTION_FORMAT30t label_ref ) ;
+	// smaliParser.g:1022:1: insn_format30t : INSTRUCTION_FORMAT30t label_ref -> ^( I_STATEMENT_FORMAT30t[$start, \"I_STATEMENT_FORMAT30t\"] INSTRUCTION_FORMAT30t label_ref ) ;
 	public final smaliParser.insn_format30t_return insn_format30t() throws RecognitionException {
 		smaliParser.insn_format30t_return retval = new smaliParser.insn_format30t_return();
 		retval.start = input.LT(1);
@@ -13209,8 +13209,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1023:3: ( INSTRUCTION_FORMAT30t label_ref -> ^( I_STATEMENT_FORMAT30t[$start, \"I_STATEMENT_FORMAT30t\"] INSTRUCTION_FORMAT30t label_ref ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1024:5: INSTRUCTION_FORMAT30t label_ref
+			// smaliParser.g:1023:3: ( INSTRUCTION_FORMAT30t label_ref -> ^( I_STATEMENT_FORMAT30t[$start, \"I_STATEMENT_FORMAT30t\"] INSTRUCTION_FORMAT30t label_ref ) )
+			// smaliParser.g:1024:5: INSTRUCTION_FORMAT30t label_ref
 			{
 			INSTRUCTION_FORMAT30t415=(Token)match(input,INSTRUCTION_FORMAT30t,FOLLOW_INSTRUCTION_FORMAT30t_in_insn_format30t5203);  
 			stream_INSTRUCTION_FORMAT30t.add(INSTRUCTION_FORMAT30t415);
@@ -13221,7 +13221,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref416.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT30t, label_ref
+			// elements: label_ref, INSTRUCTION_FORMAT30t
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13233,7 +13233,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1025:5: -> ^( I_STATEMENT_FORMAT30t[$start, \"I_STATEMENT_FORMAT30t\"] INSTRUCTION_FORMAT30t label_ref )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1025:8: ^( I_STATEMENT_FORMAT30t[$start, \"I_STATEMENT_FORMAT30t\"] INSTRUCTION_FORMAT30t label_ref )
+				// smaliParser.g:1025:8: ^( I_STATEMENT_FORMAT30t[$start, \"I_STATEMENT_FORMAT30t\"] INSTRUCTION_FORMAT30t label_ref )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT30t, (retval.start), "I_STATEMENT_FORMAT30t"), root_1);
@@ -13276,7 +13276,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format31c"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1027:1: insn_format31c : INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL ) ;
+	// smaliParser.g:1027:1: insn_format31c : INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL ) ;
 	public final smaliParser.insn_format31c_return insn_format31c() throws RecognitionException {
 		smaliParser.insn_format31c_return retval = new smaliParser.insn_format31c_return();
 		retval.start = input.LT(1);
@@ -13292,14 +13292,14 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER418_tree=null;
 		CommonTree COMMA419_tree=null;
 		CommonTree STRING_LITERAL420_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31c=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31c");
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31c=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31c");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1028:3: ( INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1029:5: INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL
+			// smaliParser.g:1028:3: ( INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL ) )
+			// smaliParser.g:1029:5: INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL
 			{
 			INSTRUCTION_FORMAT31c417=(Token)match(input,INSTRUCTION_FORMAT31c,FOLLOW_INSTRUCTION_FORMAT31c_in_insn_format31c5235);  
 			stream_INSTRUCTION_FORMAT31c.add(INSTRUCTION_FORMAT31c417);
@@ -13314,7 +13314,7 @@ public class smaliParser extends Parser {
 			stream_STRING_LITERAL.add(STRING_LITERAL420);
 
 			// AST REWRITE
-			// elements: REGISTER, STRING_LITERAL, INSTRUCTION_FORMAT31c
+			// elements: STRING_LITERAL, REGISTER, INSTRUCTION_FORMAT31c
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13326,7 +13326,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1030:5: -> ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1030:7: ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL )
+				// smaliParser.g:1030:7: ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT31c, (retval.start), "I_STATEMENT_FORMAT31c"), root_1);
@@ -13370,7 +13370,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format31i"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1032:1: insn_format31i : instruction_format31i REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal ) ;
+	// smaliParser.g:1032:1: insn_format31i : instruction_format31i REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal ) ;
 	public final smaliParser.insn_format31i_return insn_format31i() throws RecognitionException {
 		smaliParser.insn_format31i_return retval = new smaliParser.insn_format31i_return();
 		retval.start = input.LT(1);
@@ -13386,12 +13386,12 @@ public class smaliParser extends Parser {
 		CommonTree COMMA423_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
-		RewriteRuleSubtreeStream stream_instruction_format31i=new RewriteRuleSubtreeStream(adaptor,"rule instruction_format31i");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
+		RewriteRuleSubtreeStream stream_instruction_format31i=new RewriteRuleSubtreeStream(adaptor,"rule instruction_format31i");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1033:3: ( instruction_format31i REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1034:5: instruction_format31i REGISTER COMMA fixed_32bit_literal
+			// smaliParser.g:1033:3: ( instruction_format31i REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal ) )
+			// smaliParser.g:1034:5: instruction_format31i REGISTER COMMA fixed_32bit_literal
 			{
 			pushFollow(FOLLOW_instruction_format31i_in_insn_format31i5272);
 			instruction_format31i421=instruction_format31i();
@@ -13410,7 +13410,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal424.getTree());
 			// AST REWRITE
-			// elements: instruction_format31i, REGISTER, fixed_32bit_literal
+			// elements: fixed_32bit_literal, instruction_format31i, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13422,7 +13422,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1035:5: -> ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1035:8: ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal )
+				// smaliParser.g:1035:8: ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT31i, (retval.start), "I_STATEMENT_FORMAT31i"), root_1);
@@ -13466,7 +13466,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format31t"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1037:1: insn_format31t : INSTRUCTION_FORMAT31t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT31t[$start, \"I_STATEMENT_FORMAT31t\"] INSTRUCTION_FORMAT31t REGISTER label_ref ) ;
+	// smaliParser.g:1037:1: insn_format31t : INSTRUCTION_FORMAT31t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT31t[$start, \"I_STATEMENT_FORMAT31t\"] INSTRUCTION_FORMAT31t REGISTER label_ref ) ;
 	public final smaliParser.insn_format31t_return insn_format31t() throws RecognitionException {
 		smaliParser.insn_format31t_return retval = new smaliParser.insn_format31t_return();
 		retval.start = input.LT(1);
@@ -13481,14 +13481,14 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT31t425_tree=null;
 		CommonTree REGISTER426_tree=null;
 		CommonTree COMMA427_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1038:3: ( INSTRUCTION_FORMAT31t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT31t[$start, \"I_STATEMENT_FORMAT31t\"] INSTRUCTION_FORMAT31t REGISTER label_ref ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1039:5: INSTRUCTION_FORMAT31t REGISTER COMMA label_ref
+			// smaliParser.g:1038:3: ( INSTRUCTION_FORMAT31t REGISTER COMMA label_ref -> ^( I_STATEMENT_FORMAT31t[$start, \"I_STATEMENT_FORMAT31t\"] INSTRUCTION_FORMAT31t REGISTER label_ref ) )
+			// smaliParser.g:1039:5: INSTRUCTION_FORMAT31t REGISTER COMMA label_ref
 			{
 			INSTRUCTION_FORMAT31t425=(Token)match(input,INSTRUCTION_FORMAT31t,FOLLOW_INSTRUCTION_FORMAT31t_in_insn_format31t5310);  
 			stream_INSTRUCTION_FORMAT31t.add(INSTRUCTION_FORMAT31t425);
@@ -13505,7 +13505,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref428.getTree());
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT31t, label_ref
+			// elements: label_ref, INSTRUCTION_FORMAT31t, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13517,7 +13517,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1040:5: -> ^( I_STATEMENT_FORMAT31t[$start, \"I_STATEMENT_FORMAT31t\"] INSTRUCTION_FORMAT31t REGISTER label_ref )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1040:8: ^( I_STATEMENT_FORMAT31t[$start, \"I_STATEMENT_FORMAT31t\"] INSTRUCTION_FORMAT31t REGISTER label_ref )
+				// smaliParser.g:1040:8: ^( I_STATEMENT_FORMAT31t[$start, \"I_STATEMENT_FORMAT31t\"] INSTRUCTION_FORMAT31t REGISTER label_ref )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT31t, (retval.start), "I_STATEMENT_FORMAT31t"), root_1);
@@ -13561,7 +13561,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format32x"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1042:1: insn_format32x : INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT32x[$start, \"I_STATEMENT_FORMAT32x\"] INSTRUCTION_FORMAT32x REGISTER REGISTER ) ;
+	// smaliParser.g:1042:1: insn_format32x : INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT32x[$start, \"I_STATEMENT_FORMAT32x\"] INSTRUCTION_FORMAT32x REGISTER REGISTER ) ;
 	public final smaliParser.insn_format32x_return insn_format32x() throws RecognitionException {
 		smaliParser.insn_format32x_return retval = new smaliParser.insn_format32x_return();
 		retval.start = input.LT(1);
@@ -13582,8 +13582,8 @@ public class smaliParser extends Parser {
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT32x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT32x");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1043:3: ( INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT32x[$start, \"I_STATEMENT_FORMAT32x\"] INSTRUCTION_FORMAT32x REGISTER REGISTER ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1044:5: INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER
+			// smaliParser.g:1043:3: ( INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT32x[$start, \"I_STATEMENT_FORMAT32x\"] INSTRUCTION_FORMAT32x REGISTER REGISTER ) )
+			// smaliParser.g:1044:5: INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER
 			{
 			INSTRUCTION_FORMAT32x429=(Token)match(input,INSTRUCTION_FORMAT32x,FOLLOW_INSTRUCTION_FORMAT32x_in_insn_format32x5348);  
 			stream_INSTRUCTION_FORMAT32x.add(INSTRUCTION_FORMAT32x429);
@@ -13598,7 +13598,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER432);
 
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT32x, REGISTER, REGISTER
+			// elements: REGISTER, INSTRUCTION_FORMAT32x, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13610,7 +13610,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1045:5: -> ^( I_STATEMENT_FORMAT32x[$start, \"I_STATEMENT_FORMAT32x\"] INSTRUCTION_FORMAT32x REGISTER REGISTER )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1045:8: ^( I_STATEMENT_FORMAT32x[$start, \"I_STATEMENT_FORMAT32x\"] INSTRUCTION_FORMAT32x REGISTER REGISTER )
+				// smaliParser.g:1045:8: ^( I_STATEMENT_FORMAT32x[$start, \"I_STATEMENT_FORMAT32x\"] INSTRUCTION_FORMAT32x REGISTER REGISTER )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT32x, (retval.start), "I_STATEMENT_FORMAT32x"), root_1);
@@ -13654,7 +13654,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format35c_method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1047:1: insn_format35c_method : INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference ) ;
+	// smaliParser.g:1047:1: insn_format35c_method : INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference ) ;
 	public final smaliParser.insn_format35c_method_return insn_format35c_method() throws RecognitionException {
 		smaliParser.insn_format35c_method_return retval = new smaliParser.insn_format35c_method_return();
 		retval.start = input.LT(1);
@@ -13673,15 +13673,15 @@ public class smaliParser extends Parser {
 		CommonTree CLOSE_BRACE436_tree=null;
 		CommonTree COMMA437_tree=null;
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD");
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
-		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
+		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1048:3: ( INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1049:5: INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference
+			// smaliParser.g:1048:3: ( INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference ) )
+			// smaliParser.g:1049:5: INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference
 			{
 			INSTRUCTION_FORMAT35c_METHOD433=(Token)match(input,INSTRUCTION_FORMAT35c_METHOD,FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_insn_format35c_method5386);  
 			stream_INSTRUCTION_FORMAT35c_METHOD.add(INSTRUCTION_FORMAT35c_METHOD433);
@@ -13706,7 +13706,7 @@ public class smaliParser extends Parser {
 
 			stream_method_reference.add(method_reference438.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT35c_METHOD, method_reference, register_list
+			// elements: INSTRUCTION_FORMAT35c_METHOD, register_list, method_reference
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13718,7 +13718,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1050:5: -> ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1050:8: ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference )
+				// smaliParser.g:1050:8: ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT35c_METHOD, (retval.start), "I_STATEMENT_FORMAT35c_METHOD"), root_1);
@@ -13762,7 +13762,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format35c_type"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1052:1: insn_format35c_type : INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor ) ;
+	// smaliParser.g:1052:1: insn_format35c_type : INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor ) ;
 	public final smaliParser.insn_format35c_type_return insn_format35c_type() throws RecognitionException {
 		smaliParser.insn_format35c_type_return retval = new smaliParser.insn_format35c_type_return();
 		retval.start = input.LT(1);
@@ -13780,16 +13780,16 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE440_tree=null;
 		CommonTree CLOSE_BRACE442_tree=null;
 		CommonTree COMMA443_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
-		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_TYPE");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
+		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1053:3: ( INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1054:5: INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor
+			// smaliParser.g:1053:3: ( INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor ) )
+			// smaliParser.g:1054:5: INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor
 			{
 			INSTRUCTION_FORMAT35c_TYPE439=(Token)match(input,INSTRUCTION_FORMAT35c_TYPE,FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_insn_format35c_type5428);  
 			stream_INSTRUCTION_FORMAT35c_TYPE.add(INSTRUCTION_FORMAT35c_TYPE439);
@@ -13814,7 +13814,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor444.getTree());
 			// AST REWRITE
-			// elements: register_list, nonvoid_type_descriptor, INSTRUCTION_FORMAT35c_TYPE
+			// elements: nonvoid_type_descriptor, INSTRUCTION_FORMAT35c_TYPE, register_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13826,7 +13826,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1055:5: -> ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1055:8: ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor )
+				// smaliParser.g:1055:8: ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT35c_TYPE, (retval.start), "I_STATEMENT_FORMAT35c_TYPE"), root_1);
@@ -13870,7 +13870,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format35c_method_odex"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1057:1: insn_format35c_method_odex : INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference ;
+	// smaliParser.g:1057:1: insn_format35c_method_odex : INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference ;
 	public final smaliParser.insn_format35c_method_odex_return insn_format35c_method_odex() throws RecognitionException {
 		smaliParser.insn_format35c_method_odex_return retval = new smaliParser.insn_format35c_method_odex_return();
 		retval.start = input.LT(1);
@@ -13890,8 +13890,8 @@ public class smaliParser extends Parser {
 		CommonTree COMMA449_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1058:3: ( INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1059:5: INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference
+			// smaliParser.g:1058:3: ( INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference )
+			// smaliParser.g:1059:5: INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -13956,7 +13956,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format35mi_method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1064:1: insn_format35mi_method : INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX ;
+	// smaliParser.g:1064:1: insn_format35mi_method : INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX ;
 	public final smaliParser.insn_format35mi_method_return insn_format35mi_method() throws RecognitionException {
 		smaliParser.insn_format35mi_method_return retval = new smaliParser.insn_format35mi_method_return();
 		retval.start = input.LT(1);
@@ -13977,8 +13977,8 @@ public class smaliParser extends Parser {
 		CommonTree INLINE_INDEX456_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1065:3: ( INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1066:5: INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX
+			// smaliParser.g:1065:3: ( INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX )
+			// smaliParser.g:1066:5: INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -14041,7 +14041,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format35ms_method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1071:1: insn_format35ms_method : INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX ;
+	// smaliParser.g:1071:1: insn_format35ms_method : INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX ;
 	public final smaliParser.insn_format35ms_method_return insn_format35ms_method() throws RecognitionException {
 		smaliParser.insn_format35ms_method_return retval = new smaliParser.insn_format35ms_method_return();
 		retval.start = input.LT(1);
@@ -14062,8 +14062,8 @@ public class smaliParser extends Parser {
 		CommonTree VTABLE_INDEX462_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1072:3: ( INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1073:5: INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX
+			// smaliParser.g:1072:3: ( INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX )
+			// smaliParser.g:1073:5: INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -14126,7 +14126,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format3rc_method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1078:1: insn_format3rc_method : INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT3rc_METHOD[$start, \"I_STATEMENT_FORMAT3rc_METHOD\"] INSTRUCTION_FORMAT3rc_METHOD register_range method_reference ) ;
+	// smaliParser.g:1078:1: insn_format3rc_method : INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT3rc_METHOD[$start, \"I_STATEMENT_FORMAT3rc_METHOD\"] INSTRUCTION_FORMAT3rc_METHOD register_range method_reference ) ;
 	public final smaliParser.insn_format3rc_method_return insn_format3rc_method() throws RecognitionException {
 		smaliParser.insn_format3rc_method_return retval = new smaliParser.insn_format3rc_method_return();
 		retval.start = input.LT(1);
@@ -14144,16 +14144,16 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE464_tree=null;
 		CommonTree CLOSE_BRACE466_tree=null;
 		CommonTree COMMA467_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_METHOD");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_METHOD");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
 		RewriteRuleSubtreeStream stream_register_range=new RewriteRuleSubtreeStream(adaptor,"rule register_range");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1079:3: ( INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT3rc_METHOD[$start, \"I_STATEMENT_FORMAT3rc_METHOD\"] INSTRUCTION_FORMAT3rc_METHOD register_range method_reference ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1080:5: INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA method_reference
+			// smaliParser.g:1079:3: ( INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT3rc_METHOD[$start, \"I_STATEMENT_FORMAT3rc_METHOD\"] INSTRUCTION_FORMAT3rc_METHOD register_range method_reference ) )
+			// smaliParser.g:1080:5: INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA method_reference
 			{
 			INSTRUCTION_FORMAT3rc_METHOD463=(Token)match(input,INSTRUCTION_FORMAT3rc_METHOD,FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_insn_format3rc_method5563);  
 			stream_INSTRUCTION_FORMAT3rc_METHOD.add(INSTRUCTION_FORMAT3rc_METHOD463);
@@ -14178,7 +14178,7 @@ public class smaliParser extends Parser {
 
 			stream_method_reference.add(method_reference468.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT3rc_METHOD, register_range, method_reference
+			// elements: INSTRUCTION_FORMAT3rc_METHOD, method_reference, register_range
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14190,7 +14190,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1081:5: -> ^( I_STATEMENT_FORMAT3rc_METHOD[$start, \"I_STATEMENT_FORMAT3rc_METHOD\"] INSTRUCTION_FORMAT3rc_METHOD register_range method_reference )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1081:8: ^( I_STATEMENT_FORMAT3rc_METHOD[$start, \"I_STATEMENT_FORMAT3rc_METHOD\"] INSTRUCTION_FORMAT3rc_METHOD register_range method_reference )
+				// smaliParser.g:1081:8: ^( I_STATEMENT_FORMAT3rc_METHOD[$start, \"I_STATEMENT_FORMAT3rc_METHOD\"] INSTRUCTION_FORMAT3rc_METHOD register_range method_reference )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT3rc_METHOD, (retval.start), "I_STATEMENT_FORMAT3rc_METHOD"), root_1);
@@ -14234,7 +14234,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format3rc_method_odex"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1083:1: insn_format3rc_method_odex : INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference ;
+	// smaliParser.g:1083:1: insn_format3rc_method_odex : INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference ;
 	public final smaliParser.insn_format3rc_method_odex_return insn_format3rc_method_odex() throws RecognitionException {
 		smaliParser.insn_format3rc_method_odex_return retval = new smaliParser.insn_format3rc_method_odex_return();
 		retval.start = input.LT(1);
@@ -14254,8 +14254,8 @@ public class smaliParser extends Parser {
 		CommonTree COMMA473_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1084:3: ( INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1085:5: INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference
+			// smaliParser.g:1084:3: ( INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference )
+			// smaliParser.g:1085:5: INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -14320,7 +14320,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format3rc_type"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1090:1: insn_format3rc_type : INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT3rc_TYPE[$start, \"I_STATEMENT_FORMAT3rc_TYPE\"] INSTRUCTION_FORMAT3rc_TYPE register_range nonvoid_type_descriptor ) ;
+	// smaliParser.g:1090:1: insn_format3rc_type : INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT3rc_TYPE[$start, \"I_STATEMENT_FORMAT3rc_TYPE\"] INSTRUCTION_FORMAT3rc_TYPE register_range nonvoid_type_descriptor ) ;
 	public final smaliParser.insn_format3rc_type_return insn_format3rc_type() throws RecognitionException {
 		smaliParser.insn_format3rc_type_return retval = new smaliParser.insn_format3rc_type_return();
 		retval.start = input.LT(1);
@@ -14338,16 +14338,16 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE476_tree=null;
 		CommonTree CLOSE_BRACE478_tree=null;
 		CommonTree COMMA479_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_TYPE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_TYPE");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_register_range=new RewriteRuleSubtreeStream(adaptor,"rule register_range");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1091:3: ( INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT3rc_TYPE[$start, \"I_STATEMENT_FORMAT3rc_TYPE\"] INSTRUCTION_FORMAT3rc_TYPE register_range nonvoid_type_descriptor ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1092:5: INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor
+			// smaliParser.g:1091:3: ( INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT3rc_TYPE[$start, \"I_STATEMENT_FORMAT3rc_TYPE\"] INSTRUCTION_FORMAT3rc_TYPE register_range nonvoid_type_descriptor ) )
+			// smaliParser.g:1092:5: INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor
 			{
 			INSTRUCTION_FORMAT3rc_TYPE475=(Token)match(input,INSTRUCTION_FORMAT3rc_TYPE,FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_insn_format3rc_type5636);  
 			stream_INSTRUCTION_FORMAT3rc_TYPE.add(INSTRUCTION_FORMAT3rc_TYPE475);
@@ -14372,7 +14372,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor480.getTree());
 			// AST REWRITE
-			// elements: nonvoid_type_descriptor, register_range, INSTRUCTION_FORMAT3rc_TYPE
+			// elements: INSTRUCTION_FORMAT3rc_TYPE, register_range, nonvoid_type_descriptor
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14384,7 +14384,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1093:5: -> ^( I_STATEMENT_FORMAT3rc_TYPE[$start, \"I_STATEMENT_FORMAT3rc_TYPE\"] INSTRUCTION_FORMAT3rc_TYPE register_range nonvoid_type_descriptor )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1093:8: ^( I_STATEMENT_FORMAT3rc_TYPE[$start, \"I_STATEMENT_FORMAT3rc_TYPE\"] INSTRUCTION_FORMAT3rc_TYPE register_range nonvoid_type_descriptor )
+				// smaliParser.g:1093:8: ^( I_STATEMENT_FORMAT3rc_TYPE[$start, \"I_STATEMENT_FORMAT3rc_TYPE\"] INSTRUCTION_FORMAT3rc_TYPE register_range nonvoid_type_descriptor )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT3rc_TYPE, (retval.start), "I_STATEMENT_FORMAT3rc_TYPE"), root_1);
@@ -14428,7 +14428,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format3rmi_method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1095:1: insn_format3rmi_method : INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX ;
+	// smaliParser.g:1095:1: insn_format3rmi_method : INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX ;
 	public final smaliParser.insn_format3rmi_method_return insn_format3rmi_method() throws RecognitionException {
 		smaliParser.insn_format3rmi_method_return retval = new smaliParser.insn_format3rmi_method_return();
 		retval.start = input.LT(1);
@@ -14449,8 +14449,8 @@ public class smaliParser extends Parser {
 		CommonTree INLINE_INDEX486_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1096:3: ( INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1097:5: INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX
+			// smaliParser.g:1096:3: ( INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX )
+			// smaliParser.g:1097:5: INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -14513,7 +14513,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format3rms_method"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1102:1: insn_format3rms_method : INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX ;
+	// smaliParser.g:1102:1: insn_format3rms_method : INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX ;
 	public final smaliParser.insn_format3rms_method_return insn_format3rms_method() throws RecognitionException {
 		smaliParser.insn_format3rms_method_return retval = new smaliParser.insn_format3rms_method_return();
 		retval.start = input.LT(1);
@@ -14534,8 +14534,8 @@ public class smaliParser extends Parser {
 		CommonTree VTABLE_INDEX492_tree=null;
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1103:3: ( INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1104:5: INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX
+			// smaliParser.g:1103:3: ( INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX )
+			// smaliParser.g:1104:5: INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
@@ -14598,7 +14598,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_format51l"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1109:1: insn_format51l : INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal -> ^( I_STATEMENT_FORMAT51l[$start, \"I_STATEMENT_FORMAT51l\"] INSTRUCTION_FORMAT51l REGISTER fixed_literal ) ;
+	// smaliParser.g:1109:1: insn_format51l : INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal -> ^( I_STATEMENT_FORMAT51l[$start, \"I_STATEMENT_FORMAT51l\"] INSTRUCTION_FORMAT51l REGISTER fixed_literal ) ;
 	public final smaliParser.insn_format51l_return insn_format51l() throws RecognitionException {
 		smaliParser.insn_format51l_return retval = new smaliParser.insn_format51l_return();
 		retval.start = input.LT(1);
@@ -14619,8 +14619,8 @@ public class smaliParser extends Parser {
 		RewriteRuleSubtreeStream stream_fixed_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1110:3: ( INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal -> ^( I_STATEMENT_FORMAT51l[$start, \"I_STATEMENT_FORMAT51l\"] INSTRUCTION_FORMAT51l REGISTER fixed_literal ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1111:5: INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal
+			// smaliParser.g:1110:3: ( INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal -> ^( I_STATEMENT_FORMAT51l[$start, \"I_STATEMENT_FORMAT51l\"] INSTRUCTION_FORMAT51l REGISTER fixed_literal ) )
+			// smaliParser.g:1111:5: INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal
 			{
 			INSTRUCTION_FORMAT51l493=(Token)match(input,INSTRUCTION_FORMAT51l,FOLLOW_INSTRUCTION_FORMAT51l_in_insn_format51l5740);  
 			stream_INSTRUCTION_FORMAT51l.add(INSTRUCTION_FORMAT51l493);
@@ -14637,7 +14637,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_literal.add(fixed_literal496.getTree());
 			// AST REWRITE
-			// elements: REGISTER, fixed_literal, INSTRUCTION_FORMAT51l
+			// elements: INSTRUCTION_FORMAT51l, fixed_literal, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14649,7 +14649,7 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1112:5: -> ^( I_STATEMENT_FORMAT51l[$start, \"I_STATEMENT_FORMAT51l\"] INSTRUCTION_FORMAT51l REGISTER fixed_literal )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1112:8: ^( I_STATEMENT_FORMAT51l[$start, \"I_STATEMENT_FORMAT51l\"] INSTRUCTION_FORMAT51l REGISTER fixed_literal )
+				// smaliParser.g:1112:8: ^( I_STATEMENT_FORMAT51l[$start, \"I_STATEMENT_FORMAT51l\"] INSTRUCTION_FORMAT51l REGISTER fixed_literal )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_FORMAT51l, (retval.start), "I_STATEMENT_FORMAT51l"), root_1);
@@ -14693,7 +14693,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_array_data_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1114:1: insn_array_data_directive : ARRAY_DATA_DIRECTIVE parsed_integer_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE -> ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) ) ;
+	// smaliParser.g:1114:1: insn_array_data_directive : ARRAY_DATA_DIRECTIVE parsed_integer_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE -> ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) ) ;
 	public final smaliParser.insn_array_data_directive_return insn_array_data_directive() throws RecognitionException {
 		smaliParser.insn_array_data_directive_return retval = new smaliParser.insn_array_data_directive_return();
 		retval.start = input.LT(1);
@@ -14707,14 +14707,14 @@ public class smaliParser extends Parser {
 
 		CommonTree ARRAY_DATA_DIRECTIVE497_tree=null;
 		CommonTree END_ARRAY_DATA_DIRECTIVE500_tree=null;
-		RewriteRuleTokenStream stream_ARRAY_DATA_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token ARRAY_DATA_DIRECTIVE");
 		RewriteRuleTokenStream stream_END_ARRAY_DATA_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_ARRAY_DATA_DIRECTIVE");
-		RewriteRuleSubtreeStream stream_fixed_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_literal");
+		RewriteRuleTokenStream stream_ARRAY_DATA_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token ARRAY_DATA_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_parsed_integer_literal=new RewriteRuleSubtreeStream(adaptor,"rule parsed_integer_literal");
+		RewriteRuleSubtreeStream stream_fixed_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_literal");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1115:3: ( ARRAY_DATA_DIRECTIVE parsed_integer_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE -> ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1115:5: ARRAY_DATA_DIRECTIVE parsed_integer_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE
+			// smaliParser.g:1115:3: ( ARRAY_DATA_DIRECTIVE parsed_integer_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE -> ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) ) )
+			// smaliParser.g:1115:5: ARRAY_DATA_DIRECTIVE parsed_integer_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE
 			{
 			ARRAY_DATA_DIRECTIVE497=(Token)match(input,ARRAY_DATA_DIRECTIVE,FOLLOW_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive5773);  
 			stream_ARRAY_DATA_DIRECTIVE.add(ARRAY_DATA_DIRECTIVE497);
@@ -14730,7 +14730,7 @@ public class smaliParser extends Parser {
 			            throw new SemanticException(input, (retval.start), "Invalid element width: %d. Must be 1, 2, 4 or 8", elementWidth);
 			        }
 			    
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1123:5: ( fixed_literal )*
+			// smaliParser.g:1123:5: ( fixed_literal )*
 			loop52:
 			while (true) {
 				int alt52=2;
@@ -14741,7 +14741,7 @@ public class smaliParser extends Parser {
 
 				switch (alt52) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1123:5: fixed_literal
+					// smaliParser.g:1123:5: fixed_literal
 					{
 					pushFollow(FOLLOW_fixed_literal_in_insn_array_data_directive5791);
 					fixed_literal499=fixed_literal();
@@ -14760,7 +14760,7 @@ public class smaliParser extends Parser {
 			stream_END_ARRAY_DATA_DIRECTIVE.add(END_ARRAY_DATA_DIRECTIVE500);
 
 			// AST REWRITE
-			// elements: fixed_literal, parsed_integer_literal
+			// elements: parsed_integer_literal, fixed_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14772,11 +14772,11 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1125:5: -> ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1125:8: ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) )
+				// smaliParser.g:1125:8: ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_ARRAY_DATA, (retval.start), "I_STATEMENT_ARRAY_DATA"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1125:67: ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal )
+				// smaliParser.g:1125:67: ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ARRAY_ELEMENT_SIZE, "I_ARRAY_ELEMENT_SIZE"), root_2);
@@ -14784,11 +14784,11 @@ public class smaliParser extends Parser {
 				adaptor.addChild(root_1, root_2);
 				}
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1126:8: ^( I_ARRAY_ELEMENTS ( fixed_literal )* )
+				// smaliParser.g:1126:8: ^( I_ARRAY_ELEMENTS ( fixed_literal )* )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_ARRAY_ELEMENTS, "I_ARRAY_ELEMENTS"), root_2);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1126:27: ( fixed_literal )*
+				// smaliParser.g:1126:27: ( fixed_literal )*
 				while ( stream_fixed_literal.hasNext() ) {
 					adaptor.addChild(root_2, stream_fixed_literal.nextTree());
 				}
@@ -14834,7 +14834,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_packed_switch_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1128:1: insn_packed_switch_directive : PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref )* END_PACKED_SWITCH_DIRECTIVE -> ^( I_STATEMENT_PACKED_SWITCH[$start, \"I_STATEMENT_PACKED_SWITCH\"] ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal ) ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* ) ) ;
+	// smaliParser.g:1128:1: insn_packed_switch_directive : PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref )* END_PACKED_SWITCH_DIRECTIVE -> ^( I_STATEMENT_PACKED_SWITCH[$start, \"I_STATEMENT_PACKED_SWITCH\"] ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal ) ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* ) ) ;
 	public final smaliParser.insn_packed_switch_directive_return insn_packed_switch_directive() throws RecognitionException {
 		smaliParser.insn_packed_switch_directive_return retval = new smaliParser.insn_packed_switch_directive_return();
 		retval.start = input.LT(1);
@@ -14848,14 +14848,14 @@ public class smaliParser extends Parser {
 
 		CommonTree PACKED_SWITCH_DIRECTIVE501_tree=null;
 		CommonTree END_PACKED_SWITCH_DIRECTIVE504_tree=null;
-		RewriteRuleTokenStream stream_PACKED_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PACKED_SWITCH_DIRECTIVE");
 		RewriteRuleTokenStream stream_END_PACKED_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_PACKED_SWITCH_DIRECTIVE");
+		RewriteRuleTokenStream stream_PACKED_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PACKED_SWITCH_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1129:5: ( PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref )* END_PACKED_SWITCH_DIRECTIVE -> ^( I_STATEMENT_PACKED_SWITCH[$start, \"I_STATEMENT_PACKED_SWITCH\"] ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal ) ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1129:9: PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref )* END_PACKED_SWITCH_DIRECTIVE
+			// smaliParser.g:1129:5: ( PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref )* END_PACKED_SWITCH_DIRECTIVE -> ^( I_STATEMENT_PACKED_SWITCH[$start, \"I_STATEMENT_PACKED_SWITCH\"] ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal ) ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* ) ) )
+			// smaliParser.g:1129:9: PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref )* END_PACKED_SWITCH_DIRECTIVE
 			{
 			PACKED_SWITCH_DIRECTIVE501=(Token)match(input,PACKED_SWITCH_DIRECTIVE,FOLLOW_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive5840);  
 			stream_PACKED_SWITCH_DIRECTIVE.add(PACKED_SWITCH_DIRECTIVE501);
@@ -14865,7 +14865,7 @@ public class smaliParser extends Parser {
 			state._fsp--;
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal502.getTree());
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1131:5: ( label_ref )*
+			// smaliParser.g:1131:5: ( label_ref )*
 			loop53:
 			while (true) {
 				int alt53=2;
@@ -14876,7 +14876,7 @@ public class smaliParser extends Parser {
 
 				switch (alt53) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1131:5: label_ref
+					// smaliParser.g:1131:5: label_ref
 					{
 					pushFollow(FOLLOW_label_ref_in_insn_packed_switch_directive5852);
 					label_ref503=label_ref();
@@ -14907,11 +14907,11 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1133:5: -> ^( I_STATEMENT_PACKED_SWITCH[$start, \"I_STATEMENT_PACKED_SWITCH\"] ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal ) ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* ) )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1133:8: ^( I_STATEMENT_PACKED_SWITCH[$start, \"I_STATEMENT_PACKED_SWITCH\"] ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal ) ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* ) )
+				// smaliParser.g:1133:8: ^( I_STATEMENT_PACKED_SWITCH[$start, \"I_STATEMENT_PACKED_SWITCH\"] ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal ) ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_PACKED_SWITCH, (retval.start), "I_STATEMENT_PACKED_SWITCH"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1134:10: ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal )
+				// smaliParser.g:1134:10: ^( I_PACKED_SWITCH_START_KEY[$start, \"I_PACKED_SWITCH_START_KEY\"] fixed_32bit_literal )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_PACKED_SWITCH_START_KEY, (retval.start), "I_PACKED_SWITCH_START_KEY"), root_2);
@@ -14919,11 +14919,11 @@ public class smaliParser extends Parser {
 				adaptor.addChild(root_1, root_2);
 				}
 
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1135:10: ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* )
+				// smaliParser.g:1135:10: ^( I_PACKED_SWITCH_ELEMENTS[$start, \"I_PACKED_SWITCH_ELEMENTS\"] ( label_ref )* )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_PACKED_SWITCH_ELEMENTS, (retval.start), "I_PACKED_SWITCH_ELEMENTS"), root_2);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1136:11: ( label_ref )*
+				// smaliParser.g:1136:11: ( label_ref )*
 				while ( stream_label_ref.hasNext() ) {
 					adaptor.addChild(root_2, stream_label_ref.nextTree());
 				}
@@ -14969,7 +14969,7 @@ public class smaliParser extends Parser {
 
 
 	// $ANTLR start "insn_sparse_switch_directive"
-	// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1139:1: insn_sparse_switch_directive : SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref )* END_SPARSE_SWITCH_DIRECTIVE -> ^( I_STATEMENT_SPARSE_SWITCH[$start, \"I_STATEMENT_SPARSE_SWITCH\"] ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* ) ) ;
+	// smaliParser.g:1139:1: insn_sparse_switch_directive : SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref )* END_SPARSE_SWITCH_DIRECTIVE -> ^( I_STATEMENT_SPARSE_SWITCH[$start, \"I_STATEMENT_SPARSE_SWITCH\"] ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* ) ) ;
 	public final smaliParser.insn_sparse_switch_directive_return insn_sparse_switch_directive() throws RecognitionException {
 		smaliParser.insn_sparse_switch_directive_return retval = new smaliParser.insn_sparse_switch_directive_return();
 		retval.start = input.LT(1);
@@ -14985,20 +14985,20 @@ public class smaliParser extends Parser {
 		CommonTree SPARSE_SWITCH_DIRECTIVE505_tree=null;
 		CommonTree ARROW507_tree=null;
 		CommonTree END_SPARSE_SWITCH_DIRECTIVE509_tree=null;
-		RewriteRuleTokenStream stream_SPARSE_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SPARSE_SWITCH_DIRECTIVE");
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
+		RewriteRuleTokenStream stream_SPARSE_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SPARSE_SWITCH_DIRECTIVE");
 		RewriteRuleTokenStream stream_END_SPARSE_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_SPARSE_SWITCH_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1140:3: ( SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref )* END_SPARSE_SWITCH_DIRECTIVE -> ^( I_STATEMENT_SPARSE_SWITCH[$start, \"I_STATEMENT_SPARSE_SWITCH\"] ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* ) ) )
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1140:7: SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref )* END_SPARSE_SWITCH_DIRECTIVE
+			// smaliParser.g:1140:3: ( SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref )* END_SPARSE_SWITCH_DIRECTIVE -> ^( I_STATEMENT_SPARSE_SWITCH[$start, \"I_STATEMENT_SPARSE_SWITCH\"] ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* ) ) )
+			// smaliParser.g:1140:7: SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref )* END_SPARSE_SWITCH_DIRECTIVE
 			{
 			SPARSE_SWITCH_DIRECTIVE505=(Token)match(input,SPARSE_SWITCH_DIRECTIVE,FOLLOW_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive5933);  
 			stream_SPARSE_SWITCH_DIRECTIVE.add(SPARSE_SWITCH_DIRECTIVE505);
 
-			// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1141:5: ( fixed_32bit_literal ARROW label_ref )*
+			// smaliParser.g:1141:5: ( fixed_32bit_literal ARROW label_ref )*
 			loop54:
 			while (true) {
 				int alt54=2;
@@ -15009,7 +15009,7 @@ public class smaliParser extends Parser {
 
 				switch (alt54) {
 				case 1 :
-					// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1141:6: fixed_32bit_literal ARROW label_ref
+					// smaliParser.g:1141:6: fixed_32bit_literal ARROW label_ref
 					{
 					pushFollow(FOLLOW_fixed_32bit_literal_in_insn_sparse_switch_directive5940);
 					fixed_32bit_literal506=fixed_32bit_literal();
@@ -15048,15 +15048,15 @@ public class smaliParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 			// 1143:5: -> ^( I_STATEMENT_SPARSE_SWITCH[$start, \"I_STATEMENT_SPARSE_SWITCH\"] ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* ) )
 			{
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1143:8: ^( I_STATEMENT_SPARSE_SWITCH[$start, \"I_STATEMENT_SPARSE_SWITCH\"] ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* ) )
+				// smaliParser.g:1143:8: ^( I_STATEMENT_SPARSE_SWITCH[$start, \"I_STATEMENT_SPARSE_SWITCH\"] ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_STATEMENT_SPARSE_SWITCH, (retval.start), "I_STATEMENT_SPARSE_SWITCH"), root_1);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1144:8: ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* )
+				// smaliParser.g:1144:8: ^( I_SPARSE_SWITCH_ELEMENTS[$start, \"I_SPARSE_SWITCH_ELEMENTS\"] ( fixed_32bit_literal label_ref )* )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.nil();
 				root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(I_SPARSE_SWITCH_ELEMENTS, (retval.start), "I_SPARSE_SWITCH_ELEMENTS"), root_2);
-				// shaka.smali/smali/smali/src/main/antlr/smaliParser.g:1144:71: ( fixed_32bit_literal label_ref )*
+				// smaliParser.g:1144:71: ( fixed_32bit_literal label_ref )*
 				while ( stream_fixed_32bit_literal.hasNext()||stream_label_ref.hasNext() ) {
 					adaptor.addChild(root_2, stream_fixed_32bit_literal.nextTree());
 					adaptor.addChild(root_2, stream_label_ref.nextTree());

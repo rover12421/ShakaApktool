@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g
+// $ANTLR 3.5.2 expectedTokensTestGrammar.g
 
 package org.jf.smali;
 
@@ -34,15 +34,15 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 	public expectedTokensTestGrammarLexer(CharStream input, RecognizerSharedState state) {
 		super(input,state);
 	}
-	@Override public String getGrammarFileName() { return "shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g"; }
+	@Override public String getGrammarFileName() { return "expectedTokensTestGrammar.g"; }
 
 	// $ANTLR start "T__11"
 	public final void mT__11() throws RecognitionException {
 		try {
 			int _type = T__11;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:6:7: ( '(' )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:6:9: '('
+			// expectedTokensTestGrammar.g:6:7: ( '(' )
+			// expectedTokensTestGrammar.g:6:9: '('
 			{
 			match('('); 
 			}
@@ -61,8 +61,8 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 		try {
 			int _type = T__12;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:7:7: ( ')' )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:7:9: ')'
+			// expectedTokensTestGrammar.g:7:7: ( ')' )
+			// expectedTokensTestGrammar.g:7:9: ')'
 			{
 			match(')'); 
 			}
@@ -79,8 +79,8 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 	// $ANTLR start "HEX_DIGIT"
 	public final void mHEX_DIGIT() throws RecognitionException {
 		try {
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:107:2: ( ( '0' .. '9' ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:
+			// expectedTokensTestGrammar.g:107:2: ( ( '0' .. '9' ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
+			// expectedTokensTestGrammar.g:
 			{
 			if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'F')||(input.LA(1) >= 'a' && input.LA(1) <= 'f') ) {
 				input.consume();
@@ -102,8 +102,8 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 	// $ANTLR start "HEX_DIGITS"
 	public final void mHEX_DIGITS() throws RecognitionException {
 		try {
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:110:2: ( HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:110:4: HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+			// expectedTokensTestGrammar.g:110:2: ( HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
+			// expectedTokensTestGrammar.g:110:4: HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
 			{
 			mHEX_DIGIT(); 
 
@@ -127,11 +127,11 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 		try {
 			CommonToken HEX_DIGITS1=null;
 
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:113:2: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' | 'u' HEX_DIGITS ) )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:113:4: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' | 'u' HEX_DIGITS )
+			// expectedTokensTestGrammar.g:113:2: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' | 'u' HEX_DIGITS ) )
+			// expectedTokensTestGrammar.g:113:4: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' | 'u' HEX_DIGITS )
 			{
 			match('\\'); 
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:114:3: ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' | 'u' HEX_DIGITS )
+			// expectedTokensTestGrammar.g:114:3: ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' | 'u' HEX_DIGITS )
 			int alt1=9;
 			switch ( input.LA(1) ) {
 			case 'b':
@@ -186,63 +186,63 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 			}
 			switch (alt1) {
 				case 1 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:115:4: 'b'
+					// expectedTokensTestGrammar.g:115:4: 'b'
 					{
 					match('b'); 
 					sb.append("\b");
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:116:5: 't'
+					// expectedTokensTestGrammar.g:116:5: 't'
 					{
 					match('t'); 
 					sb.append("\t");
 					}
 					break;
 				case 3 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:117:5: 'n'
+					// expectedTokensTestGrammar.g:117:5: 'n'
 					{
 					match('n'); 
 					sb.append("\n");
 					}
 					break;
 				case 4 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:118:5: 'f'
+					// expectedTokensTestGrammar.g:118:5: 'f'
 					{
 					match('f'); 
 					sb.append("\f");
 					}
 					break;
 				case 5 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:119:5: 'r'
+					// expectedTokensTestGrammar.g:119:5: 'r'
 					{
 					match('r'); 
 					sb.append("\r");
 					}
 					break;
 				case 6 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:120:5: '\\\"'
+					// expectedTokensTestGrammar.g:120:5: '\\\"'
 					{
 					match('\"'); 
 					sb.append("\"");
 					}
 					break;
 				case 7 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:121:5: '\\''
+					// expectedTokensTestGrammar.g:121:5: '\\''
 					{
 					match('\''); 
 					sb.append("'");
 					}
 					break;
 				case 8 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:122:5: '\\\\'
+					// expectedTokensTestGrammar.g:122:5: '\\\\'
 					{
 					match('\\'); 
 					sb.append("\\");
 					}
 					break;
 				case 9 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:123:5: 'u' HEX_DIGITS
+					// expectedTokensTestGrammar.g:123:5: 'u' HEX_DIGITS
 					{
 					match('u'); 
 					int HEX_DIGITS1Start156 = getCharIndex();
@@ -274,8 +274,8 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 			int _type = STRING_LITERAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
 			StringBuilder sb = new StringBuilder();
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:129:2: ( BASE_STRING_LITERAL[sb] )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:129:4: BASE_STRING_LITERAL[sb]
+			// expectedTokensTestGrammar.g:129:2: ( BASE_STRING_LITERAL[sb] )
+			// expectedTokensTestGrammar.g:129:4: BASE_STRING_LITERAL[sb]
 			{
 			mBASE_STRING_LITERAL(sb); 
 
@@ -294,11 +294,11 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 	// $ANTLR start "BASE_STRING_LITERAL"
 	public final void mBASE_STRING_LITERAL(StringBuilder sb) throws RecognitionException {
 		try {
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:132:2: ( '\"' ( ESCAPE_SEQUENCE[sb] |~ ( '\\\\' | '\"' | '\\r' | '\\n' ) )* '\"' )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:132:4: '\"' ( ESCAPE_SEQUENCE[sb] |~ ( '\\\\' | '\"' | '\\r' | '\\n' ) )* '\"'
+			// expectedTokensTestGrammar.g:132:2: ( '\"' ( ESCAPE_SEQUENCE[sb] |~ ( '\\\\' | '\"' | '\\r' | '\\n' ) )* '\"' )
+			// expectedTokensTestGrammar.g:132:4: '\"' ( ESCAPE_SEQUENCE[sb] |~ ( '\\\\' | '\"' | '\\r' | '\\n' ) )* '\"'
 			{
 			match('\"'); 
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:133:3: ( ESCAPE_SEQUENCE[sb] |~ ( '\\\\' | '\"' | '\\r' | '\\n' ) )*
+			// expectedTokensTestGrammar.g:133:3: ( ESCAPE_SEQUENCE[sb] |~ ( '\\\\' | '\"' | '\\r' | '\\n' ) )*
 			loop2:
 			while (true) {
 				int alt2=3;
@@ -312,14 +312,14 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 
 				switch (alt2) {
 				case 1 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:133:5: ESCAPE_SEQUENCE[sb]
+					// expectedTokensTestGrammar.g:133:5: ESCAPE_SEQUENCE[sb]
 					{
 					mESCAPE_SEQUENCE(sb); 
 
 					}
 					break;
 				case 2 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:134:5: ~ ( '\\\\' | '\"' | '\\r' | '\\n' )
+					// expectedTokensTestGrammar.g:134:5: ~ ( '\\\\' | '\"' | '\\r' | '\\n' )
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '\f')||(input.LA(1) >= '\u000E' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -353,10 +353,10 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 		try {
 			int _type = TOKEN_NAME;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:139:2: ( ( ( 'a' .. 'z' ) | ( 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )+ )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:139:4: ( ( 'a' .. 'z' ) | ( 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )+
+			// expectedTokensTestGrammar.g:139:2: ( ( ( 'a' .. 'z' ) | ( 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )+ )
+			// expectedTokensTestGrammar.g:139:4: ( ( 'a' .. 'z' ) | ( 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )+
 			{
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:139:4: ( ( 'a' .. 'z' ) | ( 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )+
+			// expectedTokensTestGrammar.g:139:4: ( ( 'a' .. 'z' ) | ( 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )+
 			int cnt3=0;
 			loop3:
 			while (true) {
@@ -368,7 +368,7 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 
 				switch (alt3) {
 				case 1 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:
+					// expectedTokensTestGrammar.g:
 					{
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 						input.consume();
@@ -405,10 +405,10 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 		try {
 			int _type = WHITE_SPACE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:142:2: ( ( ' ' | '\\t' | '\\n' | '\\r' )+ )
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:142:4: ( ' ' | '\\t' | '\\n' | '\\r' )+
+			// expectedTokensTestGrammar.g:142:2: ( ( ' ' | '\\t' | '\\n' | '\\r' )+ )
+			// expectedTokensTestGrammar.g:142:4: ( ' ' | '\\t' | '\\n' | '\\r' )+
 			{
-			// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:142:4: ( ' ' | '\\t' | '\\n' | '\\r' )+
+			// expectedTokensTestGrammar.g:142:4: ( ' ' | '\\t' | '\\n' | '\\r' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
@@ -420,7 +420,7 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 
 				switch (alt4) {
 				case 1 :
-					// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:
+					// expectedTokensTestGrammar.g:
 					{
 					if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 						input.consume();
@@ -455,7 +455,7 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:1:8: ( T__11 | T__12 | STRING_LITERAL | TOKEN_NAME | WHITE_SPACE )
+		// expectedTokensTestGrammar.g:1:8: ( T__11 | T__12 | STRING_LITERAL | TOKEN_NAME | WHITE_SPACE )
 		int alt5=5;
 		switch ( input.LA(1) ) {
 		case '(':
@@ -555,35 +555,35 @@ public class expectedTokensTestGrammarLexer extends Lexer {
 		}
 		switch (alt5) {
 			case 1 :
-				// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:1:10: T__11
+				// expectedTokensTestGrammar.g:1:10: T__11
 				{
 				mT__11(); 
 
 				}
 				break;
 			case 2 :
-				// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:1:16: T__12
+				// expectedTokensTestGrammar.g:1:16: T__12
 				{
 				mT__12(); 
 
 				}
 				break;
 			case 3 :
-				// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:1:22: STRING_LITERAL
+				// expectedTokensTestGrammar.g:1:22: STRING_LITERAL
 				{
 				mSTRING_LITERAL(); 
 
 				}
 				break;
 			case 4 :
-				// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:1:37: TOKEN_NAME
+				// expectedTokensTestGrammar.g:1:37: TOKEN_NAME
 				{
 				mTOKEN_NAME(); 
 
 				}
 				break;
 			case 5 :
-				// shaka.smali/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g:1:48: WHITE_SPACE
+				// expectedTokensTestGrammar.g:1:48: WHITE_SPACE
 				{
 				mWHITE_SPACE(); 
 
