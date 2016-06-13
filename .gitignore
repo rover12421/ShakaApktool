@@ -15,5 +15,5 @@ bin/
 /out
 ApkSample/
 libs/
-shaka.cli/src/test/
+shaka/cli/src/test/
 !**/src/main/resources/**/bin/

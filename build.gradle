@@ -20,30 +20,6 @@ ext.langLevel = '1.7'
 ext.aspectjVersion = '1.8.9'
 version = '2.0.0'
 
-def branch = getCheckedOutBranchFromProject()
-def hash = getCheckedOutGitCommitHashFromProject()
-def date = new Date().format("yyyyMMdd")
-
-ext.shakaVersion = "$version-$branch-$hash-$date"
-ext.shakaDebug = false
-
-buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url "https://maven.eveoh.nl/content/repositories/releases"
-        }
-    }
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-        options.incremental = true
-    }
-    dependencies {
-        classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
-        classpath 'nl.eveoh:gradle-aspectj:1.6'
-    }
-}
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
@@ -64,10 +40,6 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'maven'
-    apply plugin: 'aspectj'
-    apply plugin: 'eu.appsatori.fatjar'
-
     ext {
         depends = [
                 antlr           : 'org.antlr:antlr:3.5.2',
@@ -94,15 +66,6 @@ subprojects {
 
     dependencies {
         testCompile depends.junit
-    }
-}
-
-// 过滤shaka.lib,其他项目均可以包含该项目
-configure(subprojects - project(':shaka.lib')) {
-    dependencies {
-        compile project(':shaka.lib')
-        // acj 的全局注入
-        aspectpath files(project(':shaka.lib').buildDir)
     }
 }
 

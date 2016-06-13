@@ -1,6 +1,6 @@
-[submodule "apktool"]
-	path = shaka.apktool/apktool
+[submodule "shaka/apktool/apktool"]
+	path = shaka/apktool/apktool
 	url = https://github.com/iBotPeaches/Apktool.git
-[submodule "smali"]
-	path = shaka.smali/smali
+[submodule "shaka/smali/smali"]
+	path = shaka/smali/smali
 	url = https://github.com/JesusFreke/smali.git

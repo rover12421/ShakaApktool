@@ -14,12 +14,14 @@
  *  limitations under the License.
  */
 
+apply plugin: 'eu.appsatori.fatjar'
+
 configurations {
     proguard
 }
 
 dependencies {
-    compile project(':shaka.apktool')
+    compile project(':shaka:apktool')
 
     proguard depends.proguard
 }

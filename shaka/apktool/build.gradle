@@ -78,7 +78,7 @@ processResources {
 }
 
 dependencies {
-    compile project(':shaka.smali'),
+    compile project(':shaka:smali'),
             depends.snakeyaml,
             depends.xmlpull,
             depends.guava,
