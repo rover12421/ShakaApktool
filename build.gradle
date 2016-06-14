@@ -18,7 +18,11 @@ apply from  : 'gradle/functions.gradle'
 
 ext.langLevel = '1.7'
 ext.aspectjVersion = '1.8.9'
-version = '2.0.0'
+ext.ver = '3.0.0'
+
+ext.branch = getCheckedOutBranchFromProject()
+ext.hash = getCheckedOutGitCommitHashFromProject()
+ext.date = new Date().format("yyyyMMdd")
 
 allprojects {
     apply plugin: 'java'

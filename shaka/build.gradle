@@ -14,17 +14,7 @@
  *  limitations under the License.
  */
 
-apply from  : '../gradle/functions.gradle'
-
-ext.langLevel = '1.7'
-ext.aspectjVersion = '1.8.9'
-version = '2.0.0'
-
-def branch = getCheckedOutBranchFromProject()
-def hash = getCheckedOutGitCommitHashFromProject()
-def date = new Date().format("yyyyMMdd")
-
-ext.shakaVersion = "$version-$branch-$hash-$date"
+ext.shakaVersion = "$ver-$branch-$hash-$date"
 ext.shakaDebug = false
 
 buildscript {
@@ -45,9 +35,7 @@ buildscript {
 }
 
 subprojects {
-    apply plugin: 'maven'
     apply plugin: 'aspectj'
-
 }
 
 // 过滤shaka.lib,其他项目均可以包含该项目
