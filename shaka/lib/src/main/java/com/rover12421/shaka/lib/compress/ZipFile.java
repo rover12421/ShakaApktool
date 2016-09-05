@@ -83,7 +83,7 @@ public class ZipFile extends java.util.zip.ZipFile {
     }
 
     @Override
-    public Enumeration<? extends ZipEntry> entries() {
+    public Enumeration<ZipArchiveEntry> entries() {
         return zipFile.getEntries();
     }
 
@@ -102,7 +102,7 @@ public class ZipFile extends java.util.zip.ZipFile {
     }
 
     @Override
-    public ZipEntry getEntry(String name) {
+    public ZipArchiveEntry getEntry(String name) {
         return zipFile.getEntry(name);
     }
 
