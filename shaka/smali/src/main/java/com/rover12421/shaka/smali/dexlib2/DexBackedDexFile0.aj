@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
  */
 privileged public aspect DexBackedDexFile0 {
     public DexBackedDexFile.new(@Nonnull Opcodes opcodes, @Nonnull byte[] buf, int offset, boolean verifyMagic
-            , Object _) {
+            , Object ____) {
         this(opcodes, buf, offset, verifyMagic);
     }
 }
