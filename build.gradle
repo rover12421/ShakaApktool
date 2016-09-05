@@ -16,7 +16,7 @@
 
 apply from  : 'gradle/functions.gradle'
 
-ext.langLevel = '1.7'
+ext.langLevel = '1.8'
 ext.aspectjVersion = '1.8.9'
 ext.ver = '3.0.0'
 
