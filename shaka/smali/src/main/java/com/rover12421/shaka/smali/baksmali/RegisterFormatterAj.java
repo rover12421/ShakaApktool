@@ -14,8 +14,8 @@ import java.io.IOException;
  */
 @Aspect
 public class RegisterFormatterAj {
-    @Around("execution(* org.jf.baksmali.Adaptors.RegisterFormatter.writeTo(..))" +
-            "&& args(writer, register)")
+//    @Around("execution(* org.jf.baksmali.Adaptors.RegisterFormatter.writeTo(..))" +
+//            "&& args(writer, register)")
     public void writeTo(ProceedingJoinPoint joinPoint, IndentingWriter writer, int register) throws Throwable {
         RegisterFormatter thiz = (RegisterFormatter) joinPoint.getThis();
         if (register > thiz.registerCount) {
