@@ -499,13 +499,13 @@ public class smaliParser extends Parser {
 
 		CommonTree EOF8_tree=null;
 		RewriteRuleTokenStream stream_EOF=new RewriteRuleTokenStream(adaptor,"token EOF");
-		RewriteRuleSubtreeStream stream_field=new RewriteRuleSubtreeStream(adaptor,"rule field");
+		RewriteRuleSubtreeStream stream_class_spec=new RewriteRuleSubtreeStream(adaptor,"rule class_spec");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
+		RewriteRuleSubtreeStream stream_method=new RewriteRuleSubtreeStream(adaptor,"rule method");
+		RewriteRuleSubtreeStream stream_field=new RewriteRuleSubtreeStream(adaptor,"rule field");
 		RewriteRuleSubtreeStream stream_super_spec=new RewriteRuleSubtreeStream(adaptor,"rule super_spec");
 		RewriteRuleSubtreeStream stream_implements_spec=new RewriteRuleSubtreeStream(adaptor,"rule implements_spec");
 		RewriteRuleSubtreeStream stream_source_spec=new RewriteRuleSubtreeStream(adaptor,"rule source_spec");
-		RewriteRuleSubtreeStream stream_method=new RewriteRuleSubtreeStream(adaptor,"rule method");
-		RewriteRuleSubtreeStream stream_class_spec=new RewriteRuleSubtreeStream(adaptor,"rule class_spec");
 
 		 smali_file_stack.peek().hasClassSpec = smali_file_stack.peek().hasSuperSpec = smali_file_stack.peek().hasSourceSpec = false;
 		    smali_file_stack.peek().classAnnotations = new ArrayList<CommonTree>();
@@ -650,7 +650,7 @@ public class smaliParser extends Parser {
 			    }
 			  
 			// AST REWRITE
-			// elements: source_spec, method, super_spec, field, class_spec, implements_spec
+			// elements: class_spec, source_spec, super_spec, method, field, implements_spec
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -764,8 +764,8 @@ public class smaliParser extends Parser {
 
 		CommonTree CLASS_DIRECTIVE9_tree=null;
 		CommonTree CLASS_DESCRIPTOR11_tree=null;
-		RewriteRuleTokenStream stream_CLASS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CLASS_DIRECTIVE");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_CLASS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CLASS_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
 
 		try {
@@ -785,7 +785,7 @@ public class smaliParser extends Parser {
 
 			retval.className = (CLASS_DESCRIPTOR11!=null?CLASS_DESCRIPTOR11.getText():null);
 			// AST REWRITE
-			// elements: access_list, CLASS_DESCRIPTOR
+			// elements: CLASS_DESCRIPTOR, access_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -845,8 +845,8 @@ public class smaliParser extends Parser {
 
 		CommonTree SUPER_DIRECTIVE12_tree=null;
 		CommonTree CLASS_DESCRIPTOR13_tree=null;
-		RewriteRuleTokenStream stream_SUPER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SUPER_DIRECTIVE");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_SUPER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SUPER_DIRECTIVE");
 
 		try {
 			// smaliParser.g:459:3: ( SUPER_DIRECTIVE CLASS_DESCRIPTOR -> ^( I_SUPER[$start, \"I_SUPER\"] CLASS_DESCRIPTOR ) )
@@ -1005,8 +1005,8 @@ public class smaliParser extends Parser {
 
 		CommonTree SOURCE_DIRECTIVE16_tree=null;
 		CommonTree STRING_LITERAL17_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_SOURCE_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SOURCE_DIRECTIVE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
 			// smaliParser.g:465:3: ( SOURCE_DIRECTIVE STRING_LITERAL -> ^( I_SOURCE[$start, \"I_SOURCE\"] STRING_LITERAL ) )
@@ -1198,13 +1198,13 @@ public class smaliParser extends Parser {
 		CommonTree COLON22_tree=null;
 		CommonTree EQUAL24_tree=null;
 		CommonTree END_FIELD_DIRECTIVE27_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
-		RewriteRuleTokenStream stream_FIELD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token FIELD_DIRECTIVE");
-		RewriteRuleTokenStream stream_EQUAL=new RewriteRuleTokenStream(adaptor,"token EQUAL");
 		RewriteRuleTokenStream stream_END_FIELD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_FIELD_DIRECTIVE");
+		RewriteRuleTokenStream stream_EQUAL=new RewriteRuleTokenStream(adaptor,"token EQUAL");
+		RewriteRuleTokenStream stream_FIELD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token FIELD_DIRECTIVE");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
 		RewriteRuleSubtreeStream stream_literal=new RewriteRuleSubtreeStream(adaptor,"rule literal");
 
@@ -1318,7 +1318,7 @@ public class smaliParser extends Parser {
 					stream_END_FIELD_DIRECTIVE.add(END_FIELD_DIRECTIVE27);
 
 					// AST REWRITE
-					// elements: access_list, member_name, annotation, literal, nonvoid_type_descriptor
+					// elements: nonvoid_type_descriptor, access_list, annotation, literal, member_name
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1385,7 +1385,7 @@ public class smaliParser extends Parser {
 					{
 					smali_file_stack.peek().classAnnotations.addAll(annotations);
 					// AST REWRITE
-					// elements: member_name, literal, nonvoid_type_descriptor, access_list
+					// elements: nonvoid_type_descriptor, member_name, access_list, literal
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1493,10 +1493,10 @@ public class smaliParser extends Parser {
 		CommonTree END_METHOD_DIRECTIVE33_tree=null;
 		RewriteRuleTokenStream stream_END_METHOD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_METHOD_DIRECTIVE");
 		RewriteRuleTokenStream stream_METHOD_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token METHOD_DIRECTIVE");
-		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
 		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
-		RewriteRuleSubtreeStream stream_statements_and_directives=new RewriteRuleSubtreeStream(adaptor,"rule statements_and_directives");
+		RewriteRuleSubtreeStream stream_access_list=new RewriteRuleSubtreeStream(adaptor,"rule access_list");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_statements_and_directives=new RewriteRuleSubtreeStream(adaptor,"rule statements_and_directives");
 
 		try {
 			// smaliParser.g:487:3: ( METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE -> ^( I_METHOD[$start, \"I_METHOD\"] member_name method_prototype access_list statements_and_directives ) )
@@ -1529,7 +1529,7 @@ public class smaliParser extends Parser {
 			stream_END_METHOD_DIRECTIVE.add(END_METHOD_DIRECTIVE33);
 
 			// AST REWRITE
-			// elements: statements_and_directives, method_prototype, member_name, access_list
+			// elements: member_name, method_prototype, statements_and_directives, access_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1607,11 +1607,11 @@ public class smaliParser extends Parser {
 		ParserRuleReturnScope parameter_directive38 =null;
 		ParserRuleReturnScope annotation39 =null;
 
-		RewriteRuleSubtreeStream stream_catchall_directive=new RewriteRuleSubtreeStream(adaptor,"rule catchall_directive");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
-		RewriteRuleSubtreeStream stream_ordered_method_item=new RewriteRuleSubtreeStream(adaptor,"rule ordered_method_item");
-		RewriteRuleSubtreeStream stream_catch_directive=new RewriteRuleSubtreeStream(adaptor,"rule catch_directive");
+		RewriteRuleSubtreeStream stream_catchall_directive=new RewriteRuleSubtreeStream(adaptor,"rule catchall_directive");
 		RewriteRuleSubtreeStream stream_registers_directive=new RewriteRuleSubtreeStream(adaptor,"rule registers_directive");
+		RewriteRuleSubtreeStream stream_catch_directive=new RewriteRuleSubtreeStream(adaptor,"rule catch_directive");
+		RewriteRuleSubtreeStream stream_ordered_method_item=new RewriteRuleSubtreeStream(adaptor,"rule ordered_method_item");
 		RewriteRuleSubtreeStream stream_parameter_directive=new RewriteRuleSubtreeStream(adaptor,"rule parameter_directive");
 
 		try {
@@ -1784,7 +1784,7 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: registers_directive, catch_directive, catchall_directive, ordered_method_item, parameter_directive
+			// elements: catch_directive, registers_directive, parameter_directive, catchall_directive, ordered_method_item
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -2057,8 +2057,8 @@ public class smaliParser extends Parser {
 		ParserRuleReturnScope regCount2 =null;
 
 		CommonTree directive_tree=null;
-		RewriteRuleTokenStream stream_REGISTERS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token REGISTERS_DIRECTIVE");
 		RewriteRuleTokenStream stream_LOCALS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token LOCALS_DIRECTIVE");
+		RewriteRuleTokenStream stream_REGISTERS_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token REGISTERS_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
@@ -2096,13 +2096,13 @@ public class smaliParser extends Parser {
 					// AST REWRITE
 					// elements: regCount
 					// token labels: 
-					// rule labels: retval, regCount
+					// rule labels: regCount, retval
 					// token list labels: 
 					// rule list labels: 
 					// wildcard labels: 
 					retval.tree = root_0;
-					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 					RewriteRuleSubtreeStream stream_regCount=new RewriteRuleSubtreeStream(adaptor,"rule regCount",regCount!=null?regCount.getTree():null);
+					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
 					// 522:63: -> ^( I_REGISTERS[$REGISTERS_DIRECTIVE, \"I_REGISTERS\"] $regCount)
@@ -2136,13 +2136,13 @@ public class smaliParser extends Parser {
 					// AST REWRITE
 					// elements: regCount2
 					// token labels: 
-					// rule labels: retval, regCount2
+					// rule labels: regCount2, retval
 					// token list labels: 
 					// rule list labels: 
 					// wildcard labels: 
 					retval.tree = root_0;
-					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 					RewriteRuleSubtreeStream stream_regCount2=new RewriteRuleSubtreeStream(adaptor,"rule regCount2",regCount2!=null?regCount2.getTree():null);
+					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
 					// 523:61: -> ^( I_LOCALS[$LOCALS_DIRECTIVE, \"I_LOCALS\"] $regCount2)
@@ -2365,44 +2365,44 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT45cc_METHOD82_tree=null;
 		CommonTree INSTRUCTION_FORMAT4rcc_METHOD83_tree=null;
 		CommonTree INSTRUCTION_FORMAT51l84_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT4rcc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT4rcc_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_TYPE");
 		RewriteRuleTokenStream stream_ANNOTATION_VISIBILITY=new RewriteRuleTokenStream(adaptor,"token ANNOTATION_VISIBILITY");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31i_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31i_OR_ID");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22t");
+		RewriteRuleTokenStream stream_VOID_TYPE=new RewriteRuleTokenStream(adaptor,"token VOID_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10t");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35mi_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35mi_METHOD");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22s_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22s_OR_ID");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT51l=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT51l");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT23x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT23x");
-		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
-		RewriteRuleTokenStream stream_BOOL_LITERAL=new RewriteRuleTokenStream(adaptor,"token BOOL_LITERAL");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_FIELD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD_ODEX");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD");
-		RewriteRuleTokenStream stream_ACCESS_SPEC=new RewriteRuleTokenStream(adaptor,"token ACCESS_SPEC");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22cs_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22cs_FIELD");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT12x_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT12x_OR_ID");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35ms_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35ms_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35mi_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35mi_METHOD");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22cs_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22cs_FIELD");
-		RewriteRuleTokenStream stream_VOID_TYPE=new RewriteRuleTokenStream(adaptor,"token VOID_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT45cc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT45cc_METHOD");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_TYPE");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10x");
 		RewriteRuleTokenStream stream_FLOAT_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token FLOAT_LITERAL_OR_ID");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22t");
-		RewriteRuleTokenStream stream_PRIMITIVE_TYPE=new RewriteRuleTokenStream(adaptor,"token PRIMITIVE_TYPE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10x_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10x_ODEX");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
-		RewriteRuleTokenStream stream_DOUBLE_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token DOUBLE_LITERAL_OR_ID");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10t");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD_ODEX");
 		RewriteRuleTokenStream stream_NEGATIVE_INTEGER_LITERAL=new RewriteRuleTokenStream(adaptor,"token NEGATIVE_INTEGER_LITERAL");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT45cc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT45cc_METHOD");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
-		RewriteRuleTokenStream stream_VERIFICATION_ERROR_TYPE=new RewriteRuleTokenStream(adaptor,"token VERIFICATION_ERROR_TYPE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
+		RewriteRuleTokenStream stream_DOUBLE_LITERAL_OR_ID=new RewriteRuleTokenStream(adaptor,"token DOUBLE_LITERAL_OR_ID");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31i_OR_ID=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31i_OR_ID");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT23x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT23x");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT51l=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT51l");
 		RewriteRuleTokenStream stream_POSITIVE_INTEGER_LITERAL=new RewriteRuleTokenStream(adaptor,"token POSITIVE_INTEGER_LITERAL");
+		RewriteRuleTokenStream stream_BOOL_LITERAL=new RewriteRuleTokenStream(adaptor,"token BOOL_LITERAL");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT10x_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT10x_ODEX");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_FIELD");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD");
+		RewriteRuleTokenStream stream_VERIFICATION_ERROR_TYPE=new RewriteRuleTokenStream(adaptor,"token VERIFICATION_ERROR_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
+		RewriteRuleTokenStream stream_ACCESS_SPEC=new RewriteRuleTokenStream(adaptor,"token ACCESS_SPEC");
+		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT4rcc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT4rcc_METHOD");
+		RewriteRuleTokenStream stream_PRIMITIVE_TYPE=new RewriteRuleTokenStream(adaptor,"token PRIMITIVE_TYPE");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_FIELD_ODEX");
 		RewriteRuleSubtreeStream stream_param_list_or_id=new RewriteRuleSubtreeStream(adaptor,"rule param_list_or_id");
 
@@ -3885,7 +3885,7 @@ public class smaliParser extends Parser {
 
 			stream_type_descriptor.add(type_descriptor90.getTree());
 			// AST REWRITE
-			// elements: param_list, type_descriptor
+			// elements: type_descriptor, param_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -5939,9 +5939,9 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE146_tree=null;
 		CommonTree COMMA148_tree=null;
 		CommonTree CLOSE_BRACE150_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_literal=new RewriteRuleSubtreeStream(adaptor,"rule literal");
 
 		try {
@@ -6185,9 +6185,9 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR156_tree=null;
 		CommonTree END_ANNOTATION_DIRECTIVE158_tree=null;
 		RewriteRuleTokenStream stream_ANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token ANNOTATION_DIRECTIVE");
-		RewriteRuleTokenStream stream_END_ANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_ANNOTATION_DIRECTIVE");
 		RewriteRuleTokenStream stream_ANNOTATION_VISIBILITY=new RewriteRuleTokenStream(adaptor,"token ANNOTATION_VISIBILITY");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_END_ANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_ANNOTATION_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_annotation_element=new RewriteRuleSubtreeStream(adaptor,"rule annotation_element");
 
 		try {
@@ -6233,7 +6233,7 @@ public class smaliParser extends Parser {
 			stream_END_ANNOTATION_DIRECTIVE.add(END_ANNOTATION_DIRECTIVE158);
 
 			// AST REWRITE
-			// elements: ANNOTATION_VISIBILITY, CLASS_DESCRIPTOR, annotation_element
+			// elements: annotation_element, ANNOTATION_VISIBILITY, CLASS_DESCRIPTOR
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -6317,8 +6317,8 @@ public class smaliParser extends Parser {
 		CommonTree CLASS_DESCRIPTOR160_tree=null;
 		CommonTree END_SUBANNOTATION_DIRECTIVE162_tree=null;
 		RewriteRuleTokenStream stream_SUBANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SUBANNOTATION_DIRECTIVE");
-		RewriteRuleTokenStream stream_END_SUBANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_SUBANNOTATION_DIRECTIVE");
 		RewriteRuleTokenStream stream_CLASS_DESCRIPTOR=new RewriteRuleTokenStream(adaptor,"token CLASS_DESCRIPTOR");
+		RewriteRuleTokenStream stream_END_SUBANNOTATION_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_SUBANNOTATION_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_annotation_element=new RewriteRuleSubtreeStream(adaptor,"rule annotation_element");
 
 		try {
@@ -6361,7 +6361,7 @@ public class smaliParser extends Parser {
 			stream_END_SUBANNOTATION_DIRECTIVE.add(END_SUBANNOTATION_DIRECTIVE162);
 
 			// AST REWRITE
-			// elements: CLASS_DESCRIPTOR, annotation_element
+			// elements: annotation_element, CLASS_DESCRIPTOR
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -6524,12 +6524,12 @@ public class smaliParser extends Parser {
 		CommonTree COLON169_tree=null;
 		CommonTree PRIMITIVE_TYPE173_tree=null;
 		CommonTree VOID_TYPE174_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
-		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 
 		try {
 			// smaliParser.g:693:3: ( reference_type_descriptor | ( ( reference_type_descriptor ARROW )? ( member_name COLON nonvoid_type_descriptor -> ^( I_ENCODED_FIELD ( reference_type_descriptor )? member_name nonvoid_type_descriptor ) | member_name method_prototype -> ^( I_ENCODED_METHOD ( reference_type_descriptor )? member_name method_prototype ) ) ) | PRIMITIVE_TYPE | VOID_TYPE )
@@ -6811,7 +6811,7 @@ public class smaliParser extends Parser {
 
 							stream_method_prototype.add(method_prototype172.getTree());
 							// AST REWRITE
-							// elements: reference_type_descriptor, method_prototype, member_name
+							// elements: member_name, method_prototype, reference_type_descriptor
 							// token labels: 
 							// rule labels: retval
 							// token list labels: 
@@ -6920,8 +6920,8 @@ public class smaliParser extends Parser {
 		CommonTree ARROW176_tree=null;
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
 		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
-		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 
 		try {
 			// smaliParser.g:703:3: ( ( reference_type_descriptor ARROW )? member_name method_prototype -> ( reference_type_descriptor )? member_name method_prototype )
@@ -6961,7 +6961,7 @@ public class smaliParser extends Parser {
 
 			stream_method_prototype.add(method_prototype178.getTree());
 			// AST REWRITE
-			// elements: method_prototype, reference_type_descriptor, member_name
+			// elements: method_prototype, member_name, reference_type_descriptor
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -7030,11 +7030,11 @@ public class smaliParser extends Parser {
 
 		CommonTree ARROW180_tree=null;
 		CommonTree COLON182_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
-		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 		RewriteRuleSubtreeStream stream_member_name=new RewriteRuleSubtreeStream(adaptor,"rule member_name");
+		RewriteRuleSubtreeStream stream_reference_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule reference_type_descriptor");
 
 		try {
 			// smaliParser.g:707:3: ( ( reference_type_descriptor ARROW )? member_name COLON nonvoid_type_descriptor -> ( reference_type_descriptor )? member_name nonvoid_type_descriptor )
@@ -7460,8 +7460,8 @@ public class smaliParser extends Parser {
 		CommonTree startreg_tree=null;
 		CommonTree endreg_tree=null;
 		CommonTree DOTDOT191_tree=null;
-		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 
 		try {
 			// smaliParser.g:721:3: ( (startreg= REGISTER ( DOTDOT endreg= REGISTER )? )? -> ^( I_REGISTER_RANGE[$start, \"I_REGISTER_RANGE\"] ( $startreg)? ( $endreg)? ) )
@@ -7508,14 +7508,14 @@ public class smaliParser extends Parser {
 
 			// AST REWRITE
 			// elements: startreg, endreg
-			// token labels: endreg, startreg
+			// token labels: startreg, endreg
 			// rule labels: retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleTokenStream stream_endreg=new RewriteRuleTokenStream(adaptor,"token endreg",endreg);
 			RewriteRuleTokenStream stream_startreg=new RewriteRuleTokenStream(adaptor,"token startreg",startreg);
+			RewriteRuleTokenStream stream_endreg=new RewriteRuleTokenStream(adaptor,"token endreg",endreg);
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
@@ -7681,12 +7681,12 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE197_tree=null;
 		CommonTree DOTDOT198_tree=null;
 		CommonTree CLOSE_BRACE199_tree=null;
-		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 		RewriteRuleTokenStream stream_CATCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CATCH_DIRECTIVE");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
 			// smaliParser.g:727:3: ( CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE from= label_ref DOTDOT to= label_ref CLOSE_BRACE using= label_ref -> ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using) )
@@ -7725,17 +7725,17 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(using.getTree());
 			// AST REWRITE
-			// elements: nonvoid_type_descriptor, from, using, to
+			// elements: from, to, using, nonvoid_type_descriptor
 			// token labels: 
-			// rule labels: to, retval, using, from
+			// rule labels: using, from, to, retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
-			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 			RewriteRuleSubtreeStream stream_using=new RewriteRuleSubtreeStream(adaptor,"rule using",using!=null?using.getTree():null);
 			RewriteRuleSubtreeStream stream_from=new RewriteRuleSubtreeStream(adaptor,"rule from",from!=null?from.getTree():null);
+			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
+			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
 			// 728:5: -> ^( I_CATCH[$start, \"I_CATCH\"] nonvoid_type_descriptor $from $to $using)
@@ -7804,9 +7804,9 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE201_tree=null;
 		CommonTree DOTDOT202_tree=null;
 		CommonTree CLOSE_BRACE203_tree=null;
-		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_DOTDOT=new RewriteRuleTokenStream(adaptor,"token DOTDOT");
 		RewriteRuleTokenStream stream_CATCHALL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token CATCHALL_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
@@ -7842,17 +7842,17 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(using.getTree());
 			// AST REWRITE
-			// elements: using, to, from
+			// elements: from, to, using
 			// token labels: 
-			// rule labels: to, retval, using, from
+			// rule labels: using, from, to, retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
-			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 			RewriteRuleSubtreeStream stream_using=new RewriteRuleSubtreeStream(adaptor,"rule using",using!=null?using.getTree():null);
 			RewriteRuleSubtreeStream stream_from=new RewriteRuleSubtreeStream(adaptor,"rule from",from!=null?from.getTree():null);
+			RewriteRuleSubtreeStream stream_to=new RewriteRuleSubtreeStream(adaptor,"rule to",to!=null?to.getTree():null);
+			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
 			// 732:5: -> ^( I_CATCHALL[$start, \"I_CATCHALL\"] $from $to $using)
@@ -7920,11 +7920,11 @@ public class smaliParser extends Parser {
 		CommonTree COMMA206_tree=null;
 		CommonTree STRING_LITERAL207_tree=null;
 		CommonTree END_PARAMETER_DIRECTIVE209_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
-		RewriteRuleTokenStream stream_END_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_PARAMETER_DIRECTIVE");
-		RewriteRuleTokenStream stream_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PARAMETER_DIRECTIVE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PARAMETER_DIRECTIVE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
+		RewriteRuleTokenStream stream_END_PARAMETER_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_PARAMETER_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_annotation=new RewriteRuleSubtreeStream(adaptor,"rule annotation");
 
 		List<CommonTree> annotations = new ArrayList<CommonTree>();
@@ -8009,7 +8009,7 @@ public class smaliParser extends Parser {
 					stream_END_PARAMETER_DIRECTIVE.add(END_PARAMETER_DIRECTIVE209);
 
 					// AST REWRITE
-					// elements: STRING_LITERAL, REGISTER, annotation
+					// elements: REGISTER, annotation, STRING_LITERAL
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -8060,7 +8060,7 @@ public class smaliParser extends Parser {
 					{
 					statements_and_directives_stack.peek().methodAnnotations.addAll(annotations);
 					// AST REWRITE
-					// elements: STRING_LITERAL, REGISTER
+					// elements: REGISTER, STRING_LITERAL
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -8428,13 +8428,13 @@ public class smaliParser extends Parser {
 		CommonTree COLON223_tree=null;
 		CommonTree VOID_TYPE224_tree=null;
 		CommonTree COMMA226_tree=null;
-		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
-		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
-		RewriteRuleTokenStream stream_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_VOID_TYPE=new RewriteRuleTokenStream(adaptor,"token VOID_TYPE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
+		RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
+		RewriteRuleTokenStream stream_NULL_LITERAL=new RewriteRuleTokenStream(adaptor,"token NULL_LITERAL");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
@@ -8564,15 +8564,15 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: NULL_LITERAL, signature, name, REGISTER, nonvoid_type_descriptor
-			// token labels: name, signature
+			// elements: REGISTER, NULL_LITERAL, nonvoid_type_descriptor, signature, name
+			// token labels: signature, name
 			// rule labels: retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleTokenStream stream_name=new RewriteRuleTokenStream(adaptor,"token name",name);
 			RewriteRuleTokenStream stream_signature=new RewriteRuleTokenStream(adaptor,"token signature",signature);
+			RewriteRuleTokenStream stream_name=new RewriteRuleTokenStream(adaptor,"token name",name);
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
@@ -8656,8 +8656,8 @@ public class smaliParser extends Parser {
 
 		CommonTree END_LOCAL_DIRECTIVE227_tree=null;
 		CommonTree REGISTER228_tree=null;
-		RewriteRuleTokenStream stream_END_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_END_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_LOCAL_DIRECTIVE");
 
 		try {
 			// smaliParser.g:768:3: ( END_LOCAL_DIRECTIVE REGISTER -> ^( I_END_LOCAL[$start, \"I_END_LOCAL\"] REGISTER ) )
@@ -8736,8 +8736,8 @@ public class smaliParser extends Parser {
 
 		CommonTree RESTART_LOCAL_DIRECTIVE229_tree=null;
 		CommonTree REGISTER230_tree=null;
-		RewriteRuleTokenStream stream_RESTART_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token RESTART_LOCAL_DIRECTIVE");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_RESTART_LOCAL_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token RESTART_LOCAL_DIRECTIVE");
 
 		try {
 			// smaliParser.g:772:3: ( RESTART_LOCAL_DIRECTIVE REGISTER -> ^( I_RESTART_LOCAL[$start, \"I_RESTART_LOCAL\"] REGISTER ) )
@@ -8962,8 +8962,8 @@ public class smaliParser extends Parser {
 
 		CommonTree SOURCE_DIRECTIVE233_tree=null;
 		CommonTree STRING_LITERAL234_tree=null;
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_SOURCE_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SOURCE_DIRECTIVE");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
 			// smaliParser.g:784:3: ( SOURCE_DIRECTIVE ( STRING_LITERAL )? -> ^( I_SOURCE[$start, \"I_SOURCE\"] ( STRING_LITERAL )? ) )
@@ -10348,7 +10348,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref288.getTree());
 			// AST REWRITE
-			// elements: label_ref, INSTRUCTION_FORMAT10t
+			// elements: INSTRUCTION_FORMAT10t, label_ref
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10570,7 +10570,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal294.getTree());
 			// AST REWRITE
-			// elements: REGISTER, integral_literal, INSTRUCTION_FORMAT11n
+			// elements: INSTRUCTION_FORMAT11n, integral_literal, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10638,8 +10638,8 @@ public class smaliParser extends Parser {
 
 		CommonTree INSTRUCTION_FORMAT11x295_tree=null;
 		CommonTree REGISTER296_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT11x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT11x");
 
 		try {
 			// smaliParser.g:873:3: ( INSTRUCTION_FORMAT11x REGISTER -> ^( I_STATEMENT_FORMAT11x[$start, \"I_STATEMENT_FORMAT11x\"] INSTRUCTION_FORMAT11x REGISTER ) )
@@ -10652,7 +10652,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER296);
 
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT11x
+			// elements: INSTRUCTION_FORMAT11x, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10816,9 +10816,9 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT20bc301_tree=null;
 		CommonTree VERIFICATION_ERROR_TYPE302_tree=null;
 		CommonTree COMMA303_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT20bc=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT20bc");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_VERIFICATION_ERROR_TYPE=new RewriteRuleTokenStream(adaptor,"token VERIFICATION_ERROR_TYPE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT20bc=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT20bc");
 		RewriteRuleSubtreeStream stream_verification_error_reference=new RewriteRuleSubtreeStream(adaptor,"rule verification_error_reference");
 
 		try {
@@ -10845,7 +10845,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT20bc, verification_error_reference, VERIFICATION_ERROR_TYPE
+			// elements: verification_error_reference, VERIFICATION_ERROR_TYPE, INSTRUCTION_FORMAT20bc
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10928,7 +10928,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref306.getTree());
 			// AST REWRITE
-			// elements: label_ref, INSTRUCTION_FORMAT20t
+			// elements: INSTRUCTION_FORMAT20t, label_ref
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11022,7 +11022,7 @@ public class smaliParser extends Parser {
 
 			stream_field_reference.add(field_reference310.getTree());
 			// AST REWRITE
-			// elements: REGISTER, field_reference, INSTRUCTION_FORMAT21c_FIELD
+			// elements: field_reference, REGISTER, INSTRUCTION_FORMAT21c_FIELD
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11122,7 +11122,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT21c_FIELD_ODEX, field_reference
+			// elements: INSTRUCTION_FORMAT21c_FIELD_ODEX, REGISTER, field_reference
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11194,10 +11194,10 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER316_tree=null;
 		CommonTree COMMA317_tree=null;
 		CommonTree STRING_LITERAL318_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_STRING=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_STRING");
 
 		try {
 			// smaliParser.g:913:3: ( INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT21c_STRING[$start, \"I_STATEMENT_FORMAT21c_STRING\"] INSTRUCTION_FORMAT21c_STRING REGISTER STRING_LITERAL ) )
@@ -11216,7 +11216,7 @@ public class smaliParser extends Parser {
 			stream_STRING_LITERAL.add(STRING_LITERAL318);
 
 			// AST REWRITE
-			// elements: STRING_LITERAL, REGISTER, INSTRUCTION_FORMAT21c_STRING
+			// elements: REGISTER, STRING_LITERAL, INSTRUCTION_FORMAT21c_STRING
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11288,8 +11288,8 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER320_tree=null;
 		CommonTree COMMA321_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21c_TYPE");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
@@ -11311,7 +11311,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor322.getTree());
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT21c_TYPE, nonvoid_type_descriptor
+			// elements: nonvoid_type_descriptor, INSTRUCTION_FORMAT21c_TYPE, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11382,9 +11382,9 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21ih323_tree=null;
 		CommonTree REGISTER324_tree=null;
 		CommonTree COMMA325_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21ih=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21ih");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21ih=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21ih");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 
 		try {
@@ -11406,7 +11406,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal326.getTree());
 			// AST REWRITE
-			// elements: fixed_32bit_literal, INSTRUCTION_FORMAT21ih, REGISTER
+			// elements: fixed_32bit_literal, REGISTER, INSTRUCTION_FORMAT21ih
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11477,9 +11477,9 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21lh327_tree=null;
 		CommonTree REGISTER328_tree=null;
 		CommonTree COMMA329_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21lh=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21lh");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21lh=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21lh");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 
 		try {
@@ -11501,7 +11501,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal330.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT21lh, fixed_32bit_literal, REGISTER
+			// elements: INSTRUCTION_FORMAT21lh, REGISTER, fixed_32bit_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11572,9 +11572,9 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21s331_tree=null;
 		CommonTree REGISTER332_tree=null;
 		CommonTree COMMA333_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21s=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21s");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21s=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21s");
 		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
@@ -11596,7 +11596,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal334.getTree());
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT21s, integral_literal
+			// elements: INSTRUCTION_FORMAT21s, integral_literal, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11667,9 +11667,9 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT21t335_tree=null;
 		CommonTree REGISTER336_tree=null;
 		CommonTree COMMA337_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT21t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT21t");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
@@ -11796,7 +11796,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal344.getTree());
 			// AST REWRITE
-			// elements: integral_literal, REGISTER, REGISTER, INSTRUCTION_FORMAT22b
+			// elements: REGISTER, INSTRUCTION_FORMAT22b, REGISTER, integral_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11873,8 +11873,8 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER348_tree=null;
 		CommonTree COMMA349_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
-		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD");
+		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
 		RewriteRuleSubtreeStream stream_field_reference=new RewriteRuleSubtreeStream(adaptor,"rule field_reference");
 
 		try {
@@ -11902,7 +11902,7 @@ public class smaliParser extends Parser {
 
 			stream_field_reference.add(field_reference350.getTree());
 			// AST REWRITE
-			// elements: REGISTER, field_reference, REGISTER, INSTRUCTION_FORMAT22c_FIELD
+			// elements: REGISTER, INSTRUCTION_FORMAT22c_FIELD, field_reference, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11978,9 +11978,9 @@ public class smaliParser extends Parser {
 		CommonTree COMMA353_tree=null;
 		CommonTree REGISTER354_tree=null;
 		CommonTree COMMA355_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_FIELD_ODEX=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_FIELD_ODEX");
 		RewriteRuleSubtreeStream stream_field_reference=new RewriteRuleSubtreeStream(adaptor,"rule field_reference");
 
 		try {
@@ -12013,7 +12013,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT22c_FIELD_ODEX, field_reference
+			// elements: field_reference, REGISTER, REGISTER, INSTRUCTION_FORMAT22c_FIELD_ODEX
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12089,9 +12089,9 @@ public class smaliParser extends Parser {
 		CommonTree COMMA359_tree=null;
 		CommonTree REGISTER360_tree=null;
 		CommonTree COMMA361_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22c_TYPE");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
@@ -12280,8 +12280,8 @@ public class smaliParser extends Parser {
 		CommonTree COMMA373_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
-		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 		RewriteRuleSubtreeStream stream_instruction_format22s=new RewriteRuleSubtreeStream(adaptor,"rule instruction_format22s");
+		RewriteRuleSubtreeStream stream_integral_literal=new RewriteRuleSubtreeStream(adaptor,"rule integral_literal");
 
 		try {
 			// smaliParser.g:975:3: ( instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal -> ^( I_STATEMENT_FORMAT22s[$start, \"I_STATEMENT_FORMAT22s\"] instruction_format22s REGISTER REGISTER integral_literal ) )
@@ -12310,7 +12310,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal374.getTree());
 			// AST REWRITE
-			// elements: instruction_format22s, REGISTER, REGISTER, integral_literal
+			// elements: integral_literal, REGISTER, REGISTER, instruction_format22s
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12416,7 +12416,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref380.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT22t, REGISTER, REGISTER, label_ref
+			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT22t, label_ref
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12489,9 +12489,9 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER382_tree=null;
 		CommonTree COMMA383_tree=null;
 		CommonTree REGISTER384_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22x");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT22x=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT22x");
 
 		try {
 			// smaliParser.g:985:3: ( INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER -> ^( I_STATEMENT_FORMAT22x[$start, \"I_STATEMENT_FORMAT22x\"] INSTRUCTION_FORMAT22x REGISTER REGISTER ) )
@@ -12510,7 +12510,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER384);
 
 			// AST REWRITE
-			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT22x
+			// elements: REGISTER, INSTRUCTION_FORMAT22x, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12613,7 +12613,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER390);
 
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT23x, REGISTER, REGISTER
+			// elements: INSTRUCTION_FORMAT23x, REGISTER, REGISTER, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12768,10 +12768,10 @@ public class smaliParser extends Parser {
 		CommonTree REGISTER394_tree=null;
 		CommonTree COMMA395_tree=null;
 		CommonTree STRING_LITERAL396_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31c=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31c");
-		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31c=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31c");
+		RewriteRuleTokenStream stream_STRING_LITERAL=new RewriteRuleTokenStream(adaptor,"token STRING_LITERAL");
 
 		try {
 			// smaliParser.g:1000:3: ( INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL -> ^( I_STATEMENT_FORMAT31c[$start, \"I_STATEMENT_FORMAT31c\"] INSTRUCTION_FORMAT31c REGISTER STRING_LITERAL ) )
@@ -12790,7 +12790,7 @@ public class smaliParser extends Parser {
 			stream_STRING_LITERAL.add(STRING_LITERAL396);
 
 			// AST REWRITE
-			// elements: REGISTER, STRING_LITERAL, INSTRUCTION_FORMAT31c
+			// elements: INSTRUCTION_FORMAT31c, REGISTER, STRING_LITERAL
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12862,8 +12862,8 @@ public class smaliParser extends Parser {
 		CommonTree COMMA399_tree=null;
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
-		RewriteRuleSubtreeStream stream_instruction_format31i=new RewriteRuleSubtreeStream(adaptor,"rule instruction_format31i");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
+		RewriteRuleSubtreeStream stream_instruction_format31i=new RewriteRuleSubtreeStream(adaptor,"rule instruction_format31i");
 
 		try {
 			// smaliParser.g:1005:3: ( instruction_format31i REGISTER COMMA fixed_32bit_literal -> ^( I_STATEMENT_FORMAT31i[$start, \"I_STATEMENT_FORMAT31i\"] instruction_format31i REGISTER fixed_32bit_literal ) )
@@ -12886,7 +12886,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal400.getTree());
 			// AST REWRITE
-			// elements: fixed_32bit_literal, instruction_format31i, REGISTER
+			// elements: REGISTER, fixed_32bit_literal, instruction_format31i
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12957,9 +12957,9 @@ public class smaliParser extends Parser {
 		CommonTree INSTRUCTION_FORMAT31t401_tree=null;
 		CommonTree REGISTER402_tree=null;
 		CommonTree COMMA403_tree=null;
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_REGISTER=new RewriteRuleTokenStream(adaptor,"token REGISTER");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT31t=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT31t");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
 		try {
@@ -13074,7 +13074,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER408);
 
 			// AST REWRITE
-			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT32x
+			// elements: REGISTER, INSTRUCTION_FORMAT32x, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13149,11 +13149,11 @@ public class smaliParser extends Parser {
 		CommonTree CLOSE_BRACE412_tree=null;
 		CommonTree COMMA413_tree=null;
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_METHOD");
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
-		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
+		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
 
 		try {
 			// smaliParser.g:1020:3: ( INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference -> ^( I_STATEMENT_FORMAT35c_METHOD[$start, \"I_STATEMENT_FORMAT35c_METHOD\"] INSTRUCTION_FORMAT35c_METHOD register_list method_reference ) )
@@ -13182,7 +13182,7 @@ public class smaliParser extends Parser {
 
 			stream_method_reference.add(method_reference414.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT35c_METHOD, register_list, method_reference
+			// elements: register_list, INSTRUCTION_FORMAT35c_METHOD, method_reference
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13256,12 +13256,12 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE416_tree=null;
 		CommonTree CLOSE_BRACE418_tree=null;
 		CommonTree COMMA419_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
-		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT35c_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT35c_TYPE");
-		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
+		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
+		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 
 		try {
 			// smaliParser.g:1025:3: ( INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor -> ^( I_STATEMENT_FORMAT35c_TYPE[$start, \"I_STATEMENT_FORMAT35c_TYPE\"] INSTRUCTION_FORMAT35c_TYPE register_list nonvoid_type_descriptor ) )
@@ -13290,7 +13290,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor420.getTree());
 			// AST REWRITE
-			// elements: register_list, INSTRUCTION_FORMAT35c_TYPE, nonvoid_type_descriptor
+			// elements: register_list, nonvoid_type_descriptor, INSTRUCTION_FORMAT35c_TYPE
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13620,10 +13620,10 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE440_tree=null;
 		CommonTree CLOSE_BRACE442_tree=null;
 		CommonTree COMMA443_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_METHOD");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_METHOD");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
 		RewriteRuleSubtreeStream stream_register_range=new RewriteRuleSubtreeStream(adaptor,"rule register_range");
 
@@ -13654,7 +13654,7 @@ public class smaliParser extends Parser {
 
 			stream_method_reference.add(method_reference444.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT3rc_METHOD, method_reference, register_range
+			// elements: method_reference, register_range, INSTRUCTION_FORMAT3rc_METHOD
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13814,10 +13814,10 @@ public class smaliParser extends Parser {
 		CommonTree OPEN_BRACE452_tree=null;
 		CommonTree CLOSE_BRACE454_tree=null;
 		CommonTree COMMA455_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_TYPE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT3rc_TYPE=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT3rc_TYPE");
 		RewriteRuleSubtreeStream stream_nonvoid_type_descriptor=new RewriteRuleSubtreeStream(adaptor,"rule nonvoid_type_descriptor");
 		RewriteRuleSubtreeStream stream_register_range=new RewriteRuleSubtreeStream(adaptor,"rule register_range");
 
@@ -14095,13 +14095,13 @@ public class smaliParser extends Parser {
 		CommonTree CLOSE_BRACE472_tree=null;
 		CommonTree COMMA473_tree=null;
 		CommonTree COMMA475_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
 		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT45cc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT45cc_METHOD");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
 		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
 		RewriteRuleSubtreeStream stream_register_list=new RewriteRuleSubtreeStream(adaptor,"rule register_list");
-		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
 
 		try {
 			// smaliParser.g:1082:3: ( INSTRUCTION_FORMAT45cc_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA method_reference COMMA method_prototype -> ^( I_STATEMENT_FORMAT45cc_METHOD[$start, \"I_STATEMENT_FORMAT45cc_METHOD\"] INSTRUCTION_FORMAT45cc_METHOD register_list method_reference method_prototype ) )
@@ -14138,7 +14138,7 @@ public class smaliParser extends Parser {
 
 			stream_method_prototype.add(method_prototype476.getTree());
 			// AST REWRITE
-			// elements: register_list, method_reference, INSTRUCTION_FORMAT45cc_METHOD, method_prototype
+			// elements: method_prototype, register_list, method_reference, INSTRUCTION_FORMAT45cc_METHOD
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14216,12 +14216,12 @@ public class smaliParser extends Parser {
 		CommonTree CLOSE_BRACE480_tree=null;
 		CommonTree COMMA481_tree=null;
 		CommonTree COMMA483_tree=null;
-		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
 		RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
-		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT4rcc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT4rcc_METHOD");
 		RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
-		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
+		RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
+		RewriteRuleTokenStream stream_INSTRUCTION_FORMAT4rcc_METHOD=new RewriteRuleTokenStream(adaptor,"token INSTRUCTION_FORMAT4rcc_METHOD");
 		RewriteRuleSubtreeStream stream_method_reference=new RewriteRuleSubtreeStream(adaptor,"rule method_reference");
+		RewriteRuleSubtreeStream stream_method_prototype=new RewriteRuleSubtreeStream(adaptor,"rule method_prototype");
 		RewriteRuleSubtreeStream stream_register_range=new RewriteRuleSubtreeStream(adaptor,"rule register_range");
 
 		try {
@@ -14259,7 +14259,7 @@ public class smaliParser extends Parser {
 
 			stream_method_prototype.add(method_prototype484.getTree());
 			// AST REWRITE
-			// elements: method_reference, INSTRUCTION_FORMAT4rcc_METHOD, register_range, method_prototype
+			// elements: method_prototype, INSTRUCTION_FORMAT4rcc_METHOD, method_reference, register_range
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14355,7 +14355,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_literal.add(fixed_literal488.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT51l, fixed_literal, REGISTER
+			// elements: INSTRUCTION_FORMAT51l, REGISTER, fixed_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14425,10 +14425,10 @@ public class smaliParser extends Parser {
 
 		CommonTree ARRAY_DATA_DIRECTIVE489_tree=null;
 		CommonTree END_ARRAY_DATA_DIRECTIVE492_tree=null;
-		RewriteRuleTokenStream stream_ARRAY_DATA_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token ARRAY_DATA_DIRECTIVE");
 		RewriteRuleTokenStream stream_END_ARRAY_DATA_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_ARRAY_DATA_DIRECTIVE");
-		RewriteRuleSubtreeStream stream_fixed_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_literal");
+		RewriteRuleTokenStream stream_ARRAY_DATA_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token ARRAY_DATA_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_parsed_integer_literal=new RewriteRuleSubtreeStream(adaptor,"rule parsed_integer_literal");
+		RewriteRuleSubtreeStream stream_fixed_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_literal");
 
 		try {
 			// smaliParser.g:1097:3: ( ARRAY_DATA_DIRECTIVE parsed_integer_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE -> ^( I_STATEMENT_ARRAY_DATA[$start, \"I_STATEMENT_ARRAY_DATA\"] ^( I_ARRAY_ELEMENT_SIZE parsed_integer_literal ) ^( I_ARRAY_ELEMENTS ( fixed_literal )* ) ) )
@@ -14478,7 +14478,7 @@ public class smaliParser extends Parser {
 			stream_END_ARRAY_DATA_DIRECTIVE.add(END_ARRAY_DATA_DIRECTIVE492);
 
 			// AST REWRITE
-			// elements: fixed_literal, parsed_integer_literal
+			// elements: parsed_integer_literal, fixed_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14566,8 +14566,8 @@ public class smaliParser extends Parser {
 
 		CommonTree PACKED_SWITCH_DIRECTIVE493_tree=null;
 		CommonTree END_PACKED_SWITCH_DIRECTIVE496_tree=null;
-		RewriteRuleTokenStream stream_PACKED_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PACKED_SWITCH_DIRECTIVE");
 		RewriteRuleTokenStream stream_END_PACKED_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_PACKED_SWITCH_DIRECTIVE");
+		RewriteRuleTokenStream stream_PACKED_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token PACKED_SWITCH_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");
 
@@ -14613,7 +14613,7 @@ public class smaliParser extends Parser {
 			stream_END_PACKED_SWITCH_DIRECTIVE.add(END_PACKED_SWITCH_DIRECTIVE496);
 
 			// AST REWRITE
-			// elements: fixed_32bit_literal, label_ref
+			// elements: label_ref, fixed_32bit_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14703,8 +14703,8 @@ public class smaliParser extends Parser {
 		CommonTree SPARSE_SWITCH_DIRECTIVE497_tree=null;
 		CommonTree ARROW499_tree=null;
 		CommonTree END_SPARSE_SWITCH_DIRECTIVE501_tree=null;
-		RewriteRuleTokenStream stream_SPARSE_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SPARSE_SWITCH_DIRECTIVE");
 		RewriteRuleTokenStream stream_ARROW=new RewriteRuleTokenStream(adaptor,"token ARROW");
+		RewriteRuleTokenStream stream_SPARSE_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token SPARSE_SWITCH_DIRECTIVE");
 		RewriteRuleTokenStream stream_END_SPARSE_SWITCH_DIRECTIVE=new RewriteRuleTokenStream(adaptor,"token END_SPARSE_SWITCH_DIRECTIVE");
 		RewriteRuleSubtreeStream stream_fixed_32bit_literal=new RewriteRuleSubtreeStream(adaptor,"rule fixed_32bit_literal");
 		RewriteRuleSubtreeStream stream_label_ref=new RewriteRuleSubtreeStream(adaptor,"rule label_ref");

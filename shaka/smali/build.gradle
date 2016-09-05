@@ -29,7 +29,7 @@ ext {
 
 if (genGrammarSource) {
     apply plugin: 'antlr'
-    apply plugin: 'jflex'
+    apply plugin: 'org.xbib.gradle.plugin.jflex'
 }
 
 buildscript {
@@ -53,7 +53,8 @@ sourceSets {
                     'smali/dexlib2/src/main/java',
                     'smali/baksmali/src/main/java',
                     'smali/smali/src/main/java',
-                    'generated/main',
+                    'generated/main/antlr',
+                    'generated/main/jflex',
             ]
         }
         resources {
@@ -66,11 +67,6 @@ sourceSets {
             ]
         }
         if (genGrammarSource) {
-            jflex {
-                srcDirs = [
-                        'smali/smali/src/main/jflex'
-                ]
-            }
             antlr {
                 srcDirs = [
                         'smali/smali/src/main/antlr'
@@ -88,7 +84,7 @@ sourceSets {
                     'smali/dexlib2/src/test/java',
                     'smali/baksmali/src/test/java',
                     'smali/smali/src/test/java',
-                    'generated/test',
+                    'generated/test/antlr',
                     testAccessorOutputDir
             ]
         }
@@ -177,27 +173,23 @@ if (genGrammarSource) {
         // Remove the full antlr library that's added by the antlr plugin. We manually
         // add the smaller antlr_runtime library instead
         compile.exclude group: 'org.antlr', module: 'antlr'
-
-        // The jflex lexer doesn't have any runtime dependencies, so remove the dependency
-        // that gets added by the jflex plugin
-        compile.exclude group: 'de.jflex', module: 'jflex'
     }
 
     dependencies {
         antlr depends.antlr
-        jflex depends.jflex
     }
 
     generateTestGrammarSource {
-        outputDirectory = new File("${projectDir.path}/$genDir/test/", 'org/jf/smali')
+        outputDirectory = new File("${projectDir.path}/$genDir/test/antlr/", 'org/jf/smali')
     }
 
     generateGrammarSource {
-        outputDirectory = new File("${projectDir.path}/$genDir/main/", 'org/jf/smali')
+        outputDirectory = new File("${projectDir.path}/$genDir/main/antlr/", 'org/jf/smali')
     }
 
-    generateJFlexSource {
-        outputDirectory = new File("${projectDir.path}/$genDir/main/", 'org/jf/smali')
+    jflex {
+        source = new File("${projectDir.path}/smali/smali/src/main/jflex")
+        generateDir = new File("${projectDir.path}/$genDir/main/jflex/", 'org/jf/smali')
     }
 
     task generateAccessorTestSource(type: JavaExec) {
@@ -237,5 +229,5 @@ if (genGrammarSource) {
         }
     }
 
-    modifyGeneratedCodePathPrefix.dependsOn generateGrammarSource, generateJFlexSource, generateTestGrammarSource, generateAccessorTestSource
+    modifyGeneratedCodePathPrefix.dependsOn jflex, generateGrammarSource, generateTestGrammarSource, generateAccessorTestSource
 }
