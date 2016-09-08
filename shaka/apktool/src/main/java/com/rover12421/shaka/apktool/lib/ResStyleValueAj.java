@@ -60,7 +60,7 @@ public class ResStyleValueAj {
             Duo<ResReferenceValue, ResScalarValue>[] mItems = (Duo<ResReferenceValue, ResScalarValue>[])thiz.getItems();
             serializer.startTag(null, "style");
             serializer.attribute(null, "name", res.getResSpec().getName());
-            if (!mParent.isNull()) {
+            if (!mParent.isNull() && !mParent.referentIsNull()) {
                 serializer.attribute(null, "parent", mParent.encodeAsResXmlAttr());
             } else if (res.getResSpec().getName().indexOf('.') != -1) {
                 serializer.attribute(null, "parent", "");
