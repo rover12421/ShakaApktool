@@ -1,7 +1,7 @@
 package com.rover12421.shaka.apktool.test;
 
 import brut.androlib.BuildAndDecodeTest;
-import brut.androlib.res.util.ExtFile;
+import brut.directory.ExtFile;
 
 /**
  * Created by rover12421 on 12/5/15.

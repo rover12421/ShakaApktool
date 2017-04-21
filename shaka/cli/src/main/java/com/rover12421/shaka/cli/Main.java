@@ -87,10 +87,10 @@ public class Main {
 
         if (smali) {
             smaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
-            org.jf.smali.main.main(realyArgs);
+            org.jf.smali.Main.main(realyArgs);
         } else if (baksmali) {
             baksmaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
-            org.jf.baksmali.main.main(realyArgs);
+            org.jf.baksmali.Main.main(realyArgs);
         } else {
             brut.apktool.Main.main(realyArgs);
         }

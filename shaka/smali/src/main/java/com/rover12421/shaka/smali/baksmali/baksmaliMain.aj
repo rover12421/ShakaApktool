@@ -1,21 +1,17 @@
 package com.rover12421.shaka.smali.baksmali;
 
-import org.apache.commons.cli.Options;
+import com.beust.jcommander.JCommander;
+import org.jf.baksmali.Main;
 
 /**
  * Created by rover12421 on 12/5/15.
  */
 privileged public aspect baksmaliMain {
-    public static Options org.jf.baksmali.main.getBasicOptions(){
-        return org.jf.baksmali.main.basicOptions;
+    public JCommander Main.getJcommander() {
+        return this.jc;
     }
 
-    public static Options org.jf.baksmali.main.getDebugOptions(){
-        return org.jf.baksmali.main.debugOptions;
+    public static Main Main.getInstance() {
+        return baksmaliMainAj.Instance;
     }
-
-    public static Options org.jf.baksmali.main.getOptions(){
-        return org.jf.baksmali.main.options;
-    }
-
 }

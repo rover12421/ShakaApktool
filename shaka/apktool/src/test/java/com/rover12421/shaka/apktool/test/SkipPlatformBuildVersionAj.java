@@ -1,7 +1,7 @@
 package com.rover12421.shaka.apktool.test;
 
 import brut.androlib.BuildAndDecodeTest;
-import brut.androlib.res.util.ExtFile;
+import brut.directory.ExtFile;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

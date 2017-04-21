@@ -21,10 +21,12 @@ import com.rover12421.shaka.lib.cli.CommandLineArgEnum;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.PosixParser;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.jf.baksmali.Main;
 
 import java.util.Arrays;
 
@@ -34,56 +36,63 @@ import java.util.Arrays;
 @Aspect
 public class baksmaliMainAj {
     private static HookMain hookMain;
+    public static Main Instance;
 
     public static void setHookMain(HookMain hookMain) {
         baksmaliMainAj.hookMain = hookMain;
     }
 
-    @Around("execution(* org.jf.baksmali.main.usage(..))" +
+    @After("execution(org.jf.baksmali.Main.new())")
+    public void newInstance(JoinPoint point) {
+        Instance = (Main) point.getThis();
+    }
+
+    @Around("execution(* org.jf.baksmali.Main.usage(..))" +
             "&& args(printDebugOptions)")
     public void usage(boolean printDebugOptions) {
         hookMain.usage();
     }
 
-    @Around("execution(* org.jf.baksmali.main.version())")
+    @Around("execution(* org.jf.baksmali.Main.version())")
     public void version() {
         hookMain.version();
     }
 
-    @After("execution(* org.jf.baksmali.main.buildOptions(..))")
-    public void buildOptions() {
-        org.jf.baksmali.main.getBasicOptions().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
-        org.jf.baksmali.main.getOptions().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
-    }
-
-    @Around("execution(* org.jf.baksmali.main.main(..))" +
-            "&& args(args)")
-    public void main(ProceedingJoinPoint joinPoint, String[] args) throws Throwable {
-        try {
-            CommandLineParser parser = new PosixParser();
-            CommandLine cli = parser.parse(org.jf.baksmali.main.getOptions(), args);
-            if (CommandLineArgEnum.InlieMethodResolverFromFile.hasMatch(cli)) {
-                ShakaBaksmaliOption.setInlineMethodResolverFile(cli.getOptionValue(CommandLineArgEnum.InlieMethodResolverFromFile.getOpt()));
-                int index = Arrays.binarySearch(args, CommandLineArgEnum.InlieMethodResolverFromFile.getOpt());
-                if (index < 0) {
-                    index = Arrays.binarySearch(args, CommandLineArgEnum.InlieMethodResolverFromFile.getLongOpt());
-                }
-
-                if (index >= 0) {
-                    String[] nArgs = new String[args.length - 2];
-                    if (index > 0) {
-                        System.arraycopy(args, 0, nArgs, 0, index);
-                    }
-                    System.arraycopy(args, index + 2, nArgs, index, nArgs.length - index);
-                    joinPoint.proceed(nArgs);
-                } else {
-                    LogHelper.warning("args error!!!");
-                }
-            }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-
-        joinPoint.proceed(joinPoint.getArgs());
-    }
+//    @After("execution(* org.jf.baksmali.Main.buildOptions(..))")
+//    public void buildOptions() {
+//        //Instance.getJcommander().addCommand();
+//        org.jf.baksmali.main.getBasicOptions().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
+//        org.jf.baksmali.main.getOptions().addOption(CommandLineArgEnum.InlieMethodResolverFromFile.getOption());
+//    }
+//
+//    @Around("execution(* org.jf.baksmali.main.main(..))" +
+//            "&& args(args)")
+//    public void main(ProceedingJoinPoint joinPoint, String[] args) throws Throwable {
+//        try {
+//            CommandLineParser parser = new PosixParser();
+//            CommandLine cli = parser.parse(org.jf.baksmali.Main.getOptions(), args);
+//            if (CommandLineArgEnum.InlieMethodResolverFromFile.hasMatch(cli)) {
+//                ShakaBaksmaliOption.setInlineMethodResolverFile(cli.getOptionValue(CommandLineArgEnum.InlieMethodResolverFromFile.getOpt()));
+//                int index = Arrays.binarySearch(args, CommandLineArgEnum.InlieMethodResolverFromFile.getOpt());
+//                if (index < 0) {
+//                    index = Arrays.binarySearch(args, CommandLineArgEnum.InlieMethodResolverFromFile.getLongOpt());
+//                }
+//
+//                if (index >= 0) {
+//                    String[] nArgs = new String[args.length - 2];
+//                    if (index > 0) {
+//                        System.arraycopy(args, 0, nArgs, 0, index);
+//                    }
+//                    System.arraycopy(args, index + 2, nArgs, index, nArgs.length - index);
+//                    joinPoint.proceed(nArgs);
+//                } else {
+//                    LogHelper.warning("args error!!!");
+//                }
+//            }
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//        }
+//
+//        joinPoint.proceed(joinPoint.getArgs());
+//    }
 }

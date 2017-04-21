@@ -5,7 +5,7 @@ import com.rover12421.shaka.lib.LogHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.jf.baksmali.main;
+import org.jf.baksmali.Main;
 import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.dexbacked.raw.HeaderItem;
@@ -48,7 +48,7 @@ public class DexBackedDexFileAj {
             throws Throwable {
 
         //如果是反odex,使用原逻辑
-        if (main.getOptions().hasOption("x")) {
+        if (Main.getInstance().getJcommander().getCommands().get("deodex") != null) {
             return (DexBackedDexFile) joinPoint.proceed(joinPoint.getArgs());
         }
 

@@ -316,8 +316,8 @@ public class smaliParser extends Parser {
 	      this.allowOdex = allowOdex;
 	  }
 
-	  public void setApiLevel(int apiLevel, boolean experimental) {
-	      this.opcodes = new Opcodes(apiLevel, experimental);
+	  public void setApiLevel(int apiLevel) {
+	      this.opcodes = Opcodes.forApi(apiLevel);
 	      this.apiLevel = apiLevel;
 	  }
 
@@ -650,7 +650,7 @@ public class smaliParser extends Parser {
 			    }
 			  
 			// AST REWRITE
-			// elements: class_spec, source_spec, super_spec, method, field, implements_spec
+			// elements: field, class_spec, implements_spec, source_spec, method, super_spec
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1318,7 +1318,7 @@ public class smaliParser extends Parser {
 					stream_END_FIELD_DIRECTIVE.add(END_FIELD_DIRECTIVE27);
 
 					// AST REWRITE
-					// elements: nonvoid_type_descriptor, access_list, annotation, literal, member_name
+					// elements: literal, annotation, nonvoid_type_descriptor, member_name, access_list
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1385,7 +1385,7 @@ public class smaliParser extends Parser {
 					{
 					smali_file_stack.peek().classAnnotations.addAll(annotations);
 					// AST REWRITE
-					// elements: nonvoid_type_descriptor, member_name, access_list, literal
+					// elements: nonvoid_type_descriptor, literal, access_list, member_name
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1529,7 +1529,7 @@ public class smaliParser extends Parser {
 			stream_END_METHOD_DIRECTIVE.add(END_METHOD_DIRECTIVE33);
 
 			// AST REWRITE
-			// elements: member_name, method_prototype, statements_and_directives, access_list
+			// elements: member_name, access_list, statements_and_directives, method_prototype
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1784,7 +1784,7 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: catch_directive, registers_directive, parameter_directive, catchall_directive, ordered_method_item
+			// elements: catch_directive, parameter_directive, registers_directive, catchall_directive, ordered_method_item
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -3885,7 +3885,7 @@ public class smaliParser extends Parser {
 
 			stream_type_descriptor.add(type_descriptor90.getTree());
 			// AST REWRITE
-			// elements: type_descriptor, param_list
+			// elements: param_list, type_descriptor
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -6233,7 +6233,7 @@ public class smaliParser extends Parser {
 			stream_END_ANNOTATION_DIRECTIVE.add(END_ANNOTATION_DIRECTIVE158);
 
 			// AST REWRITE
-			// elements: annotation_element, ANNOTATION_VISIBILITY, CLASS_DESCRIPTOR
+			// elements: CLASS_DESCRIPTOR, ANNOTATION_VISIBILITY, annotation_element
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -6763,7 +6763,7 @@ public class smaliParser extends Parser {
 
 							stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor170.getTree());
 							// AST REWRITE
-							// elements: reference_type_descriptor, nonvoid_type_descriptor, member_name
+							// elements: member_name, reference_type_descriptor, nonvoid_type_descriptor
 							// token labels: 
 							// rule labels: retval
 							// token list labels: 
@@ -6811,7 +6811,7 @@ public class smaliParser extends Parser {
 
 							stream_method_prototype.add(method_prototype172.getTree());
 							// AST REWRITE
-							// elements: member_name, method_prototype, reference_type_descriptor
+							// elements: reference_type_descriptor, method_prototype, member_name
 							// token labels: 
 							// rule labels: retval
 							// token list labels: 
@@ -6961,7 +6961,7 @@ public class smaliParser extends Parser {
 
 			stream_method_prototype.add(method_prototype178.getTree());
 			// AST REWRITE
-			// elements: method_prototype, member_name, reference_type_descriptor
+			// elements: member_name, method_prototype, reference_type_descriptor
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -7077,7 +7077,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor183.getTree());
 			// AST REWRITE
-			// elements: reference_type_descriptor, nonvoid_type_descriptor, member_name
+			// elements: nonvoid_type_descriptor, member_name, reference_type_descriptor
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -7507,15 +7507,15 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: startreg, endreg
-			// token labels: startreg, endreg
+			// elements: endreg, startreg
+			// token labels: endreg, startreg
 			// rule labels: retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.tree = root_0;
-			RewriteRuleTokenStream stream_startreg=new RewriteRuleTokenStream(adaptor,"token startreg",startreg);
 			RewriteRuleTokenStream stream_endreg=new RewriteRuleTokenStream(adaptor,"token endreg",endreg);
+			RewriteRuleTokenStream stream_startreg=new RewriteRuleTokenStream(adaptor,"token startreg",startreg);
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
@@ -7725,7 +7725,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(using.getTree());
 			// AST REWRITE
-			// elements: from, to, using, nonvoid_type_descriptor
+			// elements: using, nonvoid_type_descriptor, from, to
 			// token labels: 
 			// rule labels: using, from, to, retval
 			// token list labels: 
@@ -8009,7 +8009,7 @@ public class smaliParser extends Parser {
 					stream_END_PARAMETER_DIRECTIVE.add(END_PARAMETER_DIRECTIVE209);
 
 					// AST REWRITE
-					// elements: REGISTER, annotation, STRING_LITERAL
+					// elements: annotation, STRING_LITERAL, REGISTER
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -8060,7 +8060,7 @@ public class smaliParser extends Parser {
 					{
 					statements_and_directives_stack.peek().methodAnnotations.addAll(annotations);
 					// AST REWRITE
-					// elements: REGISTER, STRING_LITERAL
+					// elements: STRING_LITERAL, REGISTER
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -8564,7 +8564,7 @@ public class smaliParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: REGISTER, NULL_LITERAL, nonvoid_type_descriptor, signature, name
+			// elements: signature, REGISTER, name, nonvoid_type_descriptor, NULL_LITERAL
 			// token labels: signature, name
 			// rule labels: retval
 			// token list labels: 
@@ -10348,7 +10348,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref288.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT10t, label_ref
+			// elements: label_ref, INSTRUCTION_FORMAT10t
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10570,7 +10570,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal294.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT11n, integral_literal, REGISTER
+			// elements: REGISTER, INSTRUCTION_FORMAT11n, integral_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10845,7 +10845,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: verification_error_reference, VERIFICATION_ERROR_TYPE, INSTRUCTION_FORMAT20bc
+			// elements: INSTRUCTION_FORMAT20bc, verification_error_reference, VERIFICATION_ERROR_TYPE
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -10928,7 +10928,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref306.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT20t, label_ref
+			// elements: label_ref, INSTRUCTION_FORMAT20t
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11022,7 +11022,7 @@ public class smaliParser extends Parser {
 
 			stream_field_reference.add(field_reference310.getTree());
 			// AST REWRITE
-			// elements: field_reference, REGISTER, INSTRUCTION_FORMAT21c_FIELD
+			// elements: REGISTER, INSTRUCTION_FORMAT21c_FIELD, field_reference
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11122,7 +11122,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT21c_FIELD_ODEX, REGISTER, field_reference
+			// elements: REGISTER, field_reference, INSTRUCTION_FORMAT21c_FIELD_ODEX
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11216,7 +11216,7 @@ public class smaliParser extends Parser {
 			stream_STRING_LITERAL.add(STRING_LITERAL318);
 
 			// AST REWRITE
-			// elements: REGISTER, STRING_LITERAL, INSTRUCTION_FORMAT21c_STRING
+			// elements: INSTRUCTION_FORMAT21c_STRING, STRING_LITERAL, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11311,7 +11311,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor322.getTree());
 			// AST REWRITE
-			// elements: nonvoid_type_descriptor, INSTRUCTION_FORMAT21c_TYPE, REGISTER
+			// elements: nonvoid_type_descriptor, REGISTER, INSTRUCTION_FORMAT21c_TYPE
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11596,7 +11596,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal334.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT21s, integral_literal, REGISTER
+			// elements: REGISTER, INSTRUCTION_FORMAT21s, integral_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11691,7 +11691,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref338.getTree());
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT21t, label_ref
+			// elements: label_ref, INSTRUCTION_FORMAT21t, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11796,7 +11796,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal344.getTree());
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT22b, REGISTER, integral_literal
+			// elements: integral_literal, REGISTER, INSTRUCTION_FORMAT22b, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11902,7 +11902,7 @@ public class smaliParser extends Parser {
 
 			stream_field_reference.add(field_reference350.getTree());
 			// AST REWRITE
-			// elements: REGISTER, INSTRUCTION_FORMAT22c_FIELD, field_reference, REGISTER
+			// elements: INSTRUCTION_FORMAT22c_FIELD, field_reference, REGISTER, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12013,7 +12013,7 @@ public class smaliParser extends Parser {
 			      }
 			    
 			// AST REWRITE
-			// elements: field_reference, REGISTER, REGISTER, INSTRUCTION_FORMAT22c_FIELD_ODEX
+			// elements: REGISTER, REGISTER, field_reference, INSTRUCTION_FORMAT22c_FIELD_ODEX
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12119,7 +12119,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor362.getTree());
 			// AST REWRITE
-			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT22c_TYPE, nonvoid_type_descriptor
+			// elements: nonvoid_type_descriptor, INSTRUCTION_FORMAT22c_TYPE, REGISTER, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12310,7 +12310,7 @@ public class smaliParser extends Parser {
 
 			stream_integral_literal.add(integral_literal374.getTree());
 			// AST REWRITE
-			// elements: integral_literal, REGISTER, REGISTER, instruction_format22s
+			// elements: instruction_format22s, integral_literal, REGISTER, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12416,7 +12416,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref380.getTree());
 			// AST REWRITE
-			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT22t, label_ref
+			// elements: REGISTER, REGISTER, label_ref, INSTRUCTION_FORMAT22t
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12613,7 +12613,7 @@ public class smaliParser extends Parser {
 			stream_REGISTER.add(REGISTER390);
 
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT23x, REGISTER, REGISTER, REGISTER
+			// elements: REGISTER, REGISTER, INSTRUCTION_FORMAT23x, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12790,7 +12790,7 @@ public class smaliParser extends Parser {
 			stream_STRING_LITERAL.add(STRING_LITERAL396);
 
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT31c, REGISTER, STRING_LITERAL
+			// elements: INSTRUCTION_FORMAT31c, STRING_LITERAL, REGISTER
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12886,7 +12886,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_32bit_literal.add(fixed_32bit_literal400.getTree());
 			// AST REWRITE
-			// elements: REGISTER, fixed_32bit_literal, instruction_format31i
+			// elements: instruction_format31i, REGISTER, fixed_32bit_literal
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -12981,7 +12981,7 @@ public class smaliParser extends Parser {
 
 			stream_label_ref.add(label_ref404.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT31t, label_ref, REGISTER
+			// elements: INSTRUCTION_FORMAT31t, REGISTER, label_ref
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13182,7 +13182,7 @@ public class smaliParser extends Parser {
 
 			stream_method_reference.add(method_reference414.getTree());
 			// AST REWRITE
-			// elements: register_list, INSTRUCTION_FORMAT35c_METHOD, method_reference
+			// elements: method_reference, INSTRUCTION_FORMAT35c_METHOD, register_list
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13654,7 +13654,7 @@ public class smaliParser extends Parser {
 
 			stream_method_reference.add(method_reference444.getTree());
 			// AST REWRITE
-			// elements: method_reference, register_range, INSTRUCTION_FORMAT3rc_METHOD
+			// elements: INSTRUCTION_FORMAT3rc_METHOD, method_reference, register_range
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -13848,7 +13848,7 @@ public class smaliParser extends Parser {
 
 			stream_nonvoid_type_descriptor.add(nonvoid_type_descriptor456.getTree());
 			// AST REWRITE
-			// elements: nonvoid_type_descriptor, register_range, INSTRUCTION_FORMAT3rc_TYPE
+			// elements: INSTRUCTION_FORMAT3rc_TYPE, nonvoid_type_descriptor, register_range
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14138,7 +14138,7 @@ public class smaliParser extends Parser {
 
 			stream_method_prototype.add(method_prototype476.getTree());
 			// AST REWRITE
-			// elements: method_prototype, register_list, method_reference, INSTRUCTION_FORMAT45cc_METHOD
+			// elements: register_list, method_reference, method_prototype, INSTRUCTION_FORMAT45cc_METHOD
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14259,7 +14259,7 @@ public class smaliParser extends Parser {
 
 			stream_method_prototype.add(method_prototype484.getTree());
 			// AST REWRITE
-			// elements: method_prototype, INSTRUCTION_FORMAT4rcc_METHOD, method_reference, register_range
+			// elements: method_prototype, register_range, method_reference, INSTRUCTION_FORMAT4rcc_METHOD
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -14355,7 +14355,7 @@ public class smaliParser extends Parser {
 
 			stream_fixed_literal.add(fixed_literal488.getTree());
 			// AST REWRITE
-			// elements: INSTRUCTION_FORMAT51l, REGISTER, fixed_literal
+			// elements: fixed_literal, REGISTER, INSTRUCTION_FORMAT51l
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 

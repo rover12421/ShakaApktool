@@ -334,8 +334,8 @@ public class smaliTreeWalker extends TreeParser {
 	      this.dexBuilder = dexBuilder;
 	  }
 
-	  public void setApiLevel(int apiLevel, boolean experimental) {
-	      this.opcodes = new Opcodes(apiLevel, experimental);
+	  public void setApiLevel(int apiLevel) {
+	      this.opcodes = Opcodes.forApi(apiLevel);
 	      this.apiLevel = apiLevel;
 	  }
 

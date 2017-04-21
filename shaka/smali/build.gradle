@@ -115,7 +115,8 @@ configurations {
 dependencies {
     compile depends.antlr_runtime,
             depends.stringtemplate,
-            depends.commons_cli,
+            depends.jcommander,
+            depends.mockito,
             depends.guava,
             depends.findbugs,
             depends.ST4
