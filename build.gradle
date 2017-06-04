@@ -16,9 +16,9 @@
 
 apply from  : 'gradle/functions.gradle'
 
-ext.langLevel = '1.7'
-ext.aspectjVersion = '1.8.9'
-ext.ver = '3.0.0'
+ext.langLevel = '1.8'
+ext.aspectjVersion = '1.8.10'
+ext.ver = '4.0.0'
 
 ext.branch = getCheckedOutBranchFromProject()
 ext.hash = getCheckedOutGitCommitHashFromProject()
@@ -88,7 +88,7 @@ idea {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.2.1'
+    gradleVersion = '3.5'
 }
 
 // used for official releases only. Please don't use
