@@ -14,13 +14,3 @@
  * limitations under the License.
  */
 
-include 'shaka:common',
-		'shaka:lib',
-		'shaka:lib2',
-        'shaka:cli',
-		'shaka:smali',
-		'shaka:smali.ext',
-		'shaka:apktool',
-		'shaka:apktool.ext',
-		'shaka:smali:accessorTestGenerator'
-

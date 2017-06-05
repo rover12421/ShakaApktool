@@ -42,8 +42,16 @@ public class DexBackedDexFileAj {
 
     private static final byte[] MAGIC = new byte[]{0x64, 0x65, 0x78, 0x0a, 0x30, 0x33};
 
-    @Around("execution(org.jf.dexlib2.dexbacked.DexBackedDexFile org.jf.dexlib2.dexbacked.DexBackedDexFile.fromInputStream(..))" +
-            "&& args(opcodes, is)")
+    /**
+     * 需要修复！！！
+     * @param joinPoint
+     * @param opcodes
+     * @param is
+     * @return
+     * @throws Throwable
+     */
+//    @Around("execution(org.jf.dexlib2.dexbacked.DexBackedDexFile org.jf.dexlib2.dexbacked.DexBackedDexFile.fromInputStream(..))" +
+//            "&& args(opcodes, is)")
     public DexBackedDexFile fromInputStream(ProceedingJoinPoint joinPoint, Opcodes opcodes, InputStream is)
             throws Throwable {
 

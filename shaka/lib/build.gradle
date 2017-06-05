@@ -22,6 +22,7 @@ import java.util.zip.CRC32
  *  limitations under the License.
  */
 
+
 task genShakaAaptCrc32 {
     /**
      * 生成ShakaAapt下所有文件的Crc32值到属性文件
