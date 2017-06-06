@@ -16,6 +16,7 @@
 
 package com.rover12421.shaka.cli.util;
 
+import com.beust.jcommander.JCommander;
 import org.jf.util.jcommander.Command;
 
 import java.util.List;
@@ -36,6 +37,12 @@ public class CommandUtil {
         }
 
         return inputList.get(0);
+    }
+
+    public static void exceptionExit(JCommander command, Throwable throwable) {
+        System.err.println(throwable.getMessage());
+        command.usage();
+        System.exit(ExceptionExitCode);
     }
 
     public static void exceptionExit(Command command, String msg) {

@@ -20,14 +20,22 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.collect.Lists;
 import com.rover12421.shaka.cli.apktool.*;
-import com.rover12421.shaka.cli.base.HelpAndLanguageCommand;
+import com.rover12421.shaka.cli.baksmali.DisassembleCommand;
+import com.rover12421.shaka.cli.base.HelpCommand;
+import com.rover12421.shaka.cli.smali.AssembleCommand;
+import com.rover12421.shaka.cli.util.CommandUtil;
+import org.jf.baksmali.DeodexCommand;
+import org.jf.baksmali.DumpCommand;
+import org.jf.baksmali.ListCommand;
 import org.jf.util.jcommander.Command;
 import org.jf.util.jcommander.ExtendedCommands;
+import org.jf.util.jcommander.ExtendedParameter;
 import org.jf.util.jcommander.ExtendedParameters;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -37,12 +45,17 @@ import java.util.Properties;
         includeParametersInUsage = true,
         commandName = "ShakaApktool",
         postfixDescription = "See ShakaApktool help <command> for more information about a specific command")
-public class Main extends HelpAndLanguageCommand {
+public class Main extends HelpCommand {
     public static final String VERSION = loadVersion();
 
     @Parameter(names = {"-v", "--version"}, help = true,
             description = "Print the version of baksmali and then exit")
     public boolean version;
+
+    @Parameter(names = {"-lng", "--language"}, help = true,
+            description = "Display language, e.g. zh-CN, zh-TW.")
+    @ExtendedParameter(argumentNames = "Locale")
+    protected String localeStr = Locale.getDefault().toLanguageTag();
 
     private JCommander jc;
 
@@ -79,22 +92,38 @@ public class Main extends HelpAndLanguageCommand {
         main.jc = jc;
         jc.setProgramName("ShakaApktool");
         List<JCommander> commandHierarchy = main.getCommandHierarchy();
+
+        /**
+         * Apktool
+         */
         ExtendedCommands.addExtendedCommand(jc, new DecodeCommand(commandHierarchy));
         ExtendedCommands.addExtendedCommand(jc, new BuildCommand(commandHierarchy));
         ExtendedCommands.addExtendedCommand(jc, new InstallFrameworkCommand(commandHierarchy));
         ExtendedCommands.addExtendedCommand(jc, new PublicizeResourcesCommand(commandHierarchy));
         ExtendedCommands.addExtendedCommand(jc, new EmptyFrameworkDirCommand(commandHierarchy));
 
+        /**
+         * baksmali
+         */
+        ExtendedCommands.addExtendedCommand(jc, new DisassembleCommand(commandHierarchy));
+        ExtendedCommands.addExtendedCommand(jc, new DeodexCommand(commandHierarchy));
+        ExtendedCommands.addExtendedCommand(jc, new DumpCommand(commandHierarchy));
+        ExtendedCommands.addExtendedCommand(jc, new ListCommand(commandHierarchy));
+
+        /**
+         * smali
+         */
+        ExtendedCommands.addExtendedCommand(jc, new AssembleCommand(commandHierarchy));
+
         try {
             jc.parse(args);
         } catch (Throwable e) {
-            System.err.println(e.getMessage());
-            main.usage();
-            System.exit(-1);
+            CommandUtil.exceptionExit(jc, e);
         }
 
         if (main.version) {
             version();
+            return;
         }
 
         if (jc.getParsedCommand() == null || main.help) {

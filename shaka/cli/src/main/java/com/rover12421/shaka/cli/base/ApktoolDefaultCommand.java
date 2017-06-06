@@ -16,24 +16,17 @@
 
 package com.rover12421.shaka.cli.base;
 
-import brut.androlib.AndrolibException;
 import brut.androlib.ApkOptions;
-import brut.androlib.err.CantFindFrameworkResException;
-import brut.androlib.err.InFileNotFoundException;
-import brut.androlib.err.OutDirExistsException;
-import brut.directory.DirectoryException;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.rover12421.shaka.apktool.cli.ApktoolMain;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by rover12421 on 6/6/17.
  */
-public abstract class ApktoolDefaultCommand extends HelpAndLanguageCommand {
+public abstract class ApktoolDefaultCommand extends HelpCommand {
     public ApktoolDefaultCommand(@Nonnull List<JCommander> commandAncestors) {
         super(commandAncestors);
     }
