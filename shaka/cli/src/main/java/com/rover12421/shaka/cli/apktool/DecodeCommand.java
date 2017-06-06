@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rover12421.shaka.cli;
+package com.rover12421.shaka.cli.apktool;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.ApkDecoder;
@@ -22,12 +22,13 @@ import brut.androlib.err.CantFindFrameworkResException;
 import brut.androlib.err.InFileNotFoundException;
 import brut.androlib.err.OutDirExistsException;
 import brut.directory.DirectoryException;
-import brut.util.OSDetection;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.validators.PositiveInteger;
 import com.google.common.collect.Lists;
+import com.rover12421.shaka.cli.base.ApktoolUsingFrameworkCommand;
+import com.rover12421.shaka.cli.util.CommandUtil;
 import org.jf.util.jcommander.Command;
 import org.jf.util.jcommander.ExtendedParameter;
 import org.jf.util.jcommander.ExtendedParameters;
@@ -44,11 +45,7 @@ import java.util.List;
 @ExtendedParameters(
         commandName = "decode",
         commandAliases = { "d" })
-public class DecodeCommand extends Command {
-    @Parameter(names = {"-h", "-?", "--help"}, help = true,
-            description = "Show usage information for this command.")
-    private boolean help;
-
+public class DecodeCommand extends ApktoolUsingFrameworkCommand {
     @Parameter(names = {"-f", "--force"},
             description = "Force delete destination directory.")
     private boolean force = false;
@@ -57,11 +54,6 @@ public class DecodeCommand extends Command {
             description = "The directory to write the disassembled files to.")
     @ExtendedParameter(argumentNames = "dir")
     private String output = "out";
-
-    @Parameter(names = {"-p", "--frame-path"},
-            description = "Uses framework files located in <dir>.")
-    @ExtendedParameter(argumentNames = "dir")
-    private String framePath = getDefaultFrameworkDir();
 
     @Parameter(names = {"-r", "--no-res"},
             description = "Do not decode resources.")
@@ -75,14 +67,6 @@ public class DecodeCommand extends Command {
             description = "Uses framework files tagged by <tag>.")
     @ExtendedParameter(argumentNames = "tag")
     private String frameTag;
-
-    @Parameter(names = {"-q", "--quiet"},
-            description = "suppress all output including errors.")
-    private boolean quiet = false;
-
-    @Parameter(names = {"-v", "--verbose"},
-            description = "Generate verbose error messages.")
-    private boolean verbose = false;
 
     @Parameter(names = {"-a", "--api"},
             description = "The numeric api level of the file being disassembled.")
@@ -170,7 +154,7 @@ public class DecodeCommand extends Command {
     @ExtendedParameter(argumentNames = "classes")
     private List<String> classes = null;
 
-    @Parameter(description = "A dex/apk/oat/odex file. For apk or oat files that contain multiple dex ")
+    @Parameter(description = "A dex/apk/oat/odex file.")
     @ExtendedParameter(argumentNames = "file")
     protected List<String> inputList = Lists.newArrayList();
 
@@ -180,18 +164,9 @@ public class DecodeCommand extends Command {
 
     @Override
     public void run() {
-        if (help || inputList == null || inputList.isEmpty()) {
-            usage();
-            return;
-        }
+        super.run();
 
-        if (inputList.size() > 1) {
-            System.err.println("Too many files specified");
-            usage();
-            return;
-        }
-
-        String input = inputList.get(0);
+        String input = CommandUtil.getInput(this, inputList);
 
         ApkDecoder decoder = new ApkDecoder();
         try {
@@ -214,60 +189,33 @@ public class DecodeCommand extends Command {
             decoder.setApkFile(new File(input));
 
         } catch (Throwable e) {
-            e.printStackTrace();
-            System.exit(1);
+            CommandUtil.exceptionExit(e);
         }
 
         try {
             decoder.decode();
         } catch (OutDirExistsException ex) {
-            System.err
-                    .println("Destination directory ("
+            CommandUtil.exceptionExit("Destination directory ("
                             + output
                             + ") "
                             + "already exists. Use -f switch if you want to overwrite it.");
-            System.exit(1);
         } catch (InFileNotFoundException ex) {
-            System.err.println("Input file (" + input + ") " + "was not found or was not readable.");
-            System.exit(1);
+            CommandUtil.exceptionExit("Input file (" + input + ") " + "was not found or was not readable.");
         } catch (CantFindFrameworkResException ex) {
-            System.err
-                    .println("Can't find framework resources for package of id: "
+            CommandUtil.exceptionExit("Can't find framework resources for package of id: "
                             + String.valueOf(ex.getPkgId())
                             + ". You must install proper "
                             + "framework files, see project website for more info.");
-            System.exit(1);
         } catch (IOException ex) {
-            System.err.println("Could not modify file. Please ensure you have permission.");
-            System.exit(1);
+            CommandUtil.exceptionExit("Could not modify file. Please ensure you have permission.");
         } catch (DirectoryException ex) {
-            System.err.println("Could not modify internal dex files. Please ensure you have permission.");
-            System.exit(1);
+            CommandUtil.exceptionExit("Could not modify internal dex files. Please ensure you have permission.");
         } catch (AndrolibException e) {
-            e.printStackTrace();
-            System.exit(1);
+            CommandUtil.exceptionExit(e);
         } finally {
             try {
                 decoder.close();
             } catch (IOException ignored) {}
         }
-        System.exit(0);
-    }
-
-    private String getDefaultFrameworkDir() {
-        File parentPath = new File(System.getProperty("user.home"));
-        if (! parentPath.canWrite()) {
-            parentPath = new File(System.getProperty("java.io.tmpdir"));
-        }
-
-        String path;
-        if (OSDetection.isMacOSX()) {
-            path = parentPath.getAbsolutePath() + String.format("%1$sLibrary%1$sShakaApktool%1$sframework", File.separatorChar);
-        } else if (OSDetection.isWindows()) {
-            path = parentPath.getAbsolutePath() + String.format("%1$sAppData%1$sLocal%1$sShakaApktool%1$sframework", File.separatorChar);
-        } else {
-            path = parentPath.getAbsolutePath() + String.format("%1$s.local%1$sshare%1$sShakaApktool%1$sframework", File.separatorChar);
-        }
-        return path;
     }
 }

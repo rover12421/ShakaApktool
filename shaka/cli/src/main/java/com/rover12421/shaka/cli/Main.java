@@ -19,6 +19,8 @@ package com.rover12421.shaka.cli;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.collect.Lists;
+import com.rover12421.shaka.cli.apktool.*;
+import com.rover12421.shaka.cli.base.HelpAndLanguageCommand;
 import org.jf.util.jcommander.Command;
 import org.jf.util.jcommander.ExtendedCommands;
 import org.jf.util.jcommander.ExtendedParameters;
@@ -35,12 +37,8 @@ import java.util.Properties;
         includeParametersInUsage = true,
         commandName = "ShakaApktool",
         postfixDescription = "See ShakaApktool help <command> for more information about a specific command")
-public class Main extends Command {
+public class Main extends HelpAndLanguageCommand {
     public static final String VERSION = loadVersion();
-
-    @Parameter(names = {"-h", "-?", "--help"}, help = true,
-            description = "Show usage information")
-    private boolean help;
 
     @Parameter(names = {"-v", "--version"}, help = true,
             description = "Print the version of baksmali and then exit")
@@ -82,7 +80,18 @@ public class Main extends Command {
         jc.setProgramName("ShakaApktool");
         List<JCommander> commandHierarchy = main.getCommandHierarchy();
         ExtendedCommands.addExtendedCommand(jc, new DecodeCommand(commandHierarchy));
-        jc.parse(args);
+        ExtendedCommands.addExtendedCommand(jc, new BuildCommand(commandHierarchy));
+        ExtendedCommands.addExtendedCommand(jc, new InstallFrameworkCommand(commandHierarchy));
+        ExtendedCommands.addExtendedCommand(jc, new PublicizeResourcesCommand(commandHierarchy));
+        ExtendedCommands.addExtendedCommand(jc, new EmptyFrameworkDirCommand(commandHierarchy));
+
+        try {
+            jc.parse(args);
+        } catch (Throwable e) {
+            System.err.println(e.getMessage());
+            main.usage();
+            System.exit(-1);
+        }
 
         if (main.version) {
             version();
