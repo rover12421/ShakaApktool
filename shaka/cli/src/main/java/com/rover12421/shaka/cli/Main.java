@@ -34,7 +34,7 @@ import java.util.Properties;
 @ExtendedParameters(
         includeParametersInUsage = true,
         commandName = "ShakaApktool",
-        postfixDescription = "See baksmali help <command> for more information about a specific command")
+        postfixDescription = "See ShakaApktool help <command> for more information about a specific command")
 public class Main extends Command {
     public static final String VERSION = loadVersion();
 
@@ -99,8 +99,8 @@ public class Main extends Command {
 
     protected static void version() {
         System.out.println("ShakaApktool " + VERSION);
-        System.out.println("Copyright (C) 2017 Rover12421 (rover12421@163.com)");
-        System.out.println("Apache2 license (http://www.apache.org/licenses/LICENSE-2.0");
+        System.out.println("Copyright (C) 2017 Rover12421 <rover12421@163.com>");
+        System.out.println("Apache2 license (http://www.apache.org/licenses/LICENSE-2.0)");
         System.exit(0);
     }
 
