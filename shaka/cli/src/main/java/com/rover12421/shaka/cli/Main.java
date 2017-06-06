@@ -1,98 +1,107 @@
-/**
- *  Copyright 2015 Rover12421 <rover12421@163.com>
+/*
+ * Copyright 2017 Rover12421 <rover12421@163.com>
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package com.rover12421.shaka.cli;
 
-import com.rover12421.shaka.apktool.cli.ApktoolMainAj;
-import com.rover12421.shaka.lib.cli.CommandLineArgEnum;
-import com.rover12421.shaka.lib.multiLanguage.MultiLanguageSupport;
-import com.rover12421.shaka.smali.baksmali.baksmaliMainAj;
-import com.rover12421.shaka.smali.smali.smaliMainAj;
-import org.apache.commons.cli.*;
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.google.common.collect.Lists;
+import org.jf.util.jcommander.Command;
+import org.jf.util.jcommander.ExtendedCommands;
+import org.jf.util.jcommander.ExtendedParameters;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
-import java.util.Locale;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Properties;
 
 /**
- * Created by rover12421 on 7/11/14.
+ * Created by rover12421 on 05/06/2017.
  */
-public class Main {
+@ExtendedParameters(
+        includeParametersInUsage = true,
+        commandName = "ShakaApktool",
+        postfixDescription = "See baksmali help <command> for more information about a specific command")
+public class Main extends Command {
+    public static final String VERSION = loadVersion();
 
-    public static class IgnoreUnkownArgsPosixParser extends PosixParser {
-        @Override
-        protected void processOption(String arg, ListIterator iter) throws ParseException
-        {
-            try {
-                super.processOption(arg, iter);
-            } catch (ParseException e) {
-            }
-        }
+    @Parameter(names = {"-h", "-?", "--help"}, help = true,
+            description = "Show usage information")
+    private boolean help;
+
+    @Parameter(names = {"-v", "--version"}, help = true,
+            description = "Print the version of baksmali and then exit")
+    public boolean version;
+
+    private JCommander jc;
+
+    public Main() {
+        super(Lists.newArrayList());
     }
 
-    public static void main(String[] args) throws Exception {
-        boolean smali = false;
-        boolean baksmali = false;
-
-        String[] realyArgs = args;
-
-        if (args.length > 0) {
-            String cmd = args[0];
-            if (cmd.equalsIgnoreCase("s") || cmd.equalsIgnoreCase("smali")) {
-                smali = true;
-            } else if (cmd.equalsIgnoreCase("bs") || cmd.equalsIgnoreCase("baksmali")) {
-                baksmali = true;
-            }
-
-            if (smali || baksmali) {
-                realyArgs = new String[args.length-1];
-                System.arraycopy(args, 1, realyArgs, 0, realyArgs.length);
-            }
-        }
-
-        // cli parser
-        CommandLineParser parser = new IgnoreUnkownArgsPosixParser();
-        CommandLine commandLine;
-
-        Option language = CommandLineArgEnum.LANGUAGE.getOption();
-
-        Options options = new Options();
-        options.addOption(language);
-
-        try {
-            commandLine = parser.parse(options, args, false);
-            if (CommandLineArgEnum.LANGUAGE.hasMatch(commandLine)) {
-                String lngStr = commandLine.getOptionValue(CommandLineArgEnum.LANGUAGE.getOpt());
-                Locale locale = Locale.forLanguageTag(lngStr);
-                if (locale.toString().isEmpty()) {
-                    lngStr = lngStr.replaceAll("_", "-");
-                    locale = Locale.forLanguageTag(lngStr);
-                }
-                MultiLanguageSupport.getInstance().setLang(locale);
-            }
-        } catch (Exception ex) {
-        }
-
-        if (smali) {
-            smaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
-            org.jf.smali.Main.main(realyArgs);
-        } else if (baksmali) {
-            baksmaliMainAj.setHookMain(ApktoolMainAj.getHookMain());
-            org.jf.baksmali.Main.main(realyArgs);
-        } else {
-            brut.apktool.Main.main(realyArgs);
-        }
+    @Override
+    public void run() {
     }
+
+    @Override protected JCommander getJCommander() {
+        return jc;
+    }
+
+    private static String loadVersion() {
+        String version = "[unknown version]";
+
+        try(
+                InputStream propertiesStream = Main.class.getClassLoader().getResourceAsStream("properties/shaka.properties")
+                ) {
+            Properties properties = new Properties();
+            properties.load(propertiesStream);
+            version = properties.getProperty("version");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return version;
+    }
+
+    public static void main(String[] args) {
+        Main main = new Main();
+        JCommander jc = new JCommander(main);
+        main.jc = jc;
+        jc.setProgramName("ShakaApktool");
+        List<JCommander> commandHierarchy = main.getCommandHierarchy();
+        ExtendedCommands.addExtendedCommand(jc, new DecodeCommand(commandHierarchy));
+        jc.parse(args);
+
+        if (main.version) {
+            version();
+        }
+
+        if (jc.getParsedCommand() == null || main.help) {
+            main.usage();
+            return;
+        }
+
+        Command command = (Command)jc.getCommands().get(jc.getParsedCommand()).getObjects().get(0);
+        command.run();
+    }
+
+    protected static void version() {
+        System.out.println("ShakaApktool " + VERSION);
+        System.out.println("Copyright (C) 2017 Rover12421 (rover12421@163.com)");
+        System.out.println("Apache2 license (http://www.apache.org/licenses/LICENSE-2.0");
+        System.exit(0);
+    }
+
 }
