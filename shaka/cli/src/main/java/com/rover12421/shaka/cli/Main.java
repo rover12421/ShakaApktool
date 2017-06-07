@@ -34,9 +34,11 @@ import org.jf.util.jcommander.ExtendedParameters;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Created by rover12421 on 05/06/2017.
@@ -96,30 +98,48 @@ public class Main extends HelpCommand {
         /**
          * Apktool
          */
-        ExtendedCommands.addExtendedCommand(jc, new DecodeCommand(commandHierarchy));
-        ExtendedCommands.addExtendedCommand(jc, new BuildCommand(commandHierarchy));
-        ExtendedCommands.addExtendedCommand(jc, new InstallFrameworkCommand(commandHierarchy));
-        ExtendedCommands.addExtendedCommand(jc, new PublicizeResourcesCommand(commandHierarchy));
-        ExtendedCommands.addExtendedCommand(jc, new EmptyFrameworkDirCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new DecodeCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new BuildCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new InstallFrameworkCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new PublicizeResourcesCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new EmptyFrameworkDirCommand(commandHierarchy));
 
         /**
          * baksmali
          */
-        ExtendedCommands.addExtendedCommand(jc, new DisassembleCommand(commandHierarchy));
-        ExtendedCommands.addExtendedCommand(jc, new DeodexCommand(commandHierarchy));
-        ExtendedCommands.addExtendedCommand(jc, new DumpCommand(commandHierarchy));
-        ExtendedCommands.addExtendedCommand(jc, new ListCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new DisassembleCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new DeodexCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new DumpCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new ListCommand(commandHierarchy));
 
         /**
          * smali
          */
-        ExtendedCommands.addExtendedCommand(jc, new AssembleCommand(commandHierarchy));
+        CommandUtil.addExtendedCommand(jc, new AssembleCommand(commandHierarchy));
 
         try {
             jc.parse(args);
         } catch (Throwable e) {
             CommandUtil.exceptionExit(jc, e);
         }
+
+        Locale locale = Locale.forLanguageTag(main.localeStr);
+        if (locale.toString().isEmpty()) {
+            main.localeStr = main.localeStr.replaceAll("_", "-");
+            locale = Locale.forLanguageTag(main.localeStr);
+        }
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n/Messages", locale);
+
+        jc.setDescriptionsBundle(bundle);
+        try {
+            Field field = jc.getClass().getDeclaredField("descriptions");
+            field.setAccessible(true);
+            field.set(jc, null);
+            jc.parse(args);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
 
         if (main.version) {
             version();
