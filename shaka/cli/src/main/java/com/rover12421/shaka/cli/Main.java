@@ -86,7 +86,27 @@ public class Main extends HelpAndLanguageCommand {
 
     public static void main(String[] args) {
         Main main = new Main();
-        JCommander jc = new JCommander(main);
+
+        Locale locale = Locale.getDefault();
+        for (int i = 0; i < args.length-1; i++) {
+            String arg = args[i];
+            //"-lng", "--language"
+            if (arg.equals("-lng") || arg.equals("--language")) {
+                String localeStr = args[i+1];
+                locale = Locale.forLanguageTag(localeStr);
+                if (locale.toString().isEmpty()) {
+                    localeStr = localeStr.replaceAll("_", "-");
+                    locale = Locale.forLanguageTag(localeStr);
+                }
+                break;
+            }
+        }
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n/Messages", locale);
+
+        CommandUtil.modifyAnnotationValue(Main.class.getAnnotation(ExtendedParameters.class),
+                "postfixDescription", bundle.getString("Command.main.postfixDescription"));
+
+        JCommander jc = new JCommander(main, bundle);
         main.jc = jc;
         jc.setProgramName("ShakaApktool");
         jc.setAllowParameterOverwriting(true);
@@ -120,26 +140,6 @@ public class Main extends HelpAndLanguageCommand {
             e.printStackTrace();
             CommandUtil.exceptionExit(jc, e);
         }
-
-        Locale locale = Locale.forLanguageTag(main.localeStr);
-        if (locale.toString().isEmpty()) {
-            main.localeStr = main.localeStr.replaceAll("_", "-");
-            locale = Locale.forLanguageTag(main.localeStr);
-        }
-        ResourceBundle bundle = ResourceBundle.getBundle("i18n/Messages", locale);
-
-        jc.setDescriptionsBundle(bundle);
-        try {
-            Field field = jc.getClass().getDeclaredField("descriptions");
-            field.setAccessible(true);
-            field.set(jc, null);
-            jc.parse(args);
-        } catch (Throwable e) {
-            CommandUtil.exceptionExit(jc, e);
-        }
-
-        CommandUtil.modifyAnnotationValue(Main.class.getAnnotation(ExtendedParameters.class),
-                "postfixDescription", bundle.getString("Command.main.postfixDescription"));
 
         if (main.version) {
             version();
