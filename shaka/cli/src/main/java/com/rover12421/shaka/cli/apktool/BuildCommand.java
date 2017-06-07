@@ -78,7 +78,10 @@ public class BuildCommand extends ApktoolUsingFrameworkCommand {
         apkOptions.forceBuildAll = forceAll;
         apkOptions.aaptPath = aaptPath;
         apkOptions.copyOriginalFiles = copyOriginal;
-        File outFile = new File(output);
+        File outFile = null;
+        if (output != null) {
+            outFile = new File(output);
+        }
 
         try {
             new Androlib(apkOptions).build(new File(input), outFile);
