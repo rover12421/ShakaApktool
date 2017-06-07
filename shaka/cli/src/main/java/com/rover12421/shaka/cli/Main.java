@@ -90,7 +90,6 @@ public class Main extends HelpAndLanguageCommand {
         main.jc = jc;
         jc.setProgramName("ShakaApktool");
         jc.setAllowParameterOverwriting(true);
-        jc.setAcceptUnknownOptions(true);
         List<JCommander> commandHierarchy = main.getCommandHierarchy();
 
         /**
