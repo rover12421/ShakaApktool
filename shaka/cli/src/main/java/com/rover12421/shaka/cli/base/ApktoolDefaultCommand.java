@@ -19,6 +19,7 @@ package com.rover12421.shaka.cli.base;
 import brut.androlib.ApkOptions;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.rover12421.shaka.cli.Main;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.List;
 /**
  * Created by rover12421 on 6/6/17.
  */
-public abstract class ApktoolDefaultCommand extends HelpCommand {
+public abstract class ApktoolDefaultCommand extends HelpAndLanguageCommand {
     public ApktoolDefaultCommand(@Nonnull List<JCommander> commandAncestors) {
         super(commandAncestors);
     }

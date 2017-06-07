@@ -17,11 +17,14 @@
 package com.rover12421.shaka.cli.baksmali;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
+import org.jf.util.jcommander.ExtendedParameter;
 import org.jf.util.jcommander.ExtendedParameters;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by rover12421 on 06/06/2017.
@@ -34,4 +37,9 @@ public class DisassembleCommand extends org.jf.baksmali.DisassembleCommand {
     public DisassembleCommand(@Nonnull List<JCommander> commandAncestors) {
         super(commandAncestors);
     }
+
+    @Parameter(names = {"-lng", "--language"}, help = true,
+            description = "Display language, e.g. zh-CN, zh-TW.")
+    @ExtendedParameter(argumentNames = "Locale")
+    protected String localeStr = Locale.getDefault().toLanguageTag();
 }

@@ -21,15 +21,13 @@ import com.beust.jcommander.Parameter;
 import com.google.common.collect.Lists;
 import com.rover12421.shaka.cli.apktool.*;
 import com.rover12421.shaka.cli.baksmali.DisassembleCommand;
-import com.rover12421.shaka.cli.base.HelpCommand;
+import com.rover12421.shaka.cli.baksmali.DumpCommand;
+import com.rover12421.shaka.cli.baksmali.ListCommand;
+import com.rover12421.shaka.cli.base.HelpAndLanguageCommand;
 import com.rover12421.shaka.cli.smali.AssembleCommand;
 import com.rover12421.shaka.cli.util.CommandUtil;
 import org.jf.baksmali.DeodexCommand;
-import org.jf.baksmali.DumpCommand;
-import org.jf.baksmali.ListCommand;
 import org.jf.util.jcommander.Command;
-import org.jf.util.jcommander.ExtendedCommands;
-import org.jf.util.jcommander.ExtendedParameter;
 import org.jf.util.jcommander.ExtendedParameters;
 
 import java.io.IOException;
@@ -47,17 +45,13 @@ import java.util.ResourceBundle;
         includeParametersInUsage = true,
         commandName = "ShakaApktool",
         postfixDescription = "See ShakaApktool help <command> for more information about a specific command")
-public class Main extends HelpCommand {
+public class Main extends HelpAndLanguageCommand {
     public static final String VERSION = loadVersion();
 
     @Parameter(names = {"-v", "--version"}, help = true,
-            description = "Print the version of baksmali and then exit")
+            descriptionKey = "Command.main.version",
+            description = "Print program version.")
     public boolean version;
-
-    @Parameter(names = {"-lng", "--language"}, help = true,
-            description = "Display language, e.g. zh-CN, zh-TW.")
-    @ExtendedParameter(argumentNames = "Locale")
-    protected String localeStr = Locale.getDefault().toLanguageTag();
 
     private JCommander jc;
 
@@ -88,11 +82,15 @@ public class Main extends HelpCommand {
         return version;
     }
 
+    public Command command;
+
     public static void main(String[] args) {
         Main main = new Main();
         JCommander jc = new JCommander(main);
         main.jc = jc;
         jc.setProgramName("ShakaApktool");
+        jc.setAllowParameterOverwriting(true);
+        jc.setAcceptUnknownOptions(true);
         List<JCommander> commandHierarchy = main.getCommandHierarchy();
 
         /**
@@ -120,6 +118,7 @@ public class Main extends HelpCommand {
         try {
             jc.parse(args);
         } catch (Throwable e) {
+            e.printStackTrace();
             CommandUtil.exceptionExit(jc, e);
         }
 
@@ -137,9 +136,11 @@ public class Main extends HelpCommand {
             field.set(jc, null);
             jc.parse(args);
         } catch (Throwable e) {
-            e.printStackTrace();
+            CommandUtil.exceptionExit(jc, e);
         }
 
+        CommandUtil.modifyAnnotationValue(Main.class.getAnnotation(ExtendedParameters.class),
+                "postfixDescription", bundle.getString("Command.main.postfixDescription"));
 
         if (main.version) {
             version();
@@ -152,6 +153,7 @@ public class Main extends HelpCommand {
         }
 
         Command command = (Command)jc.getCommands().get(jc.getParsedCommand()).getObjects().get(0);
+        main.command = command;
         command.run();
     }
 

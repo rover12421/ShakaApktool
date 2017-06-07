@@ -68,7 +68,7 @@ public class CommandUtil {
         System.exit(ExceptionExitCode);
     }
 
-    public static void modifyAnnotationValue(Annotation annotation, String key, Object value){
+    public static void modifyAnnotationValue(Annotation annotation, String key, Object value) {
         try {
             Object handler = Proxy.getInvocationHandler(annotation);
             Field f = handler.getClass().getDeclaredField("memberValues");
@@ -93,7 +93,7 @@ public class CommandUtil {
         String commandName = ExtendedCommands.commandName(command);
         String prefix = "Command." + commandName;
         Parameters commandClassParameters = commandClass.getAnnotation(Parameters.class);
-        if (commandClassParameters != null) {
+        if (commandClassParameters != null && commandClassParameters.commandDescriptionKey().isEmpty()) {
             //System.out.println(prefix + "=" + commandClassParameters.commandDescription());
             setParametersCommandDescriptionKey(commandClassParameters, prefix);
         }
@@ -102,11 +102,11 @@ public class CommandUtil {
         while (Command.class.isAssignableFrom(commandClass)) {
             Field[] declaredFields = commandClass.getDeclaredFields();
             for (Field field : declaredFields) {
-                Parameter annotation = field.getAnnotation(Parameter.class);
-                if (annotation != null) {
+                Parameter parameterAnnotation = field.getAnnotation(Parameter.class);
+                if (parameterAnnotation != null && parameterAnnotation.descriptionKey().isEmpty()) {
                     String descriptionKey = prefix + field.getName();
-                    //System.out.println(descriptionKey + "=" + annotation.description());
-                    setParameterDescriptionKey(annotation, descriptionKey);
+                    //System.out.println(descriptionKey + "=" + parameterAnnotation.description());
+                    setParameterDescriptionKey(parameterAnnotation, descriptionKey);
                 }
             }
 
