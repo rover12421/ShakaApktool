@@ -38,7 +38,7 @@ subprojects {
     apply plugin: 'aspectj'
 }
 
-// 过滤shaka.lib,其他项目均可以包含该项目
+// 过滤shaka:lib
 configure(subprojects - project(':shaka:lib')) {
     dependencies {
         compile project(':shaka:lib')

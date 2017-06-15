@@ -13,17 +13,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
-import org.apache.tools.ant.filters.*
-
-def apktoolversion_major = '2.1.2'
-def apktoolversion_minor = 'SNAPSHOT'
-
-def branch = getCheckedOutBranchFromModule('apktool')
-def hash   = getCheckedOutGitCommitHashFromModule('apktool')
-ext.apktoolHash = "$branch-$hash"
-ext.apktoolVersion = "$apktoolversion_major-$apktoolversion_minor-$apktoolHash"
-
 sourceSets {
     main {
         java {
@@ -66,14 +55,6 @@ sourceSets {
                         'apktool/brut.apktool/apktool-cli/src/test/resources'
                     ]
         }
-    }
-}
-
-processResources {
-    from('apktool/brut.apktool/apktool-lib/src/main/resources/properties') {
-        include '**/*.properties'
-        into 'properties'
-        filter(ReplaceTokens, tokens: [version: apktoolVersion.toString(), gitrev: apktoolHash.toString()] )
     }
 }
 

@@ -102,8 +102,9 @@ public class ResFileDecoderAj {
         }
     }
 
-    @Around("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
-            "&& args(inDir, inFileName, outDir, outFileName, decoder)")
+//    @Around("execution(* brut.androlib.res.decoder.ResFileDecoder.decode(..))" +
+//            "&& args(inDir, inFileName, outDir, outFileName, decoder)")
+    //等待修复!!!
     public void decode(ProceedingJoinPoint joinPoint, Directory inDir, String inFileName, Directory outDir,
                        String outFileName, String decoder) throws Throwable {
         if (inFileName.startsWith("/")) {
